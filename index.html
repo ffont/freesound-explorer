@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>Freesound Explorer</title>
+<link rel="stylesheet" type="text/css" href="all.css">
+</head>
+<body>
+<canvas></canvas>
+
+<div id="query_box" class="box">
+  <input id="query_terms_input" type="text" placeholder="query terms, e.g.: instrument note">
+  <button id="go_button" onclick="start();">Go!</button><br>
+  <select id="map_descriptors_selector" onchange="setMapDescriptor();"> 
+    <option value="lowlevel.mfcc.mean">MFCC</option>
+    <option value="lowlevel.barkbands.mean">Barkbands</option>
+    <option value="lowlevel.erb_bands.mean">ERB bands</option>
+    <option value="lowlevel.frequency_bands.mean">Frequency bands</option>
+    <option value="lowlevel.gfcc.mean">GFCC</option>
+    <option value="sfx.tristimulus.mean">Tristimulus</option>
+    <option value="tonal.hpcp.mean">HPCP</option>
+    <option value="lowlevel.spectral_contrast.mean">Spectral contrast</option>
+    <option value="lowlevel.scvalleys.mean">SC Valleys</option>
+  </select>
+  <div id="info_placeholder"></div>
+</div>
+
+<div id="instructions_box" class="box">
+  <b>Freesound Explorer</b><br>
+  Introduce your query terms and click Go!<br>
+  You can select which feature you want to use for building the map<br>
+  <br>
+  Click on points to listen to sounds<br>
+  Click and drag to navigate the map<br>
+  Click+alt to zoom<br>
+  Click+shift to rotate<br>
+  Click+meta to listen to the sounds on hover
+</div>
+
+<!-- javascript loading must be at the end -->
+<script src="mouseevents.js"></script>
+<script src="audioengine.js"></script>
+<script src="tsne.js"></script>
+<script src="utils.js"></script>
+<script src="all.js"></script>
+
+</body>
+</html>

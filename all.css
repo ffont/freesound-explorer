@@ -1,0 +1,63 @@
+*{
+	margin:0;
+	padding:0;
+	font-family: Helvetica;
+	font-size: 14px;
+}
+
+body{
+	background:#111;
+} 
+
+canvas{
+	position:absolute;
+	transform:translateZ(0);
+}
+
+.box {
+	position: fixed;
+	color: #fff;
+	background-color: #111;
+	opacity: 0.9;
+}
+
+#query_box{
+	right: 20px;
+	top: 20px;
+}
+
+#instructions_box{
+	right: 20px;
+	bottom: 20px;
+	text-align: right;
+}
+
+#query_terms_input{
+	width: 240px;
+	padding: 7px;
+	border-radius: 5px;
+	border: 0px;
+	height: 30px;
+}
+
+#go_button{
+	padding: 7px;
+	border-radius: 5px;
+	border: 0px;
+	height: 30px;
+	width: 34px;
+}
+
+#map_descriptors_selector {
+	margin-top: 3px;
+	height: 30px;
+	width: 277px;
+	padding: 7px;
+	border-radius: 5px;
+	border: 0px;
+}
+
+#info_placeholder{
+	height: 30px;
+	line-height: 30px;
+}

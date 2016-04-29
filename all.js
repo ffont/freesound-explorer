@@ -1,0 +1,272 @@
+/* Global variables and objects */
+
+// Audio stuff
+var audio_manager = new AudioManager();
+
+// Sounds and content
+var default_query = "instrument note"
+var sounds = [];
+var extra_descriptors = "lowlevel.mfcc.mean";
+var map_similarity_feature = "lowlevel.mfcc.mean";
+var n_pages = 3;
+var n_pages_received = 0;
+var all_loaded = false;
+
+// t-sne
+var max_tsne_iterations = 500;
+var current_it_number = 0;
+var epsilon = 10;
+var perplexity = 10;
+var tsne = undefined;
+
+// Canvas and display stuff
+var canvas = document.querySelector('canvas');
+var ctx = canvas.getContext('2d');
+var w = window.innerWidth;
+var h = window.innerHeight;
+var default_point_modulation = 0.8;
+var disp_scale = Math.min(w, h);
+var center_x = 0.5;
+var center_y = 0.5;
+var zoom_factor = 1.0;
+var rotation_degrees = 0;
+
+/* Setup and app flow functions */
+
+function start(){
+    
+    // Sounds
+    sounds = [];
+    n_pages_received = 0;
+    all_loaded = false;
+
+    // Canvas
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvas.addEventListener("mousedown", onMouseDown, false);
+    canvas.addEventListener("mouseup", onMouseUp, false);
+    canvas.addEventListener("mouseout", onMouseOut, false);
+    center_x = 0.5;
+    center_y = 0.5;
+    zoom_factor = 1.0;
+    rotation_degrees = 0;
+
+    // Display stuff
+    if (w >= h){
+        disp_x_offset = (w - h) / 2;
+        disp_y_offset = 0.0;
+    } else {
+        disp_x_offset = 0.0;
+        disp_y_offset = (h - w) / 2;
+    }
+
+    // t-sne
+    current_it_number = 0;
+    var opt = {}
+    opt.epsilon = epsilon; // epsilon is learning rate (10 = default)
+    opt.perplexity = perplexity; // roughly how many neighbors each point influences (30 = default)
+    opt.dim = 2; // dimensionality of the embedding (2 = default)
+    tsne = new tsnejs.tSNE(opt); // create a tSNE instance
+
+    // Search sounds and start loading them
+    //var query = get_req_param("query");
+    var query = document.getElementById('query_terms_input').value;
+    if ((query == undefined) || (query=="")){
+        query = default_query;
+    }
+    for (var i=0; i<n_pages; i++){
+        var url = "http://freesound.org/apiv2/search/text/?query=" + query + "&" + 
+        "group_by_pack=1&filter=duration:[0+TO+2]&fields=id,previews,name,analysis" +
+        "&descriptors=sfx.tristimulus.mean," + extra_descriptors + "&page_size=150" +
+        "&token=eecfe4981d7f41d2811b4b03a894643d5e33f812&page=" + (i + 1);
+        loadJSON(function(data) { load_data_from_fs_json(data); }, url);  
+    }
+
+    // Ui
+    document.getElementById('query_terms_input').value = query;
+    document.getElementById('info_placeholder').innerHTML = "Searching...";
+}
+
+window.requestAnimFrame = (function(){ // This is called when code reaches this point
+    return  window.requestAnimationFrame       ||
+                    window.webkitRequestAnimationFrame ||
+                    window.mozRequestAnimationFrame    ||
+                    function( callback ){
+                        window.setTimeout(callback, 1000 / 60);
+                    };
+})();
+
+(function init(){ // This is called when code reaches this point
+    //start();
+})();
+
+(function loop(){  // This is called when code reaches this point
+    if ((all_loaded == true) && (current_it_number <= max_tsne_iterations)){
+        document.getElementById('info_placeholder').innerHTML = 'Computing map...';
+
+        tsne.step();
+        Y = tsne.getSolution();
+        var xx = [];
+        var yy = [];
+        for (i in Y){
+            xx.push(Y[i][0]);
+            yy.push(Y[i][1]);
+        }
+        min_xx = Math.min(...xx);
+        max_xx = Math.max(...xx);
+        min_yy = Math.min(...yy);
+        max_yy = Math.max(...yy);
+        var delta_xx = max_xx - min_xx;
+        var delta_yy = max_yy - min_yy;
+        for (i in sounds){
+            var sound = sounds[i];
+            var x = Y[i][0];
+            var y = Y[i][1];
+            sound.x = -min_xx/delta_xx + x/delta_xx;
+            sound.y = -min_yy/delta_yy + y/delta_yy;
+            if (delta_xx > delta_yy){
+                sound.y = sound.y * (delta_yy/delta_xx); // Preserve tsne aspect ratio
+            } else {
+                sound.x = sound.x * (delta_xx/delta_yy); // Preserve tsne aspect ratio
+            }
+            sound.x = sound.x * (current_it_number/max_tsne_iterations) + 0.5 * (1 - current_it_number/max_tsne_iterations); // Smooth position at the beginning
+            sound.y = sound.y * (current_it_number/max_tsne_iterations) + 0.5 * (1 - current_it_number/max_tsne_iterations); // Smooth position at the beginning
+        }
+    } 
+    if (current_it_number == max_tsne_iterations) {
+        document.getElementById('info_placeholder').innerHTML = "Done, " + sounds.length + " sounds loaded!";
+    }
+    current_it_number += 1;
+    draw();  
+    requestAnimFrame(loop);
+})();
+
+
+/* Sounds stuff */
+
+function SoundFactory(id, preview_url, analysis){  
+    this.x =  0.5; //Math.random();
+    this.y =  0.5; //Math.random();
+    this.rad = 10;
+    this.mod_position = Math.random();
+    this.mod_inc = 0.1;
+    this.mod_amp = default_point_modulation;
+    this.selected = false;
+
+    this.id = id;
+    this.preview_url = preview_url;
+    this.analysis = analysis;
+
+    var color = rgbToHex(
+        Math.floor(255 * analysis['sfx']['tristimulus']['mean'][0]), 
+        Math.floor(255 * analysis['sfx']['tristimulus']['mean'][1]), 
+        Math.floor(255 * analysis['sfx']['tristimulus']['mean'][2])
+    )
+    this.rgba = color;
+}
+
+function load_data_from_fs_json(data){
+    for (i in data['results']){
+        var sound_json = data['results'][i];
+        if (sound_json['analysis'] != undefined){
+            var sound = new SoundFactory(
+                id=sound_json['id'], 
+                preview_url=sound_json['previews']['preview-lq-mp3'],
+                analysis=sound_json['analysis']
+            );
+            sounds.push(sound);  
+        }
+    }
+    if (n_pages_received == n_pages){
+        // Init t-sne with sounds features
+        var X = [];
+        for (i in sounds){
+            sound_i = sounds[i];
+            var feature_vector = Object.byString(sound_i, 'analysis.' + map_similarity_feature);
+            X.push(feature_vector);
+        }
+        tsne.initDataRaw(X);
+        all_loaded = true;
+        console.log('Loaded tsne with' + sounds.length + ' sounds')
+    }
+}
+
+function checkSelectSound(x, y){
+    var min_dist = 9999;
+    var selected_sound = false;
+    for(i in sounds){
+        var sound = sounds[i];
+        var dist = computeEuclideanDistance(sound.x, sound.y, x, y);
+        if (dist < min_dist){
+            min_dist = dist;
+            selected_sound = sound;
+        }
+    }
+
+    if (min_dist < 0.01){
+        if (!selected_sound.selected){
+            selectSound(selected_sound);  
+        }
+    }
+}
+
+function selectSound(selected_sound){
+    if (!selected_sound.selected){
+        selected_sound.selected = true;
+        selected_sound.mod_amp = 5.0;
+        audio_manager.loadSound(selected_sound.id, selected_sound.preview_url);
+
+    } else {
+        selected_sound.selected = false;
+        selected_sound.mod_amp = default_point_modulation;
+    }  
+}
+
+function selectSoundFromId(sound_id){
+    for (i in sounds){
+        var sound = sounds[i];
+        if (sound.id == parseInt(sound_id)){
+            selectSound(sound);
+        }
+    }
+}
+
+function setMapDescriptor(){
+    var selected_descriptor = document.getElementById('map_descriptors_selector').value;
+    extra_descriptors = selected_descriptor;
+    map_similarity_feature = selected_descriptor;
+}
+
+/* Drawing */
+     
+function draw(){
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'lighter';
+    for(i in sounds){
+        var sound = sounds[i];
+        var disp_x, disp_y;
+        [disp_x, disp_y] = normCoordsToDisplayCoords(sound.x, sound.y)
+        
+        if (!sound.selected){
+            ctx.fillStyle = sound.rgba;
+            ctx.strokeStyle = sound.rgba;  
+        } else {
+            ctx.fillStyle = '#ffffff';  
+            ctx.strokeStyle = '#ffffff';  
+        }
+        
+        ctx.beginPath();
+        ctx.arc(disp_x, disp_y, sound.rad*zoom_factor, 0, Math.PI*2, true);
+        ctx.fill();
+        ctx.closePath();
+        
+        ctx.beginPath();
+        ctx.arc(disp_x, disp_y, (sound.rad+5+(sound.mod_amp*Math.cos(sound.mod_position)))*zoom_factor, 0, Math.PI*2, true);
+        ctx.stroke();
+        ctx.closePath();
+
+        sound.mod_position += sound.mod_inc;
+    }
+}

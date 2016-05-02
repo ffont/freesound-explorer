@@ -11,6 +11,7 @@ var map_similarity_feature = "lowlevel.mfcc.mean";
 var n_pages = 3;
 var n_pages_received = 0;
 var all_loaded = false;
+var last_selected_sound_id = undefined;
 
 // t-sne
 var max_tsne_iterations = 500;
@@ -24,7 +25,7 @@ var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext('2d');
 var w = window.innerWidth;
 var h = window.innerHeight;
-var default_point_modulation = 0.8;
+var default_point_modulation = 0.6;
 var disp_scale = Math.min(w, h);
 var center_x = 0.5;
 var center_y = 0.5;
@@ -78,7 +79,7 @@ function start(){
     }
     for (var i=0; i<n_pages; i++){
         var url = "http://freesound.org/apiv2/search/text/?query=" + query + "&" + 
-        "group_by_pack=1&filter=duration:[0+TO+2]&fields=id,previews,name,analysis" +
+        "group_by_pack=1&filter=duration:[0+TO+2]&fields=id,previews,name,analysis,url,username" +
         "&descriptors=sfx.tristimulus.mean," + extra_descriptors + "&page_size=150" +
         "&token=eecfe4981d7f41d2811b4b03a894643d5e33f812&page=" + (i + 1);
         loadJSON(function(data) { load_data_from_fs_json(data); }, url);  
@@ -146,7 +147,7 @@ window.requestAnimFrame = (function(){ // This is called when code reaches this 
 
 /* Sounds stuff */
 
-function SoundFactory(id, preview_url, analysis){  
+function SoundFactory(id, preview_url, analysis, url, name, username){  
     this.x =  0.5; //Math.random();
     this.y =  0.5; //Math.random();
     this.rad = 10;
@@ -165,6 +166,10 @@ function SoundFactory(id, preview_url, analysis){
         Math.floor(255 * analysis['sfx']['tristimulus']['mean'][2])
     )
     this.rgba = color;
+
+    this.url = url;
+    this.name = name;
+    this.username = username;
 }
 
 function load_data_from_fs_json(data){
@@ -174,7 +179,10 @@ function load_data_from_fs_json(data){
             var sound = new SoundFactory(
                 id=sound_json['id'], 
                 preview_url=sound_json['previews']['preview-lq-mp3'],
-                analysis=sound_json['analysis']
+                analysis=sound_json['analysis'],
+                url=sound_json['url'],
+                name=sound_json['name'],
+                username=sound_json['username']
             );
             sounds.push(sound);  
         }
@@ -217,7 +225,8 @@ function selectSound(selected_sound){
         selected_sound.selected = true;
         selected_sound.mod_amp = 5.0;
         audio_manager.loadSound(selected_sound.id, selected_sound.preview_url);
-
+        showSoundInfo(selected_sound);
+        last_selected_sound_id = selected_sound['id']
     } else {
         selected_sound.selected = false;
         selected_sound.mod_amp = default_point_modulation;
@@ -231,6 +240,12 @@ function selectSoundFromId(sound_id){
             selectSound(sound);
         }
     }
+}
+
+function showSoundInfo(sound){
+    var html = '';
+    html += sound.name + ' by <a href="' + sound.url + '" target="_blank">' + sound.username + '</a>';
+    document.getElementById('sound_info_box').innerHTML = html;
 }
 
 function setMapDescriptor(){
@@ -255,6 +270,10 @@ function draw(){
         } else {
             ctx.fillStyle = '#ffffff';  
             ctx.strokeStyle = '#ffffff';  
+        }
+
+        if (last_selected_sound_id == sound['id']){
+            ctx.fillStyle = '#ffffff';  
         }
         
         ctx.beginPath();

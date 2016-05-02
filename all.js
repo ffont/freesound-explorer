@@ -27,10 +27,10 @@ var w = window.innerWidth;
 var h = window.innerHeight;
 var default_point_modulation = 0.6;
 var disp_scale = Math.min(w, h);
-var center_x = 0.5;
-var center_y = 0.5;
-var zoom_factor = 2.0;
-var rotation_degrees = 0;
+var center_x = undefined;  // Set in start()
+var center_y = undefined;  // Set in start()
+var zoom_factor = undefined;  // Set in start()
+var rotation_degrees = undefined;  // Set in start()
 
 /* Setup and app flow functions */
 
@@ -51,7 +51,7 @@ function start(){
     canvas.addEventListener("mouseout", onMouseOut, false);
     center_x = 0.5;
     center_y = 0.5;
-    zoom_factor = 1.0;
+    zoom_factor = 1.5;
     rotation_degrees = 0;
 
     // Display stuff

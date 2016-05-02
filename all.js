@@ -29,7 +29,7 @@ var default_point_modulation = 0.6;
 var disp_scale = Math.min(w, h);
 var center_x = 0.5;
 var center_y = 0.5;
-var zoom_factor = 1.0;
+var zoom_factor = 2.0;
 var rotation_degrees = 0;
 
 /* Setup and app flow functions */

@@ -31,6 +31,8 @@ var center_x = undefined;  // Set in start()
 var center_y = undefined;  // Set in start()
 var zoom_factor = undefined;  // Set in start()
 var rotation_degrees = undefined;  // Set in start()
+var min_zoom = 0.2;
+var max_zoom = 15;
 
 /* Setup and app flow functions */
 
@@ -277,12 +279,12 @@ function draw(){
         }
         
         ctx.beginPath();
-        ctx.arc(disp_x, disp_y, sound.rad*zoom_factor, 0, Math.PI*2, true);
+        ctx.arc(disp_x, disp_y, sound.rad*zoom_factor*Math.pow(0.9,zoom_factor), 0, Math.PI*2, true);
         ctx.fill();
         ctx.closePath();
         
         ctx.beginPath();
-        ctx.arc(disp_x, disp_y, (sound.rad+5+(sound.mod_amp*Math.cos(sound.mod_position)))*zoom_factor, 0, Math.PI*2, true);
+        ctx.arc(disp_x, disp_y, (sound.rad+5+(sound.mod_amp*Math.cos(sound.mod_position)))*zoom_factor*Math.pow(0.9,zoom_factor), 0, Math.PI*2, true);
         ctx.stroke();
         ctx.closePath();
 

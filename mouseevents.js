@@ -47,10 +47,10 @@ function onMouseMove(event){
     
     if (zoomMode) {
         zoom_factor -= delta_y * 0.05; //delta_zoom / ((w + h)/2);
-        if (zoom_factor < 0.3) {
-            zoom_factor = 0.3;
-        } else if (zoom_factor > 8){
-            zoom_factor = 8;
+        if (zoom_factor < min_zoom) {
+            zoom_factor = min_zoom;
+        } else if (zoom_factor > max_zoom){
+            zoom_factor = maz_zoom;
         }
     }
 

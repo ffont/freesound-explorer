@@ -33,6 +33,7 @@ canvas{
 	right: 20px;
 	bottom: 20px;
 	text-align: right;
+	pointer-events: none;
 }
 
 #sound_info_box {
@@ -45,6 +46,7 @@ canvas{
 	top: 20px;
 	left: 20px;
 	width: 200px;
+	pointer-events: none;
 }
 
 #query_terms_input {

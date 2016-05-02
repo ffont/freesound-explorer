@@ -17,22 +17,28 @@ canvas{
 .box {
 	position: fixed;
 	color: #fff;
-	background-color: #111;
+	/*background-color: #111;*/
 	opacity: 0.9;
 }
 
-#query_box{
+#query_box {
 	right: 20px;
 	top: 20px;
 }
 
-#instructions_box{
+#instructions_box {
 	right: 20px;
 	bottom: 20px;
 	text-align: right;
 }
 
-#query_terms_input{
+#logo_box {
+	top: 20px;
+	left: 20px;
+	width: 200px;
+}
+
+#query_terms_input {
 	width: 240px;
 	padding: 7px;
 	border-radius: 5px;
@@ -40,7 +46,7 @@ canvas{
 	height: 30px;
 }
 
-#go_button{
+#go_button {
 	padding: 7px;
 	border-radius: 5px;
 	border: 0px;

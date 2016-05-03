@@ -134,8 +134,10 @@ window.requestAnimFrame = (function(){ // This is called when code reaches this 
             } else {
                 sound.x = sound.x * (delta_xx/delta_yy); // Preserve tsne aspect ratio
             }
-            sound.x = sound.x * (current_it_number/max_tsne_iterations) + 0.5 * (1 - current_it_number/max_tsne_iterations); // Smooth position at the beginning
-            sound.y = sound.y * (current_it_number/max_tsne_iterations) + 0.5 * (1 - current_it_number/max_tsne_iterations); // Smooth position at the beginning
+
+
+            sound.x = sound.x * Math.pow(100, current_it_number/max_tsne_iterations - 1) + 0.5 * (1 - Math.pow(100, current_it_number/max_tsne_iterations - 1)); // Smooth position at the beginning
+            sound.y = sound.y * Math.pow(100, current_it_number/max_tsne_iterations - 1) + 0.5 * (1 - Math.pow(100, current_it_number/max_tsne_iterations - 1)); // Smooth position at the beginning
         }
     } 
     if (current_it_number == max_tsne_iterations) {

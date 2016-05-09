@@ -7,7 +7,7 @@
 
 body{
 	background:#111;
-} 
+}
 
 canvas{
 	position:absolute;
@@ -77,4 +77,8 @@ canvas{
 #info_placeholder{
 	height: 30px;
 	line-height: 30px;
+}
+
+.query-form > select {
+	display: block;
 }

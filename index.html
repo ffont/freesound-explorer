@@ -7,19 +7,21 @@
 <canvas></canvas>
 
 <div id="query_box" class="box">
-  <input id="query_terms_input" type="text" placeholder="query terms, e.g.: instrument note">
-  <button id="go_button" onclick="start();">Go!</button><br>
-  <select id="map_descriptors_selector" onchange="setMapDescriptor();"> 
-    <option value="lowlevel.mfcc.mean">MFCC</option>
-    <option value="lowlevel.barkbands.mean">Barkbands</option>
-    <option value="lowlevel.erb_bands.mean">ERB bands</option>
-    <option value="lowlevel.frequency_bands.mean">Frequency bands</option>
-    <option value="lowlevel.gfcc.mean">GFCC</option>
-    <option value="sfx.tristimulus.mean">Tristimulus</option>
-    <option value="tonal.hpcp.mean">HPCP</option>
-    <option value="lowlevel.spectral_contrast.mean">Spectral contrast</option>
-    <option value="lowlevel.scvalleys.mean">SC Valleys</option>
-  </select>
+  <form id="query-form" class="query-form">
+    <input id="query_terms_input" type="text" placeholder="query terms, e.g.: instrument note">
+    <input type="submit" id="go_button" value="Go!">
+    <select id="map_descriptors_selector" onchange="setMapDescriptor();">
+      <option value="lowlevel.mfcc.mean">MFCC</option>
+      <option value="lowlevel.barkbands.mean">Barkbands</option>
+      <option value="lowlevel.erb_bands.mean">ERB bands</option>
+      <option value="lowlevel.frequency_bands.mean">Frequency bands</option>
+      <option value="lowlevel.gfcc.mean">GFCC</option>
+      <option value="sfx.tristimulus.mean">Tristimulus</option>
+      <option value="tonal.hpcp.mean">HPCP</option>
+      <option value="lowlevel.spectral_contrast.mean">Spectral contrast</option>
+      <option value="lowlevel.scvalleys.mean">SC Valleys</option>
+    </select>
+  </form>
   <div id="info_placeholder"></div>
 </div>
 

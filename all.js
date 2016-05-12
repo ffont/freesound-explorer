@@ -186,7 +186,7 @@ function load_fake_data(data){
     for (i=0; i<M; i++){
         var sound = new SoundFactory(
             id=i,
-            preview_url='http://example.com/preview/' + parseInt(i, 10),
+            preview_url=undefined,
             analysis={
                 'fake_feature': [Math.random(), Math.random(), Math.random(), Math.random(), Math.random()],
                 'sfx': {
@@ -264,14 +264,18 @@ function checkSelectSound(x, y){
 
 function selectSound(selected_sound){
     if (!selected_sound.selected){
-        selected_sound.selected = true;
-        selected_sound.mod_amp = 5.0;
-        audio_manager.loadSound(selected_sound.id, selected_sound.preview_url);
+        if (selected_sound.preview_url != undefined){
+            selected_sound.selected = true;    
+            selected_sound.mod_amp = 5.0;
+            audio_manager.loadSound(selected_sound.id, selected_sound.preview_url);    
+        }
         showSoundInfo(selected_sound);
         last_selected_sound_id = selected_sound['id']
     } else {
-        selected_sound.selected = false;
-        selected_sound.mod_amp = default_point_modulation;
+        if (selected_sound.preview_url != undefined){
+            selected_sound.selected = false;
+            selected_sound.mod_amp = default_point_modulation;
+        }
     }
 }
 

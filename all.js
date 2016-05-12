@@ -1,5 +1,7 @@
 /* Global variables and objects */
 
+var use_fake_data = true;
+
 // Audio stuff
 var audio_manager = new AudioManager();
 
@@ -73,18 +75,21 @@ function start(){
     opt.dim = 2; // dimensionality of the embedding (2 = default)
     tsne = new tsnejs.tSNE(opt); // create a tSNE instance
 
-    // Search sounds and start loading them
-    //var query = get_req_param("query");
-    var query = document.getElementById('query_terms_input').value;
-    if ((query == undefined) || (query=="")){
-        query = default_query;
-    }
-    for (var i=0; i<n_pages; i++){
-        var url = "https://freesound.org/apiv2/search/text/?query=" + query + "&" +
-        "group_by_pack=0&filter=duration:[0+TO+2]&fields=id,previews,name,analysis,url,username" +
-        "&descriptors=sfx.tristimulus.mean," + extra_descriptors + "&page_size=150" +
-        "&token=eecfe4981d7f41d2811b4b03a894643d5e33f812&page=" + (i + 1);
-        loadJSON(function(data) { load_data_from_fs_json(data); }, url);
+    if (!use_fake_data){
+        // Search sounds and start loading them
+        var query = document.getElementById('query_terms_input').value;
+        if ((query == undefined) || (query=="")){
+            query = default_query;
+        }
+        for (var i=0; i<n_pages; i++){
+            var url = "https://freesound.org/apiv2/search/text/?query=" + query + "&" +
+            "group_by_pack=0&filter=duration:[0+TO+2]&fields=id,previews,name,analysis,url,username" +
+            "&descriptors=sfx.tristimulus.mean," + extra_descriptors + "&page_size=150" +
+            "&token=eecfe4981d7f41d2811b4b03a894643d5e33f812&page=" + (i + 1);
+            loadJSON(function(data) { load_data_from_fs_json(data); }, url);
+        }    
+    } else {
+        load_fake_data();
     }
 
     // Ui
@@ -176,6 +181,39 @@ function SoundFactory(id, preview_url, analysis, url, name, username){
     this.username = username;
 }
 
+function load_fake_data(data){
+    M = 100;
+    for (i=0; i<M; i++){
+        var sound = new SoundFactory(
+            id=i,
+            preview_url='http://example.com/preview/' + parseInt(i, 10),
+            analysis={
+                'fake_feature': [Math.random(), Math.random(), Math.random(), Math.random(), Math.random()],
+                'sfx': {
+                    'tristimulus': {
+                        'mean': [Math.random(), Math.random(), Math.random()]
+                    },
+                },
+            },
+            url='http://example.com/' + parseInt(i, 10),
+            name='Fake sound ' + parseInt(i, 10),
+            username='Fake username ' + parseInt(i, 10)
+        );
+        sounds.push(sound);
+    }
+    // Init t-sne with sounds features
+    var X = [];
+    for (i in sounds){
+        sound_i = sounds[i];
+        var feature_vector = Object.byString(sound_i, 'analysis.fake_feature');
+        X.push(feature_vector);
+    }
+    tsne.initDataRaw(X);
+    all_loaded = true;
+    console.log('Loaded tsne with ' + sounds.length + ' sounds')
+}
+
+
 function load_data_from_fs_json(data){
     for (i in data['results']){
         var sound_json = data['results'][i];
@@ -201,7 +239,7 @@ function load_data_from_fs_json(data){
         }
         tsne.initDataRaw(X);
         all_loaded = true;
-        console.log('Loaded tsne with' + sounds.length + ' sounds')
+        console.log('Loaded tsne with ' + sounds.length + ' sounds')
     }
 }
 

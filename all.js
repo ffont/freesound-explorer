@@ -37,7 +37,7 @@ var max_zoom = 15;
 /* Setup and app flow functions */
 
 function start(){
-    
+
     // Sounds
     sounds = [];
     n_pages_received = 0;
@@ -80,11 +80,11 @@ function start(){
         query = default_query;
     }
     for (var i=0; i<n_pages; i++){
-        var url = "https://freesound.org/apiv2/search/text/?query=" + query + "&" + 
+        var url = "https://freesound.org/apiv2/search/text/?query=" + query + "&" +
         "group_by_pack=0&filter=duration:[0+TO+2]&fields=id,previews,name,analysis,url,username" +
         "&descriptors=sfx.tristimulus.mean," + extra_descriptors + "&page_size=150" +
         "&token=eecfe4981d7f41d2811b4b03a894643d5e33f812&page=" + (i + 1);
-        loadJSON(function(data) { load_data_from_fs_json(data); }, url);  
+        loadJSON(function(data) { load_data_from_fs_json(data); }, url);
     }
 
     // Ui
@@ -139,19 +139,19 @@ window.requestAnimFrame = (function(){ // This is called when code reaches this 
             sound.x = sound.x * Math.pow(100, current_it_number/max_tsne_iterations - 1) + 0.5 * (1 - Math.pow(100, current_it_number/max_tsne_iterations - 1)); // Smooth position at the beginning
             sound.y = sound.y * Math.pow(100, current_it_number/max_tsne_iterations - 1) + 0.5 * (1 - Math.pow(100, current_it_number/max_tsne_iterations - 1)); // Smooth position at the beginning
         }
-    } 
+    }
     if (current_it_number == max_tsne_iterations) {
         document.getElementById('info_placeholder').innerHTML = "Done, " + sounds.length + " sounds loaded!";
     }
     current_it_number += 1;
-    draw();  
+    draw();
     requestAnimFrame(loop);
 })();
 
 
 /* Sounds stuff */
 
-function SoundFactory(id, preview_url, analysis, url, name, username){  
+function SoundFactory(id, preview_url, analysis, url, name, username){
     this.x =  0.5; //Math.random();
     this.y =  0.5; //Math.random();
     this.rad = 10;
@@ -165,8 +165,8 @@ function SoundFactory(id, preview_url, analysis, url, name, username){
     this.analysis = analysis;
 
     var color = rgbToHex(
-        Math.floor(255 * analysis['sfx']['tristimulus']['mean'][0]), 
-        Math.floor(255 * analysis['sfx']['tristimulus']['mean'][1]), 
+        Math.floor(255 * analysis['sfx']['tristimulus']['mean'][0]),
+        Math.floor(255 * analysis['sfx']['tristimulus']['mean'][1]),
         Math.floor(255 * analysis['sfx']['tristimulus']['mean'][2])
     )
     this.rgba = color;
@@ -181,14 +181,14 @@ function load_data_from_fs_json(data){
         var sound_json = data['results'][i];
         if (sound_json['analysis'] != undefined){
             var sound = new SoundFactory(
-                id=sound_json['id'], 
+                id=sound_json['id'],
                 preview_url=sound_json['previews']['preview-lq-mp3'],
                 analysis=sound_json['analysis'],
                 url=sound_json['url'],
                 name=sound_json['name'],
                 username=sound_json['username']
             );
-            sounds.push(sound);  
+            sounds.push(sound);
         }
     }
     if (n_pages_received == n_pages){
@@ -219,7 +219,7 @@ function checkSelectSound(x, y){
 
     if (min_dist < 0.01){
         if (!selected_sound.selected){
-            selectSound(selected_sound);  
+            selectSound(selected_sound);
         }
     }
 }
@@ -234,7 +234,7 @@ function selectSound(selected_sound){
     } else {
         selected_sound.selected = false;
         selected_sound.mod_amp = default_point_modulation;
-    }  
+    }
 }
 
 function selectSoundFromId(sound_id){
@@ -259,7 +259,7 @@ function setMapDescriptor(){
 }
 
 /* Drawing */
-     
+
 function draw(){
     ctx.clearRect(0, 0, w, h);
     ctx.globalCompositeOperation = 'lighter';
@@ -267,24 +267,24 @@ function draw(){
         var sound = sounds[i];
         var disp_x, disp_y;
         [disp_x, disp_y] = normCoordsToDisplayCoords(sound.x, sound.y)
-        
+
         if (!sound.selected){
             ctx.fillStyle = sound.rgba;
-            ctx.strokeStyle = sound.rgba;  
+            ctx.strokeStyle = sound.rgba;
         } else {
-            ctx.fillStyle = '#ffffff';  
-            ctx.strokeStyle = '#ffffff';  
+            ctx.fillStyle = '#ffffff';
+            ctx.strokeStyle = '#ffffff';
         }
 
         if (last_selected_sound_id == sound['id']){
-            ctx.fillStyle = '#ffffff';  
+            ctx.fillStyle = '#ffffff';
         }
-        
+
         ctx.beginPath();
         ctx.arc(disp_x, disp_y, sound.rad*zoom_factor*Math.pow(0.9,zoom_factor), 0, Math.PI*2, true);
         ctx.fill();
         ctx.closePath();
-        
+
         ctx.beginPath();
         ctx.arc(disp_x, disp_y, (sound.rad+5+(sound.mod_amp*Math.cos(sound.mod_position)))*zoom_factor*Math.pow(0.9,zoom_factor), 0, Math.PI*2, true);
         ctx.stroke();
@@ -293,3 +293,12 @@ function draw(){
         sound.mod_position += sound.mod_inc;
     }
 }
+
+// form submit event handler
+(function() {
+  var formSubmitHandler = function formSubmitHandler(event) {
+    event.preventDefault();
+    start();
+  }
+  document.getElementById('query-form').onsubmit = formSubmitHandler;
+})()

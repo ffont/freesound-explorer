@@ -9,9 +9,10 @@ body{
 	background:#111;
 }
 
-canvas{
+#map {
 	position:absolute;
-	transform:translateZ(0);
+	width: 100%;  /* full window size */
+	height: 100%;
 }
 
 .box {

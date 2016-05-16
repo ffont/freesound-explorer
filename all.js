@@ -1,6 +1,6 @@
 /* Global variables and objects */
 
-var use_fake_data = true;
+var use_fake_data = false;
 
 // Audio stuff
 var audio_manager = new AudioManager();
@@ -8,6 +8,7 @@ var audio_manager = new AudioManager();
 // Sounds and content
 var default_query = "instrument note"
 var sounds = [];
+var Y;
 var extra_descriptors = "lowlevel.mfcc.mean";
 var map_similarity_feature = "lowlevel.mfcc.mean";
 var n_pages = 3;
@@ -22,19 +23,77 @@ var epsilon = 10;
 var perplexity = 10;
 var tsne = undefined;
 
-// Canvas and display stuff
-var canvas = document.querySelector('canvas');
-var ctx = canvas.getContext('2d');
+// Map and display stuff
+var svg;
 var w = window.innerWidth;
 var h = window.innerHeight;
 var default_point_modulation = 0.6;
 var disp_scale = Math.min(w, h);
-var center_x = undefined;  // Set in start()
-var center_y = undefined;  // Set in start()
-var zoom_factor = undefined;  // Set in start()
-var rotation_degrees = undefined;  // Set in start()
-var min_zoom = 0.2;
-var max_zoom = 15;
+var radius = 30;
+//var min_zoom = 0.2;
+//var max_zoom = 15;
+
+
+/* d3 */
+
+function updateMap() {
+  var Y = tsne.getSolution();
+  svg.selectAll('.u')
+    .data(sounds)
+    .attr("transform", function(d, i) { return "translate(" +
+                                          ((Y[i][0]*20*ss + tx) + 400) + "," +
+                                          ((Y[i][1]*20*ss + ty) + 300) + ")"; });
+}
+
+function drawMap() {
+
+    var div = d3.select("#map");
+    svg = div.append("svg") // svg is global
+        .attr("width", "100%")
+        .attr("height", "100%");
+
+    var g = svg.selectAll(".b")
+        .data(sounds)
+        .enter().append("g")
+        .attr("class", "u");
+
+    g.append("svg")
+        .attr("width", radius)
+        .attr("height", radius)
+        .append("circle")
+        .attr("cx", radius/2)
+        .attr("cy", radius/2)
+        .attr("r", radius/2)
+        .style("fill", function(d) { return d.rgba; });
+        //.style("mix-blend-mode", "lighten");
+
+    var zoomListener = d3.behavior.zoom()
+        .scaleExtent([0.1, 10])
+        .center([0,0])
+        .on("zoom", zoomHandler);
+    zoomListener(svg);
+}
+
+var tx=0, ty=0;
+var ss=1;
+function zoomHandler() {
+  tx = d3.event.translate[0];
+  ty = d3.event.translate[1];
+  ss = d3.event.scale;
+}
+
+function step() {
+    if (current_it_number < max_tsne_iterations){
+        document.getElementById('info_placeholder').innerHTML = 'Computing map...';
+        tsne.step();
+        current_it_number += 1;  
+    }
+    if (current_it_number == max_tsne_iterations) {
+        document.getElementById('info_placeholder').innerHTML = "Done, " + sounds.length + " sounds loaded!";
+    }
+    updateMap();
+}
+
 
 /* Setup and app flow functions */
 
@@ -45,27 +104,9 @@ function start(){
     n_pages_received = 0;
     all_loaded = false;
 
-    // Canvas
-    w = window.innerWidth;
-    h = window.innerHeight;
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    canvas.addEventListener("mousedown", onMouseDown, false);
-    canvas.addEventListener("mouseup", onMouseUp, false);
-    canvas.addEventListener("mouseout", onMouseOut, false);
-    center_x = 0.5;
-    center_y = 0.5;
-    zoom_factor = 1.5;
-    rotation_degrees = 0;
-
-    // Display stuff
-    if (w >= h){
-        disp_x_offset = (w - h) / 2;
-        disp_y_offset = 0.0;
-    } else {
-        disp_x_offset = 0.0;
-        disp_y_offset = (h - w) / 2;
-    }
+    // Map
+    var map = document.getElementById("map");
+    map.innerHTML = null;    
 
     // t-sne
     current_it_number = 0;
@@ -96,63 +137,6 @@ function start(){
     document.getElementById('query_terms_input').value = query;
     document.getElementById('info_placeholder').innerHTML = "Searching...";
 }
-
-window.requestAnimFrame = (function(){ // This is called when code reaches this point
-    return  window.requestAnimationFrame       ||
-                    window.webkitRequestAnimationFrame ||
-                    window.mozRequestAnimationFrame    ||
-                    function( callback ){
-                        window.setTimeout(callback, 1000 / 60);
-                    };
-})();
-
-(function init(){ // This is called when code reaches this point
-    //start();
-})();
-
-(function loop(){  // This is called when code reaches this point
-    if ((all_loaded == true) && (current_it_number <= max_tsne_iterations)){
-        document.getElementById('info_placeholder').innerHTML = 'Computing map...';
-
-        tsne.step();
-        Y = tsne.getSolution();
-        var xx = [];
-        var yy = [];
-        for (i in Y){
-            xx.push(Y[i][0]);
-            yy.push(Y[i][1]);
-        }
-        min_xx = Math.min(...xx);
-        max_xx = Math.max(...xx);
-        min_yy = Math.min(...yy);
-        max_yy = Math.max(...yy);
-        var delta_xx = max_xx - min_xx;
-        var delta_yy = max_yy - min_yy;
-        for (i in sounds){
-            var sound = sounds[i];
-            var x = Y[i][0];
-            var y = Y[i][1];
-            sound.x = -min_xx/delta_xx + x/delta_xx;
-            sound.y = -min_yy/delta_yy + y/delta_yy;
-            if (delta_xx > delta_yy){
-                sound.y = sound.y * (delta_yy/delta_xx); // Preserve tsne aspect ratio
-            } else {
-                sound.x = sound.x * (delta_xx/delta_yy); // Preserve tsne aspect ratio
-            }
-
-
-            sound.x = sound.x * Math.pow(100, current_it_number/max_tsne_iterations - 1) + 0.5 * (1 - Math.pow(100, current_it_number/max_tsne_iterations - 1)); // Smooth position at the beginning
-            sound.y = sound.y * Math.pow(100, current_it_number/max_tsne_iterations - 1) + 0.5 * (1 - Math.pow(100, current_it_number/max_tsne_iterations - 1)); // Smooth position at the beginning
-        }
-    }
-    if (current_it_number == max_tsne_iterations) {
-        document.getElementById('info_placeholder').innerHTML = "Done, " + sounds.length + " sounds loaded!";
-    }
-    current_it_number += 1;
-    draw();
-    requestAnimFrame(loop);
-})();
-
 
 /* Sounds stuff */
 
@@ -211,6 +195,8 @@ function load_fake_data(data){
     tsne.initDataRaw(X);
     all_loaded = true;
     console.log('Loaded tsne with ' + sounds.length + ' sounds')
+    drawMap();
+    setInterval(step, 0);
 }
 
 
@@ -240,6 +226,8 @@ function load_data_from_fs_json(data){
         tsne.initDataRaw(X);
         all_loaded = true;
         console.log('Loaded tsne with ' + sounds.length + ' sounds')
+        drawMap();
+        setInterval(step, 0);
     }
 }
 
@@ -300,41 +288,6 @@ function setMapDescriptor(){
     map_similarity_feature = selected_descriptor;
 }
 
-/* Drawing */
-
-function draw(){
-    ctx.clearRect(0, 0, w, h);
-    ctx.globalCompositeOperation = 'lighter';
-    for(i in sounds){
-        var sound = sounds[i];
-        var disp_x, disp_y;
-        [disp_x, disp_y] = normCoordsToDisplayCoords(sound.x, sound.y)
-
-        if (!sound.selected){
-            ctx.fillStyle = sound.rgba;
-            ctx.strokeStyle = sound.rgba;
-        } else {
-            ctx.fillStyle = '#ffffff';
-            ctx.strokeStyle = '#ffffff';
-        }
-
-        if (last_selected_sound_id == sound['id']){
-            ctx.fillStyle = '#ffffff';
-        }
-
-        ctx.beginPath();
-        ctx.arc(disp_x, disp_y, sound.rad*zoom_factor*Math.pow(0.9,zoom_factor), 0, Math.PI*2, true);
-        ctx.fill();
-        ctx.closePath();
-
-        ctx.beginPath();
-        ctx.arc(disp_x, disp_y, (sound.rad+5+(sound.mod_amp*Math.cos(sound.mod_position)))*zoom_factor*Math.pow(0.9,zoom_factor), 0, Math.PI*2, true);
-        ctx.stroke();
-        ctx.closePath();
-
-        sound.mod_position += sound.mod_inc;
-    }
-}
 
 // form submit event handler
 (function() {

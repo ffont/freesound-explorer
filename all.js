@@ -11,7 +11,7 @@ var sounds = [];
 var Y;
 var extra_descriptors = "lowlevel.mfcc.mean";
 var map_similarity_feature = "lowlevel.mfcc.mean";
-var n_pages = 3;
+var n_pages = 1;
 var n_pages_received = 0;
 var all_loaded = false;
 var last_selected_sound_id = undefined;
@@ -22,6 +22,7 @@ var current_it_number = 0;
 var epsilon = 10;
 var perplexity = 10;
 var tsne = undefined;
+var runner;
 
 // Map and display stuff
 var svg;
@@ -41,8 +42,8 @@ function updateMap() {
   svg.selectAll('.u')
     .data(sounds)
     .attr("transform", function(d, i) { return "translate(" +
-                                          ((Y[i][0]*20*ss + tx) + 400) + "," +
-                                          ((Y[i][1]*20*ss + ty) + 300) + ")"; });
+                                          (((Y[i][0]+(w/(20*2)))*20*ss + tx)) + "," +
+                                          (((Y[i][1]+(h/(20*2)))*20*ss + ty)) + ")"; });
 }
 
 function drawMap() {
@@ -57,21 +58,42 @@ function drawMap() {
         .enter().append("g")
         .attr("class", "u");
 
-    g.append("svg")
-        .attr("width", radius)
-        .attr("height", radius)
-        .append("circle")
-        .attr("cx", radius/2)
-        .attr("cy", radius/2)
+    g.append("svg:circle")
+        .attr("cx", -radius)  // make sure points appear outside div before first iteration
+        .attr("cy", -radius)  // make sure points appear outside div before first iteration
         .attr("r", radius/2)
-        .style("fill", function(d) { return d.rgba; });
-        //.style("mix-blend-mode", "lighten");
+        //.style("mix-blend-mode", "lighten")
+        .style("fill", function(d) { return d.rgba; })
+        .attr("fill-opacity", .65)
+        .attr("stroke", function(d) { return d.rgba; })
+        .attr("stroke-width", 1) 
+        .attr("stroke-opacity", .9)
+        .on("mouseover", function(d) {
+            d.onmouseover(d3.select(this));
+        })
+        .on("mouseout", function(d) {
+            d.onmouseout(d3.select(this));
+        })
+        .each(pulse);
 
-    var zoomListener = d3.behavior.zoom()
+    var zoom = d3.behavior.zoom()
         .scaleExtent([0.1, 10])
-        .center([0,0])
         .on("zoom", zoomHandler);
-    zoomListener(svg);
+    zoom(div);
+}
+
+function pulse() {
+    var circle = svg.selectAll("circle");
+    (function repeat() {
+        circle = circle.transition()
+            .duration(1000)
+            .attr("r", radius/2.2)
+            .transition()
+            .duration(1000)
+            .attr("r", radius/2)
+            .ease('sine')
+            .each("end", repeat);
+    })();
 }
 
 var tx=0, ty=0;
@@ -80,15 +102,16 @@ function zoomHandler() {
   tx = d3.event.translate[0];
   ty = d3.event.translate[1];
   ss = d3.event.scale;
+  updateMap();
 }
 
 function step() {
-    if (current_it_number < max_tsne_iterations){
+    current_it_number += 1;  
+    if (current_it_number <= max_tsne_iterations){
         document.getElementById('info_placeholder').innerHTML = 'Computing map...';
         tsne.step();
-        current_it_number += 1;  
-    }
-    if (current_it_number == max_tsne_iterations) {
+    } else {
+        clearInterval(runner);
         document.getElementById('info_placeholder').innerHTML = "Done, " + sounds.length + " sounds loaded!";
     }
     updateMap();
@@ -106,7 +129,9 @@ function start(){
 
     // Map
     var map = document.getElementById("map");
-    map.innerHTML = null;    
+    map.innerHTML = null; 
+    w = window.innerWidth;
+    h = window.innerHeight;
 
     // t-sne
     current_it_number = 0;
@@ -141,8 +166,8 @@ function start(){
 /* Sounds stuff */
 
 function SoundFactory(id, preview_url, analysis, url, name, username){
-    this.x =  0.5; //Math.random();
-    this.y =  0.5; //Math.random();
+    this.x =  0.0;
+    this.y =  0.0;
     this.rad = 10;
     this.mod_position = Math.random();
     this.mod_inc = 0.1;
@@ -153,16 +178,23 @@ function SoundFactory(id, preview_url, analysis, url, name, username){
     this.preview_url = preview_url;
     this.analysis = analysis;
 
-    var color = rgbToHex(
+    this.rgba = rgbToHex(
         Math.floor(255 * analysis['sfx']['tristimulus']['mean'][0]),
         Math.floor(255 * analysis['sfx']['tristimulus']['mean'][1]),
         Math.floor(255 * analysis['sfx']['tristimulus']['mean'][2])
     )
-    this.rgba = color;
 
     this.url = url;
     this.name = name;
     this.username = username;
+
+    this.onmouseover = function(svg_object){
+        svg_object.style("stroke", function(d) { return "#ffffff"; });
+    };
+
+    this.onmouseout = function(svg_object){
+        svg_object.style("stroke", function(d) { return this.rgba; });
+    };
 }
 
 function load_fake_data(data){
@@ -196,7 +228,7 @@ function load_fake_data(data){
     all_loaded = true;
     console.log('Loaded tsne with ' + sounds.length + ' sounds')
     drawMap();
-    setInterval(step, 0);
+    runner = setInterval(step, 1000/60);
 }
 
 
@@ -227,7 +259,7 @@ function load_data_from_fs_json(data){
         all_loaded = true;
         console.log('Loaded tsne with ' + sounds.length + ' sounds')
         drawMap();
-        setInterval(step, 0);
+        runner = setInterval(step, 0);
     }
 }
 

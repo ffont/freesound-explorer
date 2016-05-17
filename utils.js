@@ -8,14 +8,14 @@ AudioManager.prototype.playSoundByName = function(name, time) {
     }
     if (name in this){
         playSound(this[name], time, function(){
-            selectSoundFromId(name);
+            stop_sound_by_name(name);
         });  
     } else {
         console.log("ERROR: sound " + name + " not available!")
     }
 }
 
-AudioManager.prototype.loadSound = function(name, url) {
+AudioManager.prototype.loadAndPlaySound = function(name, url) {
     var name = name.toString();
     var soundMap = {}
     soundMap[name] = url
@@ -69,44 +69,6 @@ function loadJSON(callback, url) {
 function get_req_param(name){
      if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
             return decodeURIComponent(name[1]);
-}
-
-/* Coordinates and mapping from normalised map to display map */
-
-function normCoordsToDisplayCoords(x, y){
-
-    // First rotate
-    x -= center_x;
-    y -= center_y;
-    var sin = Math.sin(rotation_degrees);
-    var cos = Math.cos(rotation_degrees);
-    var x_r = x * cos - y * sin;
-    var y_r = x * sin + y * cos;
-    x_r += center_x;
-    y_r += center_y;
-
-    // Then translate
-    var x_rt = Math.round(((x_r - center_x) * zoom_factor * disp_scale) + disp_scale / 2 + disp_x_offset);
-    var y_rt = Math.round(((y_r - center_y) * zoom_factor * disp_scale) + disp_scale / 2 + disp_y_offset);
-    return [x_rt, y_rt];
-}
-
-function displayCoordsToNormCoords(x, y){
-
-    // First translate
-    var x_t = ((x - disp_scale / 2 - disp_x_offset) / (zoom_factor * disp_scale)) + center_x;
-    var y_t = ((y - disp_scale / 2 - disp_y_offset) / (zoom_factor * disp_scale)) + center_y;
-
-    // Then rotate
-    x_t -= center_x;
-    y_t -= center_y;
-    var sin = Math.sin(rotation_degrees);
-    var cos = Math.cos(rotation_degrees);
-    var y_tr = (y_t * cos - x_t * sin) / (cos * cos + sin * sin);
-    var x_tr = (x_t + y_tr * sin) / cos;
-    x_tr += center_x;
-    y_tr += center_y;
-    return [x_tr, y_tr];
 }
 
 /* Access nested object attributes by string */

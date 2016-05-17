@@ -15,6 +15,7 @@ var n_pages = 1;
 var n_pages_received = 0;
 var all_loaded = false;
 var last_selected_sound_id = undefined;
+var hover_playing = false;
 
 // t-sne
 var max_tsne_iterations = 500;
@@ -30,7 +31,9 @@ var w = window.innerWidth;
 var h = window.innerHeight;
 var default_point_modulation = 0.6;
 var disp_scale = Math.min(w, h);
-var radius = 30;
+var default_radius = 30;
+var default_opacity = 0.7;
+var default_stroke_width = 2;
 //var min_zoom = 0.2;
 //var max_zoom = 15;
 
@@ -59,22 +62,27 @@ function drawMap() {
         .attr("class", "u");
 
     g.append("svg:circle")
-        .attr("cx", -radius)  // make sure points appear outside div before first iteration
-        .attr("cy", -radius)  // make sure points appear outside div before first iteration
-        .attr("r", radius/2)
+        .attr("id", function(d) { return 'point_' + parseInt(d.id, 10); })
+        .attr("cx", -default_radius)  // make sure points appear outside div before first iteration
+        .attr("cy", -default_radius)  // make sure points appear outside div before first iteration
+        .attr("r", default_radius/2)
         //.style("mix-blend-mode", "lighten")
         .style("fill", function(d) { return d.rgba; })
-        .attr("fill-opacity", .65)
-        .attr("stroke", function(d) { return d.rgba; })
-        .attr("stroke-width", 1) 
-        .attr("stroke-opacity", .9)
+        .style("fill-opacity", default_opacity)
+        .style("stroke", function(d) { return d.rgba; })
+        .style("stroke-width", default_stroke_width) 
+        .style("stroke-opacity", .9)
         .on("mouseover", function(d) {
             d.onmouseover(d3.select(this));
         })
         .on("mouseout", function(d) {
             d.onmouseout(d3.select(this));
         })
-        .each(pulse);
+        .on("click", function(d) {
+            d.onclick(d3.select(this));
+        })
+        //.each(pulse)
+        ;
 
     var zoom = d3.behavior.zoom()
         .scaleExtent([0.1, 10])
@@ -82,15 +90,14 @@ function drawMap() {
     zoom(div);
 }
 
-function pulse() {
-    var circle = svg.selectAll("circle");
+function pulse(svg_object) {
     (function repeat() {
-        circle = circle.transition()
-            .duration(1000)
-            .attr("r", radius/2.2)
+        svg_object = svg_object.transition()
+            .duration(500)
+            .attr("r", default_radius/1.5)
             .transition()
-            .duration(1000)
-            .attr("r", radius/2)
+            .duration(500)
+            .attr("r", default_radius/2)
             .ease('sine')
             .each("end", repeat);
     })();
@@ -161,6 +168,18 @@ function start(){
     // Ui
     document.getElementById('query_terms_input').value = query;
     document.getElementById('info_placeholder').innerHTML = "Searching...";
+    document.onkeydown = keydown;
+    document.onkeyup = keyup;
+}
+
+function keydown(evt) {
+    if (evt.altKey) {
+        hover_playing = true;
+    }
+}
+
+function keyup(evt) {
+    hover_playing = false;
 }
 
 /* Sounds stuff */
@@ -173,6 +192,7 @@ function SoundFactory(id, preview_url, analysis, url, name, username){
     this.mod_inc = 0.1;
     this.mod_amp = default_point_modulation;
     this.selected = false;
+    this.playing = false;
 
     this.id = id;
     this.preview_url = preview_url;
@@ -189,12 +209,82 @@ function SoundFactory(id, preview_url, analysis, url, name, username){
     this.username = username;
 
     this.onmouseover = function(svg_object){
-        svg_object.style("stroke", function(d) { return "#ffffff"; });
+        svg_object.style("stroke", "#ffffff");
+        if (hover_playing){
+            this.play(svg_object);
+        }
     };
 
     this.onmouseout = function(svg_object){
-        svg_object.style("stroke", function(d) { return this.rgba; });
+        svg_object.style("stroke", this.rgba);
     };
+
+    this.onclick = function(svg_object){
+        var next_selected_value = !this.selected;
+        unselect_all();
+        if (next_selected_value){
+            this.select(svg_object);
+        }
+    };
+
+    this.select = function(svg_object){
+        this.selected = true;
+        showSoundInfo(this);
+        this.play();
+        if (svg_object!=undefined){this.updateDisplay(svg_object)};
+    }
+
+    this.unselect = function(svg_object){
+        this.selected = false;
+        if (svg_object!=undefined){this.updateDisplay(svg_object)};
+        //this.playing = false;
+        // TODO: stop   ?
+    }
+
+    this.play = function(svg_object){
+        if (!this.playing){
+            this.playing = true;    
+            audio_manager.loadAndPlaySound(this.id, this.preview_url);    
+        }
+        if (svg_object!=undefined){this.updateDisplay(svg_object)};
+    }
+
+    this.stop = function(svg_object){
+        if (this.playing){
+            this.playing = false;    
+            // TODO: do stop the sound
+        }        
+        if (svg_object!=undefined){
+            svg_object.transition().duration(200).ease('sine').attr("r", default_radius/2);
+            this.updateDisplay(svg_object);
+        };
+    }
+
+    this.updateDisplay = function(svg_object){
+        if (this.selected){
+            svg_object.style("fill", "#ffffff");
+            svg_object.style("fill-opacity", 1.0);
+        } else {
+            svg_object.style("fill", this.rgba);
+            svg_object.style("fill-opacity", default_opacity);
+        }
+
+        if (this.playing){
+            pulse(svg_object);
+            svg_object.style("fill", "#ffffff");
+        } else {
+            // Pulse will stop automatically
+            svg_object.style("fill", this.rgba);
+        }
+    }
+}
+
+function unselect_all(){
+    svg.selectAll('circle').each(function(d){d.unselect(d3.select(this));});
+}
+
+function stop_sound_by_name(name){
+    d3.select("#point_" + parseInt(name, 10)).each(function(d){d.stop(d3.select(this));});
 }
 
 function load_fake_data(data){
@@ -202,7 +292,7 @@ function load_fake_data(data){
     for (i=0; i<M; i++){
         var sound = new SoundFactory(
             id=i,
-            preview_url=undefined,
+            preview_url='test_file.wav',
             analysis={
                 'fake_feature': [Math.random(), Math.random(), Math.random(), Math.random(), Math.random()],
                 'sfx': {
@@ -260,51 +350,6 @@ function load_data_from_fs_json(data){
         console.log('Loaded tsne with ' + sounds.length + ' sounds')
         drawMap();
         runner = setInterval(step, 0);
-    }
-}
-
-function checkSelectSound(x, y){
-    var min_dist = 9999;
-    var selected_sound = false;
-    for(i in sounds){
-        var sound = sounds[i];
-        var dist = computeEuclideanDistance(sound.x, sound.y, x, y);
-        if (dist < min_dist){
-            min_dist = dist;
-            selected_sound = sound;
-        }
-    }
-
-    if (min_dist < 0.01){
-        if (!selected_sound.selected){
-            selectSound(selected_sound);
-        }
-    }
-}
-
-function selectSound(selected_sound){
-    if (!selected_sound.selected){
-        if (selected_sound.preview_url != undefined){
-            selected_sound.selected = true;    
-            selected_sound.mod_amp = 5.0;
-            audio_manager.loadSound(selected_sound.id, selected_sound.preview_url);    
-        }
-        showSoundInfo(selected_sound);
-        last_selected_sound_id = selected_sound['id']
-    } else {
-        if (selected_sound.preview_url != undefined){
-            selected_sound.selected = false;
-            selected_sound.mod_amp = default_point_modulation;
-        }
-    }
-}
-
-function selectSoundFromId(sound_id){
-    for (i in sounds){
-        var sound = sounds[i];
-        if (sound.id == parseInt(sound_id)){
-            selectSound(sound);
-        }
     }
 }
 

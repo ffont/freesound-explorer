@@ -1,6 +1,6 @@
 /* Global variables and objects */
 
-var use_fake_data = true;
+var use_fake_data = false;
 
 // Sounds and content
 var default_query = "instrument note"
@@ -42,8 +42,9 @@ function updateMap() {
   svg.selectAll('.u')
     .data(sounds)
     .attr("transform", function(d, i) { return "translate(" +
-                                          (((Y[i][0]+(w/(20*2)))*20*ss + tx)) + "," +
-                                          (((Y[i][1]+(h/(20*2)))*20*ss + ty)) + ")"; });
+                                            (((Y[i][0]+(w/(20*2)))*20*ss + tx)) + "," +
+                                            (((Y[i][1]+(h/(20*2)))*20*ss + ty)) + ")";
+                                      });
 }
 
 function drawMap() {
@@ -114,10 +115,10 @@ function unselect_all(){
 var tx=0, ty=0;
 var ss=1;
 function zoomHandler() {
-  tx = d3.event.translate[0];
-  ty = d3.event.translate[1];
-  ss = d3.event.scale;
-  updateMap();
+    tx = d3.event.translate[0];
+    ty = d3.event.translate[1];
+    ss = d3.event.scale;
+    updateMap();
 }
 
 function step() {

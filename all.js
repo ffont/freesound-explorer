@@ -1,9 +1,6 @@
 /* Global variables and objects */
 
-var use_fake_data = false;
-
-// Audio stuff
-var audio_manager = new AudioManager();
+var use_fake_data = true;
 
 // Sounds and content
 var default_query = "instrument note"
@@ -34,8 +31,8 @@ var disp_scale = Math.min(w, h);
 var default_radius = 30;
 var default_opacity = 0.7;
 var default_stroke_width = 2;
-//var min_zoom = 0.2;
-//var max_zoom = 15;
+var min_zoom = 0.2;
+var max_zoom = 15;
 
 
 /* d3 */
@@ -73,21 +70,24 @@ function drawMap() {
         .style("stroke-width", default_stroke_width) 
         .style("stroke-opacity", .9)
         .on("mouseover", function(d) {
-            d.onmouseover(d3.select(this));
+            d.onmouseover();
         })
         .on("mouseout", function(d) {
-            d.onmouseout(d3.select(this));
+            d.onmouseout();
         })
         .on("click", function(d) {
-            d.onclick(d3.select(this));
+            d.onclick();
         })
-        //.each(pulse)
+        .each(function(d) {
+            d.svg_object = d3.select(this); // Add reference to sound object
+        })
         ;
 
     var zoom = d3.behavior.zoom()
-        .scaleExtent([0.1, 10])
+        .scaleExtent([min_zoom, max_zoom])
         .on("zoom", zoomHandler);
     zoom(div);
+    div.on("dblclick.zoom", null); // disable double click zoom
 }
 
 function pulse(svg_object) {
@@ -99,8 +99,16 @@ function pulse(svg_object) {
             .duration(500)
             .attr("r", default_radius/2)
             .ease('sine')
-            .each("end", repeat);
+            .each("end", function(d){
+                if (d.playing){
+                    repeat();    
+                }
+            });
     })();
+}
+
+function unselect_all(){
+    svg.selectAll('circle').each(function(d){d.unselect(d3.select(this));});
 }
 
 var tx=0, ty=0;
@@ -193,6 +201,9 @@ function SoundFactory(id, preview_url, analysis, url, name, username){
     this.mod_amp = default_point_modulation;
     this.selected = false;
     this.playing = false;
+    this.buffer = undefined;
+    this.is_buffer_loading = false;
+    this.svg_object = undefined;
 
     this.id = id;
     this.preview_url = preview_url;
@@ -208,119 +219,110 @@ function SoundFactory(id, preview_url, analysis, url, name, username){
     this.name = name;
     this.username = username;
 
-    this.onmouseover = function(svg_object){
-        svg_object.style("stroke", "#ffffff");
+    var this_sound = this; // Useful for functions that use callbacks
+
+    this.onmouseover = function(){
+        this.svg_object.style("stroke", "#ffffff");
         if (hover_playing){
-            this.play(svg_object);
+            this.play();
         }
     };
 
-    this.onmouseout = function(svg_object){
-        svg_object.style("stroke", this.rgba);
+    this.onmouseout = function(){
+        this.svg_object.style("stroke", this.rgba);
     };
 
-    this.onclick = function(svg_object){
+    this.onclick = function(){
         var next_selected_value = !this.selected;
+        if (this.playing){
+            this.stop();
+        }
         unselect_all();
         if (next_selected_value){
-            this.select(svg_object);
+            this.play();
+            this.select();
         }
     };
 
-    this.select = function(svg_object){
+    this.select = function(){
         this.selected = true;
         showSoundInfo(this);
-        this.play();
-        if (svg_object!=undefined){this.updateDisplay(svg_object)};
+        this.updateDisplay();
     }
 
-    this.unselect = function(svg_object){
+    this.unselect = function(){
         this.selected = false;
-        if (svg_object!=undefined){this.updateDisplay(svg_object)};
-        //this.playing = false;
-        // TODO: stop   ?
+        this.updateDisplay();
     }
 
-    this.play = function(svg_object){
+    this.play = function(){
         if (!this.playing){
-            this.playing = true;    
-            audio_manager.loadAndPlaySound(this.id, this.preview_url);    
+            if (this.buffer == undefined){
+                this.loadSound(play_once_loaded=true);
+            } else {
+                this.playing = true;
+                // In web audio api, a new AudioBufferSourceNode is meant to be created
+                // and connected to the audio graph every time we want to play a buffer
+                this.source = audio_context.createBufferSource();
+                this.source.buffer = this.buffer;
+                this.source.connect(audio_context.gainNode);
+                this.source.onended = function(){
+                    this_sound.stop();
+                }
+                this.source.start(0);
+            }  
         }
-        if (svg_object!=undefined){this.updateDisplay(svg_object)};
+        this.updateDisplay();
     }
 
-    this.stop = function(svg_object){
+    this.stop = function(){
         if (this.playing){
-            this.playing = false;    
-            // TODO: do stop the sound
+            this.playing = false;
+            this.source.stop(0);    
         }        
-        if (svg_object!=undefined){
-            svg_object.transition().duration(200).ease('sine').attr("r", default_radius/2);
-            this.updateDisplay(svg_object);
-        };
+        this.svg_object.transition().duration(200).ease('sine').attr("r", default_radius/2);
+        this.updateDisplay();
     }
 
-    this.updateDisplay = function(svg_object){
+    this.updateDisplay = function(){
         if (this.selected){
-            svg_object.style("fill", "#ffffff");
-            svg_object.style("fill-opacity", 1.0);
+            this.svg_object.style("fill", "#ffffff");
+            this.svg_object.style("fill-opacity", 1.0);
         } else {
-            svg_object.style("fill", this.rgba);
-            svg_object.style("fill-opacity", default_opacity);
+            this.svg_object.style("fill", this.rgba);
+            this.svg_object.style("fill-opacity", default_opacity);
         }
 
         if (this.playing){
-            pulse(svg_object);
-            svg_object.style("fill", "#ffffff");
+            pulse(this.svg_object);
+            this.svg_object.style("fill", "#ffffff");
+            this.svg_object.style("fill-opacity", 1.0);
         } else {
             // Pulse will stop automatically
-            svg_object.style("fill", this.rgba);
+            this.svg_object.style("fill", this.rgba);
+            this.svg_object.style("fill-opacity", default_opacity);
+        }
+    }
+
+    this.loadSound = function(play_once_loaded){
+        if (!this.is_buffer_loading){
+            this.is_buffer_loading = true;
+            buffer_loader = new BufferLoader(this.preview_url, 
+                function() {  // callback ok
+                    // Once loaded, assign buffer to sound object
+                    this_sound.buffer = buffer_loader.buffer;
+                    console.log('Loaded sound ' + this_sound.id + ': ' + this_sound.preview_url);
+                    if (play_once_loaded){
+                        this_sound.play();
+                    }
+                },
+                function() {  // callback error
+                    this.is_buffer_loading = false;
+                }
+            );
         }
     }
 }
-
-function unselect_all(){
-    svg.selectAll('circle').each(function(d){d.unselect(d3.select(this));});
-}
-
-function stop_sound_by_name(name){
-    d3.select("#point_" + parseInt(name, 10)).each(function(d){d.stop(d3.select(this));});
-}
-
-function load_fake_data(data){
-    M = 100;
-    for (i=0; i<M; i++){
-        var sound = new SoundFactory(
-            id=i,
-            preview_url='test_file.wav',
-            analysis={
-                'fake_feature': [Math.random(), Math.random(), Math.random(), Math.random(), Math.random()],
-                'sfx': {
-                    'tristimulus': {
-                        'mean': [Math.random(), Math.random(), Math.random()]
-                    },
-                },
-            },
-            url='http://example.com/' + parseInt(i, 10),
-            name='Fake sound ' + parseInt(i, 10),
-            username='Fake username ' + parseInt(i, 10)
-        );
-        sounds.push(sound);
-    }
-    // Init t-sne with sounds features
-    var X = [];
-    for (i in sounds){
-        sound_i = sounds[i];
-        var feature_vector = Object.byString(sound_i, 'analysis.fake_feature');
-        X.push(feature_vector);
-    }
-    tsne.initDataRaw(X);
-    all_loaded = true;
-    console.log('Loaded tsne with ' + sounds.length + ' sounds')
-    drawMap();
-    runner = setInterval(step, 1000/60);
-}
-
 
 function load_data_from_fs_json(data){
     for (i in data['results']){

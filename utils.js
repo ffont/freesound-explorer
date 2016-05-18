@@ -1,39 +1,3 @@
-/* Audio stuff */
-
-var AudioManager = function() {};
-
-AudioManager.prototype.playSoundByName = function(name, time) {
-    if (time == undefined){
-        time = 0;
-    }
-    if (name in this){
-        playSound(this[name], time, function(){
-            stop_sound_by_name(name);
-        });  
-    } else {
-        console.log("ERROR: sound " + name + " not available!")
-    }
-}
-
-AudioManager.prototype.loadAndPlaySound = function(name, url) {
-    var name = name.toString();
-    var soundMap = {}
-    soundMap[name] = url
-    loadSounds(this, soundMap, function(){
-        audio_manager.playSoundByName(name);
-    });
-}
-
-/* Distance measures */
-
-function computeEuclideanDistance(p1x, p1y, p2x, p2y){  
-    return Math.sqrt( Math.pow(p2x - p1x, 2) + Math.pow(p2y - p1y, 2) );
-}
-
-function computeEuclideanDistance3d(p1x, p1y, p1z, p2x, p2y, p2z){  
-    return Math.sqrt( Math.pow(p2x - p1x, 2) + Math.pow(p2y - p1y, 2) + Math.pow(p2z - p1z, 2) );
-}
-
 /* Colors */
 
 function componentToHex(c) {
@@ -58,7 +22,7 @@ function loadJSON(callback, url) {
         if (status == 200) {
             callback(xhr.response);
         } else {
-            console.log('Errort getting data from Freesound, status code: ' + xhr.status);
+            console.log('Error getting data from Freesound, status code: ' + xhr.status);
         }
     };
     xhr.send();
@@ -86,4 +50,40 @@ Object.byString = function(o, s) {
             }
     }
     return o;
+}
+
+/* Generate fake data */
+
+function load_fake_data(data){
+    M = 100;
+    for (i=0; i<M; i++){
+        var sound = new SoundFactory(
+            id=i,
+            preview_url='test_file.wav',
+            analysis={
+                'fake_feature': [Math.random(), Math.random(), Math.random(), Math.random(), Math.random()],
+                'sfx': {
+                    'tristimulus': {
+                        'mean': [Math.random(), Math.random(), Math.random()]
+                    },
+                },
+            },
+            url='http://example.com/' + parseInt(i, 10),
+            name='Fake sound ' + parseInt(i, 10),
+            username='Fake username ' + parseInt(i, 10)
+        );
+        sounds.push(sound);
+    }
+    // Init t-sne with sounds features
+    var X = [];
+    for (i in sounds){
+        sound_i = sounds[i];
+        var feature_vector = Object.byString(sound_i, 'analysis.fake_feature');
+        X.push(feature_vector);
+    }
+    tsne.initDataRaw(X);
+    all_loaded = true;
+    console.log('Loaded tsne with ' + sounds.length + ' sounds')
+    drawMap();
+    runner = setInterval(step, 1000/60);
 }

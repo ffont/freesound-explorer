@@ -1,4 +1,4 @@
-/* Colors */
+/* Colours */
 
 function componentToHex(c) {
     var hex = c.toString(16);
@@ -30,7 +30,7 @@ function loadJSON(callback, url) {
 
 /* Request parameters */
 
-function get_req_param(name){
+function getRequestParameter(name){
      if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
             return decodeURIComponent(name[1]);
 }
@@ -52,9 +52,9 @@ Object.byString = function(o, s) {
     return o;
 }
 
-/* Generate fake data */
+/* Data utilities */
 
-function load_fake_data(data){
+function loadFakeData(data){
     M = 100;
     for (i=0; i<M; i++){
         var sound = new SoundFactory(

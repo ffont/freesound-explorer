@@ -1,6 +1,6 @@
 /* Global variables and objects */
 
-var use_fake_data = true;
+var use_fake_data = false;
 
 // Sounds and content
 var sounds = [];

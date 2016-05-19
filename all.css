@@ -10,6 +10,34 @@ body{
 	overflow: hidden;
 }
 
+.modal {
+	position: absolute; 
+	left: 50%;
+}
+
+.modal_content {
+	position: relative; 
+	left: -50%;
+	top: 150px;
+}
+
+.modal_close_button {
+	position: absolute;
+	right: 40px;
+	top: 28px;
+	color:gray;
+	font-size: 15px;
+}
+
+#loginModal {
+	display: none;
+}
+
+#loginForm {
+	height: 400px;
+	width: 500px;
+}
+
 #map {
 	position:absolute;
 	width: 100%;  /* full window size */
@@ -35,7 +63,6 @@ body{
 	right: 20px;
 	bottom: 20px;
 	text-align: right;
-	pointer-events: none;
 }
 
 #sound_info_box {
@@ -79,6 +106,10 @@ body{
 #info_placeholder{
 	height: 30px;
 	line-height: 30px;
+}
+
+#logging_info{
+	text-align: right;
 }
 
 .query-form > select {

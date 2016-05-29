@@ -1,8 +1,8 @@
 <html>
 <head>
 <title>Freesound Explorer</title>
-<link rel="stylesheet" type="text/css" href="all.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.min.css" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/all.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/gh-fork-ribbon.min.css') }}" />
 </head>
 <body>
 
@@ -39,7 +39,7 @@
 </div>
 
 <div id="logo_box" class="box">
-    <img src="logo.svg"/ height=60>
+    <img src="{{ url_for('static', filename='images/logo.svg') }}"/ height=60>
 </div>
 
 <div id="loginModal" class="modal">
@@ -56,16 +56,16 @@
 <a class="github-fork-ribbon right-bottom fixed" href="https://github.com/ffont/FreesoundExplorer" title="Fork me on GitHub">Fork me on GitHub</a>
 
 <!-- javascript loading must be at the end -->
-<script src="freesound.js"></script>
-<script src="login-flow.js"></script>
-<script src="d3.min.js"></script>
-<script src="tsne.js"></script>
-<script src="utils.js"></script>
-<script src="audioengine.js"></script>
-<script src="map.js"></script>
-<script src="ui.js"></script>
-<script src="sounds.js"></script>
-<script src="main.js"></script>
+<script src="{{ url_for('static', filename='js/freesound.js') }}"></script>
+<script src="{{ url_for('static', filename='js/login-flow.js') }}"></script>
+<script src="{{ url_for('static', filename='js/d3.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/tsne.js') }}"></script>
+<script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+<script src="{{ url_for('static', filename='js/audioengine.js') }}"></script>
+<script src="{{ url_for('static', filename='js/map.js') }}"></script>
+<script src="{{ url_for('static', filename='js/ui.js') }}"></script>
+<script src="{{ url_for('static', filename='js/sounds.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
 </body>
 </html>

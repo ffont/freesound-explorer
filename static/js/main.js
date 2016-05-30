@@ -71,10 +71,7 @@ function start(){
             query = default_query;
         }
         for (var i=0; i<n_pages; i++){
-            var url = "https://freesound.org/apiv2/search/text/?query=" + query + "&" +
-            "group_by_pack=0&filter=duration:[0+TO+2]&fields=id,previews,name,analysis,url,username" +
-            "&descriptors=sfx.tristimulus.mean," + extra_descriptors + "&page_size=150" +
-            "&token=eecfe4981d7f41d2811b4b03a894643d5e33f812&page=" + (i + 1);
+            var url = "/search?query=" + query + "&extra_descriptors=" + extra_descriptors + "&page=" + (i + 1);
             loadJSON(function(data) { loadDataFromFreesoundResponse(data); }, url);
         }    
     } else {
@@ -119,6 +116,7 @@ function loadDataFromFreesoundResponse(data){
         runner = setInterval(step, 0);
     }
 }
+
 
 /* Event handlers */
 

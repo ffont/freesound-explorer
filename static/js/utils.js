@@ -22,7 +22,7 @@ function loadJSON(callback, url) {
         if (status == 200) {
             callback(xhr.response);
         } else {
-            console.log('Error getting data from Freesound, status code: ' + xhr.status);
+            console.log('Error getting JSON data, status code: ' + xhr.status);
         }
     };
     xhr.send();

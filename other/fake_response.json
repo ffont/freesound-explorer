@@ -1,0 +1,3436 @@
+{
+    "count": 9226,
+    "next": "http://www.freesound.org/apiv2/search/text/?&query=instrument%20note&filter=duration:[0%20TO%202]&page=2&page_size=150&fields=id,previews,name,analysis,url,username&descriptors=sfx.tristimulus.mean,lowlevel.mfcc.mean",
+    "results": [{
+        "id": 21678,
+        "url": "https://www.freesound.org/people/madjad/sounds/21678/",
+        "name": "Ocarina Note (4).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21678_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21678_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21678_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21678_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-895.9962016424236, 152.6598612298818,-4.755595144274282, 18.91166979137661,-15.270460461760257,-23.837213793306166,-12.4584889101843,-20.553613043173264, 2.84936692491271, 39.61648690966287, 55.6952703484414, 53.187848328906014, 30.106736695192584]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5610708508924082, 0.43491482804345605, 0.004014379632128029]
+                }
+            }
+        }
+    }, {
+        "id": 21677,
+        "url": "https://www.freesound.org/people/madjad/sounds/21677/",
+        "name": "Ocarina Note (3).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21677_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21677_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21677_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21677_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-849.7394480899914, 154.3898008654361,-14.88176225072874, 33.147453304143326,-18.418447579542367,-15.594269818541429,-14.99036955899631,-33.02257138621457,-16.01516852611655, 9.788286723915853, 20.74814404490992, 43.49649223438855, 42.089139086609656]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6125609836437192, 0.3755564972056423, 0.004239706403512211]
+                }
+            }
+        }
+    }, {
+        "id": 21676,
+        "url": "https://www.freesound.org/people/madjad/sounds/21676/",
+        "name": "Ocarina Note (2).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21676_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21676_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21676_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21676_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-837.9418914522811, 143.42745107060335,-16.836928867276868, 35.15468668097607,-23.691786928128824,-7.250418680017114,-13.582399947993936,-23.261590821324546,-13.551468945815357, 11.090071874323739, 25.16832229377949, 43.112502422168205, 39.00064126352686]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.7713043799380742, 0.2173681519103414, 0.005589312771124349]
+                }
+            }
+        }
+    }, {
+        "id": 21675,
+        "url": "https://www.freesound.org/people/madjad/sounds/21675/",
+        "name": "Ocarina Note (1).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21675_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21675_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21675_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21675_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-825.6259832507296, 131.78120127431026,-31.75835864543137, 26.313526350014126,-38.06251265399024,-19.53786147045546,-12.369042117865106, 10.53405565043513, 28.16895815943852, 55.91404974526349, 53.34956028357271, 34.719174782856854, 5.941316522273627]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6642523322420417, 0.3272743438766559, 0.008473205246176873]
+                }
+            }
+        }
+    }, {
+        "id": 21679,
+        "url": "https://www.freesound.org/people/madjad/sounds/21679/",
+        "name": "Ocarina Note (5).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21679_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21679_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21679_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21679_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-903.8121565746446, 165.61993415986103,-11.183593026525463,-4.472760059861871,-5.573200192348579,-18.583143525767365,-27.933735001376295,-31.405738352918537,-13.666192497149105,-11.418689314851973, 6.729321430493698, 28.930101814443383, 31.774243637394008]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.7354922044459393, 0.2620717227400196, 0.002435987171297161]
+                }
+            }
+        }
+    }, {
+        "id": 21656,
+        "url": "https://www.freesound.org/people/madjad/sounds/21656/",
+        "name": "Indonesian Thum-Note (5).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21656_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21656_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21656_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21656_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-939.6800826675253, 158.97804979766298, 83.13165888887163, 52.07570271621423, 22.7473852119584,-7.203492357703577,-41.70053826730253,-56.982077774457636,-47.371098388215515,-34.92808826806959,-27.270108149375705,-22.105023465812675,-8.679943335186845]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.9537578977475691, 0.04131228084324545, 0.0006165952893261472]
+                }
+            }
+        }
+    }, {
+        "id": 21655,
+        "url": "https://www.freesound.org/people/madjad/sounds/21655/",
+        "name": "Indonesian Thum-Note (4).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21655_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21655_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21655_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21655_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-943.1240925306086, 156.70198930372368, 82.51563572280135, 42.58003534647099, 6.949794515845848,-15.549553064833056,-40.55297174420563,-55.967950843736006,-50.477763017128886,-32.62362955174121,-17.799470373267404,-8.056495921982627, 2.755990516551138]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5376722201012892, 0.46062866969008326, 0.0010476171806834543]
+                }
+            }
+        }
+    }, {
+        "id": 21654,
+        "url": "https://www.freesound.org/people/madjad/sounds/21654/",
+        "name": "Indonesian Thum-Note (3).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21654_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21654_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21654_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21654_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-937.0968445288647, 151.3306704861684, 86.98913331967375, 52.718182417050365, 17.672584096615683,-8.300919199341207,-39.85901810824762,-59.358531769415556,-40.87584792090382,-24.230984549587543,-18.53495268489225,-18.643190537854966,-20.708981124590427]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.9787851800385696, 0.018739300390711335, 0.0015208716261041963]
+                }
+            }
+        }
+    }, {
+        "id": 21653,
+        "url": "https://www.freesound.org/people/madjad/sounds/21653/",
+        "name": "Indonesian Thum-Note (2).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21653_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21653_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21653_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21653_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-919.2738858201953, 155.1572880934494, 65.14840094753724, 39.97988654049547, 16.558872506282007,-5.5458286547602675,-50.46762224777571,-65.17559574101698,-42.64252712759079,-27.288559903246327,-18.579627627051476,-17.90063841836585,-5.987214936283827]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.8680739091277728, 0.13094763676310647, 0.0005892234053102896]
+                }
+            }
+        }
+    }, {
+        "id": 21652,
+        "url": "https://www.freesound.org/people/madjad/sounds/21652/",
+        "name": "Indonesian Thum-Note (1).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21652_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21652_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21652_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21652_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-908.8327333226283, 155.19295285902396, 64.41302121075594, 38.80665205549873, 17.924315305172627, 13.455764371646314,-20.083821591017315,-54.882641855308385,-45.556532958700224,-15.375933825821987,-15.277201607269255,-22.801965930388214,-38.54633409371251]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.7614778449793015, 0.23363961934713387, 0.002537278036458177]
+                }
+            }
+        }
+    }, {
+        "id": 21657,
+        "url": "https://www.freesound.org/people/madjad/sounds/21657/",
+        "name": "Indonesian Thum-Note (6).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21657_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21657_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21657_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21657_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-918.2795681032256, 155.73298622495471, 71.19993733623866, 45.43778903903752, 29.03727633651108, 26.858155903945995,-13.384149561073825,-59.55019063531383,-53.87311458835424,-19.466876373724585,-13.119348030570206,-23.04625360030136,-42.608485938792946]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.8183196850271268, 0.17989244328743415, 0.001338661457696722]
+                }
+            }
+        }
+    }, {
+        "id": 255670,
+        "url": "https://www.freesound.org/people/spectral9/sounds/255670/",
+        "name": "Wine Glass Hit F#6",
+        "username": "spectral9",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/255/255670_2511199-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/255/255670_2511199-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/255/255670_2511199-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/255/255670_2511199-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1097.5815699785537,-17.081125426201368,-10.580745518186767, 0.48475668283109635, 2.5112644889674645, 4.266128291753091, 8.798011222672098,-5.972331485538377,-15.017846016388239, 8.160568896474116, 14.807295409430337,-9.834320563339707, 1.9395093314741323]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.2849995120490136, 0.4457207402251102, 0.21604862999324279]
+                }
+            }
+        }
+    }, {
+        "id": 255669,
+        "url": "https://www.freesound.org/people/spectral9/sounds/255669/",
+        "name": "Wine Glass Hit E6",
+        "username": "spectral9",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/255/255669_2511199-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/255/255669_2511199-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/255/255669_2511199-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/255/255669_2511199-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1095.7219367075372,-15.973968939365841,-15.251690575391443, 1.5307729706595192, 0.053933704427204104, 2.8558557705681835, 13.26152071821101, 2.8289666643082363,-21.084320370087347,-6.511739246161078, 24.415761437833698,-2.615077439111552,-2.143844628428663]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.21708136362762198, 0.5524774174754243, 0.14030762403782807]
+                }
+            }
+        }
+    }, {
+        "id": 255668,
+        "url": "https://www.freesound.org/people/spectral9/sounds/255668/",
+        "name": "Wine Glass Hit F6",
+        "username": "spectral9",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/255/255668_2511199-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/255/255668_2511199-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/255/255668_2511199-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/255/255668_2511199-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1096.4923998181803,-13.232680519209964,-17.428120785864085, 0.44510526547640744, 2.1458161409503496, 3.1295584020640295, 14.622443025743683,-1.4291564592425494,-23.162938949694926, 2.3290422847762016, 22.663165819225878,-7.641915973100661, 0.2591926371576345]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.26400329822132146, 0.44810409919674016, 0.22325585797715772]
+                }
+            }
+        }
+    }, {
+        "id": 255666,
+        "url": "https://www.freesound.org/people/spectral9/sounds/255666/",
+        "name": "Wine Glass Hit F5",
+        "username": "spectral9",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/255/255666_2511199-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/255/255666_2511199-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/255/255666_2511199-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/255/255666_2511199-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1088.5178368331415,-6.270816131596534,-10.821374361720705,-11.088135411012855,-8.911016902797854,-4.847706662290252, 2.2340131929018088, 5.966812959799565, 5.754870034445868, 6.5485933649149155, 16.21607533295404, 1.9025305677445767,-24.102285588485724]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.15788801156597282, 0.689506565805806, 0.14199592684072437]
+                }
+            }
+        }
+    }, {
+        "id": 255649,
+        "url": "https://www.freesound.org/people/spectral9/sounds/255649/",
+        "name": "Wine Glass Hit Eb6",
+        "username": "spectral9",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/255/255649_2511199-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/255/255649_2511199-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/255/255649_2511199-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/255/255649_2511199-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1092.2163011551766,-18.31931601522028,-10.559761292064291,-3.4528870662873636,-1.7106504701933427, 4.357354028354851, 11.473377691535399, 9.602969086010278,-15.981090041264505,-16.144624214811603, 16.863267669919697, 5.578736796589063,-0.7039190152799323]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.21808716154921676, 0.5552601330400262, 0.10800190147390172]
+                }
+            }
+        }
+    }, {
+        "id": 21669,
+        "url": "https://www.freesound.org/people/madjad/sounds/21669/",
+        "name": "Ocarina Loop (4).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21669_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21669_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21669_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21669_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-926.675145301876, 146.929413441722, 17.6430282051184, 17.090032464921276,-13.120407959096278,-15.07443014202185,-18.783946401023574,-25.19771412744401,-2.802033246728818, 16.533511477057043, 24.150719028557802, 30.839117421253228, 28.60783092030098]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.7041143986254718, 0.2848062187688197, 0.009367853137182098]
+                }
+            }
+        }
+    }, {
+        "id": 21668,
+        "url": "https://www.freesound.org/people/madjad/sounds/21668/",
+        "name": "Ocarina Loop (3).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21668_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21668_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21668_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21668_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-890.3578770575708, 168.65418522214165,-4.0333025681161345, 15.71394981253761,-7.874533932829251,-27.877514852324804,-20.622835344211722,-27.093945271868815,-10.044826653813146, 13.897169278203558, 29.795117931745036, 44.442888495937126, 44.765426986917056]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.8154426666797605, 0.18074121376933347, 0.002444260716018121]
+                }
+            }
+        }
+    }, {
+        "id": 261537,
+        "url": "https://www.freesound.org/people/Thalamus_Lab/sounds/261537/",
+        "name": "Clavicordio-String hit",
+        "username": "Thalamus_Lab",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/261/261537_3347587-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/261/261537_3347587-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/261/261537_3347587-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/261/261537_3347587-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1068.9007753963162, 78.4376297601667, 45.32573581319367, 21.46847491657449, 8.952173030008566, 5.200299155039939, 8.866931985479216, 14.81826737494725, 18.293151385476307, 19.461809430065884, 17.199021552147393, 9.783162623117326,-0.07622310384102815]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6529374956268543, 0.3119812707119866, 0.021592846660562885]
+                }
+            }
+        }
+    }, {
+        "id": 261534,
+        "url": "https://www.freesound.org/people/Thalamus_Lab/sounds/261534/",
+        "name": "Clavicordio-Resonance board hit",
+        "username": "Thalamus_Lab",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/261/261534_3347587-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/261/261534_3347587-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/261/261534_3347587-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/261/261534_3347587-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1061.2249692090647, 93.1466740106694, 64.47563551782643, 39.05424709309022, 22.242492071487337, 14.0120884110788, 10.774543486547408, 8.668571728203752, 5.860879251360788, 2.336707729137821,-0.787056665717008,-2.7488479727444273,-2.110599089393095]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.872177505316313, 0.11345303417359812, 0.011509000386675306]
+                }
+            }
+        }
+    }, {
+        "id": 261530,
+        "url": "https://www.freesound.org/people/Thalamus_Lab/sounds/261530/",
+        "name": "Clavicordio-Low string hit 2",
+        "username": "Thalamus_Lab",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/261/261530_3347587-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/261/261530_3347587-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/261/261530_3347587-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/261/261530_3347587-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1052.822150281951, 89.4385970852563, 45.96477863888031, 18.484181989465572, 6.398392719292363, 2.6662438545214626, 4.474936282343828, 3.5793444576769273,-0.899306086220477,-4.533191972948652,-7.768945318801343,-7.908894289042566,-4.207669500495143]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.7101703102386234, 0.26460921998833736, 0.022116415020221658]
+                }
+            }
+        }
+    }, {
+        "id": 253242,
+        "url": "https://www.freesound.org/people/poissonmort/sounds/253242/",
+        "name": "Toy records#99-K03.wav",
+        "username": "poissonmort",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/253/253242_789068-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/253/253242_789068-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/253/253242_789068-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/253/253242_789068-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1063.0993699263597, 55.89947469789022, 29.21203655028185, 11.962151066759404,-2.9896638798953403,-0.35248021361634735, 0.027024969047527585, 2.3703509273915113, 6.465909758878922, 12.744010936131279, 18.11862817005207, 18.747138746673865, 15.232585244280068]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.7143390177065854, 0.24841663961809846, 0.03423925284798279]
+                }
+            }
+        }
+    }, {
+        "id": 253240,
+        "url": "https://www.freesound.org/people/poissonmort/sounds/253240/",
+        "name": "Toy records#99-K02.wav",
+        "username": "poissonmort",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/253/253240_789068-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/253/253240_789068-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/253/253240_789068-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/253/253240_789068-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1076.0306120552925, 47.77853644553973, 22.28975108317451, 12.001356308674191, 6.740203690993561, 10.686155923277074, 9.32499630070506, 7.968165014708655, 10.6787922784825, 12.698811887643046, 13.066686269162528, 11.691274099435859, 9.981756119672147]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6422885024017009, 0.30068673982597394, 0.02326822505271622]
+                }
+            }
+        }
+    }, {
+        "id": 253238,
+        "url": "https://www.freesound.org/people/poissonmort/sounds/253238/",
+        "name": "Toy records#99-K06.wav",
+        "username": "poissonmort",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/253/253238_789068-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/253/253238_789068-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/253/253238_789068-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/253/253238_789068-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1069.1418113584093, 47.324422742129485, 21.875855312758787, 14.545008957861073, 0.7608099758708126, 12.823276947273362, 12.293716972001508, 9.867320478579531, 12.092942123887562, 12.570471433620408, 16.331070531410173, 16.69239967490334, 8.385098957098545]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6654773244982493, 0.21601353831336953, 0.08308555940693386]
+                }
+            }
+        }
+    }, {
+        "id": 21663,
+        "url": "https://www.freesound.org/people/madjad/sounds/21663/",
+        "name": "Indonesian Thum-Strike (6).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21663_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21663_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21663_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21663_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-973.0870280375698, 129.7312216482315, 78.71656938356314, 49.87837273674073, 22.282760338458665, 0.8576303899362941,-25.56972301543339,-45.3332895866309,-35.995288675186046,-22.478315732267834,-16.642692720487652,-14.19782908190777,-14.550974384093223]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.8957646672747129, 0.0938042509258029, 0.007715536890592413]
+                }
+            }
+        }
+    }, {
+        "id": 21662,
+        "url": "https://www.freesound.org/people/madjad/sounds/21662/",
+        "name": "Indonesian Thum-Strike (5).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21662_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21662_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21662_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21662_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-919.3751280240082, 128.67272581354496, 50.81229625025225, 34.51475470656488, 17.176255002339353, 18.18750363698991,-16.110298314326194,-52.49745999063807,-42.01007218349185,-8.100179633968727,-11.144166383943368,-16.442841017435168,-28.070575244632053]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.7264102806464932, 0.2517476900743103, 0.005676487681354947]
+                }
+            }
+        }
+    }, {
+        "id": 21661,
+        "url": "https://www.freesound.org/people/madjad/sounds/21661/",
+        "name": "Indonesian Thum-Strike (4).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21661_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21661_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21661_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21661_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-917.4011180416716, 156.51979462467077, 73.81559951869937, 39.34658900088629, 9.786650038312755,-11.460369272564282,-28.217659013425884,-36.12113904738402,-29.985892477163446,-20.65673887000554,-18.072052139930886,-13.10108151221359,-13.415999874159704]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.7715673313029662, 0.1989100840955227, 0.002879846990351567]
+                }
+            }
+        }
+    }, {
+        "id": 21660,
+        "url": "https://www.freesound.org/people/madjad/sounds/21660/",
+        "name": "Indonesian Thum-Strike (3).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21660_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21660_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21660_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21660_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-924.8277945703122, 153.62730935133905, 77.80315428746935, 39.522614911393354, 10.182569749745493,-7.468235961748565,-23.043723052255864,-35.73903548786849,-29.625571648581605,-21.104486552667623,-16.364725162878695,-17.218000090442178,-18.693588401644135]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.8217056761486694, 0.16842291385760033, 0.00729450859564602]
+                }
+            }
+        }
+    }, {
+        "id": 21659,
+        "url": "https://www.freesound.org/people/madjad/sounds/21659/",
+        "name": "Indonesian Thum-Strike (2).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21659_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21659_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21659_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21659_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-966.2035521410273, 137.43282596044654, 74.96789433900753, 47.27768722697518, 26.010951438959847, 8.55037377498401,-23.9840854172316,-48.62396377934069,-44.29290450382666,-27.542058377846455,-16.601717462988116,-17.274086473935505,-17.538505402421254]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.9536348358950248, 0.03991588703254547, 0.002480746952145279]
+                }
+            }
+        }
+    }, {
+        "id": 21658,
+        "url": "https://www.freesound.org/people/madjad/sounds/21658/",
+        "name": "Indonesian Thum-Strike (1).wav",
+        "username": "madjad",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/21/21658_114441-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/21/21658_114441-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/21/21658_114441-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/21/21658_114441-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-944.7810993993237, 149.13778366630555, 69.76487863735926, 33.01515258674657, 7.435880239703239,-4.927645168280006,-24.253487736183786,-40.08176902807944,-36.09826771375836,-19.373833326849798,-13.154851254475107,-11.418738177252248,-14.698184958289655]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6804645804869526, 0.29307327484672663, 0.006445187429900687]
+                }
+            }
+        }
+    }, {
+        "id": 148771,
+        "url": "https://www.freesound.org/people/Daphne_in_Wonderland/sounds/148771/",
+        "name": "piano_string_hit_short 6",
+        "username": "Daphne_in_Wonderland",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/148/148771_667113-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/148/148771_667113-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/148/148771_667113-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/148/148771_667113-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-936.7386629592744, 206.25351619762276, 84.72285772129544, 40.35560505875654, 31.867612428077376, 14.950297086217464,-3.928192536993518,-14.816940481101676,-14.027972572624352,-10.531793686276991,-10.257098242641975,-7.237914117943736,-0.597306890694371]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.901511134079929, 0.0959833867804227, 0.00222698647712658]
+                }
+            }
+        }
+    }, {
+        "id": 148770,
+        "url": "https://www.freesound.org/people/Daphne_in_Wonderland/sounds/148770/",
+        "name": "piano_string_hit_short 10",
+        "username": "Daphne_in_Wonderland",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/148/148770_667113-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/148/148770_667113-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/148/148770_667113-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/148/148770_667113-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1045.7704106946396, 98.12236371604298, 37.084926721872705, 0.6971361922240189,-7.525769747081912,-6.527959655777069,-6.048519747870604,-8.842085642825419,-11.899225261870892,-11.21115298266458,-7.451884843252813,-2.555114712648382, 0.2291625151948278]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5250999123120366, 0.42462799863585604, 0.04488172194278589]
+                }
+            }
+        }
+    }, {
+        "id": 148769,
+        "url": "https://www.freesound.org/people/Daphne_in_Wonderland/sounds/148769/",
+        "name": "piano_string_hit_short 2",
+        "username": "Daphne_in_Wonderland",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/148/148769_667113-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/148/148769_667113-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/148/148769_667113-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/148/148769_667113-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1050.1712516802934, 89.5034255714746, 39.21485430472141, 25.865740798742948, 23.091316901259955, 13.829734387689122, 6.661693056485904, 3.2750638663275224, 0.11963179365396598,-4.330178465273794,-5.902201929507415,-3.635882708001897,-1.2879759949759813]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.8372078380681969, 0.15591534742003668, 0.005205779681173525]
+                }
+            }
+        }
+    }, {
+        "id": 148756,
+        "url": "https://www.freesound.org/people/Daphne_in_Wonderland/sounds/148756/",
+        "name": "piano_string_hit_short 9",
+        "username": "Daphne_in_Wonderland",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/148/148756_667113-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/148/148756_667113-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/148/148756_667113-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/148/148756_667113-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1036.8902766649778, 107.91846244290876, 39.628791720835224,-3.050546746778868,-10.414286051763204,-4.500821339072986,-3.02642558098251,-9.0169200100604,-14.262344082481983,-12.801927774321276,-6.89040770040616,-1.0486969954773815, 0.3024591267685094]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.546141392033121, 0.429901569654305, 0.02395712977761173]
+                }
+            }
+        }
+    }, {
+        "id": 148755,
+        "url": "https://www.freesound.org/people/Daphne_in_Wonderland/sounds/148755/",
+        "name": "piano_string_hit_short 8",
+        "username": "Daphne_in_Wonderland",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/148/148755_667113-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/148/148755_667113-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/148/148755_667113-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/148/148755_667113-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1067.616078567429, 75.49500538458248, 30.918521086428896, 6.001337718030863, 1.0351816205320217, 1.4991806469965894, 1.4834056788893797,-1.2200901631614454,-4.215139723257427,-3.4275325780970642, 0.06649183261020486, 3.555117989538855, 4.303884846535855]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5808949593947035, 0.37056905706965104, 0.0450158187100112]
+                }
+            }
+        }
+    }, {
+        "id": 148772,
+        "url": "https://www.freesound.org/people/Daphne_in_Wonderland/sounds/148772/",
+        "name": "piano_string_hit_short 5",
+        "username": "Daphne_in_Wonderland",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/148/148772_667113-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/148/148772_667113-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/148/148772_667113-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/148/148772_667113-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-964.2049770797852, 147.7130126742203, 32.48543006544475, 32.30208663805593, 33.226870646214806, 16.595169441856854, 16.94155341293201, 7.227400760488113,-5.58992664088125,-1.4228967825057068, 4.887408424797543, 4.336857641173357, 3.5638965036924324]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.9351835370861163, 0.04537924791979433, 0.00572169909588702]
+                }
+            }
+        }
+    }, {
+        "id": 2200,
+        "url": "https://www.freesound.org/people/Andrew%20Duke/sounds/2200/",
+        "name": "bell.wav",
+        "username": "Andrew Duke",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/2/2200_3525-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/2/2200_3525-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/2/2200_3525-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/2/2200_3525-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-738.6011383424728, 58.033703234484385,-48.36700661865644, 27.56330902135216,-41.994647788221236, 1.4969795522882798, 9.075836341828035,-12.127178507781863, 10.689655071066646, 14.078406075952895, 4.5164575425641456, 17.434464775648422, 33.619696658580395]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.2130670205283128, 0.6172791028087248, 0.16215627793882842]
+                }
+            }
+        }
+    }, {
+        "id": 83983,
+        "url": "https://www.freesound.org/people/juskiddink/sounds/83983/",
+        "name": "Crumhorn note 3.wav",
+        "username": "juskiddink",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/83/83983_649468-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/83/83983_649468-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/83/83983_649468-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/83/83983_649468-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-628.7745754095728, 32.03934124709075,-116.11585865742892,-24.052415914722292,-13.99448860756403,-0.3566832664568539,-34.47432484741971,-14.29020549241862,-27.05604507353546,-42.76466739099763,-32.64465005365558,-34.00125788902279,-17.521792908208038]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.47036751404419097, 0.431129901510893, 0.090043735437216]
+                }
+            }
+        }
+    }, {
+        "id": 83982,
+        "url": "https://www.freesound.org/people/juskiddink/sounds/83982/",
+        "name": "Crumhorn note 2.wav",
+        "username": "juskiddink",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/83/83982_649468-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/83/83982_649468-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/83/83982_649468-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/83/83982_649468-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-651.361313495124, 40.73520842334023,-103.96709013780253,-4.206044141461863,-6.993061213682751,-10.289948283410276,-44.88609876560608,-13.934692949980711,-14.448126932436722,-36.003148260108524,-29.529143101943422,-36.88863822699545,-23.15693039684344]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.34692292174821077, 0.4823404984678354, 0.1707365876326938]
+                }
+            }
+        }
+    }, {
+        "id": 175566,
+        "url": "https://www.freesound.org/people/sergeeo/sounds/175566/",
+        "name": "Kalimba (note D)",
+        "username": "sergeeo",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/175/175566_2042115-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/175/175566_2042115-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/175/175566_2042115-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/175/175566_2042115-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1086.193596983057, 26.89703124892977, 15.851617679151945, 16.56187067136067, 11.844182430545944, 4.488237602242034,-9.211412148734613,-17.418064657290714,-13.01493487026957,-12.468978614541602,-8.93934056089438,-7.36628666631082,-3.116727808074362]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6872694508311125, 0.24441389223277502, 0.0611573891498755]
+                }
+            }
+        }
+    }, {
+        "id": 218456,
+        "url": "https://www.freesound.org/people/thomasjaunism/sounds/218456/",
+        "name": "Toy Piano",
+        "username": "thomasjaunism",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/218/218456_3344538-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/218/218456_3344538-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/218/218456_3344538-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/218/218456_3344538-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-946.8648002686806, 74.68992623645406,-52.61759561652999,-2.8769974332787873, 14.110184406986255,-5.221013595904089,-21.448258853816366, 8.292361896206184, 57.7996702366537, 42.13887463387044,-24.537196087427237,-3.3554170021534997,-9.135326072733857]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.35574082007682006, 0.5635325143621838, 0.05960720938045083]
+                }
+            }
+        }
+    }, {
+        "id": 9644,
+        "url": "https://www.freesound.org/people/Heigh-hoo/sounds/9644/",
+        "name": "open_ghost_1.aif",
+        "username": "Heigh-hoo",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/9/9644_21830-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/9/9644_21830-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/9/9644_21830-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/9/9644_21830-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1074.9764435824925, 48.03965347921052, 20.11168107333978, 15.289029135983686, 6.4187932108498424, 4.0234697813886875,-2.732625872061902,-4.815280052198136,-5.679252242508317,-5.838727564105488,-6.31179701792605,-5.628953322588531,-5.568156592730085]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6631359269820732, 0.3070308318420813, 0.018781417368716816]
+                }
+            }
+        }
+    }, {
+        "id": 9645,
+        "url": "https://www.freesound.org/people/Heigh-hoo/sounds/9645/",
+        "name": "open_ghost_2.aif",
+        "username": "Heigh-hoo",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/9/9645_21830-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/9/9645_21830-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/9/9645_21830-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/9/9645_21830-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1003.058625219752, 83.5214551670991, 28.568266937862585, 17.315706709161105,-4.468189632360857,-5.513418117760818,-10.773543369942905,-7.575063051109065,-4.2009998706810405,-0.9701684189763875,-0.39244030059625384,-0.3873604945803508,-2.506452030899436]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5974973638371238, 0.3700833580681747, 0.032284399688507284]
+                }
+            }
+        }
+    }, {
+        "id": 130526,
+        "url": "https://www.freesound.org/people/stomachache/sounds/130526/",
+        "name": "F-hi-1.WAV",
+        "username": "stomachache",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/130/130526_177850-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/130/130526_177850-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/130/130526_177850-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/130/130526_177850-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1017.8225216313081, 85.88207887143597,-0.15154869533056559,-35.31014325707263,-36.93724873357042,-18.47682154191689,-1.364897316437121, 6.836430844766604, 7.941271558058334, 6.428165199549476,-4.0261993294165315,-21.62641220325663,-26.781304731094313]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5818563865111934, 0.3875595242948293, 0.016686404019578223]
+                }
+            }
+        }
+    }, {
+        "id": 130525,
+        "url": "https://www.freesound.org/people/stomachache/sounds/130525/",
+        "name": "F-hi-2.WAV",
+        "username": "stomachache",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/130/130525_177850-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/130/130525_177850-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/130/130525_177850-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/130/130525_177850-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1006.8757260933799, 85.03714980667068, 1.150811192313896,-33.895476128603605,-36.933585675897085,-13.545087718403934,-3.1708242347346407, 6.469576902626785, 10.30458141804117, 5.414319938574257,-2.1366291357510074,-19.56029227241504,-28.007607694851956]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5292275480145816, 0.4360885118762863, 0.024550259333826863]
+                }
+            }
+        }
+    }, {
+        "id": 130524,
+        "url": "https://www.freesound.org/people/stomachache/sounds/130524/",
+        "name": "F-low-1.WAV",
+        "username": "stomachache",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/130/130524_177850-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/130/130524_177850-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/130/130524_177850-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/130/130524_177850-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1007.1964920659088, 99.08843884327821, 10.010027665920488,-18.699002531156502,-16.306512185326874,-11.471355679837904,-5.951584809774412,-6.4608136061369645,-14.609559610162119,-13.755099769139205,-6.243370350230305, 0.7291952226432258,-2.606456129173653]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6113340477672304, 0.3177759811505451, 0.03623457046369519]
+                }
+            }
+        }
+    }, {
+        "id": 130523,
+        "url": "https://www.freesound.org/people/stomachache/sounds/130523/",
+        "name": "F-low-2.WAV",
+        "username": "stomachache",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/130/130523_177850-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/130/130523_177850-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/130/130523_177850-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/130/130523_177850-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-938.3894930595942, 127.95622133483626,-7.889236108089132,-44.1608413963513,-34.56457415448356,-16.009336115860943,-8.678528201128904,-12.580922257647881,-17.531950600157533,-17.909759996177893,-6.00848787029168, 1.9417670347876876,-6.608204632122048]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.4412859932902136, 0.5156686314247144, 0.03205663217338429]
+                }
+            }
+        }
+    }, {
+        "id": 65384,
+        "url": "https://www.freesound.org/people/Department64/sounds/65384/",
+        "name": "v01_N.WAV",
+        "username": "Department64",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/65/65384_861714-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/65/65384_861714-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/65/65384_861714-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/65/65384_861714-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1030.847906230266, 58.407910328382634, 9.345612198675683,-3.7404374378375365,-25.389286919805134,-24.540805686196638,-15.223916788480112,-6.273373747369034,-7.158065976181799,-11.10347379431782,-16.31894656478889,-18.131386268124935,-11.577994567000399]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.3678368897492648, 0.5026299361433435, 0.11277784119867808]
+                }
+            }
+        }
+    }, {
+        "id": 255684,
+        "url": "https://www.freesound.org/people/Samulis/sounds/255684/",
+        "name": "Marimba B5",
+        "username": "Samulis",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/255/255684_2475994-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/255/255684_2475994-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/255/255684_2475994-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/255/255684_2475994-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1129.3155340788608, 8.92524405734784, 0.47773341986745443,-5.238494109393003,-3.4809093401153173, 3.992010439311308, 10.636556489427063, 10.886059331599368, 4.812966576927146,-2.241062200200511,-4.461564721319457,-0.4457526438498482, 5.942343559667875]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.4223500681085465, 0.48837675464043623, 0.07407712019913394]
+                }
+            }
+        }
+    }, {
+        "id": 255681,
+        "url": "https://www.freesound.org/people/Samulis/sounds/255681/",
+        "name": "Marimba C7",
+        "username": "Samulis",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/255/255681_2475994-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/255/255681_2475994-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/255/255681_2475994-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/255/255681_2475994-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1131.4246519951778, 6.921387938974646, 3.4548021760202605, 5.398632294453158, 8.101349246325567, 5.859445458921428, 2.840367524668217, 4.413438946729701, 6.6880180106041545, 4.621899319212391, 1.9388772410101607, 3.4207544115502087, 5.49963852657096]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5001191746119817, 0.4252534026658099, 0.06266202118181197]
+                }
+            }
+        }
+    }, {
+        "id": 255678,
+        "url": "https://www.freesound.org/people/Samulis/sounds/255678/",
+        "name": "Marimba A6",
+        "username": "Samulis",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/255/255678_2475994-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/255/255678_2475994-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/255/255678_2475994-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/255/255678_2475994-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1133.4512710048814, 4.2270563347645265, 0.39697199985651754, 1.6831030855214049, 5.713299464636131, 5.7179695139644195, 1.7549136978925042, 0.3399682386863026, 3.475984881438027, 5.575350009202747, 3.0339489032614484, 0.08656583407676269, 1.4186140229118218]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.44696433108978173, 0.43392157817616483, 0.10437388004455607]
+                }
+            }
+        }
+    }, {
+        "id": 32292,
+        "url": "https://www.freesound.org/people/gurdonark/sounds/32292/",
+        "name": "Diatonic Harmonica Sample, key of C.WAV",
+        "username": "gurdonark",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/32/32292_59021-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/32/32292_59021-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/32/32292_59021-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/32/32292_59021-hq.mp3"
+        },
+        "analysis": null
+    }, {
+        "id": 339316,
+        "url": "https://www.freesound.org/people/FullMetalJedi/sounds/339316/",
+        "name": "bass5(8).wav",
+        "username": "FullMetalJedi",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/339/339316_6035865-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/339/339316_6035865-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/339/339316_6035865-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/339/339316_6035865-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-862.5351563009167, 208.90815917066186, 21.763255756562025, 77.04046011033951, 107.39209921711338, 49.06048594753162, 22.841474017311565, 10.748725818582493, 0.28918952281304006, 9.076401046666263, 16.416225773256357, 8.188425571367725,-13.970747915293963]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.9379841916155903, 0.05831579032610988, 0.00332981827798034]
+                }
+            }
+        }
+    }, {
+        "id": 339317,
+        "url": "https://www.freesound.org/people/FullMetalJedi/sounds/339317/",
+        "name": "bass5(2-8).wav",
+        "username": "FullMetalJedi",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/339/339317_6035865-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/339/339317_6035865-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/339/339317_6035865-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/339/339317_6035865-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-867.8307767358364, 211.46374805452638, 26.864999531892593, 73.39675868092111, 106.79632977602616, 49.96824367431875, 22.439219845404704, 12.142067416151008,-0.08732262729100293, 7.520647621224728, 17.01287241845246, 8.767595718516857,-13.775184194853823]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.967488756668152, 0.029686081350340916, 0.0008604918925027271]
+                }
+            }
+        }
+    }, {
+        "id": 113294,
+        "url": "https://www.freesound.org/people/NoiseCollector/sounds/113294/",
+        "name": "note.wav",
+        "username": "NoiseCollector",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/113/113294_4948-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/113/113294_4948-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/113/113294_4948-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/113/113294_4948-hq.mp3"
+        },
+        "analysis": null
+    }, {
+        "id": 258199,
+        "url": "https://www.freesound.org/people/sastesty/sounds/258199/",
+        "name": "overall quality of single note-flute-D4",
+        "username": "sastesty",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/258/258199_4783743-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/258/258199_4783743-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/258/258199_4783743-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/258/258199_4783743-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1045.5296587218982, 111.30203301105102, 68.51069761668666, 31.257686927908313, 7.0071350668487415,-11.598506502160083,-27.077951588446563,-36.976830988204796,-41.086208720800364,-40.1958012747484,-34.208224283383345,-23.94191369384129,-11.296496031974721]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6091002654371529, 0.35390232796908627, 0.029395318230702943]
+                }
+            }
+        }
+    }, {
+        "id": 153642,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/153642/",
+        "name": "Viola C#-5 Pizzicato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/153/153642_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/153/153642_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/153/153642_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/153/153642_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1059.4462019058903, 76.00947293641515, 35.95329857923912, 20.355558178003793, 5.478914508413189,-4.898175073489539,-10.008941497042724,-14.125327659949635,-11.840535027803575,-6.601562700234394,-5.202530315580133,-2.859976795246266,-3.50396492159423]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.764679396765734, 0.20719405241465305, 0.026801451454567957]
+                }
+            }
+        }
+    }, {
+        "id": 153637,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/153637/",
+        "name": "Viola G#-4 Pizzicato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/153/153637_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/153/153637_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/153/153637_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/153/153637_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1055.064175214774, 86.85147068953285, 38.89854481634288, 11.504407396974495,-0.08697478904995624,-3.8645015948469705,-8.417850535755646,-14.097224563598965,-16.90048612172441,-16.82845059667724,-13.564250109619563,-6.407813971073504,-0.6014974289854077]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.8116825286540778, 0.17298631764795494, 0.011627587861009061]
+                }
+            }
+        }
+    }, {
+        "id": 153621,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/153621/",
+        "name": "Violin F#-5 Pizzicato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/153/153621_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/153/153621_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/153/153621_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/153/153621_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1089.0271007377344, 53.750895890361036, 25.65391139731322, 6.89902007102434,-5.3309462576611635,-13.603123319495504,-17.835910414100553,-18.52491634701213,-15.24054942923314,-9.952244420974699,-5.048723425214304,-1.1277221948379363, 4.472111314488655]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.7936663450486581, 0.19538998746841488, 0.008599537757729085]
+                }
+            }
+        }
+    }, {
+        "id": 153782,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/153782/",
+        "name": "Double-bass A2  Col-legno",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/153/153782_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/153/153782_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/153/153782_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/153/153782_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-961.2086054320174, 163.55332972422642, 77.04728486723035, 18.828959210916103,-5.1009092798676585,-6.347671144746008,-0.45972814557697295, 0.42892487681394914, 2.0942294353463984, 0.8493381362907315,-5.325306100862809,-7.961675236706183,-6.279444319160617]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5302152140048685, 0.4589605461100413, 0.010129345965239197]
+                }
+            }
+        }
+    }, {
+        "id": 153781,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/153781/",
+        "name": "Double-bass F#2  Col-legno",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/153/153781_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/153/153781_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/153/153781_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/153/153781_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1012.0467462003251, 128.45466786372876, 76.03151505666865, 41.07694141886215, 20.651867621940866, 11.830119287972872, 5.68865960963176,-1.790403308699981,-3.5123073441412633,-1.9223517094921336,-1.4054739553058406,-0.3237334763708161,-0.9624717291380737]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.8060269005230589, 0.16142335772589006, 0.0240120080748259]
+                }
+            }
+        }
+    }, {
+        "id": 153779,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/153779/",
+        "name": "Double-bass E2  Col-legno",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/153/153779_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/153/153779_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/153/153779_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/153/153779_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1012.7911532879672, 127.71559996190148, 78.73966192315116, 46.68254092063291, 24.1596613701047, 9.797583098971607, 1.3438221319894796,-7.359180320988745,-8.425529913826548,-4.916028895712682,-4.254038659673617,-4.054561537126696,-5.385745722611449]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5944317631745744, 0.3896123875905209, 0.011105066907127972]
+                }
+            }
+        }
+    }, {
+        "id": 153834,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/153834/",
+        "name": "Double-bass E-4 Pizzicato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/153/153834_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/153/153834_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/153/153834_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/153/153834_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1029.1042826093408, 108.78829563780971, 55.853268540652586, 24.478678350751284, 8.676657314010324, 1.0836080343399375,-3.2676482508074236,-4.368677213446435,-4.428289697981449,-4.5234190622355355,-3.7325343597666794,-2.245639933381545,-1.679351730610913]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6388848652539207, 0.3339936268945842, 0.019240161880887095]
+                }
+            }
+        }
+    }, {
+        "id": 153832,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/153832/",
+        "name": "Double-bass D-4 Pizzicato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/153/153832_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/153/153832_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/153/153832_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/153/153832_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1034.0047318616362, 112.5473222283293, 57.30275747391836, 15.893700318021244,-3.315881489049433,-5.1217270649181925,-2.385332653557108,-0.9670270301279581,-2.4055280916048485,-4.055682300111072,-5.998482473095457,-7.089783522061592,-5.268270702509802]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6285313023115169, 0.3477041476454451, 0.02159414390625084]
+                }
+            }
+        }
+    }, {
+        "id": 153829,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/153829/",
+        "name": "Double-bass B-3 Pizzicato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/153/153829_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/153/153829_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/153/153829_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/153/153829_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1024.7393662766528, 120.49146679697016, 63.408235453064115, 21.541440766775125, 1.3667872729673987,-4.312658459388618,-7.101017004937167,-10.55974167438021,-13.298593068503779,-13.574837077373493,-13.323200655319145,-12.652135283728834,-10.473456479537303]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.729614901307054, 0.26398686420164413, 0.006398179089860113]
+                }
+            }
+        }
+    }, {
+        "id": 153825,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/153825/",
+        "name": "Double-bass G#-3 Pizzicato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/153/153825_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/153/153825_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/153/153825_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/153/153825_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-971.2082254853265, 170.95062558212356, 74.61176115183541, 20.347022647849165,-4.540491896769124,-5.9467816768663475, 1.2982604562759248,-2.4871369094987745,-8.244324661125546,-7.845346076780686,-9.179072627481517,-12.315564552521309,-11.228798467118473]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.727545406038644, 0.26367906508396, 0.007942727852076323]
+                }
+            }
+        }
+    }, {
+        "id": 153821,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/153821/",
+        "name": "Double-bass e-3 Pizzicato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/153/153821_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/153/153821_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/153/153821_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/153/153821_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-963.4303961235454, 159.85643525777823, 65.21742869211279, 15.244974161026494,-0.27215199406275176,-0.6605402599142772, 1.9227550848542114,-2.496882493908255,-6.695470015635838,-8.57941588975549,-11.917287987406699,-11.67115020530447,-8.471279809213696]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.619257676174857, 0.3525557389643127, 0.010721495380267874]
+                }
+            }
+        }
+    }, {
+        "id": 154294,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154294/",
+        "name": "Bassoon D#-3 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154294_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154294_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154294_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154294_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1051.3478905609318, 80.18032335409669, 25.83746481162195, 1.6616607991632595,-5.006463781089179,-2.9113682688709215, 0.634732185820756,-0.38032577941174844, 4.371815520626374, 8.640237793338073, 7.471450675571324, 4.6877161974001735, 0.1940784663623034]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5720901549290415, 0.3946716634351616, 0.029345773054650366]
+                }
+            }
+        }
+    }, {
+        "id": 154293,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154293/",
+        "name": "Bassoon D-3 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154293_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154293_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154293_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154293_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1053.342418773915, 79.93569052213972, 19.123053846504856,-3.7921129599820236,-5.503693419322597,-1.48270315456037, 0.11701364272698157,-0.9093602880116489, 4.718778288522355, 8.88002446545478, 7.627867343494394, 6.796980396403256, 3.409287874419849]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5645031308653857, 0.4081795678237431, 0.025960451879680175]
+                }
+            }
+        }
+    }, {
+        "id": 154292,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154292/",
+        "name": "Bassoon C#-3 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154292_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154292_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154292_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154292_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1042.465910600485, 92.535162234698, 26.886030609425415, 1.2603162915061372,-3.01203542118425,-5.01433737006388,-8.135948577640985,-11.770458234295194,-8.212697358366349,-0.19599569780916565, 4.635967356219872, 7.3033936715671715, 6.849978263628225]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6173446423390877, 0.363984704723286, 0.017612935326825195]
+                }
+            }
+        }
+    }, {
+        "id": 154291,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154291/",
+        "name": "Bassoon C-3 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154291_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154291_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154291_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154291_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1056.7186261793254, 82.53144362252326, 27.565094950971545, 3.0144485671665797, 0.7921057809372919,-0.6227276136692166,-5.332983595587395,-7.766058470084552,-3.0524403075439976, 3.854534722971607, 6.551459090479085, 5.925025765461589, 4.096416521222606]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5330045137000679, 0.42077619438067004, 0.03659763589945827]
+                }
+            }
+        }
+    }, {
+        "id": 154290,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154290/",
+        "name": "Bassoon B-2 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154290_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154290_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154290_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154290_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1057.5888405496858, 83.14910905934516, 30.38500845968912, 3.570218274359906,-0.8550398514482982,-1.1641608978517413,-3.3139209185070895,-2.44011591400029, 2.8139834941982813, 6.222416497825224, 5.011807821692698, 2.5003029667291483,-0.42286966803767223]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.589689994611057, 0.38365252112854925, 0.022464787947415233]
+                }
+            }
+        }
+    }, {
+        "id": 154289,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154289/",
+        "name": "Bassoon A#-2 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154289_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154289_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154289_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154289_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1064.5969167742028, 74.9471227926475, 24.826702896254954, 2.878911461252856, 4.085060181862316, 4.230245575516952,-0.8795516386342317,-2.5097633481203228, 1.7089853164199809, 5.701625464709685, 5.788949082543042, 3.867012716009889, 1.8147434744858446]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.649299345347771, 0.32315774644183703, 0.02501732543685469]
+                }
+            }
+        }
+    }, {
+        "id": 154288,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154288/",
+        "name": "Bassoon A-2 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154288_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154288_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154288_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154288_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1058.8971084947482, 82.30666130943897, 29.586139856177557, 3.3402180682462514, 0.2636589766871683, 0.023298979405186725,-0.8832120654067167,-0.15064431948230206, 2.0927011203724386, 4.571657215223094, 4.708273693234428, 3.3088309795186337, 3.029107974994743]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6122898486144852, 0.34582723776495755, 0.025454737464378593]
+                }
+            }
+        }
+    }, {
+        "id": 154287,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154287/",
+        "name": "Bassoon G#-2 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154287_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154287_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154287_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154287_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1047.5593306171304, 89.06060185067318, 29.535831852891125, 3.3980430518885063,-1.4085090939877751, 1.1645062091486176,-1.1569385248780142,-3.9745655866900793, 1.7713523236265738, 7.218762356211746, 9.895726543932858, 9.68060905888361, 5.396289220784048]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.8534951202855444, 0.11380477573780524, 0.02279707502807816]
+                }
+            }
+        }
+    }, {
+        "id": 154286,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154286/",
+        "name": "Bassoon G-2 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154286_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154286_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154286_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154286_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1065.4701840300918, 77.7723230780504, 31.6097043261177, 5.490240518468794, 0.5895011477971791, 0.8110303126517068, 0.2732900449529684, 0.3984224214464049, 2.8769824008652614, 6.166913690676394, 8.537967271695827, 9.533869612236812, 7.645291192258508]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.8245239255564789, 0.1527034630761152, 0.02066722822991114]
+                }
+            }
+        }
+    }, {
+        "id": 154285,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154285/",
+        "name": "Bassoon F#-2 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154285_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154285_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154285_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154285_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1070.2888443491527, 69.90717530347321, 25.39942494774156, 5.036311972010574, 3.4906149209035435, 3.7013261185163184, 3.1532185457077153, 3.8303463963871933, 5.2004796557764426, 6.023998806255678, 5.337277580481226, 3.4573903383141826, 2.3291041165506865]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6262463209313992, 0.3451762725626008, 0.027443761036197573]
+                }
+            }
+        }
+    }, {
+        "id": 154284,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154284/",
+        "name": "Bassoon F-2 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154284_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154284_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154284_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154284_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1050.8753322800212, 92.81654333971798, 40.38765963133634, 11.383875365093965, 7.34208161052774, 7.855052405424856, 5.277011615217865, 3.8265879373634446, 6.420521743219572, 9.149286469855342, 9.532609993945048, 6.466905190310512, 2.580931428395284]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5257536336492636, 0.43647299451117894, 0.02141180881788823]
+                }
+            }
+        }
+    }, {
+        "id": 154283,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154283/",
+        "name": "Bassoon E-2 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154283_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154283_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154283_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154283_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1050.126452360093, 93.5322868818699, 39.37395128282984, 10.306885448901394, 5.84861951209226, 3.2472354077013557,-2.930390747830372,-4.755471600355355, 1.6480349396315586, 8.391065729509911, 9.556852927613749, 6.326326880310702, 2.46167545773526]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5613728281066315, 0.3930071757115389, 0.014546957603320334]
+                }
+            }
+        }
+    }, {
+        "id": 154282,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154282/",
+        "name": "Bassoon D#-2 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154282_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154282_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154282_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154282_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1060.0235522575074, 84.74949924610677, 37.66150100043215, 11.842867032848455, 7.432800633044351, 5.133694325752881, 0.656247421574379,-0.6180764930549929, 2.5478744665592927, 5.466380196783676, 6.194052053844473, 5.149617357499502, 2.9658627865344394]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.7168009708281009, 0.2218400716770531, 0.026896256091289195]
+                }
+            }
+        }
+    }, {
+        "id": 154281,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154281/",
+        "name": "Bassoon D-2 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154281_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154281_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154281_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154281_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1064.6160860554296, 81.14199001193228, 38.09283590692089, 11.233873122092433, 4.982027330557819, 4.056598481146672,-0.9539839531290807,-4.323487138217874, 0.2829939690339874, 6.118856025990979, 8.2555763411103, 6.447282296322506, 2.892453313708643]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.7164835980953339, 0.2588067053125151, 0.01794954655978131]
+                }
+            }
+        }
+    }, {
+        "id": 154280,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154280/",
+        "name": "Bassoon C#-2 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154280_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154280_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154280_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154280_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1034.5191785718941, 107.43359697734495, 41.073283170330825, 3.5428140495149663,-4.543358416970561,-5.850378389285658,-9.370488877453212,-9.330559711883682,-1.0308455108686707, 9.018934102111755, 9.60691366071845, 4.15307214671498,-0.5952731309312556]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.7186956425670027, 0.25283824500809765, 0.028466211650534697]
+                }
+            }
+        }
+    }, {
+        "id": 154279,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154279/",
+        "name": "Bassoon C-2 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154279_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154279_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154279_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154279_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1061.9607856188236, 81.59749325166361, 33.05927655077965, 6.419126053857093, 3.833171695205824, 4.474399728676415,-0.3364301337860528,-3.0927013088885884, 1.5985204735425165, 6.559181127227415, 5.571452620718031, 2.244005274774184, 0.6914444610836415]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.7108006058366713, 0.26244753808082166, 0.02459959310687844]
+                }
+            }
+        }
+    }, {
+        "id": 154123,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154123/",
+        "name": "Soprano-Recorder C -6 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154123_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154123_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154123_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154123_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1036.2331253055868, 28.258280580622507, 3.0783771224563283, 16.538339766638927, 28.40544454924366, 17.505388835680613,-5.251948693108992,-8.998114832477135, 16.024949741949897, 11.691968511095096,-10.713273110862191,-21.034835894417423, 13.000433457746405]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.4073791283006253, 0.4878055946501935, 0.06814601682152897]
+                }
+            }
+        }
+    }, {
+        "id": 154122,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154122/",
+        "name": "Soprano-Recorder B-6 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154122_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154122_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154122_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154122_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1042.8377946562855, 32.233925958340016, 1.2213069477469312, 10.645529374630966, 26.57931897631617, 21.685104564246075,-3.552761492419457,-11.125212623567242, 10.63260483652908, 14.391136564532903,-1.6396027494843994,-16.685323921715522, 4.032735688329137]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.3432019118676636, 0.5605465948221439, 0.031373041351195737]
+                }
+            }
+        }
+    }, {
+        "id": 154120,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154120/",
+        "name": "Soprano-Recorder A-6 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154120_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154120_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154120_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154120_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1032.5440326321514, 34.959716499438535,-7.907430072439927, 12.523776018312592, 19.67092918854806, 26.462594398714458, 10.164843310140478,-9.626173625227167, 2.6492634697452417, 11.29606742034357, 8.013794449238741,-3.463934798326689,-16.48596362242014]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.46166331750203465, 0.4605904381089463, 0.030556208983013193]
+                }
+            }
+        }
+    }, {
+        "id": 154118,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154118/",
+        "name": "Soprano-Recorder G-6 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154118_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154118_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154118_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154118_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1052.8293210130767, 34.014385164425235, 4.684979657459253, 10.271291641525515, 14.381818905366623, 24.60742958175162, 17.050897070499357,-3.976968166323084,-7.138455049905362, 6.382302591126893, 10.593919533889729, 8.944544308692986,-9.884394103309946]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.49923595263786097, 0.3929068774905157, 0.03549772530370924]
+                }
+            }
+        }
+    }, {
+        "id": 154116,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154116/",
+        "name": "Soprano-Recorder F-6 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154116_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154116_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154116_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154116_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1055.115577287397, 35.94813173145505, 7.191863276522474, 9.438485784017947, 10.410120718868727, 19.808416049269354, 19.581919437425316, 2.1916067321746695,-10.691123135161826,-1.5144574364871535, 8.043634405848689, 15.018600140061581, 7.997445385558373]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5537928113055686, 0.3689818404763956, 0.04331806042743381]
+                }
+            }
+        }
+    }, {
+        "id": 154115,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154115/",
+        "name": "Soprano-Recorder E-6 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154115_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154115_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154115_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154115_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1047.5939063206768, 50.25332544654298, 5.399442842377459, 6.030332655313711, 9.086102942004176, 22.541959592620056, 30.09150112274454, 10.104895668643689,-11.575745641363257,-12.476856398082212, 2.917058866310692, 22.089142926384074, 18.139507370509875]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5641390089500645, 0.40194572672653417, 0.03391522009358618]
+                }
+            }
+        }
+    }, {
+        "id": 154113,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154113/",
+        "name": "Soprano-Recorder D -6 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154113_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154113_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154113_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154113_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1045.9033177111457, 49.99421827790804, 7.71860847732347, 10.031802124425559, 5.21367767724346, 21.63516789007449, 29.87012985832212, 19.330224969094665, 0.7557458764886376,-13.933942442645405,-7.693000541906936, 5.3371335553511585, 21.73023325105513]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5371936803288851, 0.4327352239346004, 0.027648043599754927]
+                }
+            }
+        }
+    }, {
+        "id": 154111,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154111/",
+        "name": "Soprano-Recorder C-5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154111_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154111_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154111_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154111_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1061.4584794533428, 46.15873410553058, 11.49464474552079, 11.04877497764071, 1.9546370007193254, 12.986861289127308, 16.8411489794151, 20.787006263192573, 16.091366783837483,-3.979598518038421,-10.321590245706401,-3.924779197658465, 6.147656235065723]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5559555491995762, 0.3907440570825051, 0.04449200051044216]
+                }
+            }
+        }
+    }, {
+        "id": 154110,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154110/",
+        "name": "Soprano-Recorder B-5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154110_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154110_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154110_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154110_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1051.8854824033376, 49.56873894797161, 11.856858204613285, 8.546464686062635,-1.2514719850763378, 8.21357874444786, 24.07458142278861, 30.59070991135556, 21.088568791808232,-2.070930741512467,-11.999648467462656,-8.384810636873858, 0.895881333165076]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6405176597338754, 0.30018236574379814, 0.04407179860904513]
+                }
+            }
+        }
+    }, {
+        "id": 154108,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154108/",
+        "name": "Soprano-Recorder A-5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154108_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154108_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154108_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154108_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1055.162932511761, 53.01846137025702, 17.155992177441256, 18.050868041592928, 0.9563979763762587, 4.029452352568924, 14.398387812033539, 21.11268140749379, 23.462682663030062, 7.903792435798295,-4.978758138661775,-2.6905816560690816,-3.046481836145354]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6889919075835154, 0.2780524134778186, 0.02885207978272384]
+                }
+            }
+        }
+    }, {
+        "id": 154106,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154106/",
+        "name": "Soprano-Recorder G-5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154106_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154106_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154106_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154106_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1061.9847117216882, 53.12651436132054, 16.667873361613907, 15.19187281736754, 0.11461260993017772, 2.11756115157875, 10.453706079822489, 13.284961020983623, 17.5792166797945, 15.393626987911514, 8.737200290194016,-0.3211643942402169,-4.503586060478536]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6483761768620803, 0.28481266415065404, 0.039349930006388215]
+                }
+            }
+        }
+    }, {
+        "id": 154104,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154104/",
+        "name": "Soprano-Recorder F-5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154104_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154104_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154104_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154104_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1062.4068618927058, 51.86583272086642, 12.51562026834308, 17.545176677795457, 8.456371578388785, 4.488313867313737,-0.6073362644326487, 0.9045390256649893, 11.858710219724669, 13.013105723428385, 7.828682727120681, 2.02201327635816, 0.7239620450430668]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6055279936560234, 0.3287620702169813, 0.03421501837668632]
+                }
+            }
+        }
+    }, {
+        "id": 154103,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154103/",
+        "name": "Soprano-Recorder E-5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154103_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154103_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154103_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154103_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1070.713976408361, 54.3021613415539, 12.026908001318022, 12.867829012962124, 6.097595817163575, 1.0499772561932434, 2.1087113111142277, 0.010991962851803249, 5.408054219912769, 11.462589112988747, 11.724948131374115, 8.349929375728335, 2.098925850086822]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6067164663101045, 0.33098860992688695, 0.05113305282076946]
+                }
+            }
+        }
+    }, {
+        "id": 154101,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154101/",
+        "name": "Soprano-Recorder D-5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154101_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154101_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154101_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154101_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1078.2564495950794, 53.50527053246044, 20.892485855307065, 19.032072497042673, 9.661025424670687, 2.8949628045579767, 2.5726381280362913,-0.32344325732310236, 1.831900048200703, 7.261331053120212, 11.08993225655532, 9.68258975712489, 4.470267161629093]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6704682856409835, 0.2581272041461397, 0.06117967294802638]
+                }
+            }
+        }
+    }, {
+        "id": 154100,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154100/",
+        "name": "Alto-Recorder F-6 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154100_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154100_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154100_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154100_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1017.9251837818784, 39.11821824017137, 5.1231132241603285, 8.009541041472088, 7.6933698560984665, 20.17860670731445, 14.914553446799593,-2.0497466431870333,-5.3079995532617765, 7.439926882330834, 11.643057611261415, 13.499106319148305,-5.913585384016406]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.4491736647226372, 0.4319594643876678, 0.03479423377174472]
+                }
+            }
+        }
+    }, {
+        "id": 154099,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154099/",
+        "name": "Alto-Recorder E-6 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154099_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154099_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154099_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154099_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1032.90895894884, 38.02203950382491, 0.3916101162281003, 4.356311503203046, 3.9990899432546323, 21.609593669363505, 22.455454465486543,-1.4320630652999042,-13.032009381502686, 0.7531073474913246, 2.625086252413954, 12.479839004186482, 6.430671625319829]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.4959602363933282, 0.3034676007365437, 0.03165199722024272]
+                }
+            }
+        }
+    }, {
+        "id": 154095,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154095/",
+        "name": "Alto-Recorder C-6 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154095_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154095_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154095_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154095_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1043.8331063359856, 52.38441925536517, 5.809694614210764, 6.997999889264429, 5.093644046365965, 13.186230897403552, 15.715319536118644, 13.571170735227412, 0.7995761865014519,-8.5043301018241,-10.305240389276195,-1.5440300116562635, 8.290507684475772]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6675288668530087, 0.27554554556539734, 0.04097310146652183]
+                }
+            }
+        }
+    }, {
+        "id": 154094,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154094/",
+        "name": "Alto-Recorder B-5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154094_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154094_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154094_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154094_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1055.4046784472328, 47.19705685041277, 4.726635766968569, 7.5533363536393, 2.0886227210728396, 10.972789721374962, 15.990908030868145, 17.45825794659353, 7.9430908406907985,-2.7118606278620687,-8.524165948043022,-5.6452777714465014, 2.926230429241673]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5644781195412402, 0.3763921198431161, 0.05165842771516405]
+                }
+            }
+        }
+    }, {
+        "id": 154092,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154092/",
+        "name": "Alto-Recorder A -5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154092_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154092_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154092_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154092_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1062.8432825286368, 49.369439738490094, 8.950061358266309, 8.808544259674106,-2.0214675093094523, 5.250057877377548, 15.28604766873956, 17.6515786504149, 15.366739751472473, 5.371716736549205,-6.726994128859798,-5.970395406352988,-3.66837893645058]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6640759231275674, 0.27312579130375125, 0.05001155029123646]
+                }
+            }
+        }
+    }, {
+        "id": 154090,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154090/",
+        "name": "Alto-Recorder G-5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154090_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154090_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154090_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154090_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1054.2663781290482, 58.97287263759763, 9.53381951974539, 5.713173046961986,-1.1531630258847725,-0.1115863922721768, 5.222077937723194, 16.290024534049813, 18.45532617768425, 9.049508289646898,-2.6964714179439864,-10.405066917380344,-13.925374306106097]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5197932151694039, 0.4258905222331151, 0.04664225730743301]
+                }
+            }
+        }
+    }, {
+        "id": 154088,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154088/",
+        "name": "Alto-Recorder F -5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154088_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154088_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154088_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154088_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1056.710674477483, 62.79099587701104, 14.109567716840488, 8.829107127773895, 4.376471132889054, 2.657780550036673, 2.563011551119483, 14.247487240069859, 24.266740927099377, 21.054775296625806, 11.808146040052367, 0.9042866169390041,-9.143675548165339]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6309668631155292, 0.33009492376417054, 0.029041477653165317]
+                }
+            }
+        }
+    }, {
+        "id": 154087,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154087/",
+        "name": "Alto-Recorder E-5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154087_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154087_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154087_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154087_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1064.9456556978553, 58.13868766617217, 13.844440791408168, 10.559679400314344, 5.3096528323772185, 4.801165902283656, 5.407164971734204, 8.095292395209455, 12.141245694266468, 16.966850619304633, 17.144791174439742, 5.884428442215058,-5.04490586983613]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6687957492410674, 0.2650212653529546, 0.03774014419990883]
+                }
+            }
+        }
+    }, {
+        "id": 154085,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154085/",
+        "name": "Alto-Recorder D-5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154085_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154085_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154085_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154085_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1059.7593001659286, 63.15759360534145, 10.671871511308556, 5.782187981310745, 4.240283519141871, 2.8257268302971736,-1.1790120075363333,-0.6899799687741137, 7.064236253982436, 14.670896087094896, 18.328527779390054, 12.339267684886348, 4.771437412898447]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5908135605773248, 0.3591719693245365, 0.0500144234502046]
+                }
+            }
+        }
+    }, {
+        "id": 154083,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154083/",
+        "name": "Alto-Recorder C-5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154083_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154083_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154083_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154083_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1064.75453086429, 59.117218994, 15.108970768054855, 14.868227499360442, 5.56594510582105,-2.2711187549780005,-2.7683536739624417,-3.677843781397862, 1.1374219677643103, 8.416413719002108, 11.040998927357052, 12.87901261610114, 14.057604806309282]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5400946870423542, 0.3957962815692415, 0.059129630782736906]
+                }
+            }
+        }
+    }, {
+        "id": 154082,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154082/",
+        "name": "Alto-Recorder B-4 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154082_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154082_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154082_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154082_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1067.9055347139542, 58.41927475043723, 20.68142545741333, 19.66055263516307, 6.596832019537999,-1.9919038535774178,-4.746946178043031,-4.204636741171259, 3.3720624022760135, 7.622413826996488, 10.001240050555065, 13.493443852411474, 12.130846539099123]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6723919582403975, 0.27192461819284125, 0.05077678110872034]
+                }
+            }
+        }
+    }, {
+        "id": 154080,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154080/",
+        "name": "Alto-Recorder A-4 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154080_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154080_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154080_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154080_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1066.3908775076827, 62.43022096754996, 21.71338503310548, 17.63680430074326, 5.542008393767285, 2.069365863211047, 2.28796493773024,-6.873000940923132,-6.132042005149246,-0.724141629237048, 4.824951248295946, 11.687401251815853, 11.611228819910757]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6184818136473241, 0.33484551907138904, 0.042504293402765764]
+                }
+            }
+        }
+    }, {
+        "id": 154078,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154078/",
+        "name": "Alto-Recorder G-4 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154078_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154078_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154078_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154078_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1061.4202828855648, 63.563197603256626, 16.011932793929358, 17.220878262405314, 9.651466975007844, 0.06442068237246074,-1.4193691218998943,-6.016173732916519,-3.808766649816014,-1.2231824948244399,-1.7577039332038182, 1.663210955067205, 5.399918838652073]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.689809148763878, 0.2594850312525731, 0.03082746786097831]
+                }
+            }
+        }
+    }, {
+        "id": 154076,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154076/",
+        "name": "Alto-Recorder F-4 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154076_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154076_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154076_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154076_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1077.0910992911638, 60.78572127364341, 26.9270828563125, 17.929262602132347, 8.691659615312355,-1.1137390930851612,-3.544460524602073,-6.802408255968934,-7.450682451417218,-3.683634861879585,-1.2289302528979758, 0.6725519134091159, 4.448572971747513]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5176262319995188, 0.42187044025961046, 0.042694287045300976]
+                }
+            }
+        }
+    }, {
+        "id": 154074,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154074/",
+        "name": "Alto-Recorder E-6 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154074_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154074_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154074_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154074_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1042.198818615391, 43.47744181090494, 1.6582692291893721, 4.080193569011499, 6.095718626943166, 22.301224656841935, 19.869662076510284, 6.7743309245473045,-8.7898302394752,-5.490849632922791, 2.7104414772147156, 11.770879526869447, 10.949121512701934]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.4625288423020157, 0.4548883869203481, 0.07278865734494742]
+                }
+            }
+        }
+    }, {
+        "id": 154072,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154072/",
+        "name": "Alto-Recorder D-6 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154072_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154072_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154072_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154072_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1045.1649453972232, 51.33892551054022, 1.2269915855355056, 2.014414214890863, 2.596945538811463, 13.5553072380121, 15.401170181887116, 10.602258638220842,-2.8436489695630196,-6.2550716093144905,-6.7092956373796575, 3.2152534736677456, 16.571395075821247]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5120742806661339, 0.40699681271277566, 0.07083139226941505]
+                }
+            }
+        }
+    }, {
+        "id": 154070,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154070/",
+        "name": "Alto-Recorder C-6 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154070_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154070_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154070_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154070_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1037.584204645389, 51.53574340516266,-0.8274427581099913, 5.358955011855577, 0.5863073876789415, 12.570903114163714, 15.9354797502527, 18.40863922225341, 10.797665792784002,-2.278319763394434,-11.853720905507195,-7.562650759717928, 8.51989592217483]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.48602792757293384, 0.45256338528054013, 0.05762303846842754]
+                }
+            }
+        }
+    }, {
+        "id": 154069,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154069/",
+        "name": "Alto-Recorder B-5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154069_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154069_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154069_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154069_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1035.2865887970083, 54.43552374418006,-1.246716029290916, 0.5994981334589953,-4.181682206599053, 10.501844429713692, 20.77572407873918, 20.8641754462843, 9.86241932260378,-1.5308048990298173,-9.464999506682673,-5.162221589013708, 3.9776300533713806]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5504384295875474, 0.38178332367076945, 0.04682873397276976]
+                }
+            }
+        }
+    }, {
+        "id": 154067,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154067/",
+        "name": "Alto-Recorder A -5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154067_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154067_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154067_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154067_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1038.9990395946052, 53.371635185199786, 0.6597615604838286, 0.24419375815108776,-14.015312735292873,-0.5375776611131086, 11.854829438068576, 17.511549481697188, 16.028623576021914, 7.343020589518258,-6.379792472375987,-8.38137121263371,-7.989486410059211]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5740197095372015, 0.34888671912730046, 0.06381177483966043]
+                }
+            }
+        }
+    }, {
+        "id": 154065,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154065/",
+        "name": "Alto-Recorder G-5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154065_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154065_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154065_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154065_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1052.48974074601, 60.12282146694042, 11.816388997499388, 4.018252778593925,-6.699691896642287,-4.002285039249038, 3.876521058023356, 15.22106661371437, 22.78411081459188, 20.308798564189015, 5.0374981319951555,-7.101896074365316,-14.047062436749204]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5831807079933532, 0.3765917246879572, 0.03384473641120728]
+                }
+            }
+        }
+    }, {
+        "id": 154063,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154063/",
+        "name": "Alto-Recorder F -5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154063_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154063_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154063_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154063_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1053.0263386256856, 58.90739900951597, 6.859093325975927, 6.980211068464894, 0.1875389132495542,-1.3377147793566075,-0.5980497271613713, 5.229002010570263, 18.048914896368487, 21.76243542421345, 12.291704824221624, 4.891406544066785,-3.8618118364507845]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5499129360409806, 0.4132384029585147, 0.03684869618160056]
+                }
+            }
+        }
+    }, {
+        "id": 154062,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154062/",
+        "name": "Alto-Recorder E-5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154062_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154062_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154062_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154062_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1044.2877022904129, 65.790781475899, 11.401660313121965, 8.87746866567274,-3.682357218200691,-6.519231542015533,-1.950123730334923, 4.800086795604704, 11.496540717837787, 21.62514487379629, 21.978104210023975, 10.669201183671095,-4.716388208566747]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6016396789875825, 0.3702450251384582, 0.025488571553765934]
+                }
+            }
+        }
+    }, {
+        "id": 154060,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154060/",
+        "name": "Alto-Recorder D-5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154060_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154060_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154060_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154060_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1054.879653133631, 64.05352196151041, 12.30965105704021, 7.778955634237984, 3.1735016843184383, 3.59300853195629,-0.9997838384338902,-6.468084147050514,-0.5849640258167668, 10.91314821614768, 14.71563822177344, 13.401394979556208, 5.854429158720235]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5900963646935443, 0.34673168459364234, 0.0489010022808462]
+                }
+            }
+        }
+    }, {
+        "id": 154058,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154058/",
+        "name": "Alto-Recorder C-5 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154058_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154058_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154058_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154058_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1058.1197586423311, 63.83160143156359, 14.63054498845674, 11.492949094372976, 2.5864586410125794,-3.693199651431549,-4.0896840927135365,-3.8773062001792074,-0.6688214928110415, 6.499980964124384, 11.020778150862297, 13.752057796192123, 12.90900681463294]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6421278468410851, 0.3054772928279831, 0.0454237496281229]
+                }
+            }
+        }
+    }, {
+        "id": 154057,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154057/",
+        "name": "Alto-Recorder B-4 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154057_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154057_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154057_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154057_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1062.0968165181962, 59.74120351266304, 16.803981914379534, 17.948674466923407, 6.536919210584435,-0.9487565582499973,-3.8260097143144187,-5.910025445886755, 0.12148046695900588, 4.593108780780783, 5.595338084855424, 12.927281067124479, 13.083977871012145]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5366541211092303, 0.4162045272802714, 0.04226720493714412]
+                }
+            }
+        }
+    }, {
+        "id": 154055,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154055/",
+        "name": "Alto-Recorder A-4 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154055_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154055_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154055_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154055_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1064.0265951590354, 63.854098686285944, 17.065475252653957, 8.544240275173852, 0.9801926307917224, 1.4418377869729857, 1.4491107713240203,-6.329238554760589,-8.541436439731488,-7.494236608717701,-0.8692246621791846, 9.572236902286985, 12.348167651722026]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6516875431944034, 0.2900376652689553, 0.04756391673642966]
+                }
+            }
+        }
+    }, {
+        "id": 154053,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154053/",
+        "name": "Alto-Recorder G-4 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154053_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154053_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154053_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154053_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1064.863156791242, 63.77485376073637, 16.961298538894845, 16.181308886367926, 13.807870532219892, 1.8080160548568305,-2.5243124937066526,-4.4071168772664455,-4.984850577820623,-3.9740206332302686,-4.560081324318372,-3.207814204096827, 2.576532096787835]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.655638002563942, 0.2787016709294329, 0.047977151948021]
+                }
+            }
+        }
+    }, {
+        "id": 154097,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154097/",
+        "name": "Alto-Recorder D-6 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154097_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154097_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154097_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154097_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1036.6493826975604, 42.533251880726816,-5.279477203331949, 1.496740777323295, 4.997410143391014, 18.437636124381182, 21.65637948242602, 9.329667601215661,-8.041061708656141,-6.975676464101449,-3.0737180135661872, 10.733524941614915, 18.02291492539977]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5010542094109685, 0.4307679685309649, 0.06658300873363453]
+                }
+            }
+        }
+    }, {
+        "id": 154075,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154075/",
+        "name": "Alto-Recorder F-6 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154075_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154075_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154075_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154075_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1031.3644828606602, 39.050693391806206, 3.141251715139846, 7.449018595897207, 9.68120268279655, 19.130572091975413, 16.77949451833816, 4.092330636100873,-5.969164775866731,-1.153058808082127, 6.1187359733635205, 17.253666640184537, 7.669003341327907]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5754773224523332, 0.22772784534961846, 0.0366774309231085]
+                }
+            }
+        }
+    }, {
+        "id": 154051,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154051/",
+        "name": "Alto-Recorder F-4 Staccato Non-Vibrato ",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154051_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154051_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154051_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154051_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1076.0225893561123, 64.44147553972799, 29.60544263723986, 18.198196465110414, 11.852741403253596, 2.0817610558369557,-1.7008673965851018,-2.736451245356903,-2.9053884859101116,-1.0605107769183664,-1.6154823053753777,-3.4742763733793867,-2.379459421406916]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6940898701375224, 0.24557905567480431, 0.04664261284884378]
+                }
+            }
+        }
+    }, {
+        "id": 154303,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154303/",
+        "name": "Bassoon C-4 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154303_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154303_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154303_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154303_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1056.0276090897669, 78.29286985128782, 22.892208163093663, 0.21093428894628638,-1.3385355601502322, 1.2597634021795525,-0.46868737195950344,-5.714554980798586,-2.3538960275566945, 4.9920808269084835, 4.9334395013675, 1.6917330097416128, 0.8133775006438382]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6709892781721623, 0.31301216454725617, 0.013322444156936362]
+                }
+            }
+        }
+    }, {
+        "id": 154302,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154302/",
+        "name": "Bassoon B-3 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154302_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154302_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154302_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154302_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1058.943469756382, 76.87189527093696, 21.711021639739172,-1.0295983249022072,-3.529914151842175,-1.6485966333075388,-1.7391754993252622,-1.5363498362065087, 2.685540376905985, 4.549682764437136, 4.437959233318472, 5.435026653134808, 2.648770069816676]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5858170754611597, 0.3905761466224106, 0.019662679606067806]
+                }
+            }
+        }
+    }, {
+        "id": 154301,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154301/",
+        "name": "Bassoon A#-3 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154301_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154301_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154301_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154301_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1050.479522121356, 84.61999115256171, 20.952486894822734,-5.180507467982669,-3.7577264055501414,-2.3428714766049943,-5.1238810343115,-4.534611408006069, 1.2793612819035751, 3.7139131016840072, 0.46840257599918633,-3.704159706611986,-4.031583374945042]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5559945750489076, 0.41847021671687457, 0.019288457857388305]
+                }
+            }
+        }
+    }, {
+        "id": 154300,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154300/",
+        "name": "Bassoon A-3 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154300_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154300_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154300_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154300_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1053.7165747445274, 81.28189481473689, 21.334450826231944,-3.5889479433696674,-3.8909891539944437, 0.06292715805161543, 1.281102092130287, 0.6276658775821667, 2.3310712312340556, 3.6298188240838747, 2.4760864523187904, 1.4205334763125603, 2.31449761330194]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5356147957377839, 0.43873141223494333, 0.025274045553887393]
+                }
+            }
+        }
+    }, {
+        "id": 154299,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154299/",
+        "name": "Bassoon G#-3 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154299_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154299_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154299_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154299_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1049.3904939556583, 81.91424963552457, 21.384665126697683,-1.0768508905120227,-1.4676405859306814, 2.1888584012497407,-1.114064435239836,-4.584237881953751, 1.1707215997930898, 1.991144295006139, 3.7936666491941975, 3.5403303294927935, 1.6937268682928233]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6032462857416425, 0.3454938040232257, 0.05020814547293926]
+                }
+            }
+        }
+    }, {
+        "id": 154298,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154298/",
+        "name": "Bassoon G-3 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154298_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154298_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154298_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154298_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1045.5024667414912, 90.42439039457172, 27.157144103957425,-1.8764878071649147,-7.447310806099409,-3.3731066715982982,-2.41437967653956,-1.559375631228181, 5.110891007629818, 7.260003933251511, 8.01533431798899, 7.508305060443702, 3.6717060861629354]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6616434311976833, 0.3100765226581063, 0.018504373735906146]
+                }
+            }
+        }
+    }, {
+        "id": 154297,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154297/",
+        "name": "Bassoon F#-3 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154297_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154297_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154297_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154297_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1053.1346095659483, 82.61397215473635, 22.808240024330196,-5.145896539836717,-5.099780428991871, 0.767840978851603,-0.8923749518978008,-2.9506995127912305, 3.460084527574329, 6.884954549877022, 6.744387646334207, 1.9947122638936696,-2.5786787178030655]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.613340119636989, 0.3529161661855217, 0.022118173508820886]
+                }
+            }
+        }
+    }, {
+        "id": 154296,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154296/",
+        "name": "Bassoon F-3 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154296_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154296_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154296_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154296_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1068.9961248210852, 69.22766722931343, 24.822017755220415, 5.46722691860491, 1.9986900890539674, 2.139559387816562, 1.3218450242039583, 0.9834280177701521, 4.001128601826924, 4.707782554395533, 4.204131663465247, 3.1757513600369807,-0.012233031116764206]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.7611166896423043, 0.21816596531363594, 0.01926747130492538]
+                }
+            }
+        }
+    }, {
+        "id": 154295,
+        "url": "https://www.freesound.org/people/Carlos_Vaquero/sounds/154295/",
+        "name": "Bassoon E-3 Staccato Non-Vibrato",
+        "username": "Carlos_Vaquero",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/154/154295_2626346-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/154/154295_2626346-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/154/154295_2626346-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/154/154295_2626346-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1048.8430334832874, 87.54348459058241, 28.242503876018805, 3.5579678486947954,-0.8234168064650178,-0.5894336729225431,-5.82930509852626,-11.074835746061263,-4.641335335817825, 2.2100182122318484, 5.343407058039038, 7.98276617762596, 5.874667438449529]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.8043495050724397, 0.17923607938918198, 0.015326986630874216]
+                }
+            }
+        }
+    }, {
+        "id": 275048,
+        "url": "https://www.freesound.org/people/MrCisum/sounds/275048/",
+        "name": "Imaging Beep Fast.wav",
+        "username": "MrCisum",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/275/275048_1954708-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/275/275048_1954708-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/275/275048_1954708-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/275/275048_1954708-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-684.7037222850382, 10.384435022053331,-17.81753929723047,-20.711800168366565,-40.48984644615707,-22.932479129222358,-21.086463944546264,-4.81909165138803,-14.119674410129202,-8.173330481131549, 17.445055581590662, 19.460618876447466,-0.13311307519472623]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.6699039708366937, 0.31758757768154144, 0.012414083898548084]
+                }
+            }
+        }
+    }, {
+        "id": 312246,
+        "url": "https://www.freesound.org/people/modularsamples/sounds/312246/",
+        "name": "Yamaha CS-30L-Changes Length-C#4 (Changes Length-61-64.aif)",
+        "username": "modularsamples",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/312/312246_2050105-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/312/312246_2050105-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/312/312246_2050105-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/312/312246_2050105-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1101.0676102656603, 10.084328260896816, 6.60199360884945, 4.393932498990649, 0.10881361419523634, 1.2226710371672398, 0.8860123918993282, 1.6785497001958638, 1.3416959593703341, 2.3669182858289393, 3.14271463268248, 2.748829330878627, 2.450703086804622]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5909900208397012, 0.2667588558261, 0.13361114570432947]
+                }
+            }
+        }
+    }, {
+        "id": 312245,
+        "url": "https://www.freesound.org/people/modularsamples/sounds/312245/",
+        "name": "Yamaha CS-30L-Changes Length-C4 (Changes Length-60-127.aif)",
+        "username": "modularsamples",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/312/312245_2050105-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/312/312245_2050105-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/312/312245_2050105-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/312/312245_2050105-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1035.1754069658928, 32.3936564668687,-24.618401525859333, 3.8642155577011135,-3.140762472177076,-8.38382780617894,-3.455566524006094,-0.11932221730966436,-1.9863362763193473,-0.905264294677677, 0.677174781430739, 1.3112478682917228, 0.6642290987485874]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.40500614695487896, 0.4346875686543343, 0.1373088916870959]
+                }
+            }
+        }
+    }, {
+        "id": 312244,
+        "url": "https://www.freesound.org/people/modularsamples/sounds/312244/",
+        "name": "Yamaha CS-30L-Changes Length-C4 (Changes Length-60-64.aif)",
+        "username": "modularsamples",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/312/312244_2050105-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/312/312244_2050105-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/312/312244_2050105-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/312/312244_2050105-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1103.1018259905168, 10.176926795913015, 4.530760431739, 2.2967139421337937,-0.5665892801340162, 0.9921746872652093, 1.555315881147052, 2.5006377323158735, 2.173881097095026, 1.877221671237074, 1.677139550058663, 1.9581811976248225, 1.7085613512708424]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5430267916803232, 0.3051636726674457, 0.14479094357231098]
+                }
+            }
+        }
+    }, {
+        "id": 312243,
+        "url": "https://www.freesound.org/people/modularsamples/sounds/312243/",
+        "name": "Yamaha CS-30L-Changes Length-B3 (Changes Length-59-127.aif)",
+        "username": "modularsamples",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/312/312243_2050105-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/312/312243_2050105-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/312/312243_2050105-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/312/312243_2050105-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1022.739442265991, 38.950845281876724,-26.088718513879773, 5.326345406878457,-2.6296771407222015,-7.407609466693315,-2.8274642020762877,-1.9489639026299048,-4.499354874736953,-0.0508645232077184, 1.5952990256846076, 0.7529263178069651, 2.2675067023712643]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.43150748621154855, 0.44144420183366156, 0.1250320275546515]
+                }
+            }
+        }
+    }, {
+        "id": 312242,
+        "url": "https://www.freesound.org/people/modularsamples/sounds/312242/",
+        "name": "Yamaha CS-30L-Changes Length-B3 (Changes Length-59-64.aif)",
+        "username": "modularsamples",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/312/312242_2050105-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/312/312242_2050105-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/312/312242_2050105-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/312/312242_2050105-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1103.0801718024643, 9.225917385397178, 2.720427141705263, 2.989278452676507,-1.0060369739883903, 2.595469867981321, 1.5612474818086746, 2.010592002586155, 0.756139711501158, 1.546304331976381, 2.5850821621375863, 2.4205530648356084, 2.0146455814572914]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.5683779936355643, 0.2910338899278624, 0.12408763269382003]
+                }
+            }
+        }
+    }, {
+        "id": 312241,
+        "url": "https://www.freesound.org/people/modularsamples/sounds/312241/",
+        "name": "Yamaha CS-30L-Changes Length-A#3 (Changes Length-58-127.aif)",
+        "username": "modularsamples",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/312/312241_2050105-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/312/312241_2050105-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/312/312241_2050105-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/312/312241_2050105-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1026.1442615985661, 40.477383267382486,-25.94192263384313, 5.9054617289379125,-0.010847115381718862,-8.122857204709025,-3.3513980152685985, 0.9395133065290846,-2.7016993686883533,-1.1172610767437754, 1.7575751941768087, 1.8061194982920483, 2.196932304198601]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.45047225881002156, 0.4100351767272283, 0.12595218794418653]
+                }
+            }
+        }
+    }, {
+        "id": 312240,
+        "url": "https://www.freesound.org/people/modularsamples/sounds/312240/",
+        "name": "Yamaha CS-30L-Changes Length-A#3 (Changes Length-58-64.aif)",
+        "username": "modularsamples",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/312/312240_2050105-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/312/312240_2050105-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/312/312240_2050105-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/312/312240_2050105-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1105.1544300258836, 8.707740267850184, 2.3944194113852344, 3.8124074761868005,-0.3920663979938164, 1.0414503974820346, 2.132499539150815, 1.8504468655202548, 1.9281545008875982, 1.415460929881373, 2.0286195918769736, 2.6751729888685487, 2.448197567007665]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.502555093451309, 0.31248536935049426, 0.15101024689564302]
+                }
+            }
+        }
+    }, {
+        "id": 312239,
+        "url": "https://www.freesound.org/people/modularsamples/sounds/312239/",
+        "name": "Yamaha CS-30L-Changes Length-A3 (Changes Length-57-127.aif)",
+        "username": "modularsamples",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/312/312239_2050105-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/312/312239_2050105-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/312/312239_2050105-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/312/312239_2050105-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1027.4447198364621, 42.62017234024048,-26.282386627110846, 4.3553674218374585, 2.8442678870939844,-6.538439747713554,-3.571327293386706, 1.1101624831030878,-0.3609115811006219,-1.2511250036599477, 0.9025730697485081, 2.3755795635924652, 3.2320121912724535]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.4731534891257514, 0.3645571501173133, 0.14550871441607033]
+                }
+            }
+        }
+    }, {
+        "id": 312238,
+        "url": "https://www.freesound.org/people/modularsamples/sounds/312238/",
+        "name": "Yamaha CS-30L-Changes Length-A3 (Changes Length-57-64.aif)",
+        "username": "modularsamples",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/312/312238_2050105-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/312/312238_2050105-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/312/312238_2050105-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/312/312238_2050105-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1108.7339738069743, 8.125495600641678, 3.9596052996428313, 4.0680563037840445, 1.564998266294336, 2.0085381131054705, 0.45386018869927336, 2.037030040397597, 1.6886910570061486, 1.6567153965728623, 2.134213091681014, 2.087609341642848, 2.6209226844697766]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.513290935814293, 0.3338762511661367, 0.1264995871875944]
+                }
+            }
+        }
+    }, {
+        "id": 312237,
+        "url": "https://www.freesound.org/people/modularsamples/sounds/312237/",
+        "name": "Yamaha CS-30L-Changes Length-G3 (Changes Length-56-127.aif)",
+        "username": "modularsamples",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/312/312237_2050105-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/312/312237_2050105-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/312/312237_2050105-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/312/312237_2050105-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-927.9734736196357, 83.89811876270785,-51.26941504956773, 11.720172020031015, 2.8348210541469494,-10.268522035210234,-7.037158650542666,-1.7338106420630381,-4.292099199398079,-2.8023463147498675,-0.8578343830225096,-1.2181154369868161, 2.2314249600700418]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.38806977228544787, 0.4821478715292537, 0.10438971605117643]
+                }
+            }
+        }
+    }, {
+        "id": 312236,
+        "url": "https://www.freesound.org/people/modularsamples/sounds/312236/",
+        "name": "Yamaha CS-30L-Changes Length-G3 (Changes Length-56-64.aif)",
+        "username": "modularsamples",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/312/312236_2050105-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/312/312236_2050105-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/312/312236_2050105-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/312/312236_2050105-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1047.256739963098, 37.01674305971711,-18.695633635636092, 3.3265515205327594, 3.6353564338712974,-4.724557637758254,-2.7092285986979845, 0.2674592871347356,-0.9477066458188829,-1.1499400763906786, 0.5461659478867856, 0.44548350191235686, 1.1593875273785526]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.49568460034870593, 0.3545163102682682, 0.13637055063947487]
+                }
+            }
+        }
+    }, {
+        "id": 312235,
+        "url": "https://www.freesound.org/people/modularsamples/sounds/312235/",
+        "name": "Yamaha CS-30L-Changes Length-F#3 (Changes Length-55-127.aif)",
+        "username": "modularsamples",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/312/312235_2050105-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/312/312235_2050105-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/312/312235_2050105-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/312/312235_2050105-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-925.7859036449645, 83.35118734146886,-46.70397416274862, 13.139782643047928,-3.8684679448366093,-3.0539055694091264,-3.7444256569004524,-8.430613284820119,-4.864148963684885, 0.9742599295315939,-1.955937036929118,-2.127858295022236, 2.6459124229131197]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.3959554745236391, 0.4794146256474487, 0.10860916620350192]
+                }
+            }
+        }
+    }, {
+        "id": 312234,
+        "url": "https://www.freesound.org/people/modularsamples/sounds/312234/",
+        "name": "Yamaha CS-30L-Changes Length-F#3 (Changes Length-55-64.aif)",
+        "username": "modularsamples",
+        "previews": {
+            "preview-lq-ogg": "https://www.freesound.org/data/previews/312/312234_2050105-lq.ogg",
+            "preview-lq-mp3": "https://www.freesound.org/data/previews/312/312234_2050105-lq.mp3",
+            "preview-hq-ogg": "https://www.freesound.org/data/previews/312/312234_2050105-hq.ogg",
+            "preview-hq-mp3": "https://www.freesound.org/data/previews/312/312234_2050105-hq.mp3"
+        },
+        "analysis": {
+            "lowlevel": {
+                "mfcc": {
+                    "mean": [-1062.498164469216, 28.464601911155228,-9.92987010853178, 2.976698245164513, 1.9453575928460027,-1.2292425441789592,-2.441051877184772, 0.6809348683729155, 0.9228142156805116,-0.4344884280538874,-0.0362919066820164, 1.5385411472946975, 2.63711375969822]
+                }
+            },
+            "sfx": {
+                "tristimulus": {
+                    "mean": [0.49395943275748977, 0.3422013340434638, 0.13309415005615632]
+                }
+            }
+        }
+    }
+    ],
+    "previous": null
+}
+

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, make_response
+from flask import Flask, render_template, jsonify, request, make_response, redirect
 import freesound
 import settings
 import json
@@ -42,6 +42,20 @@ def search():
             response = make_response(jsonify(e.detail), e.code)
 
     return response
+
+
+@app.route('/oauth_urls')
+def oauth_urls():
+    return make_response(jsonify({'authorize_url': "https://www.freesound.org/apiv2/oauth2/logout_and_authorize/?client_id=" + settings.FS_CLIENT_ID + "&response_type=code"}), 200)
+
+
+@app.route('/oauth_callback')
+def oauth_callback():
+    code = request.args.get('code', 'no_code')
+    # TODO get access token
+    # TODO get "me" resource and store user data
+    return render_template('logged.html')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=settings.PORT, debug=settings.DEBUG)

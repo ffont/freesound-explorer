@@ -1,0 +1,85 @@
+import sys
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+from flask import Flask, g
+import flask_login as login
+
+sys.path.append('../..')
+
+from social.apps.flask_app.routes import social_auth
+from social.apps.flask_app.template_filters import backends
+from social.apps.flask_app.default.models import init_social
+
+# App
+app = Flask(__name__)
+app.config.from_object('FreesoundExplorer.settings')
+
+try:
+    app.config.from_object('FreesoundExplorer.local_settings')
+except ImportError:
+    pass
+
+
+# Templates
+# We modify the template loader to also look in the root folder
+# This is where index.html stays. Having index.html in the root allows us to statically host FreesoundExplorer and
+# only allow end user registration when the Flask backend in running.
+
+import jinja2
+import os
+root_dir = os.path.dirname(os.path.realpath(__file__))
+my_loader = jinja2.ChoiceLoader([
+    app.jinja_loader,
+    jinja2.FileSystemLoader(root_dir),
+])
+app.jinja_loader = my_loader
+
+
+# DB
+engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
+Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+db_session = scoped_session(Session)
+
+app.register_blueprint(social_auth)
+init_social(app, db_session)
+
+login_manager = login.LoginManager()
+login_manager.login_view = 'main'
+login_manager.login_message = ''
+login_manager.init_app(app)
+
+from FreesoundExplorer import models
+from FreesoundExplorer import routes
+
+
+@login_manager.user_loader
+def load_user(userid):
+    try:
+        return models.user.User.query.get(int(userid))
+    except (TypeError, ValueError):
+        pass
+
+
+@app.before_request
+def global_user():
+    g.user = login.current_user._get_current_object()
+
+
+@app.teardown_appcontext
+def commit_on_success(error=None):
+    if error is None:
+        db_session.commit()
+    else:
+        db_session.rollback()
+    db_session.remove()
+
+
+@app.context_processor
+def inject_user():
+    try:
+        return {'user': g.user}
+    except AttributeError:
+        return {'user': None}
+
+
+app.context_processor(backends)

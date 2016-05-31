@@ -29,6 +29,10 @@ body{
 	font-size: 15px;
 }
 
+.modal_close_button a {
+	color: black;
+}
+
 #loginModal {
 	display: none;
 }

@@ -12,19 +12,21 @@ function rgbToHex(r, g, b) {
 
 /* JSON requests */
 
-function loadJSON(callback, url) {   
+function loadJSON(url, callback, error_callback) {   
     var xhr = new XMLHttpRequest();
     xhr.open('get', url, true);
     xhr.responseType = 'json';
     xhr.onload = function() {
         var status = xhr.status;
-        n_pages_received += 1;
         if (status == 200) {
             callback(xhr.response);
-        } else {
-            console.log('Error getting JSON data, status code: ' + xhr.status);
         }
     };
+    xhr.onerror = function(){
+        if (error_callback){
+            error_callback();
+        }
+    }
     xhr.send();
 }
 

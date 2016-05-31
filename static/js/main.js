@@ -1,13 +1,11 @@
 /* Global variables and objects */
 
-var use_fake_data = false;
-
 // Sounds and content
 var sounds = [];
 var default_query = "instrument note"
 var extra_descriptors = "lowlevel.mfcc.mean";
 var map_similarity_feature = "lowlevel.mfcc.mean";
-var n_pages = 1;
+var n_pages = 2;
 var n_pages_received = 0;
 var all_loaded = false;
 
@@ -64,57 +62,59 @@ function start(){
     opt.dim = 2; // dimensionality of the embedding (2 = default)
     tsne = new tsnejs.tSNE(opt); // create a tSNE instance
 
-    if (!use_fake_data){
-        // Search sounds and start loading them
-        var query = document.getElementById('query_terms_input').value;
-        if ((query == undefined) || (query=="")){
-            query = default_query;
-        }
-        for (var i=0; i<n_pages; i++){
-            var url = "/search?query=" + query + "&extra_descriptors=" + extra_descriptors + "&page=" + (i + 1);
-            loadJSON(function(data) { loadDataFromFreesoundResponse(data); }, url);
-        }    
-    } else {
-        query = "fake data";
-        loadFakeData();
+    
+    // Search sounds and start loading them
+    var query = document.getElementById('query_terms_input').value;
+    if ((query == undefined) || (query=="")){
+        query = default_query;
     }
 
+    freesound.setToken(sessionStorage.getItem("app_token"));
+    for (var i=0; i<n_pages; i++){
+        freesound.textSearch(query, {
+            page:(i + 1), page_size:150, group_by_pack:0,
+            filter:"duration:[0%20TO%202]", 
+            fields:"id,previews,name,analysis,url,username", 
+            descriptors:"sfx.tristimulus.mean," + extra_descriptors 
+            }, function(response){
+                for (i in response.results){
+                    var sound = response.results[i];
+                    if (sound.analysis != null){
+                        var sound = new SoundFactory(
+                            id=sound.id,
+                            preview_url=sound.previews["preview-lq-mp3"],
+                            analysis=sound.analysis,
+                            url=sound.url,
+                            name=sound.name,
+                            username=sound.username
+                        );
+                        sounds.push(sound);
+                    }
+                }   
+                n_pages_received += 1;
+                if (n_pages_received == n_pages){
+                    // Init t-sne with sounds features
+                    var X = [];
+                    for (i in sounds){
+                        sound_i = sounds[i];
+                        var feature_vector = Object.byString(sound_i, 'analysis.' + map_similarity_feature);
+                        X.push(feature_vector);
+                    }
+                    tsne.initDataRaw(X);
+                    all_loaded = true;
+                    console.log('Loaded tsne with ' + sounds.length + ' sounds')
+                    drawMap();
+                    runner = setInterval(step, 0);
+                }                    
+            },function(){ console.log("Error while searching..."); }
+        );
+    }    
+    
     // Ui
     document.getElementById('query_terms_input').value = query;
     document.getElementById('info_placeholder').innerHTML = "Searching...";
     document.onkeydown = onKeyDown;
     document.onkeyup = onKeyUp;
-}
-
-function loadDataFromFreesoundResponse(data){
-    for (i in data['results']){
-        var sound_json = data['results'][i];
-        if (sound_json['analysis'] != undefined){
-            var sound = new SoundFactory(
-                id=sound_json['id'],
-                preview_url=sound_json['previews']['preview-lq-mp3'],
-                analysis=sound_json['analysis'],
-                url=sound_json['url'],
-                name=sound_json['name'],
-                username=sound_json['username']
-            );
-            sounds.push(sound);
-        }
-    }
-    if (n_pages_received == n_pages){
-        // Init t-sne with sounds features
-        var X = [];
-        for (i in sounds){
-            sound_i = sounds[i];
-            var feature_vector = Object.byString(sound_i, 'analysis.' + map_similarity_feature);
-            X.push(feature_vector);
-        }
-        tsne.initDataRaw(X);
-        all_loaded = true;
-        console.log('Loaded tsne with ' + sounds.length + ' sounds')
-        drawMap();
-        runner = setInterval(step, 0);
-    }
 }
 
 

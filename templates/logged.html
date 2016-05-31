@@ -3,8 +3,9 @@
     </head>
     <body>
         <script>
+        	window.parent.setSessionStorage("{{ access_token }}", "{{ username }}");
             window.parent.closeLoginModal();
-            window.parent.setLogoutLink("fake username");  // TODO: get real username from backend server
+            window.parent.setLogoutLink();
         </script>
     </body>
 </html>

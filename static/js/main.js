@@ -39,6 +39,8 @@ var sound_playing_colour = "#ffffff";
 
 // UI
 var hover_playing_mode = false;
+document.onkeydown = onKeyDown;
+document.onkeyup = onKeyUp;
 
 
 function search(query, filter){
@@ -101,8 +103,6 @@ function search(query, filter){
     
     // Ui
     document.getElementById('info_placeholder').innerHTML = "Searching...";
-    document.onkeydown = onKeyDown;
-    document.onkeyup = onKeyUp;
 }
 
 function post_receive_search_results(){

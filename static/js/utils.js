@@ -73,11 +73,30 @@ function parseFreesoundSearchUrl(url){
 /* Data utilities */
 
 function loadFakeData(data){
+    // Sounds
+    sounds = [];
+    n_pages_received = 0;
+    all_loaded = false;
+
+    // Map
+    var map = document.getElementById("map");
+    map.innerHTML = null; 
+    w = window.innerWidth;
+    h = window.innerHeight;
+
+    // t-sne
+    current_it_number = 0;
+    var opt = {}
+    opt.epsilon = epsilon; // epsilon is learning rate (10 = default)
+    opt.perplexity = perplexity; // roughly how many neighbors each point influences (30 = default)
+    opt.dim = 2; // dimensionality of the embedding (2 = default)
+    tsne = new tsnejs.tSNE(opt); // create a tSNE instance
+
     M = 100;
     for (i=0; i<M; i++){
         var sound = new SoundFactory(
             id=i,
-            preview_url='test_file.wav',
+            preview_url='other/test_file.wav',
             analysis={
                 'fake_feature': [Math.random(), Math.random(), Math.random(), Math.random(), Math.random()],
                 'sfx': {

@@ -109,18 +109,25 @@ function post_receive_search_results(){
     n_pages_received += 1;
     // Check if all information has already been received and if that is the case start the map
     if (n_pages_received == n_pages){
-        // Init t-sne with sounds features
-        var X = [];
-        for (i in sounds){
-            sound_i = sounds[i];
-            var feature_vector = Object.byString(sound_i, 'analysis.' + map_similarity_feature);
-            X.push(feature_vector);
+        if (sounds.length > 0){
+            // Init t-sne with sounds features
+            var X = [];
+            for (i in sounds){
+                sound_i = sounds[i];
+                var feature_vector = Object.byString(sound_i, 'analysis.' + map_similarity_feature);
+                X.push(feature_vector);
+            }
+            tsne.initDataRaw(X);
+            all_loaded = true;
+            console.log('Loaded tsne with ' + sounds.length + ' sounds')
+            drawMap();
+            runner = setInterval(step, 0);
+        } else {
+            // No results found
+            console.log('No results found...')
+            document.getElementById('info_placeholder').innerHTML = 'No results found...';
+
         }
-        tsne.initDataRaw(X);
-        all_loaded = true;
-        console.log('Loaded tsne with ' + sounds.length + ' sounds')
-        drawMap();
-        runner = setInterval(step, 0);
     }         
 }
 

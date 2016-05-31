@@ -2,6 +2,7 @@
 <head>
 <title>Freesound Explorer</title>
 <link rel="stylesheet" type="text/css" href="static/css/all.css" />
+<link rel="stylesheet" type="text/css" href="static/css/font-awesome.min.css" />
 </head>
 <body>
 
@@ -10,7 +11,7 @@
 <div id="query_box" class="box">
     <form id="query-form" class="query-form">
         <input id="query_terms_input" type="text" placeholder="query terms, e.g.: instrument note">
-        <input type="submit" id="go_button" value="Go!">
+        <a id="go_button" href="javascript:void(0);" onclick="submitQuery();"><i class="fa fa-search fa-lg" aria-hidden="true"></i></a>
         <select id="map_descriptors_selector" onchange="setMapDescriptor();">
             <option value="lowlevel.mfcc.mean">MFCC</option>
             <option value="lowlevel.barkbands.mean">Barkbands</option>

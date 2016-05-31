@@ -144,9 +144,7 @@ function onKeyUp(evt) {
     hover_playing_mode = false;
 }
 
-(function() {
-  var formSubmitHandler = function formSubmitHandler(event) {
-    event.preventDefault();
+function submitQuery(){
     var query = document.getElementById('query_terms_input').value;
     if ((query.startsWith("http")) && (query.indexOf("freesound.org") != -1)){
         // Freesound url, parse query and filter and search
@@ -159,6 +157,12 @@ function onKeyUp(evt) {
         // normal query
         search(query);
     }
+}
+
+(function() {
+  var formSubmitHandler = function formSubmitHandler(event) {
+    event.preventDefault();
+    submitQuery();
   }
   document.getElementById('query-form').onsubmit = formSubmitHandler;
 })()

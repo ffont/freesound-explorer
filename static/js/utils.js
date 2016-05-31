@@ -36,9 +36,12 @@ function loadJSON(url, callback, error_callback) {
 
 /* Request parameters */
 
-function getRequestParameter(name){
-     if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
-            return decodeURIComponent(name[1]);
+function getRequestParameter(name, string){
+    if (string == undefined){
+        string = location.search;
+    }
+    if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(string))
+        return decodeURIComponent(name[1]);
 }
 
 /* Access nested object attributes by string */
@@ -57,6 +60,15 @@ Object.byString = function(o, s) {
     }
     return o;
 }
+
+/* Freesound utilities */
+
+function parseFreesoundSearchUrl(url){
+    var q = getRequestParameter("q", url)
+    var f = getRequestParameter("f", url)
+    return [q, f];
+}
+
 
 /* Data utilities */
 

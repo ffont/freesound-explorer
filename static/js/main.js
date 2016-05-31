@@ -3,6 +3,7 @@
 // Sounds and content
 var sounds = [];
 var default_query = "instrument note"
+var default_filter = "duration:[0%20TO%202]"
 var extra_descriptors = "lowlevel.mfcc.mean";
 var map_similarity_feature = "lowlevel.mfcc.mean";
 var n_pages = 2;
@@ -40,7 +41,11 @@ var sound_playing_colour = "#ffffff";
 var hover_playing_mode = false;
 
 
-function start(){
+function search(query, filter){
+    if ((query == undefined) || (query=="")){ query = default_query; document.getElementById('query_terms_input').value = default_query; }
+    if ((filter == undefined) || (filter=="")){ filter = default_filter; }
+
+
     /* Prepare app to load data and display map */
 
     // Sounds
@@ -64,16 +69,11 @@ function start(){
 
     
     // Search sounds and start loading them
-    var query = document.getElementById('query_terms_input').value;
-    if ((query == undefined) || (query=="")){
-        query = default_query;
-    }
-
     freesound.setToken(sessionStorage.getItem("app_token"));
     for (var i=0; i<n_pages; i++){
         freesound.textSearch(query, {
             page:(i + 1), page_size:150, group_by_pack:0,
-            filter:"duration:[0%20TO%202]", 
+            filter:filter, 
             fields:"id,previews,name,analysis,url,username", 
             descriptors:"sfx.tristimulus.mean," + extra_descriptors 
             }, function(response){
@@ -90,31 +90,38 @@ function start(){
                         );
                         sounds.push(sound);
                     }
-                }   
-                n_pages_received += 1;
-                if (n_pages_received == n_pages){
-                    // Init t-sne with sounds features
-                    var X = [];
-                    for (i in sounds){
-                        sound_i = sounds[i];
-                        var feature_vector = Object.byString(sound_i, 'analysis.' + map_similarity_feature);
-                        X.push(feature_vector);
-                    }
-                    tsne.initDataRaw(X);
-                    all_loaded = true;
-                    console.log('Loaded tsne with ' + sounds.length + ' sounds')
-                    drawMap();
-                    runner = setInterval(step, 0);
-                }                    
-            },function(){ console.log("Error while searching..."); }
+                }
+                post_receive_search_results();
+            },function(){ 
+                post_receive_search_results();
+                console.log("Error while searching..."); 
+            }
         );
     }    
     
     // Ui
-    document.getElementById('query_terms_input').value = query;
     document.getElementById('info_placeholder').innerHTML = "Searching...";
     document.onkeydown = onKeyDown;
     document.onkeyup = onKeyUp;
+}
+
+function post_receive_search_results(){
+    n_pages_received += 1;
+    // Check if all information has already been received and if that is the case start the map
+    if (n_pages_received == n_pages){
+        // Init t-sne with sounds features
+        var X = [];
+        for (i in sounds){
+            sound_i = sounds[i];
+            var feature_vector = Object.byString(sound_i, 'analysis.' + map_similarity_feature);
+            X.push(feature_vector);
+        }
+        tsne.initDataRaw(X);
+        all_loaded = true;
+        console.log('Loaded tsne with ' + sounds.length + ' sounds')
+        drawMap();
+        runner = setInterval(step, 0);
+    }         
 }
 
 
@@ -133,7 +140,18 @@ function onKeyUp(evt) {
 (function() {
   var formSubmitHandler = function formSubmitHandler(event) {
     event.preventDefault();
-    start();
+    var query = document.getElementById('query_terms_input').value;
+    if ((query.startsWith("http")) && (query.indexOf("freesound.org") != -1)){
+        // Freesound url, parse query and filter and search
+
+        var q_f = parseFreesoundSearchUrl(query)
+        console.log(query)
+        console.log(q_f)
+        search(q_f[0], q_f[1]);
+    } else {
+        // normal query
+        search(query);
+    }
   }
   document.getElementById('query-form').onsubmit = formSubmitHandler;
 })()

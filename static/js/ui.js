@@ -2,7 +2,9 @@ function showSoundInfo(sound){
 	/* show selected sound info in div */
     var html = '';
     html += sound.name + ' by <a href="' + sound.url + '" target="_blank">' + sound.username + '</a>';
-    html += ' <a href="javascript:void(0);" onclick="bookmark_sound(' + sound.id + ');"><i class="fa fa-bookmark-o" aria-hidden="true"></a>';
+    if (supports_end_user_auth){
+    	html += ' <a href="javascript:void(0);" onclick="bookmark_sound(' + sound.id + ');"><i class="fa fa-bookmark-o" aria-hidden="true"></a>';	
+    }
     document.getElementById('sound_info_box').innerHTML = html;
 }
 

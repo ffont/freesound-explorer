@@ -1,5 +1,8 @@
 /* Global variables and objects */
 
+// Supports end user auth
+var supports_end_user_auth = true;  // Will be set to true if there is backend for auth
+
 // Sounds and content
 var sounds = [];
 var default_query = "instrument note"

@@ -2,7 +2,7 @@ var login_url = '/login/freesound/';
 var logout_url = '/logout/';
 var prepare_auth_url = '/prepare_auth/';
 var get_app_token_url = '/get_app_token/'
-var supports_end_user_auth = true;
+
 
 function fsLogin(){
     document.getElementById('loginFrame').src = login_url;

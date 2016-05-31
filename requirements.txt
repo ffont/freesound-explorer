@@ -1,1 +1,5 @@
 Flask
+Flask-Login
+Flask-Script
+Flask-SQLAlchemy
+python-social-auth

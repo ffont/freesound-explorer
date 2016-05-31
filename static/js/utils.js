@@ -61,14 +61,6 @@ Object.byString = function(o, s) {
     return o;
 }
 
-/* Freesound utilities */
-
-function parseFreesoundSearchUrl(url){
-    var q = getRequestParameter("q", url)
-    var f = getRequestParameter("f", url)
-    return [q, f];
-}
-
 
 /* Data utilities */
 
@@ -107,7 +99,8 @@ function loadFakeData(data){
             },
             url='http://example.com/' + parseInt(i, 10),
             name='Fake sound ' + parseInt(i, 10),
-            username='Fake username ' + parseInt(i, 10)
+            username='Fake username ' + parseInt(i, 10),
+            fs_object=undefined
         );
         sounds.push(sound);
     }

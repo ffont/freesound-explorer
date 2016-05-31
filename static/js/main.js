@@ -71,8 +71,8 @@ function search(query, filter){
 
     
     // Search sounds and start loading them
-    freesound.setToken(sessionStorage.getItem("app_token"));
     for (var i=0; i<n_pages; i++){
+        freesound.setToken(sessionStorage.getItem("app_token"));
         freesound.textSearch(query, {
             page:(i + 1), page_size:150, group_by_pack:0,
             filter:filter, 
@@ -88,7 +88,8 @@ function search(query, filter){
                             analysis=sound.analysis,
                             url=sound.url,
                             name=sound.name,
-                            username=sound.username
+                            username=sound.username,
+                            fs_object=response.getSound(i)
                         );
                         sounds.push(sound);
                     }
@@ -102,7 +103,7 @@ function search(query, filter){
     }    
     
     // Ui
-    document.getElementById('info_placeholder').innerHTML = "Searching...";
+    showMessage('Searching...');
 }
 
 function post_receive_search_results(){
@@ -124,11 +125,34 @@ function post_receive_search_results(){
             runner = setInterval(step, 0);
         } else {
             // No results found
-            console.log('No results found...')
-            document.getElementById('info_placeholder').innerHTML = 'No results found...';
-
+            console.log('No results found...');
+            showMessage('No results found...');
         }
     }         
+}
+
+
+/* Freesound utilities */
+
+function parseFreesoundSearchUrl(url){
+    var q = getRequestParameter("q", url)
+    var f = getRequestParameter("f", url)
+    return [q, f];
+}
+
+function bookmark_sound(sound_id){
+    freesound.setToken(sessionStorage.getItem("access_token"), "oauth");
+    var sound = selectSound(sound_id);
+    sound.fs_object.bookmark(
+        sound.name,  // Use sound name
+        "Freesound Explorer",  // Category
+        function(){
+            showMessage('Bookmarked sound!');
+        },
+        function(){
+            showMessage('Error bookmarking sound...');
+        }
+    )
 }
 
 

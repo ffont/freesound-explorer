@@ -1,4 +1,4 @@
-function SoundFactory(id, preview_url, analysis, url, name, username){
+function SoundFactory(id, preview_url, analysis, url, name, username, fs_object){
     /* function to create sound objects from data */
     var this_sound = this; // Useful for functions that use callbacks
     this.svg_object = undefined;
@@ -20,6 +20,7 @@ function SoundFactory(id, preview_url, analysis, url, name, username){
         Math.floor(255 * analysis['sfx']['tristimulus']['mean'][1]),
         Math.floor(255 * analysis['sfx']['tristimulus']['mean'][2])
     )
+    this.fs_object = fs_object;
 
     this.onmouseover = function(){
         this.svg_object.style("stroke", sound_selected_colour);
@@ -143,4 +144,8 @@ function playingAnimation(svg_object) {
 function unselectAllSounds(){
     /* Set all sounds to unselected */
     svg.selectAll('.sound_point').each(function(d){d.unselect(d3.select(this));});
+}
+
+function selectSound(sound_id){
+    return selectPoint(sound_id).__data__
 }

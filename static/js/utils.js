@@ -20,6 +20,10 @@ function loadJSON(url, callback, error_callback) {
         var status = xhr.status;
         if (status == 200) {
             callback(xhr.response);
+        } else {
+            if (error_callback){
+                error_callback();
+            }
         }
     };
     xhr.onerror = function(){

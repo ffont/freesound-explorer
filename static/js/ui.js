@@ -16,7 +16,7 @@ function setMapDescriptor(){
 }
 
 var message_timer = undefined;
-function showMessage(msg, time, type){
+function showMessage(msg, type, time){
 	clearTimeout(message_timer);  // Clear timeout if there is one set
 
 	if (time == undefined)

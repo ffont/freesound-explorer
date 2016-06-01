@@ -106,7 +106,7 @@ function search(query, filter){
     }    
     
     // Ui
-    showMessage('Searching...');
+    showMessage('Searching...', "info", 0);
 }
 
 function post_receive_search_results(){

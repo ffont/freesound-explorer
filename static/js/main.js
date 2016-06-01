@@ -123,12 +123,10 @@ function post_receive_search_results(){
             }
             tsne.initDataRaw(X);
             all_loaded = true;
-            console.log('Loaded tsne with ' + sounds.length + ' sounds')
             drawMap();
             runner = setInterval(step, 0);
         } else {
             // No results found
-            console.log('No results found...');
             showMessage('No results found...');
         }
     }         
@@ -175,10 +173,7 @@ function submitQuery(){
     var query = document.getElementById('query_terms_input').value;
     if ((query.startsWith("http")) && (query.indexOf("freesound.org") != -1)){
         // Freesound url, parse query and filter and search
-
         var q_f = parseFreesoundSearchUrl(query)
-        console.log(query)
-        console.log(q_f)
         search(q_f[0], q_f[1]);
     } else {
         // normal query

@@ -75,6 +75,18 @@ body{
 	text-align: left;
 }
 
+#messages_box {
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	text-align: left;
+	padding: 18px;
+	background-color: #000;
+	opacity: 0.70;
+	min-height: 18px;
+	display:none;
+}
+
 #logo_box {
 	top: 20px;
 	left: 20px;
@@ -105,11 +117,6 @@ body{
 	padding: 7px;
 	border-radius: 5px;
 	border: 0px;
-}
-
-#info_placeholder{
-	height: 30px;
-	line-height: 30px;
 }
 
 #logging_info{

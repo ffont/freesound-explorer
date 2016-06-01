@@ -164,17 +164,17 @@
             makeRequest(makeUri(uris.similarSounds,[jsonObject.id]),success,error, params,SoundCollection);
         };
  
-       jsonObject.getComments = function (success, error){
+        jsonObject.getComments = function (success, error){
             makeRequest(makeUri(uris.comments,[jsonObject.id]),success,error,{},Collection);
-       };
+        };
 
-       jsonObject.download = function (targetWindow){// can be window, new, or iframe
+        jsonObject.download = function (targetWindow){// can be window, new, or iframe
             checkOauth();
             var uri = makeUri(uris.download,[jsonObject.id]);
             targetWindow.location = uri;
-       };
+        };
        
-	jsonObject.comment = function (commentStr, success, error){
+	    jsonObject.comment = function (commentStr, success, error){
             checkOauth();
             var data = new FormData();
             data.append('comment', comment);

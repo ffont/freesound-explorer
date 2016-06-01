@@ -67,11 +67,15 @@ function step() {
     /* This function is called at each iteration of map computation */
     current_it_number += 1;  
     if (current_it_number <= max_tsne_iterations){
-        document.getElementById('info_placeholder').innerHTML = 'Computing map...';
+        showMessage('Computing map... (' + parseInt(100*(current_it_number/max_tsne_iterations), 10) + '%)');
         tsne.step();
     } else {
         clearInterval(runner);
-        document.getElementById('info_placeholder').innerHTML = "Done, " + sounds.length + " sounds loaded!";
+        showMessage("Done, " + sounds.length + " sounds loaded!");
     }
     updateMap();
+}
+
+function selectPoint(point_id){
+    return svg.select('#point_' + parseInt(point_id, 10))[0][0];
 }

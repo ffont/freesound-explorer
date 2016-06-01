@@ -1,8 +1,12 @@
 /* Global variables and objects */
 
+// Supports end user auth
+var supports_end_user_auth = true;  // Will be set to true if there is backend for auth
+
 // Sounds and content
 var sounds = [];
 var default_query = "instrument note"
+var default_filter = "duration:[0%20TO%202]"
 var extra_descriptors = "lowlevel.mfcc.mean";
 var map_similarity_feature = "lowlevel.mfcc.mean";
 var n_pages = 2;
@@ -38,9 +42,15 @@ var sound_playing_colour = "#ffffff";
 
 // UI
 var hover_playing_mode = false;
+document.onkeydown = onKeyDown;
+document.onkeyup = onKeyUp;
 
 
-function start(){
+function search(query, filter){
+    if ((query == undefined) || (query=="")){ query = default_query; document.getElementById('query_terms_input').value = default_query; }
+    if ((filter == undefined) || (filter=="")){ filter = default_filter; }
+
+
     /* Prepare app to load data and display map */
 
     // Sounds
@@ -64,16 +74,11 @@ function start(){
 
     
     // Search sounds and start loading them
-    var query = document.getElementById('query_terms_input').value;
-    if ((query == undefined) || (query=="")){
-        query = default_query;
-    }
-
-    freesound.setToken(sessionStorage.getItem("app_token"));
     for (var i=0; i<n_pages; i++){
+        freesound.setToken(sessionStorage.getItem("app_token"));
         freesound.textSearch(query, {
             page:(i + 1), page_size:150, group_by_pack:0,
-            filter:"duration:[0%20TO%202]", 
+            filter:filter, 
             fields:"id,previews,name,analysis,url,username", 
             descriptors:"sfx.tristimulus.mean," + extra_descriptors 
             }, function(response){
@@ -86,35 +91,69 @@ function start(){
                             analysis=sound.analysis,
                             url=sound.url,
                             name=sound.name,
-                            username=sound.username
+                            username=sound.username,
+                            fs_object=response.getSound(i)
                         );
                         sounds.push(sound);
                     }
-                }   
-                n_pages_received += 1;
-                if (n_pages_received == n_pages){
-                    // Init t-sne with sounds features
-                    var X = [];
-                    for (i in sounds){
-                        sound_i = sounds[i];
-                        var feature_vector = Object.byString(sound_i, 'analysis.' + map_similarity_feature);
-                        X.push(feature_vector);
-                    }
-                    tsne.initDataRaw(X);
-                    all_loaded = true;
-                    console.log('Loaded tsne with ' + sounds.length + ' sounds')
-                    drawMap();
-                    runner = setInterval(step, 0);
-                }                    
-            },function(){ console.log("Error while searching..."); }
+                }
+                post_receive_search_results();
+            },function(){ 
+                post_receive_search_results();
+                console.log("Error while searching..."); 
+            }
         );
     }    
     
     // Ui
-    document.getElementById('query_terms_input').value = query;
-    document.getElementById('info_placeholder').innerHTML = "Searching...";
-    document.onkeydown = onKeyDown;
-    document.onkeyup = onKeyUp;
+    showMessage('Searching...', "info", 0);
+}
+
+function post_receive_search_results(){
+    n_pages_received += 1;
+    // Check if all information has already been received and if that is the case start the map
+    if (n_pages_received == n_pages){
+        if (sounds.length > 0){
+            // Init t-sne with sounds features
+            var X = [];
+            for (i in sounds){
+                sound_i = sounds[i];
+                var feature_vector = Object.byString(sound_i, 'analysis.' + map_similarity_feature);
+                X.push(feature_vector);
+            }
+            tsne.initDataRaw(X);
+            all_loaded = true;
+            drawMap();
+            runner = setInterval(step, 0);
+        } else {
+            // No results found
+            showMessage('No results found...');
+        }
+    }         
+}
+
+
+/* Freesound utilities */
+
+function parseFreesoundSearchUrl(url){
+    var q = getRequestParameter("q", url)
+    var f = getRequestParameter("f", url)
+    return [q, f];
+}
+
+function bookmark_sound(sound_id){
+    freesound.setToken(sessionStorage.getItem("access_token"), "oauth");
+    var sound = selectSound(sound_id);
+    sound.fs_object.bookmark(
+        sound.name,  // Use sound name
+        "Freesound Explorer",  // Category
+        function(){
+            showMessage('Bookmarked sound!');
+        },
+        function(){
+            showMessage('Error bookmarking sound...');
+        }
+    )
 }
 
 
@@ -130,10 +169,22 @@ function onKeyUp(evt) {
     hover_playing_mode = false;
 }
 
+function submitQuery(){
+    var query = document.getElementById('query_terms_input').value;
+    if ((query.startsWith("http")) && (query.indexOf("freesound.org") != -1)){
+        // Freesound url, parse query and filter and search
+        var q_f = parseFreesoundSearchUrl(query)
+        search(q_f[0], q_f[1]);
+    } else {
+        // normal query
+        search(query);
+    }
+}
+
 (function() {
   var formSubmitHandler = function formSubmitHandler(event) {
     event.preventDefault();
-    start();
+    submitQuery();
   }
   document.getElementById('query-form').onsubmit = formSubmitHandler;
 })()

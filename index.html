@@ -3,7 +3,9 @@
 <title>Freesound Explorer</title>
 
 <link rel="stylesheet" type="text/css" href="static/css/all.css" />
-<!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.min.css" /-->
+<link rel="stylesheet" type="text/css" href="static/css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css" href="static/css/waveform.css">
+
 </head>
 <body>
 
@@ -12,7 +14,7 @@
 <div id="query_box" class="box">
     <form id="query-form" class="query-form">
         <input id="query_terms_input" type="text" placeholder="query terms, e.g.: instrument note">
-        <input type="submit" id="go_button" value="Go!">
+        <a id="go_button" href="javascript:void(0);" onclick="submitQuery();"><i class="fa fa-search fa-lg" aria-hidden="true"></i></a>
         <select id="map_descriptors_selector" onchange="setMapDescriptor();">
             <option value="lowlevel.mfcc.mean">MFCC</option>
             <option value="lowlevel.barkbands.mean">Barkbands</option>
@@ -25,7 +27,6 @@
             <option value="lowlevel.scvalleys.mean">SC Valleys</option>
         </select>
     </form>
-    <div id="info_placeholder"></div>
     <div id="logging_info"></div>
 </div>
 
@@ -39,8 +40,12 @@
 <div id="sound_info_box" class="box">
 </div>
 
+<div id="messages_box" class="box">
+    <div id="info_placeholder"></div>
+</div>
+
 <div id="logo_box" class="box">
-    <img src="static/images/logo.svg"/ height=60>
+    <img src="static/images/logo.svg"/ height=50>
 </div>
 
 <div id="loginModal" class="modal">
@@ -67,6 +72,7 @@
 <script src="static/js/ui.js"></script>
 <script src="static/js/sounds.js"></script>
 <script src="static/js/main.js"></script>
+<script src="static/js/waveform.js"></script>
 
 </body>
 </html>

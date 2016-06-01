@@ -1,11 +1,29 @@
+var waveform_timer = undefined;
 function showSoundInfo(sound){
+	clearTimeout(waveform_timer); // Just in case there was a timeout running
+
 	/* show selected sound info in div */
     var html = '';
+
+    // Waveform placeholder
+    html += '<div id="waveform"><div class="waveform_svg"></div></div>';
+
+    // Sound info
     html += sound.name + ' by <a href="' + sound.url + '" target="_blank">' + sound.username + '</a>';
     if (supports_end_user_auth){
     	html += ' <a href="javascript:void(0);" onclick="bookmark_sound(' + sound.id + ');"><i class="fa fa-bookmark-o" aria-hidden="true"></i></a>';	
     }
     document.getElementById('sound_info_box').innerHTML = html;
+
+    // Should show waveform only if buffer has loaded
+    // Temporary fix: setTimeout to give enough time for the buffer to load
+    if (sound.buffer != undefined){
+    	showWaveform(sound);
+    } else {
+    	setTimeout(function(){
+    			showWaveform(sound);
+    		}, 1000)
+    }    
 }
 
 function setMapDescriptor(){

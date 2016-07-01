@@ -3,13 +3,13 @@ import { DEFAULT_FILTER, DEFAULT_QUERY } from './constants';
 import freesound from './vendors/freesound';
 import { rgbToHex } from './utils/colors';
 
-function newSearch(query = DEFAULT_QUERY, filter = DEFAULT_FILTER) {
+function search(query = DEFAULT_QUERY, filter = DEFAULT_FILTER) {
   // Search sounds and start loading them
   let pageCounter = 0;
-  const pageToScrobble = 2;
+  const pagesToGet = 2;
   const extraDescriptors = 'lowlevel.mfcc.mean';
   const promises = [];
-  while (pageCounter < pageToScrobble) {
+  while (pageCounter < pagesToGet) {
     freesound.setToken(sessionStorage.getItem('app_token'));
     promises.push(freesound.textSearch(query, {
       page: pageCounter + 1,
@@ -28,10 +28,10 @@ export function submitQuery(submittedQuery) {
   if ((submittedQuery.startsWith('http')) && (submittedQuery.indexOf('freesound.org') !== -1)) {
     // Freesound url, parse query and filter and search
     const { query, filter } = parseFreesoundSearchUrl(submittedQuery);
-    return newSearch(query, filter);
+    return search(query, filter);
   }
   // normal query
-  return newSearch(submittedQuery);
+  return search(submittedQuery);
 }
 
 export function reshapeReceivedSounds(allPagesResults) {

@@ -35,6 +35,7 @@ class Map extends React.Component {
   }
 
   computeStepSolution() {
+    // update state in order to force re-render and automatically update displayed map
     this.setState({
       currentStepIteration: this.state.currentStepIteration + 1,
     });

@@ -1,0 +1,14 @@
+@import "./variables.json";
+
+html, body, #app {
+	height: 100%;
+}
+
+body {
+	background: $blackBackground;
+	overflow: hidden;
+}
+
+.app-container {
+	height: 100%;
+}

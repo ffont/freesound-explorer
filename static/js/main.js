@@ -25,7 +25,7 @@ var Y;
 // Map
 var w = window.innerWidth;
 var h = window.innerHeight;
-var tx=0; 
+var tx=0;
 var ty=0;
 var ss=1;
 var min_zoom = 0.2;
@@ -46,117 +46,6 @@ document.onkeydown = onKeyDown;
 document.onkeyup = onKeyUp;
 
 
-function search(query, filter){
-    if ((query == undefined) || (query=="")){ query = default_query; document.getElementById('query_terms_input').value = default_query; }
-    if ((filter == undefined) || (filter=="")){ filter = default_filter; }
-
-
-    /* Prepare app to load data and display map */
-
-    // Sounds
-    sounds = [];
-    n_pages_received = 0;
-    all_loaded = false;
-
-    // Map
-    var map = document.getElementById("map");
-    map.innerHTML = null; 
-    w = window.innerWidth;
-    h = window.innerHeight;
-
-    // t-sne
-    current_it_number = 0;
-    var opt = {}
-    opt.epsilon = epsilon; // epsilon is learning rate (10 = default)
-    opt.perplexity = perplexity; // roughly how many neighbors each point influences (30 = default)
-    opt.dim = 2; // dimensionality of the embedding (2 = default)
-    tsne = new tsnejs.tSNE(opt); // create a tSNE instance
-
-    
-    // Search sounds and start loading them
-    for (var i=0; i<n_pages; i++){
-        freesound.setToken(sessionStorage.getItem("app_token"));
-        freesound.textSearch(query, {
-            page:(i + 1), page_size:150, group_by_pack:0,
-            filter:filter, 
-            fields:"id,previews,name,analysis,url,username", 
-            descriptors:"sfx.tristimulus.mean," + extra_descriptors 
-            }, function(response){
-                for (i in response.results){
-                    var sound = response.results[i];
-                    if (sound.analysis != null){
-                        var sound = new SoundFactory(
-                            id=sound.id,
-                            preview_url=sound.previews["preview-lq-mp3"],
-                            analysis=sound.analysis,
-                            url=sound.url,
-                            name=sound.name,
-                            username=sound.username,
-                            fs_object=response.getSound(i)
-                        );
-                        sounds.push(sound);
-                    }
-                }
-                post_receive_search_results();
-            },function(){ 
-                post_receive_search_results();
-                console.log("Error while searching..."); 
-            }
-        );
-    }    
-    
-    // Ui
-    showMessage('Searching...', "info", 0);
-}
-
-function post_receive_search_results(){
-    n_pages_received += 1;
-    // Check if all information has already been received and if that is the case start the map
-    if (n_pages_received == n_pages){
-        if (sounds.length > 0){
-            // Init t-sne with sounds features
-            var X = [];
-            for (i in sounds){
-                sound_i = sounds[i];
-                var feature_vector = Object.byString(sound_i, 'analysis.' + map_similarity_feature);
-                X.push(feature_vector);
-            }
-            tsne.initDataRaw(X);
-            all_loaded = true;
-            drawMap();
-            runner = setInterval(step, 0);
-        } else {
-            // No results found
-            showMessage('No results found...');
-        }
-    }         
-}
-
-
-/* Freesound utilities */
-
-function parseFreesoundSearchUrl(url){
-    var q = getRequestParameter("q", url)
-    var f = getRequestParameter("f", url)
-    return [q, f];
-}
-
-function bookmark_sound(sound_id){
-    freesound.setToken(sessionStorage.getItem("access_token"), "oauth");
-    var sound = selectSound(sound_id);
-    sound.fs_object.bookmark(
-        sound.name,  // Use sound name
-        "Freesound Explorer",  // Category
-        function(){
-            showMessage('Bookmarked sound!');
-        },
-        function(){
-            showMessage('Error bookmarking sound...');
-        }
-    )
-}
-
-
 /* Event handlers */
 
 function onKeyDown(evt) {
@@ -168,23 +57,3 @@ function onKeyDown(evt) {
 function onKeyUp(evt) {
     hover_playing_mode = false;
 }
-
-function submitQuery(){
-    var query = document.getElementById('query_terms_input').value;
-    if ((query.startsWith("http")) && (query.indexOf("freesound.org") != -1)){
-        // Freesound url, parse query and filter and search
-        var q_f = parseFreesoundSearchUrl(query)
-        search(q_f[0], q_f[1]);
-    } else {
-        // normal query
-        search(query);
-    }
-}
-
-(function() {
-  var formSubmitHandler = function formSubmitHandler(event) {
-    event.preventDefault();
-    submitQuery();
-  }
-  document.getElementById('query-form').onsubmit = formSubmitHandler;
-})()

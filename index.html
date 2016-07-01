@@ -1,78 +1,45 @@
+<!doctype html>
 <html>
-<head>
-<title>Freesound Explorer</title>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Freesound Explorer</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" type="text/css" href="static/css/all.css" />
-<link rel="stylesheet" type="text/css" href="static/css/font-awesome.min.css" />
-<link rel="stylesheet" type="text/css" href="static/css/waveform.css">
+    <link rel="stylesheet" type="text/css" href="static/css/all.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/waveform.css">
 
-</head>
-<body>
+  </head>
+  <body>
+    <div id="app"></div>
 
-<div id="map"></div>
+    <div id="sound-info-box" class="box">
+    </div>
 
-<div id="query_box" class="box">
-    <form id="query-form" class="query-form">
-        <input id="query_terms_input" type="text" placeholder="query terms, e.g.: instrument note">
-        <a id="go_button" href="javascript:void(0);" onclick="submitQuery();"><i class="fa fa-search fa-lg" aria-hidden="true"></i></a>
-        <select id="map_descriptors_selector" onchange="setMapDescriptor();">
-            <option value="lowlevel.mfcc.mean">MFCC</option>
-            <option value="lowlevel.barkbands.mean">Barkbands</option>
-            <option value="lowlevel.erb_bands.mean">ERB bands</option>
-            <option value="lowlevel.frequency_bands.mean">Frequency bands</option>
-            <option value="lowlevel.gfcc.mean">GFCC</option>
-            <option value="sfx.tristimulus.mean">Tristimulus</option>
-            <option value="tonal.hpcp.mean">HPCP</option>
-            <option value="lowlevel.spectral_contrast.mean">Spectral contrast</option>
-            <option value="lowlevel.scvalleys.mean">SC Valleys</option>
-        </select>
-    </form>
-    <div id="logging_info"></div>
-</div>
+    <div id="messages-box" class="box">
+        <div id="info-placeholder"></div>
+    </div>
 
-<!--div id="instructions_box" class="box">
-  Introduce some query terms to search in Freesound and click Go!<br>
-  Results will be displayed in a similarity map built using the selected feature in the dropdown list<br>
-  Click on points to listen to sounds,
-  Move your mouse while holding alt key to play sounds on hover<br>
-</div-->
+    <div id="logo_box" class="box">
+        <img src="static/images/logo.svg"/ height=50>
+    </div>
 
-<div id="sound_info_box" class="box">
-</div>
-
-<div id="messages_box" class="box">
-    <div id="info_placeholder"></div>
-</div>
-
-<div id="logo_box" class="box">
-    <img src="static/images/logo.svg"/ height=50>
-</div>
-
-<div id="loginModal" class="modal">
-    <div class="modal_content">
-        <div class="modal_close_button">
-            <a href="javascript:closeLoginModal();">x</a>
-        </div>
-        <div id="loginForm">
-            <iframe height="400" width="500" id="loginFrame" frameBorder="0" /></iframe>
+    <div id="loginModal" class="modal">
+        <div class="modal_content">
+            <div class="modal_close_button">
+                <a href="javascript:closeLoginModal();">x</a>
+            </div>
+            <div id="loginForm">
+                <iframe height="400" width="500" id="loginFrame" frameBorder="0" /></iframe>
+            </div>
         </div>
     </div>
-</div>
 
-<!--a class="github-fork-ribbon right-bottom fixed" href="https://github.com/ffont/FreesoundExplorer" title="Fork me on GitHub">Fork me on GitHub</a-->
+    <script src="static/js/utils.js"></script>
+    <script src="static/js/login-flow.js"></script>
+    <script src="static/js/bundle.js"></script>
 
-<!-- javascript loading must be at the end -->
-<script src="static/js/d3.min.js"></script>
-<script src="static/js/tsne.js"></script>
-<script src="static/js/utils.js"></script>
-<script src="static/js/freesound.js"></script>
-<script src="static/js/login-flow.js"></script>
-<script src="static/js/audioengine.js"></script>
-<script src="static/js/map.js"></script>
-<script src="static/js/ui.js"></script>
-<script src="static/js/sounds.js"></script>
-<script src="static/js/main.js"></script>
-<script src="static/js/waveform.js"></script>
-
-</body>
+  </body>
 </html>

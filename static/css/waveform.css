@@ -1,6 +1,6 @@
 /* Adapted from: http://bl.ocks.org/jm3/9870108 */
 
-#waveform > waveform_svg,
+#waveform > waveform-svg,
 #waveform > div {
   height:       100px;
   width:        200px;
@@ -10,7 +10,7 @@
   position:     relative;
 }
 
-#waveform .waveform_svg g rect {
+#waveform .waveform-svg g rect {
   fill: white;
   stroke-width: 0.1;
   stroke: white;

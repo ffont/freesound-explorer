@@ -1,0 +1,24 @@
+@import "./mixins";
+
+#search-button {
+	padding: 7px;
+	border-radius: 5px;
+	border: 0px;
+	height: 30px;
+	width: 34px;
+  background: none;
+  color: white;
+}
+
+#query-terms-input {
+	width: 240px;
+	padding: 7px;
+	border-radius: 5px;
+	border: 0px;
+	height: 30px;
+}
+
+#query-box {
+	right: 20px;
+	top: 20px;
+}

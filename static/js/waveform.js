@@ -15,7 +15,7 @@ function showWaveform(sound){
   data = data.slice(1, max_points);
 
   // Render data
-  svg_render( data, "#waveform > .waveform_svg" );
+  svg_render( data, "#waveform > .waveform-svg" );
 }
 
 function svg_render( data, svg ) {

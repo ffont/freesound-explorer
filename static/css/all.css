@@ -11,12 +11,12 @@ body{
 }
 
 .modal {
-	position: absolute; 
+	position: absolute;
 	left: 50%;
 }
 
 .modal_content {
-	position: relative; 
+	position: relative;
 	left: -50%;
 	top: 150px;
 }
@@ -58,11 +58,6 @@ body{
 	color: #fff;
 }
 
-#query_box {
-	right: 20px;
-	top: 20px;
-}
-
 #instructions_box {
 	right: 20px;
 	bottom: 20px;
@@ -75,7 +70,7 @@ body{
 	text-align: left;
 }
 
-#messages_box {
+#messages-box {
 	left: 0px;
 	right: 0px;
 	bottom: 0px;
@@ -94,23 +89,7 @@ body{
 	pointer-events: none;
 }
 
-#query_terms_input {
-	width: 240px;
-	padding: 7px;
-	border-radius: 5px;
-	border: 0px;
-	height: 30px;
-}
-
-#go_button {
-	padding: 7px;
-	border-radius: 5px;
-	border: 0px;
-	height: 30px;
-	width: 34px;
-}
-
-#map_descriptors_selector {
+#map-descriptors-selector {
 	margin-top: 3px;
 	height: 30px;
 	width: 277px;
@@ -119,7 +98,7 @@ body{
 	border: 0px;
 }
 
-#logging_info{
+#logging-info{
 	text-align: right;
 }
 

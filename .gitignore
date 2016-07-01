@@ -3,3 +3,6 @@ settings.py
 *.pyc
 .env
 *.db
+/node_modules/
+npm-debug.log
+.tags

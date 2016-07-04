@@ -1,5 +1,6 @@
 import React from 'react';
-import d3 from 'd3';
+import { select, event as d3Event } from 'd3-selection';
+import { zoom } from 'd3-zoom';
 import MapCircle from './MapCircle';
 import '../../polyfills/requestAnimationFrame';
 import { MIN_ZOOM, MAX_ZOOM, MAX_TSNE_ITERATIONS } from '../../constants';
@@ -24,11 +25,11 @@ class Map extends React.Component {
   }
 
   componentDidMount() {
-    const container = d3.select(this.refs.mapContainer);
-    const zoom = d3.behavior.zoom()
+    const container = select(this.refs.mapContainer);
+    const zoomBehaviour = zoom()
       .scaleExtent([MIN_ZOOM, MAX_ZOOM])
       .on('zoom', this.zoomHandler);
-    zoom(container);
+    zoomBehaviour(container);
     // disable double click zoom
     container.on('dblclick.zoom', null);
     this.computeStepSolution();
@@ -51,9 +52,9 @@ class Map extends React.Component {
   }
 
   zoomHandler() {
-    const translateX = d3.event.translate[0];
-    const translateY = d3.event.translate[1];
-    const scale = d3.event.scale;
+    const translateX = d3Event.transform.x;
+    const translateY = d3Event.transform.y;
+    const scale = d3Event.transform.k;
     this.setState({ translateX, translateY, scale });
   }
 

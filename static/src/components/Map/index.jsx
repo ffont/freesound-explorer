@@ -9,6 +9,8 @@ import '../../stylesheets/Map.scss';
 const propTypes = {
   sounds: React.PropTypes.array,
   tsne: React.PropTypes.object,
+  audioContext: React.PropTypes.object,
+  audioEngine: React.PropTypes.object,
 };
 
 class Map extends React.Component {
@@ -76,6 +78,8 @@ class Map extends React.Component {
               positionInTsneSolution={tsneSolution[index]}
               windowWidth={windowWidth}
               windowHeight={windowHeight}
+              audioContext={this.props.audioContext}
+              audioEngine={this.props.audioEngine}
             />
           ))}
         </svg>

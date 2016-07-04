@@ -1,3 +1,3 @@
-(function(window) {
+(function() {
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
-})(window);
+})();

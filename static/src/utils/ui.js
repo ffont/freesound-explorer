@@ -41,10 +41,3 @@ const uiUtils = (() => {
 })();
 
 export default uiUtils;
-
-function setMapDescriptor() {
-	/* select and prepare audio descriptor to use for map */
-  var selectedDescriptor = document.getElementById('map-descriptors-selector').value;
-  extra_descriptors = selectedDescriptor;
-  map_similarity_feature = selectedDescriptor;
-}

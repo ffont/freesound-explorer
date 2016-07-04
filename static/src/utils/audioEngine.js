@@ -1,48 +1,32 @@
-// Start off by initializing a new context.
-export const audioContext = (() => {
-  const context = new (window.AudioContext || window.webkitAudioContext)();
-
-  // Create a main gain node to set general volume
-  if (!context.createGain) {
-    context.createGain = context.createGainNode;
-  }
-  context.gainNode = context.createGain();
-  context.gainNode.connect(context.destination);
-  return context;
-})();
-
-export function setVolume(value) {
-  audioContext.gainNode.gain.value = value;
-}
-
-// Buffer loader class to load audiofiles from urls
-export function BufferLoader(url, callback, errorCallback) {
-  // Load buffer asynchronously
-  const request = new XMLHttpRequest();
-  request.open('GET', url, true);
-  request.responseType = 'arraybuffer';
-
-  request.onload = () => {
-    // Asynchronously decode the audio file data in request.response
-    audioContext.decodeAudioData(
-      request.response,
-      (buffer) => {
-        if (!buffer) {
-          console.error(`Error decoding file data: ${url}`);
-          errorCallback();
-        } else {
-          this.buffer = buffer;
-          if (callback) { callback(); }
-        }
-      },
-      (error) => {
-        console.error('DecodeAudioData error', error);
-        errorCallback();
-      }
-    );
+/**
+ * Initializes a single XMLHttpRequest object (avoiding memory leaks)
+ * and exposes a closure to use it.
+ */
+const audioEngine = (audioContext) => {
+  const xhr = new XMLHttpRequest();
+  xhr.responseType = 'arraybuffer';
+  return {
+    loadSound(soundUrl) {
+      return new Promise((resolve, reject) => {
+        xhr.open('GET', soundUrl);
+        xhr.onreadystatechange = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            const buffer = xhr.response;
+            if (!!buffer) {
+              audioContext.decodeAudioData(buffer).then(
+                decodedData => resolve(decodedData),
+                error => reject(error)
+              );
+            }
+          } else {
+            reject('Error in the network');
+          }
+        };
+        xhr.onerror = (error) => reject(error);
+        xhr.send();
+      });
+    },
   };
-  request.onerror = () => {
-    console.error('BufferLoader: XHR error');
-  };
-  request.send();
-}
+};
+
+export default audioEngine;

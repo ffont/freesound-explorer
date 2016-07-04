@@ -1,10 +1,12 @@
 import React from 'react';
 import QueryBox from '../QueryBox';
 import Map from '../Map';
-import { submitQuery, reshapeReceivedSounds } from '../../fsQuery';
+import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
+import audioEngine from '../../utils/audioEngine';
 import tsnejs from '../../vendors/tsne';
 import '../../stylesheets/App.scss';
 import { DEFAULT_DESCRIPTOR, TSNE_CONFIG } from '../../constants';
+import '../../polyfills/AudioContext';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,6 +15,7 @@ class App extends React.Component {
     this.onQuerySubmit = this.onQuerySubmit.bind(this);
     this.setMapDescriptor = this.setMapDescriptor.bind(this);
     this.tsne = new tsnejs.Tsne(TSNE_CONFIG);
+    this.setUpAudioContext();
   }
 
   onQuerySubmit(query) {
@@ -24,6 +27,15 @@ class App extends React.Component {
     });
     submitQuery(query).then(allPagesResults => this.storeQueryResults(allPagesResults),
       error => this.handleQueryError(error));
+  }
+
+  setUpAudioContext() {
+    this.audioContext = new window.AudioContext();
+    // create a main gain node to set general volume
+    this.audioContext.gainNode = this.audioContext.createGain();
+    this.audioContext.gainNode.connect(this.audioContext.destination);
+    // setup audio engine for loading and playing sounds
+    this.audioEngine = audioEngine(this.audioContext);
   }
 
   setMapDescriptor(evt) {
@@ -60,7 +72,13 @@ class App extends React.Component {
     return (
       <div className="app-container">
         <QueryBox onQuerySubmit={this.onQuerySubmit} onSetMapDescriptor={this.setMapDescriptor} />
-        {(shouldShowMap) ? <Map sounds={this.state.sounds} tsne={this.tsne} /> : ''}
+        {(shouldShowMap) ?
+          <Map
+            sounds={this.state.sounds}
+            tsne={this.tsne}
+            audioContext={this.audioContext}
+            audioEngine={this.audioEngine}
+          /> : ''}
       </div>
     );
   }

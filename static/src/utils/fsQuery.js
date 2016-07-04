@@ -1,7 +1,7 @@
-import { parseFreesoundSearchUrl } from './utils/freesoundUtils';
-import { DEFAULT_FILTER, DEFAULT_QUERY } from './constants';
-import freesound from './vendors/freesound';
-import { rgbToHex } from './utils/colors';
+import { parseFreesoundSearchUrl } from './freesoundUtils';
+import { DEFAULT_FILTER, DEFAULT_QUERY } from '../constants';
+import freesound from '../vendors/freesound';
+import { rgbToHex } from './colors';
 
 function search(query = DEFAULT_QUERY, filter = DEFAULT_FILTER) {
   // Search sounds and start loading them

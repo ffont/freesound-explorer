@@ -2,7 +2,7 @@
  * Initializes a single XMLHttpRequest object (avoiding memory leaks)
  * and exposes a closure to use it.
  */
-const audioEngine = (audioContext) => {
+const audioLoader = (audioContext) => {
   const xhr = new XMLHttpRequest();
   xhr.responseType = 'arraybuffer';
   return {
@@ -29,4 +29,4 @@ const audioEngine = (audioContext) => {
   };
 };
 
-export default audioEngine;
+export default audioLoader;

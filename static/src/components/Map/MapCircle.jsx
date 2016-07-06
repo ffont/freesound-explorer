@@ -2,6 +2,7 @@ import React from 'react';
 import { DEFAULT_RADIUS, DEFAULT_OPACITY, DEFAULT_STROKE_WIDTH, DEFAULT_STROKE_OPACITY,
   MAP_SCALE_FACTOR }
   from '../../constants';
+import freesound from '../../vendors/freesound';
 
 const propTypes = {
   sound: React.PropTypes.object,
@@ -11,7 +12,7 @@ const propTypes = {
   positionInTsneSolution: React.PropTypes.array,
   windowWidth: React.PropTypes.number,
   windowHeight: React.PropTypes.number,
-  audioEngine: React.PropTypes.object,
+  audioLoader: React.PropTypes.object,
   audioContext: React.PropTypes.object,
 };
 
@@ -35,7 +36,9 @@ class MapCircle extends React.Component {
     this.isPlaying = false;
     this.onHoverCallback = this.onHoverCallback.bind(this);
     this.onMouseLeaveCallback = this.onMouseLeaveCallback.bind(this);
+    this.onClickCallback = this.onClickCallback.bind(this);
     this.state = {
+      isHovered: false,
       isSelected: false,
       isPlaying: false,
     };
@@ -43,25 +46,30 @@ class MapCircle extends React.Component {
 
   onHoverCallback() {
     if (!this.buffer) {
-      this.props.audioEngine.loadSound(this.props.sound.previewUrl).then(
-        decodedAudio => {
-          this.buffer = decodedAudio;
-          this.playAudio();
-        },
-        error => console.log(error)
-      );
+      this.props.audioLoader.loadSound(this.props.sound.previewUrl)
+        .then(
+          decodedAudio => {
+            this.buffer = decodedAudio;
+            this.playAudio();
+          }
+        );
     } else {
       this.playAudio();
     }
-
     this.setState({
-      isSelected: true,
+      isHovered: true,
     });
   }
 
   onMouseLeaveCallback() {
     this.setState({
-      isSelected: false,
+      isHovered: false,
+    });
+  }
+
+  onClickCallback() {
+    this.setState({
+      isSelected: !this.state.isSelected,
     });
   }
 
@@ -72,8 +80,22 @@ class MapCircle extends React.Component {
     source.start();
   }
 
+  bookmarkSound() {
+    freesound.setToken(sessionStorage.getItem('access_token'), 'oauth');
+    const sound = this.props.sound;
+    const successCallback = () => console.log('Sound bookmarked!');
+    const errorCallback = () => console.log('Error bookmarking sound...');
+    sound.fsObject.bookmark(
+      sound.name,  // Use sound name
+      'Freesound Explorer',  // Category
+      successCallback,
+      errorCallback
+    );
+  }
+
   render() {
-    const circleColor = (this.state.isSelected) ? 'white' : this.props.sound.rgba;
+    const circleColor = (this.state.isSelected || this.state.isHovered) ?
+      'white' : this.props.sound.rgba;
     return (
       <circle
         cx={-DEFAULT_RADIUS}
@@ -88,6 +110,7 @@ class MapCircle extends React.Component {
         style={computeCirclePosition(this.props)}
         onMouseEnter={this.onHoverCallback}
         onMouseLeave={this.onMouseLeaveCallback}
+        onClick={this.onClickCallback}
       />
     );
   }

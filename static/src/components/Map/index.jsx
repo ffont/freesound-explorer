@@ -10,7 +10,8 @@ const propTypes = {
   sounds: React.PropTypes.array,
   tsne: React.PropTypes.object,
   audioContext: React.PropTypes.object,
-  audioEngine: React.PropTypes.object,
+  audioLoader: React.PropTypes.object,
+  updateSystemStatusMessage: React.PropTypes.func,
 };
 
 class Map extends React.Component {
@@ -42,11 +43,21 @@ class Map extends React.Component {
     this.setState({
       currentStepIteration: this.state.currentStepIteration + 1,
     });
+    if (this.state.currentStepIteration % 50 === 0) {
+      // sporadically update the status message
+      const progress = parseInt(100 * this.state.currentStepIteration / MAX_TSNE_ITERATIONS, 10);
+      const statusMessage =
+        `${this.props.sounds.length} sounds loaded, computing map (${progress}%)`;
+      this.props.updateSystemStatusMessage(statusMessage);
+    }
     if (this.state.currentStepIteration < MAX_TSNE_ITERATIONS) {
       this.props.tsne.step();
       this.stepInterval = requestAnimationFrame(() => this.computeStepSolution());
     } else {
       cancelAnimationFrame(this.stepInterval);
+      this.props.updateSystemStatusMessage('Map computed!', 'success');
+      // hide system status message after 5 seconds
+      setTimeout(() => this.props.updateSystemStatusMessage(''), 5000);
       this.setState({
         currentStepIteration: 0,
       });
@@ -79,7 +90,7 @@ class Map extends React.Component {
               windowWidth={windowWidth}
               windowHeight={windowHeight}
               audioContext={this.props.audioContext}
-              audioEngine={this.props.audioEngine}
+              audioLoader={this.props.audioLoader}
             />
           ))}
         </svg>

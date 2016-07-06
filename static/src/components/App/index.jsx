@@ -1,8 +1,9 @@
 import React from 'react';
 import QueryBox from '../QueryBox';
 import Map from '../Map';
+import MessagesBox from '../MessagesBox';
 import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
-import audioEngine from '../../utils/audioEngine';
+import audioLoader from '../../utils/audioLoader';
 import tsnejs from '../../vendors/tsne';
 import '../../stylesheets/App.scss';
 import { DEFAULT_DESCRIPTOR, TSNE_CONFIG } from '../../constants';
@@ -11,9 +12,14 @@ import '../../polyfills/AudioContext';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { sounds: [], descriptor: DEFAULT_DESCRIPTOR };
+    this.state = {
+      sounds: [],
+      descriptor: DEFAULT_DESCRIPTOR,
+      statusMessage: { message: '', status: '' },
+    };
     this.onQuerySubmit = this.onQuerySubmit.bind(this);
     this.setMapDescriptor = this.setMapDescriptor.bind(this);
+    this.updateSystemStatusMessage = this.updateSystemStatusMessage.bind(this);
     this.tsne = new tsnejs.Tsne(TSNE_CONFIG);
     this.setUpAudioContext();
   }
@@ -25,6 +31,7 @@ class App extends React.Component {
       error: '',
       isFetching: true,
     });
+    this.updateSystemStatusMessage('Searching for sounds...');
     submitQuery(query).then(allPagesResults => this.storeQueryResults(allPagesResults),
       error => this.handleQueryError(error));
   }
@@ -35,7 +42,7 @@ class App extends React.Component {
     this.audioContext.gainNode = this.audioContext.createGain();
     this.audioContext.gainNode.connect(this.audioContext.destination);
     // setup audio engine for loading and playing sounds
-    this.audioEngine = audioEngine(this.audioContext);
+    this.audioLoader = audioLoader(this.audioContext);
   }
 
   setMapDescriptor(evt) {
@@ -47,7 +54,7 @@ class App extends React.Component {
 
   storeQueryResults(allPagesResults) {
     const sounds = reshapeReceivedSounds(allPagesResults);
-    // create a tSNE instance
+    // initialize tsne data
     const xTsne = [];
     sounds.forEach(sound => {
       const soundFeatureVector = Object.byString(sound, `analysis.${this.state.descriptor}`);
@@ -58,12 +65,28 @@ class App extends React.Component {
       sounds,
       isFetching: false,
     });
+    this.updateSystemStatusMessage(`${sounds.length} sounds loaded, computing map`);
   }
 
   handleQueryError(error) {
     this.setState({
       error: error || 'Unexpected error',
       isFetching: false,
+    });
+  }
+
+  /**
+   * Updates the status message in the UI.
+   *
+   * @param {String} message: the message to be shown
+   * @param {String} status: the related icon (info, success, error)
+   */
+  updateSystemStatusMessage(message, status = 'info') {
+    this.setState({
+      statusMessage: {
+        message,
+        status,
+      },
     });
   }
 
@@ -77,8 +100,10 @@ class App extends React.Component {
             sounds={this.state.sounds}
             tsne={this.tsne}
             audioContext={this.audioContext}
-            audioEngine={this.audioEngine}
+            audioLoader={this.audioLoader}
+            updateSystemStatusMessage={this.updateSystemStatusMessage}
           /> : ''}
+        <MessagesBox statusMessage={this.state.statusMessage} />
       </div>
     );
   }

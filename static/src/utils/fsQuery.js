@@ -1,7 +1,19 @@
-import { parseFreesoundSearchUrl } from './freesoundUtils';
 import { DEFAULT_FILTER, DEFAULT_QUERY } from '../constants';
 import freesound from '../vendors/freesound';
 import { rgbToHex } from './colors';
+
+function getRequestParameter(name, queryUrl = location.search) {
+  const parsedRegex = (new RegExp(
+    `[?&]${encodeURIComponent(name)}=([^&]*)`)
+  ).exec(queryUrl);
+  return decodeURIComponent(parsedRegex[1]);
+}
+
+function parseFreesoundSearchUrl(url) {
+  const query = getRequestParameter('q', url);
+  const filter = getRequestParameter('f', url);
+  return { query, filter };
+}
 
 function search(query = DEFAULT_QUERY, filter = DEFAULT_FILTER) {
   // Search sounds and start loading them

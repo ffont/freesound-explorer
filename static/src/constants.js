@@ -2,7 +2,7 @@ export const DEFAULT_QUERY = 'instrument note';
 export const DEFAULT_DESCRIPTOR = 'lowlevel.mfcc.mean';
 export const DEFAULT_FILTER = 'duration:[0%20TO%202]';
 
-export const MAX_TSNE_ITERATIONS = 500;
+export const MAX_TSNE_ITERATIONS = 250;
 
 export const MIN_ZOOM = 0.2;
 export const MAX_ZOOM = 15;

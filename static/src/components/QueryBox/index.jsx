@@ -1,6 +1,7 @@
 import React from 'react';
 import LoggingInfo from '../LoggingInfo';
 import '../../stylesheets/QueryBox.scss';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 const propTypes = {
   onSetMapDescriptor: React.PropTypes.func,
@@ -8,6 +9,10 @@ const propTypes = {
 };
 
 class QueryBox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+  }
   render() {
     return (
       <div id="query-box" className="box">

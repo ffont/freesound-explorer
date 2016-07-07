@@ -20,8 +20,14 @@ class App extends React.Component {
     this.onQuerySubmit = this.onQuerySubmit.bind(this);
     this.setMapDescriptor = this.setMapDescriptor.bind(this);
     this.updateSystemStatusMessage = this.updateSystemStatusMessage.bind(this);
-    this.tsne = new tsnejs.Tsne(TSNE_CONFIG);
     this.setUpAudioContext();
+    this.tsne = undefined;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.descriptor !== this.state.descriptor) {
+      this.initializeTsne(this.state.sounds);
+    }
   }
 
   onQuerySubmit(query) {
@@ -55,17 +61,26 @@ class App extends React.Component {
   storeQueryResults(allPagesResults) {
     const sounds = reshapeReceivedSounds(allPagesResults);
     // initialize tsne data
+    this.initializeTsne(sounds);
+    this.setState({
+      sounds,
+      isFetching: false,
+    });
+    this.updateSystemStatusMessage(`${sounds.length} sounds loaded, computing map`);
+  }
+
+  initializeTsne(sounds) {
+    if (!sounds) {
+      // don't initialize tsne if no sounds provided
+      return;
+    }
+    this.tsne = new tsnejs.Tsne(TSNE_CONFIG);
     const xTsne = [];
     sounds.forEach(sound => {
       const soundFeatureVector = Object.byString(sound, `analysis.${this.state.descriptor}`);
       xTsne.push(soundFeatureVector);
     });
     this.tsne.initDataRaw(xTsne);
-    this.setState({
-      sounds,
-      isFetching: false,
-    });
-    this.updateSystemStatusMessage(`${sounds.length} sounds loaded, computing map`);
   }
 
   handleQueryError(error) {
@@ -92,6 +107,8 @@ class App extends React.Component {
 
   render() {
     const shouldShowMap = !!this.state.sounds.length;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
     return (
       <div className="app-container">
         <QueryBox onQuerySubmit={this.onQuerySubmit} onSetMapDescriptor={this.setMapDescriptor} />
@@ -102,6 +119,8 @@ class App extends React.Component {
             audioContext={this.audioContext}
             audioLoader={this.audioLoader}
             updateSystemStatusMessage={this.updateSystemStatusMessage}
+            windowWidth={windowWidth}
+            windowHeight={windowHeight}
           /> : ''}
         <MessagesBox statusMessage={this.state.statusMessage} />
       </div>

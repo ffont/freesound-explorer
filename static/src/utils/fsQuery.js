@@ -19,7 +19,17 @@ function search(query = DEFAULT_QUERY, filter = DEFAULT_FILTER) {
   // Search sounds and start loading them
   let pageCounter = 0;
   const pagesToGet = 2;
-  const extraDescriptors = 'lowlevel.mfcc.mean';
+  const extraDescriptors = [
+    'lowlevel.mfcc.mean',
+    'lowlevel.barkbands.mean',
+    'lowlevel.erb_bands.mean',
+    'lowlevel.frequency_bands.mean',
+    'lowlevel.gfcc.mean',
+    'sfx.tristimulus.mean',
+    'tonal.hpcp.mean',
+    'lowlevel.spectral_contrast.mean',
+    'lowlevel.scvalleys.mean',
+  ];
   const promises = [];
   while (pageCounter < pagesToGet) {
     freesound.setToken(sessionStorage.getItem('app_token'));
@@ -29,7 +39,7 @@ function search(query = DEFAULT_QUERY, filter = DEFAULT_FILTER) {
       group_by_pack: 0,
       filter,
       fields: 'id,previews,name,analysis,url,username',
-      descriptors: `sfx.tristimulus.mean,${extraDescriptors}`,
+      descriptors: extraDescriptors.join(),
     }));
     pageCounter++;
   }

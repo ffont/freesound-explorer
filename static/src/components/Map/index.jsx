@@ -5,6 +5,7 @@ import MapCircle from './MapCircle';
 import '../../polyfills/requestAnimationFrame';
 import { MIN_ZOOM, MAX_ZOOM, MAX_TSNE_ITERATIONS } from '../../constants';
 import '../../stylesheets/Map.scss';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 const propTypes = {
   sounds: React.PropTypes.array,
@@ -12,6 +13,8 @@ const propTypes = {
   audioContext: React.PropTypes.object,
   audioLoader: React.PropTypes.object,
   updateSystemStatusMessage: React.PropTypes.func,
+  windowWidth: React.PropTypes.number,
+  windowHeight: React.PropTypes.number,
 };
 
 class Map extends React.Component {
@@ -25,6 +28,7 @@ class Map extends React.Component {
       scale: 1,
       currentStepIteration: 0,
     });
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   }
 
   componentDidMount() {
@@ -38,21 +42,24 @@ class Map extends React.Component {
     this.computeStepSolution();
   }
 
-  computeStepSolution() {
-    // update state in order to force re-render and automatically update displayed map
-    this.setState({
-      currentStepIteration: this.state.currentStepIteration + 1,
-    });
-    if (this.state.currentStepIteration % 50 === 0) {
-      // sporadically update the status message
-      const progress = parseInt(100 * this.state.currentStepIteration / MAX_TSNE_ITERATIONS, 10);
-      const statusMessage =
-        `${this.props.sounds.length} sounds loaded, computing map (${progress}%)`;
-      this.props.updateSystemStatusMessage(statusMessage);
+  componentDidUpdate(prevProps) {
+    if (prevProps.tsne !== this.props.tsne) {
+      this.computeStepSolution();
     }
+  }
+
+  computeStepSolution() {
+    const progress = parseInt(100 * this.state.currentStepIteration / MAX_TSNE_ITERATIONS, 10);
+    const statusMessage =
+    `${this.props.sounds.length} sounds loaded, computing map (${progress}%)`;
+    this.props.updateSystemStatusMessage(statusMessage);
     if (this.state.currentStepIteration < MAX_TSNE_ITERATIONS) {
       this.props.tsne.step();
       this.stepInterval = requestAnimationFrame(() => this.computeStepSolution());
+      // update state in order to force re-render and automatically update displayed map
+      this.setState({
+        currentStepIteration: this.state.currentStepIteration + 1,
+      });
     } else {
       cancelAnimationFrame(this.stepInterval);
       this.props.updateSystemStatusMessage('Map computed!', 'success');
@@ -73,8 +80,6 @@ class Map extends React.Component {
 
   render() {
     const { translateX, translateY, scale } = this.state;
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
     const tsneSolution = this.props.tsne.getSolution();
     return (
       <div className="map-container" ref="mapContainer">
@@ -87,8 +92,8 @@ class Map extends React.Component {
               translateY={translateY}
               scale={scale}
               positionInTsneSolution={tsneSolution[index]}
-              windowWidth={windowWidth}
-              windowHeight={windowHeight}
+              windowWidth={this.props.windowWidth}
+              windowHeight={this.props.windowHeight}
               audioContext={this.props.audioContext}
               audioLoader={this.props.audioLoader}
             />

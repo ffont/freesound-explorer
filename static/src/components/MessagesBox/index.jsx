@@ -3,7 +3,10 @@ import '../../stylesheets/MessagesBox.scss';
 import 'font-awesome/css/font-awesome.min.css';
 
 const propTypes = {
-  statusMessage: React.PropTypes.object,
+  statusMessage: React.PropTypes.shape({
+    message: React.PropTypes.string,
+    status: React.PropTypes.string,
+  }),
 };
 
 function MessagesBox(props) {

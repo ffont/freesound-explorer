@@ -96,6 +96,7 @@ class App extends React.Component {
       xTsne.push(soundFeatureVector);
     });
     this.tsne.initDataRaw(xTsne);
+    this.forceUpdate();  // to force render()
   }
 
   handleQueryError(error) {

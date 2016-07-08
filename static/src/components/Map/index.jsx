@@ -26,8 +26,8 @@ class Map extends React.Component {
       translateX: 0,
       translateY: 0,
       scale: 1,
-      currentStepIteration: 0,
     });
+    this.currentStepIteration = 0;
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   }
 
@@ -49,25 +49,22 @@ class Map extends React.Component {
   }
 
   computeStepSolution() {
-    const progress = parseInt(100 * this.state.currentStepIteration / MAX_TSNE_ITERATIONS, 10);
+    const progress = parseInt(100 * this.currentStepIteration / MAX_TSNE_ITERATIONS, 10);
     const statusMessage =
     `${this.props.sounds.length} sounds loaded, computing map (${progress}%)`;
     this.props.updateSystemStatusMessage(statusMessage);
-    if (this.state.currentStepIteration < MAX_TSNE_ITERATIONS) {
+    if (this.currentStepIteration < MAX_TSNE_ITERATIONS) {
       this.props.tsne.step();
       this.stepInterval = requestAnimationFrame(() => this.computeStepSolution());
-      // update state in order to force re-render and automatically update displayed map
-      this.setState({
-        currentStepIteration: this.state.currentStepIteration + 1,
-      });
+      this.currentStepIteration++;
+      // force render with new solution
+      this.forceUpdate();
     } else {
       cancelAnimationFrame(this.stepInterval);
       this.props.updateSystemStatusMessage('Map computed!', 'success');
       // hide system status message after 5 seconds
       setTimeout(() => this.props.updateSystemStatusMessage(''), 5000);
-      this.setState({
-        currentStepIteration: 0,
-      });
+      this.currentStepIteration = 0;
     }
   }
 

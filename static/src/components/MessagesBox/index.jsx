@@ -9,39 +9,48 @@ const propTypes = {
   }),
 };
 
-function MessagesBox(props) {
-  let className = 'message-box';
-  const { message, status } = props.statusMessage;
-  if (!!message) {
-    className += ' active';
+class MessagesBox extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    // update component only when receiving a new message
+    if (this.props.statusMessage.message !== nextProps.statusMessage.message) {
+      return true;
+    }
+    return false;
   }
-  let statusIcon;
-  switch (status) {
-    case 'info': {
-      statusIcon = 'info-circle';
-      break;
+  render() {
+    let className = 'message-box';
+    const { message, status } = this.props.statusMessage;
+    if (!!message) {
+      className += ' active';
     }
-    case 'success': {
-      statusIcon = 'check-circle';
-      break;
+    let statusIcon;
+    switch (status) {
+      case 'info': {
+        statusIcon = 'info-circle';
+        break;
+      }
+      case 'success': {
+        statusIcon = 'check-circle';
+        break;
+      }
+      case 'error': {
+        statusIcon = 'exclamation';
+        break;
+      }
+      default: {
+        statusIcon = 'info-circle';
+        break;
+      }
     }
-    case 'error': {
-      statusIcon = 'exclamation';
-      break;
-    }
-    default: {
-      statusIcon = 'info-circle';
-      break;
-    }
-  }
-  return (
-    <div className={className}>
-      <div className="message-content">
-        <i className={`fa fa-${statusIcon}`} aria-hidden></i>
-        <span style={{ marginLeft: 20 }}>{message}</span>
+    return (
+      <div className={className}>
+        <div className="message-content">
+          <i className={`fa fa-${statusIcon}`} aria-hidden></i>
+          <span style={{ marginLeft: 20 }}>{message}</span>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 MessagesBox.propTypes = propTypes;

@@ -6,10 +6,15 @@ import freesound from '../../vendors/freesound';
 
 const propTypes = {
   sound: React.PropTypes.object,
-  translateX: React.PropTypes.number,
-  translateY: React.PropTypes.number,
-  scale: React.PropTypes.number,
-  positionInTsneSolution: React.PropTypes.array,
+  mapZoom: React.PropTypes.shape({
+    translateX: React.PropTypes.number,
+    translateY: React.PropTypes.number,
+    scale: React.PropTypes.number,
+  }),
+  positionInTsneSolution: React.PropTypes.shape({
+    x: React.PropTypes.number,
+    y: React.PropTypes.number,
+  }),
   windowWidth: React.PropTypes.number,
   windowHeight: React.PropTypes.number,
   audioLoader: React.PropTypes.object,
@@ -17,12 +22,12 @@ const propTypes = {
 };
 
 function computeCirclePosition(props) {
-  const translateX = (props.positionInTsneSolution[0] +
+  const translateX = (props.positionInTsneSolution.x +
     (props.windowWidth / (MAP_SCALE_FACTOR * 2))) *
-    MAP_SCALE_FACTOR * props.scale + props.translateX;
-  const translateY = (props.positionInTsneSolution[1] +
+    MAP_SCALE_FACTOR * props.mapZoom.scale + props.mapZoom.translateX;
+  const translateY = (props.positionInTsneSolution.y +
     (props.windowHeight / (MAP_SCALE_FACTOR * 2))) *
-    MAP_SCALE_FACTOR * props.scale + props.translateY;
+    MAP_SCALE_FACTOR * props.mapZoom.scale + props.mapZoom.translateY;
   return {
     transform: `translate3d(${translateX}px, ${translateY}px, 0)`,
     mixBlendMode: 'screen',
@@ -42,6 +47,25 @@ class MapCircle extends React.Component {
       isSelected: false,
       isPlaying: false,
     };
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // case 1: state updated
+    if (this.state !== nextState) {
+      return true;
+    }
+    // case 2: new solution computed
+    if (this.props.positionInTsneSolution.x !== nextProps.positionInTsneSolution.x ||
+      this.props.positionInTsneSolution.y !== nextProps.positionInTsneSolution.y) {
+      return true;
+    }
+    // case 3: interaction with map (zoom, move)
+    if (this.props.mapZoom.translateX !== nextProps.mapZoom.translateX ||
+      this.props.mapZoom.translateY !== nextProps.mapZoom.translateY ||
+      this.props.mapZoom.scale !== nextProps.mapZoom.scale) {
+      return true;
+    }
+    return false;
   }
 
   onHoverCallback() {

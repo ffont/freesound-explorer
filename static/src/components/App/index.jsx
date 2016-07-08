@@ -9,6 +9,13 @@ import '../../stylesheets/App.scss';
 import { DEFAULT_DESCRIPTOR, TSNE_CONFIG } from '../../constants';
 import '../../polyfills/AudioContext';
 
+const propTypes = {
+  windowSize: React.PropTypes.shape({
+    windowWidth: React.PropTypes.number,
+    windowHeight: React.PropTypes.number,
+  }),
+};
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -22,6 +29,14 @@ class App extends React.Component {
     this.updateSystemStatusMessage = this.updateSystemStatusMessage.bind(this);
     this.setUpAudioContext();
     this.tsne = undefined;
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.statusMessage.message === nextState.statusMessage.message) {
+      // avoid wasted renders due to continuous receiving of same message
+      return false;
+    }
+    return true;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -84,6 +99,7 @@ class App extends React.Component {
   }
 
   handleQueryError(error) {
+    this.updateSystemStatusMessage('No sounds found', 'error');
     this.setState({
       error: error || 'Unexpected error',
       isFetching: false,
@@ -107,8 +123,6 @@ class App extends React.Component {
 
   render() {
     const shouldShowMap = !!this.state.sounds.length;
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
     return (
       <div className="app-container">
         <QueryBox onQuerySubmit={this.onQuerySubmit} onSetMapDescriptor={this.setMapDescriptor} />
@@ -119,8 +133,8 @@ class App extends React.Component {
             audioContext={this.audioContext}
             audioLoader={this.audioLoader}
             updateSystemStatusMessage={this.updateSystemStatusMessage}
-            windowWidth={windowWidth}
-            windowHeight={windowHeight}
+            windowWidth={this.props.windowSize.windowWidth}
+            windowHeight={this.props.windowSize.windowHeight}
           /> : ''}
         <MessagesBox statusMessage={this.state.statusMessage} />
       </div>
@@ -128,4 +142,5 @@ class App extends React.Component {
   }
 }
 
+App.propTypes = propTypes;
 export default App;

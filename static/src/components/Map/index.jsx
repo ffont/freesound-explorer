@@ -80,24 +80,29 @@ class Map extends React.Component {
 
   render() {
     const { translateX, translateY, scale } = this.state;
+    const mapZoom = { translateX, translateY, scale };
     const tsneSolution = this.props.tsne.getSolution();
     return (
       <div className="map-container" ref="mapContainer">
         <svg ref="map" className="map">
-          {this.props.sounds.map((sound, index) => (
-            <MapCircle
-              key={sound.id}
-              sound={sound}
-              translateX={translateX}
-              translateY={translateY}
-              scale={scale}
-              positionInTsneSolution={tsneSolution[index]}
-              windowWidth={this.props.windowWidth}
-              windowHeight={this.props.windowHeight}
-              audioContext={this.props.audioContext}
-              audioLoader={this.props.audioLoader}
-            />
-          ))}
+          {this.props.sounds.map((sound, index) => {
+            const circlePosition = {
+              x: tsneSolution[index][0],
+              y: tsneSolution[index][1],
+            };
+            return (
+              <MapCircle
+                key={index}
+                sound={sound}
+                mapZoom={mapZoom}
+                positionInTsneSolution={circlePosition}
+                windowWidth={this.props.windowWidth}
+                windowHeight={this.props.windowHeight}
+                audioContext={this.props.audioContext}
+                audioLoader={this.props.audioLoader}
+              />
+            );
+          })}
         </svg>
       </div>
     );

@@ -33,6 +33,7 @@ class Map extends React.Component {
     });
     this.currentStepIteration = 0;
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    this.onClickCallback = this.onClickCallback.bind(this);
   }
 
   componentDidMount() {
@@ -49,6 +50,13 @@ class Map extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.tsne !== this.props.tsne) {
       this.computeStepSolution();
+    }
+  }
+
+  onClickCallback(evt) {
+    if (evt.target.tagName !== 'circle') {
+      // deselect all sounds when not clicking on a circle
+      this.props.updateSelectedSound();
     }
   }
 
@@ -85,7 +93,7 @@ class Map extends React.Component {
     const tsneSolution = this.props.tsne.getSolution();
     return (
       <div className="map-container" ref="mapContainer">
-        <svg ref="map" className="map">
+        <svg ref="map" className="map" onClick={this.onClickCallback}>
           {this.props.sounds.map((sound, index) => {
             const circlePosition = {
               x: tsneSolution[index][0],

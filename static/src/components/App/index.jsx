@@ -23,16 +23,19 @@ class App extends React.Component {
       sounds: [],
       descriptor: DEFAULT_DESCRIPTOR,
       statusMessage: { message: '', status: '' },
+      selectedSound: undefined,
     };
     this.onQuerySubmit = this.onQuerySubmit.bind(this);
     this.setMapDescriptor = this.setMapDescriptor.bind(this);
     this.updateSystemStatusMessage = this.updateSystemStatusMessage.bind(this);
+    this.updateSelectedSound = this.updateSelectedSound.bind(this);
     this.setUpAudioContext();
     this.tsne = undefined;
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.statusMessage.message === nextState.statusMessage.message) {
+    if (!!this.state.statusMessage.message &&
+      this.state.statusMessage.message === nextState.statusMessage.message) {
       // avoid wasted renders due to continuous receiving of same message
       return false;
     }
@@ -108,6 +111,15 @@ class App extends React.Component {
   }
 
   /**
+   * Updates the sound for which to show a modal with details
+   */
+  updateSelectedSound(soundID) {
+    this.setState({
+      selectedSound: soundID,
+    });
+  }
+
+  /**
    * Updates the status message in the UI.
    *
    * @param {String} message: the message to be shown
@@ -134,8 +146,9 @@ class App extends React.Component {
             audioContext={this.audioContext}
             audioLoader={this.audioLoader}
             updateSystemStatusMessage={this.updateSystemStatusMessage}
-            windowWidth={this.props.windowSize.windowWidth}
-            windowHeight={this.props.windowSize.windowHeight}
+            windowSize={this.props.windowSize}
+            selectedSound={this.state.selectedSound}
+            updateSelectedSound={this.updateSelectedSound}
           /> : ''}
         <MessagesBox statusMessage={this.state.statusMessage} />
       </div>

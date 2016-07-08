@@ -6,6 +6,8 @@ import freesound from '../../vendors/freesound';
 
 const propTypes = {
   sound: React.PropTypes.object,
+  isSelected: React.PropTypes.bool,
+  updateSelectedSound: React.PropTypes.func,
   mapZoom: React.PropTypes.shape({
     translateX: React.PropTypes.number,
     translateY: React.PropTypes.number,
@@ -15,18 +17,21 @@ const propTypes = {
     x: React.PropTypes.number,
     y: React.PropTypes.number,
   }),
-  windowWidth: React.PropTypes.number,
-  windowHeight: React.PropTypes.number,
+  windowSize: React.PropTypes.shape({
+    windowWidth: React.PropTypes.number,
+    windowHeight: React.PropTypes.number,
+  }),
   audioLoader: React.PropTypes.object,
   audioContext: React.PropTypes.object,
 };
 
 function computeCirclePosition(props) {
+  const { windowWidth, windowHeight } = props.windowSize;
   const translateX = (props.positionInTsneSolution.x +
-    (props.windowWidth / (MAP_SCALE_FACTOR * 2))) *
+    (windowWidth / (MAP_SCALE_FACTOR * 2))) *
     MAP_SCALE_FACTOR * props.mapZoom.scale + props.mapZoom.translateX;
   const translateY = (props.positionInTsneSolution.y +
-    (props.windowHeight / (MAP_SCALE_FACTOR * 2))) *
+    (windowHeight / (MAP_SCALE_FACTOR * 2))) *
     MAP_SCALE_FACTOR * props.mapZoom.scale + props.mapZoom.translateY;
   return {
     transform: `translate3d(${translateX}px, ${translateY}px, 0)`,
@@ -44,7 +49,6 @@ class MapCircle extends React.Component {
     this.onClickCallback = this.onClickCallback.bind(this);
     this.state = {
       isHovered: false,
-      isSelected: false,
       isPlaying: false,
     };
   }
@@ -63,6 +67,9 @@ class MapCircle extends React.Component {
     if (this.props.mapZoom.translateX !== nextProps.mapZoom.translateX ||
       this.props.mapZoom.translateY !== nextProps.mapZoom.translateY ||
       this.props.mapZoom.scale !== nextProps.mapZoom.scale) {
+      return true;
+    }
+    if (this.props.isSelected !== nextProps.isSelected) {
       return true;
     }
     return false;
@@ -92,9 +99,12 @@ class MapCircle extends React.Component {
   }
 
   onClickCallback() {
-    this.setState({
-      isSelected: !this.state.isSelected,
-    });
+    if (this.props.isSelected) {
+      // undo selection if sound is already selected
+      this.props.updateSelectedSound();
+    } else {
+      this.props.updateSelectedSound(this.props.sound.id);
+    }
   }
 
   playAudio() {
@@ -118,7 +128,7 @@ class MapCircle extends React.Component {
   }
 
   render() {
-    const circleColor = (this.state.isSelected || this.state.isHovered) ?
+    const circleColor = (this.props.isSelected || this.state.isHovered) ?
       'white' : this.props.sound.rgba;
     return (
       <circle

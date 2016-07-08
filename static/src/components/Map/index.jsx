@@ -13,8 +13,12 @@ const propTypes = {
   audioContext: React.PropTypes.object,
   audioLoader: React.PropTypes.object,
   updateSystemStatusMessage: React.PropTypes.func,
-  windowWidth: React.PropTypes.number,
-  windowHeight: React.PropTypes.number,
+  windowSize: React.PropTypes.shape({
+    windowWidth: React.PropTypes.number,
+    windowHeight: React.PropTypes.number,
+  }),
+  selectedSound: React.PropTypes.number,
+  updateSelectedSound: React.PropTypes.func,
 };
 
 class Map extends React.Component {
@@ -93,8 +97,9 @@ class Map extends React.Component {
                 sound={sound}
                 mapZoom={mapZoom}
                 positionInTsneSolution={circlePosition}
-                windowWidth={this.props.windowWidth}
-                windowHeight={this.props.windowHeight}
+                isSelected={this.props.selectedSound === sound.id}
+                updateSelectedSound={this.props.updateSelectedSound}
+                windowSize={this.props.windowSize}
                 audioContext={this.props.audioContext}
                 audioLoader={this.props.audioLoader}
               />

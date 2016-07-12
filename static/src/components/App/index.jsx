@@ -147,7 +147,12 @@ class App extends React.Component {
     const shouldShowMap = !!this.state.sounds.length;
     return (
       <div className="app-container">
-        <QueryBox onQuerySubmit={this.onQuerySubmit} onSetMapDescriptor={this.setMapDescriptor} onSetMaxResults={this.setMaxResults} />
+        <QueryBox 
+          onQuerySubmit={this.onQuerySubmit} 
+          onSetMapDescriptor={this.setMapDescriptor} 
+          onSetMaxResults={this.setMaxResults} 
+          maxResults={this.state.maxResults}
+        />
         {(shouldShowMap) ?
           <Map
             sounds={this.state.sounds}

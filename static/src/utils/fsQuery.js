@@ -18,7 +18,8 @@ function parseFreesoundSearchUrl(url) {
 function search(query = DEFAULT_QUERY, filter = DEFAULT_FILTER, maxResults = DEFAULT_MAX_RESULTS) {
   // Search sounds and start loading them
   let pageCounter = 0;
-  const pagesToGet = 1;
+  const freesoundMaxPageSize = 150;
+  const pagesToGet = Math.ceil(maxResults / freesoundMaxPageSize);
   const extraDescriptors = [
     'lowlevel.mfcc.mean',
     'lowlevel.barkbands.mean',
@@ -32,10 +33,11 @@ function search(query = DEFAULT_QUERY, filter = DEFAULT_FILTER, maxResults = DEF
   ];
   const promises = [];
   while (pageCounter < pagesToGet) {
+    const maxPageResults = (pageCounter + 1 != pagesToGet) ? Math.min(maxResults, freesoundMaxPageSize) : maxResults - pageCounter * freesoundMaxPageSize;
     freesound.setToken(sessionStorage.getItem('app_token'));
     promises.push(freesound.textSearch(query, {
       page: pageCounter + 1,
-      page_size: maxResults,
+      page_size: maxPageResults,
       group_by_pack: 0,
       filter,
       fields: 'id,previews,name,analysis,url,username',

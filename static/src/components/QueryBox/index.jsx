@@ -46,9 +46,8 @@ class QueryBox extends React.Component {
           </select>
           <input
             id="max-results-slider" type="range" onChange={this.props.onSetMaxResults}
-            min="0" max="150" defaultValue={DEFAULT_MAX_RESULTS} step="1"
-            ref="maxResults"
-          />
+            min="20" max="450" defaultValue={DEFAULT_MAX_RESULTS} step="1"
+          />{this.props.maxResults}
         </form>
         <LoggingInfo />
       </div>

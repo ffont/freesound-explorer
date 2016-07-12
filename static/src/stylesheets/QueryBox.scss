@@ -6,8 +6,8 @@
 	border: 0px;
 	height: 30px;
 	width: 34px;
-  background: none;
-  color: white;
+  	background: none;
+  	color: white;
 }
 
 #query-terms-input {
@@ -15,10 +15,15 @@
 	padding: 7px;
 	border-radius: 5px;
 	border: 0px;
-	height: 30px;
+	height: 18px;
 }
 
 #query-box {
 	right: 20px;
 	top: 20px;
+}
+
+#max-results-slider {
+	width: 275px;
+	margin-top: 8px;	
 }

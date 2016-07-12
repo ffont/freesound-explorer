@@ -1,4 +1,5 @@
 export const DEFAULT_QUERY = 'instrument note';
+export const DEFAULT_MAX_RESULTS = 60;
 export const DEFAULT_DESCRIPTOR = 'lowlevel.mfcc.mean';
 export const DEFAULT_FILTER = 'duration:[0%20TO%202]';
 

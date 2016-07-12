@@ -6,7 +6,7 @@ import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
 import audioLoader from '../../utils/audioLoader';
 import tsnejs from '../../vendors/tsne';
 import '../../stylesheets/App.scss';
-import { DEFAULT_DESCRIPTOR, TSNE_CONFIG } from '../../constants';
+import { DEFAULT_DESCRIPTOR, TSNE_CONFIG, DEFAULT_MAX_RESULTS } from '../../constants';
 import '../../polyfills/AudioContext';
 
 const propTypes = {
@@ -24,9 +24,11 @@ class App extends React.Component {
       descriptor: DEFAULT_DESCRIPTOR,
       statusMessage: { message: '', status: '' },
       selectedSound: undefined,
+      maxResults: DEFAULT_MAX_RESULTS,
     };
     this.onQuerySubmit = this.onQuerySubmit.bind(this);
     this.setMapDescriptor = this.setMapDescriptor.bind(this);
+    this.setMaxResults = this.setMaxResults.bind(this);
     this.updateSystemStatusMessage = this.updateSystemStatusMessage.bind(this);
     this.updateSelectedSound = this.updateSelectedSound.bind(this);
     this.setUpAudioContext();
@@ -56,7 +58,7 @@ class App extends React.Component {
       isFetching: true,
     });
     this.updateSystemStatusMessage('Searching for sounds...');
-    submitQuery(query).then(allPagesResults => this.storeQueryResults(allPagesResults),
+    submitQuery(query, this.state.maxResults).then(allPagesResults => this.storeQueryResults(allPagesResults),
       error => this.handleQueryError(error));
   }
 
@@ -73,6 +75,13 @@ class App extends React.Component {
     const newDescriptor = evt.target.value;
     this.setState({
       descriptor: newDescriptor,
+    });
+  }
+
+  setMaxResults(evt) {
+    const newMaxResults = evt.target.value;
+    this.setState({
+      maxResults: newMaxResults,
     });
   }
 
@@ -138,7 +147,7 @@ class App extends React.Component {
     const shouldShowMap = !!this.state.sounds.length;
     return (
       <div className="app-container">
-        <QueryBox onQuerySubmit={this.onQuerySubmit} onSetMapDescriptor={this.setMapDescriptor} />
+        <QueryBox onQuerySubmit={this.onQuerySubmit} onSetMapDescriptor={this.setMapDescriptor} onSetMaxResults={this.setMaxResults} />
         {(shouldShowMap) ?
           <Map
             sounds={this.state.sounds}

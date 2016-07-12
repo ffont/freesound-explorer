@@ -1,4 +1,4 @@
-import { DEFAULT_FILTER, DEFAULT_QUERY } from '../constants';
+import { DEFAULT_FILTER, DEFAULT_QUERY, DEFAULT_MAX_RESULTS } from '../constants';
 import freesound from '../vendors/freesound';
 import { rgbToHex } from './colors';
 
@@ -15,10 +15,10 @@ function parseFreesoundSearchUrl(url) {
   return { query, filter };
 }
 
-function search(query = DEFAULT_QUERY, filter = DEFAULT_FILTER) {
+function search(query = DEFAULT_QUERY, filter = DEFAULT_FILTER, maxResults = DEFAULT_MAX_RESULTS) {
   // Search sounds and start loading them
   let pageCounter = 0;
-  const pagesToGet = 2;
+  const pagesToGet = 1;
   const extraDescriptors = [
     'lowlevel.mfcc.mean',
     'lowlevel.barkbands.mean',
@@ -35,7 +35,7 @@ function search(query = DEFAULT_QUERY, filter = DEFAULT_FILTER) {
     freesound.setToken(sessionStorage.getItem('app_token'));
     promises.push(freesound.textSearch(query, {
       page: pageCounter + 1,
-      page_size: 150,
+      page_size: maxResults,
       group_by_pack: 0,
       filter,
       fields: 'id,previews,name,analysis,url,username',
@@ -46,14 +46,14 @@ function search(query = DEFAULT_QUERY, filter = DEFAULT_FILTER) {
   return Promise.all(promises);
 }
 
-export function submitQuery(submittedQuery) {
+export function submitQuery(submittedQuery, maxResults) {
   if ((submittedQuery.startsWith('http')) && (submittedQuery.indexOf('freesound.org') !== -1)) {
     // Freesound url, parse query and filter and search
     const { query, filter } = parseFreesoundSearchUrl(submittedQuery);
-    return search(query, filter);
+    return search(query, filter, maxResults);
   }
   // normal query
-  return search(submittedQuery);
+  return search(submittedQuery, DEFAULT_FILTER, maxResults);
 }
 
 export function reshapeReceivedSounds(allPagesResults) {

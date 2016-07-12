@@ -2,9 +2,11 @@ import React from 'react';
 import LoggingInfo from '../LoggingInfo';
 import '../../stylesheets/QueryBox.scss';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import { DEFAULT_MAX_RESULTS } from '../../constants';
 
 const propTypes = {
   onSetMapDescriptor: React.PropTypes.func,
+  onSetMaxResults: React.PropTypes.func,
   onQuerySubmit: React.PropTypes.func,
 };
 
@@ -42,6 +44,11 @@ class QueryBox extends React.Component {
             <option value="lowlevel.spectral_contrast.mean">Spectral contrast</option>
             <option value="lowlevel.scvalleys.mean">SC Valleys</option>
           </select>
+          <input
+            id="max-results-slider" type="range" onChange={this.props.onSetMaxResults}
+            min="0" max="150" defaultValue={DEFAULT_MAX_RESULTS} step="1"
+            ref="maxResults"
+          />
         </form>
         <LoggingInfo />
       </div>

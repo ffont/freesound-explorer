@@ -27,17 +27,15 @@ const propTypes = {
 
 function computeCirclePosition(props) {
   const { windowWidth, windowHeight } = props.windowSize;
-  const translateX = (props.positionInTsneSolution.x +
+  const cx = (props.positionInTsneSolution.x +
     (windowWidth / (MAP_SCALE_FACTOR * 2))) *
     MAP_SCALE_FACTOR * props.mapZoom.scale + props.mapZoom.translateX;
-  const translateY = (props.positionInTsneSolution.y +
+  const cy = (props.positionInTsneSolution.y +
     (windowHeight / (MAP_SCALE_FACTOR * 2))) *
     MAP_SCALE_FACTOR * props.mapZoom.scale + props.mapZoom.translateY;
-  return {
-    transform: `translate3d(${translateX}px, ${translateY}px, 0)`,
-    mixBlendMode: 'screen',
-  };
+  return { cx, cy };
 }
+
 
 class MapCircle extends React.Component {
   constructor(props) {
@@ -130,10 +128,11 @@ class MapCircle extends React.Component {
   render() {
     const circleColor = (this.props.isSelected || this.state.isHovered) ?
       'white' : this.props.sound.rgba;
+    const { cx, cy } = computeCirclePosition(this.props);
     return (
       <circle
-        cx={-DEFAULT_RADIUS}
-        cy={-DEFAULT_RADIUS}
+        cx={cx}
+        cy={cy}
         r={DEFAULT_RADIUS / 2}
         ref="circleElement"
         fill={circleColor}
@@ -141,7 +140,6 @@ class MapCircle extends React.Component {
         stroke={circleColor}
         strokeWidth={DEFAULT_STROKE_WIDTH}
         strokeOpacity={DEFAULT_STROKE_OPACITY}
-        style={computeCirclePosition(this.props)}
         onMouseEnter={this.onHoverCallback}
         onMouseLeave={this.onMouseLeaveCallback}
         onClick={this.onClickCallback}

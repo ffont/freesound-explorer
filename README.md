@@ -38,7 +38,7 @@ Note that `python manage.py syncdb` will probably be required only the first tim
 ```
 npm run with-flask
 ```
-and ensure you have `USE_JS_DEV_SERVER=True` in your `settings.py`. This will make the flask server correctly load the bundle served at port 8080 (and with hot reloading) by webpack.
+(instead of `npm run dev`) and ensure you have `USE_JS_DEV_SERVER=True` in your `settings.py`. This will make the flask server correctly load the bundle served at port 8080 (and with hot reloading) by webpack.
 
 # License
 MIT

@@ -8,7 +8,8 @@ import json
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    use_js_dev_server = settings.USE_JS_DEV_SERVER
+    return render_template('index.html', use_js_dev_server=use_js_dev_server)
 
 
 @app.route('/logout/')
@@ -39,8 +40,8 @@ def done():
 def prepare_auth():
     username, access_token = get_user_data()
     return make_response(jsonify({
-        'username': username, 
-        'access_token': access_token, 
+        'username': username,
+        'access_token': access_token,
         'logged': g.user.is_authenticated,
         }), 200)
 

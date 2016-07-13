@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p",
+    "with-flask": "NODE_ENV=flask ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --colors",
     "dev": "node express_server.js",
     "eslint": "./node_modules/eslint/bin/eslint.js static/src/**/**/**/**"
   },
@@ -29,7 +30,6 @@
     "d3": "^4.1.0",
     "express": "^4.14.0",
     "file-loader": "^0.9.0",
-    "font-awesome": "^4.6.3",
     "json-loader": "^0.5.4",
     "loader-utils": "^0.2.15",
     "node-sass": "^3.8.0",
@@ -57,6 +57,7 @@
     "react-addons-perf": "^15.2.0",
     "react-hot-loader": "^1.3.0",
     "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-server": "^1.14.1",
     "webpack-hot-middleware": "^2.12.0",
     "why-did-you-update": "0.0.8"
   }

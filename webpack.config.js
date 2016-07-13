@@ -15,7 +15,9 @@ function getJsxLoaders() {
 }
 
 function getEntrySources(sources) {
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV === 'flask') {
+    sources.push('webpack-dev-server/client?http://localhost:8080');
+  } else if (process.env.NODE_ENV !== 'production') {
     sources.push('webpack-hot-middleware/client');
   }
   return sources;
@@ -34,7 +36,7 @@ module.exports = {
     './static/src/index',
   ]),
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'static/js/'),
     filename: 'bundle.js',
     publicPath: '/static/js/',
   },

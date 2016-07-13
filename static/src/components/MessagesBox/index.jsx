@@ -1,6 +1,5 @@
 import React from 'react';
 import '../../stylesheets/MessagesBox.scss';
-import 'font-awesome/css/font-awesome.min.css';
 
 const propTypes = {
   statusMessage: React.PropTypes.shape({

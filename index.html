@@ -6,8 +6,8 @@
     <title>Freesound Explorer</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" type="text/css" href="static/css/all.css" />
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/all.css">
     <link rel="stylesheet" type="text/css" href="static/css/waveform.css">
 
   </head>
@@ -34,7 +34,11 @@
 
     <script src="static/js/utils.js"></script>
     <script src="static/js/login-flow.js"></script>
-    <script src="static/js/bundle.js"></script>
+    {% if use_js_dev_server %}
+      <script src="http://localhost:8080/static/js/bundle.js"></script>
+    {% else %}
+      <script src="static/js/bundle.js"></script>
+    {% endif %}
 
   </body>
 </html>

@@ -1,6 +1,35 @@
 @import "./mixins";
 
-#search-button {
+.query-box {
+	position: absolute;
+	right: 0;
+	top: 20px;
+	width: 320px;
+	height: 100px;
+	opacity: 0.9;
+	input:not([type='text'], [type='range']), select {
+		display: block;
+		float: right;
+	}
+	select {
+		margin: 5px 33px;
+	}
+	select {
+		background-color: white;
+		display: block;
+		width: 90%;
+		height: 30px;
+		padding: 7px;
+		border-radius: 5px;
+		border: 0px;
+	}
+	span {
+		color: white;
+	}
+}
+
+
+.search-button {
 	padding: 7px;
 	border-radius: 5px;
 	border: 0px;
@@ -10,7 +39,7 @@
   	color: white;
 }
 
-#query-terms-input {
+.query-terms-input {
 	width: 240px;
 	padding: 7px;
 	border-radius: 5px;
@@ -18,13 +47,8 @@
 	height: 18px;
 }
 
-#query-box {
-	right: 20px;
-	top: 20px;
-}
-
-#max-results-slider {
+.max-results-slider {
 	width: 255px;
-	margin-top: 8px;	
+	margin-top: 8px;
 	margin-right: 8px;
 }

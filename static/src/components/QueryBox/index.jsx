@@ -8,6 +8,7 @@ const propTypes = {
   onSetMapDescriptor: React.PropTypes.func,
   onSetMaxResults: React.PropTypes.func,
   onQuerySubmit: React.PropTypes.func,
+  maxResults: React.PropTypes.number,
 };
 
 class QueryBox extends React.Component {
@@ -17,15 +18,18 @@ class QueryBox extends React.Component {
   }
   render() {
     return (
-      <div id="query-box" className="box">
+      <div id="query-box" className="query-box">
         <form id="query-form" className="query-form">
           <input
-            id="query-terms-input" type="text"
+            id="query-terms-input"
+            className="query-terms-input"
+            type="text"
             placeholder="query terms, e.g.: instrument note"
             ref="query"
           />
           <button
             id="search-button"
+            className="search-button"
             onClick={(evt) => {
               evt.preventDefault();
               this.props.onQuerySubmit(this.refs.query.value);
@@ -33,7 +37,11 @@ class QueryBox extends React.Component {
           >
             <i className="fa fa-search fa-lg" aria-hidden="true"></i>
           </button>
-          <select id="map-descriptors-selector" onChange={this.props.onSetMapDescriptor}>
+          <select
+            id="map-descriptors-selector"
+            className="map-descriptors-selector"
+            onChange={this.props.onSetMapDescriptor}
+          >
             <option value="lowlevel.mfcc.mean">MFCC</option>
             <option value="lowlevel.barkbands.mean">Barkbands</option>
             <option value="lowlevel.erb_bands.mean">ERB bands</option>
@@ -45,9 +53,11 @@ class QueryBox extends React.Component {
             <option value="lowlevel.scvalleys.mean">SC Valleys</option>
           </select>
           <input
-            id="max-results-slider" type="range" onChange={this.props.onSetMaxResults}
+            id="max-results-slider"
+            className="max-results-slider"
+            type="range" onChange={this.props.onSetMaxResults}
             min="20" max="450" defaultValue={DEFAULT_MAX_RESULTS} step="1"
-          />{this.props.maxResults}
+          /><span>{this.props.maxResults}</span>
         </form>
         <LoggingInfo />
       </div>

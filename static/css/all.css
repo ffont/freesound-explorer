@@ -1,15 +1,3 @@
-*{
-	margin:0;
-	padding:0;
-	font-family: Helvetica;
-	font-size: 14px;
-}
-
-body{
-	background:#111;
-	overflow: hidden;
-}
-
 .modal {
 	position: absolute;
 	left: 50%;
@@ -42,66 +30,6 @@ body{
 	width: 500px;
 }
 
-#map {
-	position:absolute;
-	width: 100%;  /* full window size */
-	height: 100%;
-}
-
-.box {
-	position: fixed;
-	color: #fff;
-	opacity: 0.9;
-}
-
-.box a {
-	color: #fff;
-}
-
-#instructions_box {
-	right: 20px;
-	bottom: 20px;
-	text-align: right;
-}
-
-#sound_info_box {
-	left: 20px;
-	bottom: 20px;
-	text-align: left;
-}
-
-#messages-box {
-	left: 0px;
-	right: 0px;
-	bottom: 0px;
-	text-align: left;
-	padding: 18px;
-	background-color: #000;
-	opacity: 0.70;
-	min-height: 18px;
-	display:none;
-}
-
-#logo_box {
-	top: 20px;
-	left: 20px;
-	width: 200px;
-	pointer-events: none;
-}
-
-#map-descriptors-selector {
-	margin-top: 3px;
-	height: 30px;
-	width: 277px;
-	padding: 7px;
-	border-radius: 5px;
-	border: 0px;
-}
-
 #logging-info{
 	text-align: right;
-}
-
-.query-form > select {
-	display: block;
 }

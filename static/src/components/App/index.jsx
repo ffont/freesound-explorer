@@ -1,6 +1,7 @@
 import React from 'react';
 import QueryBox from '../QueryBox';
 import Map from '../Map';
+import Logo from '../Logo';
 import MessagesBox from '../MessagesBox';
 import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
 import audioLoader from '../../utils/audioLoader';
@@ -147,10 +148,11 @@ class App extends React.Component {
     const shouldShowMap = !!this.state.sounds.length;
     return (
       <div className="app-container">
-        <QueryBox 
-          onQuerySubmit={this.onQuerySubmit} 
-          onSetMapDescriptor={this.setMapDescriptor} 
-          onSetMaxResults={this.setMaxResults} 
+        <Logo />
+        <QueryBox
+          onQuerySubmit={this.onQuerySubmit}
+          onSetMapDescriptor={this.setMapDescriptor}
+          onSetMaxResults={this.setMaxResults}
           maxResults={this.state.maxResults}
         />
         {(shouldShowMap) ?

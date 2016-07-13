@@ -1,11 +1,10 @@
-.map-container, svg {
+.map-container, svg.map {
   height: 100%;
 }
 
-svg {
+svg.map {
   width: 100%;
-}
-
-circle {
-  mix-blend-mode: screen;
+  circle {
+    mix-blend-mode: screen;
+  }
 }

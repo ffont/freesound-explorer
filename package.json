@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ffont/FreesoundExplorer.git"
+    "url": "git+https://github.com/ffont/freesound-explorer.git"
   },
   "author": "Frederic Font, Giuseppe Bandiera",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ffont/FreesoundExplorer/issues"
+    "url": "https://github.com/ffont/freesound-explorer/issues"
   },
-  "homepage": "https://github.com/ffont/FreesoundExplorer#readme",
+  "homepage": "https://github.com/ffont/freesound-explorer#readme",
   "dependencies": {
     "autoprefixer": "^6.3.7",
     "babel-core": "^6.10.4",

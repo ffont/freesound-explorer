@@ -10,24 +10,22 @@ from social.apps.flask_app.routes import social_auth
 from social.apps.flask_app.template_filters import backends
 from social.apps.flask_app.default.models import init_social
 
-# App
-app = Flask(__name__)
-app.config.from_object('FreesoundExplorer.settings')
 
-try:
-    app.config.from_object('FreesoundExplorer.local_settings')
-except ImportError:
-    pass
+# App
+# We change the default static url path to '' so that 'static' route defined
+# in routes/main.py takes precedene.
+app = Flask(__name__, static_url_path='')
+app.config.from_object('backend.settings')
 
 
 # Templates
-# We modify the template loader to also look in the root folder
-# This is where index.html stays. Having index.html in the root allows us to statically host FreesoundExplorer and
-# only allow end user registration when the Flask backend in running.
-
+# We modify the template loader to also look in the repository root folder.
+# This is where index.html stays. Having index.html in the root allows us to
+# statically host freesound-explorer (only enabling end user registration
+# when the Flask backend in running).
 import jinja2
 import os
-root_dir = os.path.dirname(os.path.realpath(__file__))
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__),".."))
 my_loader = jinja2.ChoiceLoader([
     app.jinja_loader,
     jinja2.FileSystemLoader(root_dir),
@@ -48,8 +46,8 @@ login_manager.login_view = 'main'
 login_manager.login_message = ''
 login_manager.init_app(app)
 
-from FreesoundExplorer import models
-from FreesoundExplorer import routes
+from backend import models
+from backend import routes
 
 
 @login_manager.user_loader

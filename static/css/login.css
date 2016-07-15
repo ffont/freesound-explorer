@@ -1,6 +1,7 @@
 .modal {
 	position: absolute;
 	left: 50%;
+	top: 0px;
 }
 
 .modal_content {
@@ -32,4 +33,10 @@
 
 #logging-info{
 	text-align: right;
+	color: white;
+	margin-top: 5px;
+}
+
+#logging-info a{
+	color: white;
 }

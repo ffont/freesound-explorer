@@ -11,7 +11,7 @@ function fsLogin(){
 }
 
 function fsLogout(){
-    loadJSON(logout_url, function(data) { 
+    loadJSON(logout_url, function(data) {
         console.log(data);
         clearSession();
         setLoginLink();
@@ -19,11 +19,11 @@ function fsLogout(){
 }
 
 function setLogoutLink(){
-    document.getElementById('logging_info').innerHTML = sessionStorage.getItem('username') + ', <a href="javascript:void(fsLogout())">Logout</a>';
+    document.getElementById('logging-info').innerHTML = sessionStorage.getItem('username') + ', <a href="javascript:void(fsLogout())">Logout</a>';
 }
 
 function setLoginLink(){
-    document.getElementById('logging_info').innerHTML = '<a href="javascript:void(fsLogin())">Login</a>';
+    document.getElementById('logging-info').innerHTML = '<a href="javascript:void(fsLogin())">Login</a>';
 }
 
 function closeLoginModal(){
@@ -42,7 +42,7 @@ function clearSession(){
 }
 
 function getAppToken(){
-    loadJSON(get_app_token_url, function(data) { 
+    loadJSON(get_app_token_url, function(data) {
         sessionStorage.setItem("app_token", data.app_token);
     }, function(){
         console.log("Using static app token");
@@ -53,13 +53,13 @@ function getAppToken(){
 function prepareAuth(){
     clearSession();  // Just in case some data was living in the site
     getAppToken();
-    loadJSON(prepare_auth_url, function(data) { 
+    loadJSON(prepare_auth_url, function(data) {
         console.log("This instance of Freesound Explorer supports end user authentication :)");
         setSessionStorage(data.access_token, data.username);
         if (data.logged == true){
             setLogoutLink();
         } else {
-            setLoginLink();    
+            setLoginLink();
         }
     }, function(){
         supports_end_user_auth = false;

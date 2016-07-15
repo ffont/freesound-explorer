@@ -80,7 +80,7 @@ class App extends React.Component {
   }
 
   setMaxResults(evt) {
-    const newMaxResults = evt.target.value;
+    const newMaxResults = Number(evt.target.value);
     this.setState({
       maxResults: newMaxResults,
     });

@@ -4,8 +4,7 @@
     <body>
         <script>
         	window.parent.setSessionStorage("{{ access_token }}", "{{ username }}");
-            window.parent.closeLoginModal();
-            window.parent.setLogoutLink();
+          window.parent.handleSuccessfulLogin();
         </script>
     </body>
 </html>

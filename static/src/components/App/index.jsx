@@ -1,9 +1,11 @@
 import React from 'react';
 import QueryBox from '../QueryBox';
 import Map from '../Map';
+import Login from '../Login';
 import Logo from '../Logo';
 import MessagesBox from '../MessagesBox';
 import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
+import { readObjectByString } from '../../utils/misc';
 import audioLoader from '../../utils/audioLoader';
 import tsnejs from '../../vendors/tsne';
 import '../../stylesheets/App.scss';
@@ -26,12 +28,20 @@ class App extends React.Component {
       statusMessage: { message: '', status: '' },
       selectedSound: undefined,
       maxResults: DEFAULT_MAX_RESULTS,
+      isUserLoggedIn: false,
+      isEndUserAuthSupported: false,
+      isLoginModalVisible: false,
     };
     this.onQuerySubmit = this.onQuerySubmit.bind(this);
     this.setMapDescriptor = this.setMapDescriptor.bind(this);
     this.setMaxResults = this.setMaxResults.bind(this);
     this.updateSystemStatusMessage = this.updateSystemStatusMessage.bind(this);
     this.updateSelectedSound = this.updateSelectedSound.bind(this);
+    this.setLoginModalVisibility = this.setLoginModalVisibility.bind(this);
+    this.updateUserLoggedStatus = this.updateUserLoggedStatus.bind(this);
+    this.updateEndUserAuthSupport = this.updateEndUserAuthSupport.bind(this);
+    this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
+    this.setSessionStorage = this.setSessionStorage.bind(this);
     this.setUpAudioContext();
     this.tsne = undefined;
   }
@@ -59,7 +69,8 @@ class App extends React.Component {
       isFetching: true,
     });
     this.updateSystemStatusMessage('Searching for sounds...');
-    submitQuery(query, this.state.maxResults).then(allPagesResults => this.storeQueryResults(allPagesResults),
+    submitQuery(query, this.state.maxResults).then(
+      allPagesResults => this.storeQueryResults(allPagesResults),
       error => this.handleQueryError(error));
   }
 
@@ -79,10 +90,33 @@ class App extends React.Component {
     });
   }
 
+  setSessionStorage(accessToken, userName) {
+    sessionStorage.setItem('access_token', accessToken);
+    sessionStorage.setItem('username', userName);
+  }
+
   setMaxResults(evt) {
     const newMaxResults = Number(evt.target.value);
     this.setState({
       maxResults: newMaxResults,
+    });
+  }
+
+  setLoginModalVisibility(isLoginModalVisible) {
+    this.setState({
+      isLoginModalVisible,
+    });
+  }
+
+  updateUserLoggedStatus(isUserLoggedIn) {
+    this.setState({
+      isUserLoggedIn,
+    });
+  }
+
+  updateEndUserAuthSupport(isEndUserAuthSupported) {
+    this.setState({
+      isEndUserAuthSupported,
     });
   }
 
@@ -97,6 +131,13 @@ class App extends React.Component {
     this.updateSystemStatusMessage(`${sounds.length} sounds loaded, computing map`);
   }
 
+  handleSuccessfulLogin() {
+    this.setState({
+      isUserLoggedIn: true,
+      isLoginModalVisible: false,
+    });
+  }
+
   initializeTsne(sounds) {
     if (!sounds) {
       // don't initialize tsne if no sounds provided
@@ -105,7 +146,7 @@ class App extends React.Component {
     this.tsne = new tsnejs.Tsne(TSNE_CONFIG);
     const xTsne = [];
     sounds.forEach(sound => {
-      const soundFeatureVector = Object.byString(sound, `analysis.${this.state.descriptor}`);
+      const soundFeatureVector = readObjectByString(sound, `analysis.${this.state.descriptor}`);
       xTsne.push(soundFeatureVector);
     });
     this.tsne.initDataRaw(xTsne);
@@ -154,6 +195,15 @@ class App extends React.Component {
           onSetMapDescriptor={this.setMapDescriptor}
           onSetMaxResults={this.setMaxResults}
           maxResults={this.state.maxResults}
+        />
+        <Login
+          isLoginModalVisible={this.state.isLoginModalVisible}
+          isUserLoggedIn={this.state.isUserLoggedIn}
+          isEndUserAuthSupported={this.state.isEndUserAuthSupported}
+          setLoginModalVisibility={this.setLoginModalVisibility}
+          updateUserLoggedStatus={this.updateUserLoggedStatus}
+          updateEndUserAuthSupport={this.updateEndUserAuthSupport}
+          setSessionStorage={this.setSessionStorage}
         />
         {(shouldShowMap) ?
           <Map

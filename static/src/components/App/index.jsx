@@ -96,7 +96,7 @@ class App extends React.Component {
   }
 
   setMaxResults(evt) {
-    const newMaxResults = Number(evt.target.value);
+    const newMaxResults = parseInt(evt.target.value, 10);
     this.setState({
       maxResults: newMaxResults,
     });

@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify, request, make_response, redir
 from flask_login import login_required, logout_user
 from social.apps.flask_app.default.models import UserSocialAuth
 from backend import app
+from social.exceptions import SocialAuthBaseException
 import json
 
 
@@ -9,6 +10,13 @@ import json
 @app.route('/static/<path:filename>')
 def custom_static(filename):
     return send_from_directory(app.config['CUSTOM_STATIC_FOLDER_PATH'], filename)
+
+
+@app.errorhandler(500)
+def error_handler(error):
+    # See https://github.com/omab/python-social-auth/blob/master/docs/configuration/flask.rst#exceptions-handling
+    if isinstance(error, SocialAuthBaseException):
+        return render_template('failed_login.html')
 
 
 @app.route('/')

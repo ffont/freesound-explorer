@@ -19,3 +19,4 @@ const app = render(<App windowSize={{ windowWidth, windowHeight }} />,
 
 window.setSessionStorage = app.setSessionStorage;
 window.handleSuccessfulLogin = app.handleSuccessfulLogin;
+window.handleFailedLogin = app.handleFailedLogin;

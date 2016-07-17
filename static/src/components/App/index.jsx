@@ -41,6 +41,7 @@ class App extends React.Component {
     this.updateUserLoggedStatus = this.updateUserLoggedStatus.bind(this);
     this.updateEndUserAuthSupport = this.updateEndUserAuthSupport.bind(this);
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
+    this.handleFailedLogin = this.handleFailedLogin.bind(this);
     this.setSessionStorage = this.setSessionStorage.bind(this);
     this.setUpAudioContext();
     this.tsne = undefined;
@@ -134,6 +135,13 @@ class App extends React.Component {
   handleSuccessfulLogin() {
     this.setState({
       isUserLoggedIn: true,
+      isLoginModalVisible: false,
+    });
+  }
+
+  handleFailedLogin() {
+    this.setState({
+      isUserLoggedIn: false,
       isLoginModalVisible: false,
     });
   }

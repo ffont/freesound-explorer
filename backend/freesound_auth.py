@@ -1,4 +1,5 @@
 from social.backends.oauth import BaseOAuth2
+from social.utils import handle_http_errors
 
 
 class FreesoundAuth(BaseOAuth2):

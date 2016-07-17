@@ -31,7 +31,6 @@ class FreesoundAuth(BaseOAuth2):
         }
 
     def get_user_details(self, response):
-        print response['username']
         return response
 
     def user_data(self, access_token, *args, **kwargs):

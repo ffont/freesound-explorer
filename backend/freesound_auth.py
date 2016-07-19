@@ -1,4 +1,5 @@
 from social.backends.oauth import BaseOAuth2
+from social.utils import handle_http_errors
 
 
 class FreesoundAuth(BaseOAuth2):
@@ -31,7 +32,6 @@ class FreesoundAuth(BaseOAuth2):
         }
 
     def get_user_details(self, response):
-        print response['username']
         return response
 
     def user_data(self, access_token, *args, **kwargs):

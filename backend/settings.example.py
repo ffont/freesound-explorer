@@ -1,6 +1,6 @@
 import os
 
-DEBUG = True
+DEBUG = False
 USE_JS_DEV_SERVER = True
 SECRET_KEY = 'secret_key'
 SESSION_COOKIE_NAME = 'psa_session'

@@ -1,5 +1,4 @@
 import React from 'react';
-import LoggingInfo from '../LoggingInfo';
 import '../../stylesheets/QueryBox.scss';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { DEFAULT_MAX_RESULTS } from '../../constants';
@@ -59,7 +58,6 @@ class QueryBox extends React.Component {
             min="20" max="450" defaultValue={DEFAULT_MAX_RESULTS} step="1"
           /><span>{this.props.maxResults}</span>
         </form>
-        <LoggingInfo />
       </div>
     );
   }

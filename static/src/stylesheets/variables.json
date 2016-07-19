@@ -8,5 +8,7 @@
   "blackBackground": "#1b1919",
   "menuOpacity": 0.85,
   "menuBackground": "#000000",
-  "messagesBoxHeight": "50px"
+  "messagesBoxHeight": "50px",
+  "sidebarWidth": "340px",
+  "sidebarClosedOffset": "50px"
 }

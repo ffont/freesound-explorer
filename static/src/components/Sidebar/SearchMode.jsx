@@ -4,7 +4,7 @@ import '../../stylesheets/Sidebar.scss';
 
 function SearchMode(props) {
   return (
-    <div className="sidebar-wrapper">
+    <div className="mode-controls-wrapper">
       <QueryBox {...props} />
     </div>
   );

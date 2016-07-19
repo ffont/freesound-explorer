@@ -31,6 +31,7 @@ class App extends React.Component {
       isUserLoggedIn: false,
       isEndUserAuthSupported: false,
       isLoginModalVisible: false,
+      isSidebarVisible: true,
     };
     this.onQuerySubmit = this.onQuerySubmit.bind(this);
     this.setMapDescriptor = this.setMapDescriptor.bind(this);
@@ -199,6 +200,7 @@ class App extends React.Component {
       <div className="app-container">
         <Logo />
         <Sidebar
+          isVisible={this.state.isSidebarVisible}
           onQuerySubmit={this.onQuerySubmit}
           onSetMapDescriptor={this.setMapDescriptor}
           onSetMaxResults={this.setMaxResults}

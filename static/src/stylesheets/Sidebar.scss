@@ -1,10 +1,19 @@
 @import "./variables.json";
 
-.sidebar-wrapper {
+.sidebar {
   position: absolute;
   top: 0px;
-  left: 0px;
-  width: 340px;
+  left: $sidebarClosedOffset - $sidebarWidth;
+  width: $sidebarWidth;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+.sidebar.active {
+  left: 0px;
+}
+
+.mode-controls-wrapper {
+  width: calc(100% - 60px);
+  padding: 10px;
 }

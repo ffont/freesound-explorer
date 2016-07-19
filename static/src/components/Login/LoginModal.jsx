@@ -8,6 +8,7 @@ const propTypes = {
 
 function LoginModal(props) {
   const modalClassName = `login-modal-bg${(props.isVisible) ? ' active' : ''}`;
+  const iframeSrc = (props.isVisible) ? props.contentURL : '';
   return (
     <div className={modalClassName}>
       <div className="login-modal">
@@ -20,7 +21,7 @@ function LoginModal(props) {
               height="400"
               width="500"
               frameBorder="0"
-              src={props.contentURL}
+              src={iframeSrc}
             />
           </div>
         </div>

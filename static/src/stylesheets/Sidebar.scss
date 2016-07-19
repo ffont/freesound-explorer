@@ -6,14 +6,24 @@
   left: $sidebarClosedOffset - $sidebarWidth;
   width: $sidebarWidth;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .sidebar.active {
   left: 0px;
 }
 
-.mode-controls-wrapper {
-  width: calc(100% - 60px);
-  padding: 10px;
+.sidebar-content-wrapper {
+  width: $sidebarWidth - $sidebarClosedOffset -40px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 100%;
+}
+
+.sidebar-menu-wrapper {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 100%;
+  width: $sidebarClosedOffset;
+  background-color: rgba(0, 0, 0, 0.5);
 }

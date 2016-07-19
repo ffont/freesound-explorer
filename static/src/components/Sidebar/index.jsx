@@ -4,13 +4,20 @@ import '../../stylesheets/Sidebar.scss';
 
 const propTypes = {
   isVisible: React.PropTypes.bool,
+  setSidebarVisibility: React.PropTypes.func,
 };
 
 function Sidebar(props) {
   const sidebarClassName = `sidebar${(props.isVisible) ? ' active' : ''}`;
   return (
     <div className={sidebarClassName}>
-      <SearchMode {...props} />
+      <div className="sidebar-content-wrapper">
+        <SearchMode {...props} />
+      </div>
+      <div
+        className="sidebar-menu-wrapper"
+        onClick={() => props.setSidebarVisibility(!props.isVisible)}
+      ></div>
     </div>
   );
 }

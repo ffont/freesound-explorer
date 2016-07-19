@@ -39,6 +39,7 @@ class App extends React.Component {
     this.updateSystemStatusMessage = this.updateSystemStatusMessage.bind(this);
     this.updateSelectedSound = this.updateSelectedSound.bind(this);
     this.setLoginModalVisibility = this.setLoginModalVisibility.bind(this);
+    this.setSidebarVisibility = this.setSidebarVisibility.bind(this);
     this.updateUserLoggedStatus = this.updateUserLoggedStatus.bind(this);
     this.updateEndUserAuthSupport = this.updateEndUserAuthSupport.bind(this);
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
@@ -107,6 +108,12 @@ class App extends React.Component {
   setLoginModalVisibility(isLoginModalVisible) {
     this.setState({
       isLoginModalVisible,
+    });
+  }
+
+  setSidebarVisibility(isSidebarVisible) {
+    this.setState({
+      isSidebarVisible,
     });
   }
 
@@ -201,6 +208,7 @@ class App extends React.Component {
         <Logo />
         <Sidebar
           isVisible={this.state.isSidebarVisible}
+          setSidebarVisibility={this.setSidebarVisibility}
           onQuerySubmit={this.onQuerySubmit}
           onSetMapDescriptor={this.setMapDescriptor}
           onSetMaxResults={this.setMaxResults}

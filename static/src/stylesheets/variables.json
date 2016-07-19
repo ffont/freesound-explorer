@@ -6,5 +6,7 @@
   },
   "redRegular": "#97171e",
   "blackBackground": "#1b1919",
+  "menuOpacity": 0.85,
+  "menuBackground": "#000000",
   "messagesBoxHeight": "50px"
 }

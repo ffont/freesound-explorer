@@ -1,8 +1,8 @@
 import React from 'react';
-import QueryBox from '../QueryBox';
 import Map from '../Map';
 import Login from '../Login';
 import Logo from '../Logo';
+import Sidebar from '../Sidebar';
 import MessagesBox from '../MessagesBox';
 import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
 import { readObjectByString } from '../../utils/misc';
@@ -198,7 +198,7 @@ class App extends React.Component {
     return (
       <div className="app-container">
         <Logo />
-        <QueryBox
+        <Sidebar
           onQuerySubmit={this.onQuerySubmit}
           onSetMapDescriptor={this.setMapDescriptor}
           onSetMaxResults={this.setMaxResults}

@@ -160,6 +160,7 @@ class App extends React.Component {
       isUserLoggedIn: true,
       isLoginModalVisible: false,
     });
+    this.updateSystemStatusMessage(`Logged in as ${sessionStorage.getItem('username')}`);
   }
 
   handleFailedLogin() {
@@ -167,6 +168,7 @@ class App extends React.Component {
       isUserLoggedIn: false,
       isLoginModalVisible: false,
     });
+    this.updateSystemStatusMessage('Failed to log in...');
   }
 
   initializeTsne(sounds) {
@@ -247,6 +249,7 @@ class App extends React.Component {
           updateUserLoggedStatus={this.updateUserLoggedStatus}
           updateEndUserAuthSupport={this.updateEndUserAuthSupport}
           setSessionStorage={this.setSessionStorage}
+          updateSystemStatusMessage={this.updateSystemStatusMessage}
         />
         {(shouldShowMap) ?
           <Map

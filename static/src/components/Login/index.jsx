@@ -43,6 +43,7 @@ const propTypes = {
   updateUserLoggedStatus: React.PropTypes.func,
   updateEndUserAuthSupport: React.PropTypes.func,
   setSessionStorage: React.PropTypes.func,
+  updateSystemStatusMessage: React.PropTypes.func,
 };
 
 class Login extends React.Component {
@@ -85,6 +86,7 @@ class Login extends React.Component {
     loadJSON(URLS.logout).then(() => {
       clearSession();
       this.props.updateUserLoggedStatus(false);
+      this.props.updateSystemStatusMessage(`Logged out`);
     });
   }
 

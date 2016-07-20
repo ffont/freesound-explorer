@@ -1,5 +1,5 @@
 import React from 'react';
-import QueryBox from '../QueryBox';
+import QueryBox from './QueryBox';
 import '../../stylesheets/Sidebar.scss';
 
 function SearchMode(props) {

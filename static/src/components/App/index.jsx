@@ -9,7 +9,8 @@ import { readObjectByString } from '../../utils/misc';
 import audioLoader from '../../utils/audioLoader';
 import tsnejs from '../../vendors/tsne';
 import '../../stylesheets/App.scss';
-import { DEFAULT_DESCRIPTOR, TSNE_CONFIG, DEFAULT_MAX_RESULTS } from '../../constants';
+import { DEFAULT_DESCRIPTOR, TSNE_CONFIG, DEFAULT_MAX_RESULTS,
+  DEFAULT_MESSAGE_DURATION } from '../../constants';
 import '../../polyfills/AudioContext';
 
 const propTypes = {
@@ -49,6 +50,7 @@ class App extends React.Component {
     this.setSessionStorage = this.setSessionStorage.bind(this);
     this.setUpAudioContext();
     this.tsne = undefined;
+    this.messageTimer = undefined;
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -212,6 +214,14 @@ class App extends React.Component {
         status,
       },
     });
+
+    // Clear existing timeouts for hiding the message and set a new one
+    clearTimeout(this.messageTimer);
+    this.messageTimer = setTimeout(
+      () => {
+        this.setState({ statusMessage: { message: '', status: '' } });
+      }, DEFAULT_MESSAGE_DURATION
+    );
   }
 
   render() {

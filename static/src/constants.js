@@ -3,7 +3,7 @@ export const DEFAULT_MAX_RESULTS = 60;
 export const DEFAULT_DESCRIPTOR = 'lowlevel.mfcc.mean';
 export const DEFAULT_FILTER = 'duration:[0%20TO%202]';
 
-export const MAX_TSNE_ITERATIONS = 250;
+export const DEFAULT_MESSAGE_DURATION = 5000;
 
 export const MIN_ZOOM = 0.2;
 export const MAX_ZOOM = 15;
@@ -13,6 +13,7 @@ export const DEFAULT_OPACITY = 0.7;
 export const DEFAULT_STROKE_WIDTH = 2;
 export const DEFAULT_STROKE_OPACITY = 0.9;
 
+export const MAX_TSNE_ITERATIONS = 250;
 export const TSNE_CONFIG = {
   epsilon: 10,
   perplexity: 10,

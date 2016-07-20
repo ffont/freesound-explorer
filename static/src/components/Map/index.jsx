@@ -75,7 +75,7 @@ class Map extends React.Component {
       cancelAnimationFrame(this.stepInterval);
       this.props.updateSystemStatusMessage('Map computed!', 'success');
       // hide system status message after 5 seconds
-      setTimeout(() => this.props.updateSystemStatusMessage(''), 5000);
+      // setTimeout(() => this.props.updateSystemStatusMessage(''), 5000);
       this.currentStepIteration = 0;
     }
   }

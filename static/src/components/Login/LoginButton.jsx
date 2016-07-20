@@ -7,9 +7,15 @@ const propTypes = {
 };
 
 function LoginButton(props) {
+  const username = (props.isUserLoggedIn) ? sessionStorage.getItem('username') : '';
   const content = (props.isUserLoggedIn) ?
-    <a className="login-button" onClick={props.handleFreesoundLogout}>Logout</a> :
-    <a className="login-button" onClick={props.handleFreesoundLogin}>Login</a>;
+    <a className="login-button" onClick={props.handleFreesoundLogout}>
+      <span className="username">{username}</span>
+      <i className="fa fa-user-times fa-2x" aria-hidden="true" />
+    </a> :
+    <a className="login-button" onClick={props.handleFreesoundLogin}>
+      <i className="fa fa-user fa-2x" aria-hidden="true" />
+    </a>;
   return content;
 }
 

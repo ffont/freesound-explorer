@@ -32,6 +32,7 @@ class App extends React.Component {
       isEndUserAuthSupported: false,
       isLoginModalVisible: false,
       isSidebarVisible: true,
+      activeMode: 'SearchMode',
     };
     this.onQuerySubmit = this.onQuerySubmit.bind(this);
     this.setMapDescriptor = this.setMapDescriptor.bind(this);
@@ -40,6 +41,7 @@ class App extends React.Component {
     this.updateSelectedSound = this.updateSelectedSound.bind(this);
     this.setLoginModalVisibility = this.setLoginModalVisibility.bind(this);
     this.setSidebarVisibility = this.setSidebarVisibility.bind(this);
+    this.setActiveMode = this.setActiveMode.bind(this);
     this.updateUserLoggedStatus = this.updateUserLoggedStatus.bind(this);
     this.updateEndUserAuthSupport = this.updateEndUserAuthSupport.bind(this);
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
@@ -115,6 +117,17 @@ class App extends React.Component {
     this.setState({
       isSidebarVisible,
     });
+  }
+
+  setActiveMode(activeMode) {
+    this.setState({
+      activeMode,
+    });
+    if (!this.state.isSidebarVisible) {
+      this.setState({
+        isSidebarVisible: true,
+      });
+    }
   }
 
   updateUserLoggedStatus(isUserLoggedIn) {
@@ -209,6 +222,8 @@ class App extends React.Component {
         <Sidebar
           isVisible={this.state.isSidebarVisible}
           setSidebarVisibility={this.setSidebarVisibility}
+          activeMode={this.state.activeMode}
+          setActiveMode={this.setActiveMode}
           onQuerySubmit={this.onQuerySubmit}
           onSetMapDescriptor={this.setMapDescriptor}
           onSetMaxResults={this.setMaxResults}

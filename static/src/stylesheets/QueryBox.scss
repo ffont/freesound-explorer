@@ -9,8 +9,9 @@
 		float: right;
 	}
 	select {
-		margin-top: 5px;
+		margin-top: 8px;
 		background-color: white;
+		color: black;
 		display: block;
 		width: 100%;
 		height: 30px;
@@ -38,10 +39,11 @@
 	border-radius: 5px;
 	border: 0px;
 	height: 18px;
+	color: black;
 }
 
 .max-results-slider {
 	width: calc(100% - 40px);
 	margin-top: 8px;
-	margin-right: 8px;
+	margin-right: 12px;
 }

@@ -34,7 +34,7 @@ class QueryBox extends React.Component {
               this.props.onQuerySubmit(this.refs.query.value);
             }}
           >
-            <i className="fa fa-search fa-lg" aria-hidden="true"></i>
+            <i className="fa fa-arrow-circle-right fa-lg" aria-hidden="true" />
           </button>
           <select
             id="map-descriptors-selector"

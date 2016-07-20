@@ -4,9 +4,11 @@
   right: 20px;
   color: white;
   cursor: pointer;
-  border: 1px solid white;
-  border-radius: 5px;
   padding: 10px;
+}
+
+.login-button .username {
+  margin-right: 10px;
 }
 
 .login-modal-bg {

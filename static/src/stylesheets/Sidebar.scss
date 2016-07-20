@@ -6,6 +6,10 @@
   left: $sidebarClosedOffset - $sidebarWidth;
   width: $sidebarWidth;
   height: 100%;
+
+  p {
+    margin-bottom: 8px;
+  }
 }
 
 .sidebar.active {
@@ -26,4 +30,41 @@
   height: 100%;
   width: $sidebarClosedOffset;
   background-color: rgba(0, 0, 0, 0.5);
+  ul {
+    list-style-type: none;
+  }
+  li {
+    display: block;
+    width: 100%;
+    height: $sidebarClosedOffset;
+    text-align: center;
+    line-height: $sidebarClosedOffset;
+    cursor: pointer;
+  }
+  li:hover {
+    background-color: rgba(70, 70, 70, 0.5);
+  }
+  li.active {
+    background-color: rgba(100, 100, 100, 0.5);
+  }
+}
+
+.sidebar-menu-wrapper .toggle-visibility-button {
+  position:absolute;
+  bottom: 0px;
+  left: 0px;
+  display:block;
+  width: 100%;
+  height: $sidebarClosedOffset;
+  line-height: $sidebarClosedOffset;
+  text-align: center;
+  cursor: pointer;
+}
+
+.sidebar .mode-active {
+  display: block;
+}
+
+.sidebar .mode-inactive {
+  display: none;
 }

@@ -1,11 +1,18 @@
 import React from 'react';
 import QueryBox from './QueryBox';
-import '../../stylesheets/Sidebar.scss';
+
+const propTypes = {
+  isActiveMode: React.PropTypes.bool,
+};
 
 function SearchMode(props) {
   return (
-    <QueryBox {...props} />
+    <div className={(props.isActiveMode) ? 'mode-active' : 'mode-inactive'}>
+      <h1>Search</h1>
+      <QueryBox {...props} />
+    </div>
   );
 }
 
+SearchMode.propTypes = propTypes;
 export default SearchMode;

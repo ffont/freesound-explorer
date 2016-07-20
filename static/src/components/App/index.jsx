@@ -207,7 +207,7 @@ class App extends React.Component {
    * @param {String} message: the message to be shown
    * @param {String} status: the related icon (info, success, error)
    */
-  updateSystemStatusMessage(message, status = 'info') {
+  updateSystemStatusMessage(message, status = 'info', time = DEFAULT_MESSAGE_DURATION) {
     this.setState({
       statusMessage: {
         message,
@@ -220,7 +220,7 @@ class App extends React.Component {
     this.messageTimer = setTimeout(
       () => {
         this.setState({ statusMessage: { message: '', status: '' } });
-      }, DEFAULT_MESSAGE_DURATION
+      }, time
     );
   }
 

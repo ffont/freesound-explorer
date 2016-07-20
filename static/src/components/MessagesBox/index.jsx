@@ -19,6 +19,7 @@ class MessagesBox extends React.Component {
   render() {
     let className = 'message-box';
     const { message, status } = this.props.statusMessage;
+    className += ` ${status}`;
     if (!!message) {
       className += ' active';
     }

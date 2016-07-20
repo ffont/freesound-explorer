@@ -3,7 +3,7 @@ export const DEFAULT_MAX_RESULTS = 60;
 export const DEFAULT_DESCRIPTOR = 'lowlevel.mfcc.mean';
 export const DEFAULT_FILTER = 'duration:[0%20TO%202]';
 
-export const DEFAULT_MESSAGE_DURATION = 5000;
+export const DEFAULT_MESSAGE_DURATION = 4000;
 
 export const MIN_ZOOM = 0.2;
 export const MAX_ZOOM = 15;

@@ -5,6 +5,7 @@
   top: 0px;
   left: $sidebarClosedOffset - $sidebarWidth;
   width: $sidebarWidth;
+  transition: left 0.3s ease;
   height: 100%;
 
   p {

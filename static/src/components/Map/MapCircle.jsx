@@ -8,33 +8,13 @@ const propTypes = {
   sound: React.PropTypes.object,
   isSelected: React.PropTypes.bool,
   updateSelectedSound: React.PropTypes.func,
-  mapZoom: React.PropTypes.shape({
-    translateX: React.PropTypes.number,
-    translateY: React.PropTypes.number,
-    scale: React.PropTypes.number,
-  }),
-  positionInTsneSolution: React.PropTypes.shape({
-    x: React.PropTypes.number,
-    y: React.PropTypes.number,
-  }),
-  windowSize: React.PropTypes.shape({
-    windowWidth: React.PropTypes.number,
-    windowHeight: React.PropTypes.number,
+  position: React.PropTypes.shape({
+    cx: React.PropTypes.number,
+    cy: React.PropTypes.number,
   }),
   audioLoader: React.PropTypes.object,
   audioContext: React.PropTypes.object,
 };
-
-function computeCirclePosition(props) {
-  const { windowWidth, windowHeight } = props.windowSize;
-  const cx = (props.positionInTsneSolution.x +
-    (windowWidth / (MAP_SCALE_FACTOR * 2))) *
-    MAP_SCALE_FACTOR * props.mapZoom.scale + props.mapZoom.translateX;
-  const cy = (props.positionInTsneSolution.y +
-    (windowHeight / (MAP_SCALE_FACTOR * 2))) *
-    MAP_SCALE_FACTOR * props.mapZoom.scale + props.mapZoom.translateY;
-  return { cx, cy };
-}
 
 
 class MapCircle extends React.Component {
@@ -56,15 +36,9 @@ class MapCircle extends React.Component {
     if (this.state !== nextState) {
       return true;
     }
-    // case 2: new solution computed
-    if (this.props.positionInTsneSolution.x !== nextProps.positionInTsneSolution.x ||
-      this.props.positionInTsneSolution.y !== nextProps.positionInTsneSolution.y) {
-      return true;
-    }
-    // case 3: interaction with map (zoom, move)
-    if (this.props.mapZoom.translateX !== nextProps.mapZoom.translateX ||
-      this.props.mapZoom.translateY !== nextProps.mapZoom.translateY ||
-      this.props.mapZoom.scale !== nextProps.mapZoom.scale) {
+    // case 2: new position
+    if (this.props.position.cx !== nextProps.position.cx ||
+      this.props.position.cy !== nextProps.position.cy) {
       return true;
     }
     if (this.props.isSelected !== nextProps.isSelected) {
@@ -128,7 +102,7 @@ class MapCircle extends React.Component {
   render() {
     const circleColor = (this.props.isSelected || this.state.isHovered) ?
       'white' : this.props.sound.rgba;
-    const { cx, cy } = computeCirclePosition(this.props);
+    const { cx, cy } = this.props.position;
     return (
       <circle
         cx={cx}

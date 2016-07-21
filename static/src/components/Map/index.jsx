@@ -2,8 +2,9 @@ import React from 'react';
 import { select, event as d3Event } from 'd3-selection';
 import { zoom } from 'd3-zoom';
 import MapCircle from './MapCircle';
+import SoundInfo from '../SoundInfo';
 import '../../polyfills/requestAnimationFrame';
-import { MIN_ZOOM, MAX_ZOOM, MAX_TSNE_ITERATIONS } from '../../constants';
+import { MIN_ZOOM, MAX_ZOOM, MAX_TSNE_ITERATIONS, MAP_SCALE_FACTOR } from '../../constants';
 import '../../stylesheets/Map.scss';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
@@ -87,33 +88,50 @@ class Map extends React.Component {
     this.setState({ translateX, translateY, scale });
   }
 
-  render() {
+  computeCirclePosition(positionInTsneSolution) {
+    const { windowWidth, windowHeight } = this.props.windowSize;
     const { translateX, translateY, scale } = this.state;
-    const mapZoom = { translateX, translateY, scale };
+    const cx = (positionInTsneSolution.x +
+      (windowWidth / (MAP_SCALE_FACTOR * 2))) *
+      MAP_SCALE_FACTOR * scale + translateX;
+    const cy = (positionInTsneSolution.y +
+      (windowHeight / (MAP_SCALE_FACTOR * 2))) *
+      MAP_SCALE_FACTOR * scale + translateY;
+    return { cx, cy };
+  }
+
+  render() {
     const tsneSolution = this.props.tsne.getSolution();
+    let soundInfoPosition;
+    let soundInfoContent;
     return (
       <div className="map-container" ref="mapContainer">
         <svg ref="map" className="map" onClick={this.onClickCallback}>
           {this.props.sounds.map((sound, index) => {
-            const circlePosition = {
+            const tsnePosition = {
               x: tsneSolution[index][0],
               y: tsneSolution[index][1],
             };
+            const { cx, cy } = this.computeCirclePosition(tsnePosition);
+            const isSoundSelected = this.props.selectedSound === sound.id;
+            if (isSoundSelected) {
+              soundInfoPosition = { x: cx, y: cy };
+              soundInfoContent = sound;
+            }
             return (
               <MapCircle
                 key={index}
                 sound={sound}
-                mapZoom={mapZoom}
-                positionInTsneSolution={circlePosition}
+                position={{ cx, cy }}
                 isSelected={this.props.selectedSound === sound.id}
                 updateSelectedSound={this.props.updateSelectedSound}
-                windowSize={this.props.windowSize}
                 audioContext={this.props.audioContext}
                 audioLoader={this.props.audioLoader}
               />
             );
           })}
         </svg>
+        <SoundInfo position={soundInfoPosition} sound={soundInfoContent} />
       </div>
     );
   }

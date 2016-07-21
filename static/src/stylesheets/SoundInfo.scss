@@ -1,0 +1,14 @@
+$sound-info-modal-height: 300px;
+$sound-info-modal-width: 400px;
+
+.sound-info-modal {
+  position: absolute;
+  margin-top: -$sound-info-modal-height;
+  height: 0;
+  transition: height 0.3s ease-in-out;
+  &.active {
+    height: $sound-info-modal-height;
+  }
+  width: $sound-info-modal-width;
+  background-color: white;
+}

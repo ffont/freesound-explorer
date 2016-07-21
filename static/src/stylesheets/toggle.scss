@@ -1,0 +1,60 @@
+@import "./variables.json";
+// Adapted from http://callmenick.com/post/css-toggle-switch-examples
+
+.toggle-wrapper {
+  height: 22px;
+  line-height:22px;
+  span {
+    vertical-align: top;
+  }
+}
+.toggle {
+  display:none;
+}
+.toggle + label {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  margin-left: 10px;
+}
+input.toggle + label {
+  padding: 1px;
+  width: 40px;
+  height: 20px;
+  background-color: white;
+  border-radius: 20px;
+  transition: background 0.4s;
+}
+input.toggle + label:before,
+input.toggle + label:after {
+  display: block;
+  position: absolute;
+  content: "";
+}
+input.toggle + label:before {
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+  right: 1px;
+  background-color: $menuBackground;
+  border-radius: 20px;
+  transition: background 0.4s;
+}
+input.toggle + label:after {
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  width: 18px;
+  background-color: white;
+  border-radius: 18px;
+  transition: margin 0.4s, background 0.4s;
+}
+input.toggle:checked + label {
+  background-color: white;
+}
+input.toggle:checked + label:after {
+  margin-left: 20px;
+  background-color: white;
+}

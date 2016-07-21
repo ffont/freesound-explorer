@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../stylesheets/QueryBox.scss';
+import '../../stylesheets/toggle.scss';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { DEFAULT_MAX_RESULTS } from '../../constants';
 
@@ -59,12 +60,18 @@ class QueryBox extends React.Component {
             type="range" onChange={this.props.onSetMaxResults}
             min="20" max="450" defaultValue={DEFAULT_MAX_RESULTS} step="1"
           /><span>{this.props.maxResults}</span>
-          <div>
-            <input
-              type="checkbox"
-              checked={this.props.playOnHover}
-              onChange={this.props.tooglePlayOnHover}
-            /> Play on hover
+          <div className="toggle-wrapper">
+            <span>Play on hover:</span>
+            <div style={{ display: 'inline' }}>
+              <input
+                id="playOnHoverSwitch"
+                className="toggle"
+                type="checkbox"
+                checked={this.props.playOnHover}
+                onChange={this.props.tooglePlayOnHover}
+              />
+              <label htmlFor="playOnHoverSwitch"></label>
+            </div>
           </div>
         </form>
       </div>

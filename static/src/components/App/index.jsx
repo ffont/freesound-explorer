@@ -49,6 +49,7 @@ class App extends React.Component {
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
     this.handleFailedLogin = this.handleFailedLogin.bind(this);
     this.setSessionStorage = this.setSessionStorage.bind(this);
+    this.tooglePlayOnHover = this.tooglePlayOnHover.bind(this);
     this.setUpAudioContext();
     this.tsne = undefined;
     this.messageTimer = undefined;
@@ -131,6 +132,12 @@ class App extends React.Component {
         isSidebarVisible: true,
       });
     }
+  }
+
+  tooglePlayOnHover() {
+    this.setState({
+      playOnHover: !this.state.playOnHover,
+    });
   }
 
   updateUserLoggedStatus(isUserLoggedIn) {
@@ -241,6 +248,8 @@ class App extends React.Component {
           onSetMapDescriptor={this.setMapDescriptor}
           onSetMaxResults={this.setMaxResults}
           maxResults={this.state.maxResults}
+          playOnHover={this.state.playOnHover}
+          tooglePlayOnHover={this.tooglePlayOnHover}
         />
         <Login
           isLoginModalVisible={this.state.isLoginModalVisible}

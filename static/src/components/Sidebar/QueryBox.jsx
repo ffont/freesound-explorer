@@ -8,6 +8,8 @@ const propTypes = {
   onSetMaxResults: React.PropTypes.func,
   onQuerySubmit: React.PropTypes.func,
   maxResults: React.PropTypes.number,
+  playOnHover: React.PropTypes.bool,
+  tooglePlayOnHover: React.PropTypes.func,
 };
 
 class QueryBox extends React.Component {
@@ -57,6 +59,13 @@ class QueryBox extends React.Component {
             type="range" onChange={this.props.onSetMaxResults}
             min="20" max="450" defaultValue={DEFAULT_MAX_RESULTS} step="1"
           /><span>{this.props.maxResults}</span>
+          <div>
+            <input
+              type="checkbox"
+              checked={this.props.playOnHover}
+              onChange={this.props.tooglePlayOnHover}
+            /> Play on hover
+          </div>
         </form>
       </div>
     );

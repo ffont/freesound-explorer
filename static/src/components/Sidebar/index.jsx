@@ -1,5 +1,6 @@
 import React from 'react';
 import SearchMode from './SearchMode';
+import PathsMode from './PathsMode';
 import InfoMode from './InfoMode';
 import '../../stylesheets/Sidebar.scss';
 
@@ -16,6 +17,7 @@ function Sidebar(props) {
     <div className={sidebarClassName}>
       <div className="sidebar-content-wrapper">
         <SearchMode {...props} isActiveMode={props.activeMode === 'SearchMode'} />
+        <PathsMode {...props} isActiveMode={props.activeMode === 'PathsMode'} />
         <InfoMode isActiveMode={props.activeMode === 'InfoMode'} />
       </div>
       <div className="sidebar-menu-wrapper">
@@ -24,6 +26,10 @@ function Sidebar(props) {
             className={(props.activeMode === 'SearchMode') ? 'active' : ''}
             onClick={() => props.setActiveMode('SearchMode')}
           ><i className="fa fa-search fa-lg" aria-hidden="true" /></li>
+          <li
+            className={(props.activeMode === 'PathsMode') ? 'active' : ''}
+            onClick={() => props.setActiveMode('PathsMode')}
+          ><i className="fa fa-exchange fa-lg" aria-hidden="true" /></li>
           <li
             className={(props.activeMode === 'InfoMode') ? 'active' : ''}
             onClick={() => props.setActiveMode('InfoMode')}

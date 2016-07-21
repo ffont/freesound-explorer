@@ -3,7 +3,7 @@ import { select, event as d3Event } from 'd3-selection';
 import { zoom } from 'd3-zoom';
 import MapCircle from './MapCircle';
 import '../../polyfills/requestAnimationFrame';
-import { MIN_ZOOM, MAX_ZOOM, MAX_TSNE_ITERATIONS } from '../../constants';
+import { MIN_ZOOM, MAX_ZOOM, MAX_TSNE_ITERATIONS, MAP_SCALE_FACTOR } from '../../constants';
 import '../../stylesheets/Map.scss';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
@@ -20,6 +20,7 @@ const propTypes = {
   selectedSound: React.PropTypes.number,
   updateSelectedSound: React.PropTypes.func,
   playOnHover: React.PropTypes.bool,
+  paths: React.PropTypes.array,
 };
 
 class Map extends React.Component {
@@ -81,6 +82,17 @@ class Map extends React.Component {
     }
   }
 
+  projectPoint(point) {
+    const { windowWidth, windowHeight } = this.props.windowSize;
+    const cx = (point.x +
+      (windowWidth / (MAP_SCALE_FACTOR * 2))) *
+      MAP_SCALE_FACTOR * this.state.scale + this.state.translateX;
+    const cy = (point.y +
+      (windowHeight / (MAP_SCALE_FACTOR * 2))) *
+      MAP_SCALE_FACTOR * this.state.scale + this.state.translateY;
+    return { cx, cy };
+  }
+
   zoomHandler() {
     const translateX = d3Event.transform.x;
     const translateY = d3Event.transform.y;
@@ -95,6 +107,7 @@ class Map extends React.Component {
     return (
       <div className="map-container" ref="mapContainer">
         <svg ref="map" className="map" onClick={this.onClickCallback}>
+          // Draw circles (sounds)
           {this.props.sounds.map((sound, index) => {
             const circlePosition = {
               x: tsneSolution[index][0],
@@ -115,6 +128,26 @@ class Map extends React.Component {
               />
             );
           })}
+          // Draw lines (paths)
+          {this.props.paths.map((path) => (
+            [...Array(path.sounds.length - 1).keys()].map((sound, index) => {
+              const soundFrom = path.sounds[index];
+              const soundTo = path.sounds[index + 1];
+              const indexSoundFrom = this.props.sounds.indexOf(soundFrom);
+              const positionFrom = {
+                x: tsneSolution[indexSoundFrom][0],
+                y: tsneSolution[indexSoundFrom][1],
+              };
+              const indexSoundTo = this.props.sounds.indexOf(soundTo);
+              const positionTo = {
+                x: tsneSolution[indexSoundTo][0],
+                y: tsneSolution[indexSoundTo][1],
+              };
+              const { cx: x1, cy: y1 } = this.projectPoint(positionFrom);
+              const { cx: x2, cy: y2 } = this.projectPoint(positionTo);
+              return <line key={index} x1={x1} y1={y1} x2={x2} y2={y2} />;
+            })
+          ))}
         </svg>
       </div>
     );

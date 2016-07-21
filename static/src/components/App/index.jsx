@@ -25,6 +25,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       sounds: [],
+      paths: [],
       descriptor: DEFAULT_DESCRIPTOR,
       statusMessage: { message: '', status: '' },
       selectedSound: undefined,
@@ -34,7 +35,7 @@ class App extends React.Component {
       isLoginModalVisible: false,
       isSidebarVisible: true,
       activeMode: 'SearchMode',
-      playOnHover: true,
+      playOnHover: false,
     };
     this.onQuerySubmit = this.onQuerySubmit.bind(this);
     this.setMapDescriptor = this.setMapDescriptor.bind(this);
@@ -179,6 +180,37 @@ class App extends React.Component {
     this.updateSystemStatusMessage('Failed to log in...', 'error');
   }
 
+  createRandomPaths(sounds) {
+    function getRandomSoundObject() {
+      const max = sounds.length;
+      const index = Math.floor(Math.random() * max);
+      return sounds[index];
+    }
+    const randomPaths = [
+      {
+        name: 'Random path 1',
+        sounds: [
+          getRandomSoundObject(),
+          getRandomSoundObject(),
+          getRandomSoundObject(),
+        ],
+      }, {
+        name: 'Random path 2',
+        sounds: [
+          getRandomSoundObject(),
+          getRandomSoundObject(),
+          getRandomSoundObject(),
+          getRandomSoundObject(),
+          getRandomSoundObject(),
+          getRandomSoundObject(),
+        ],
+      },
+    ];
+    this.setState({
+      paths: randomPaths,
+    });
+  }
+
   initializeTsne(sounds) {
     if (!sounds) {
       // don't initialize tsne if no sounds provided
@@ -192,6 +224,9 @@ class App extends React.Component {
     });
     this.tsne.initDataRaw(xTsne);
     this.forceUpdate();  // to force render()
+
+    // Create some random paths that we will use for test and development
+    this.createRandomPaths(sounds);
   }
 
   handleQueryError(error) {
@@ -250,6 +285,7 @@ class App extends React.Component {
           maxResults={this.state.maxResults}
           playOnHover={this.state.playOnHover}
           tooglePlayOnHover={this.tooglePlayOnHover}
+          paths={this.state.paths}
         />
         <Login
           isLoginModalVisible={this.state.isLoginModalVisible}
@@ -272,6 +308,7 @@ class App extends React.Component {
             selectedSound={this.state.selectedSound}
             updateSelectedSound={this.updateSelectedSound}
             playOnHover={this.state.playOnHover}
+            paths={this.state.paths}
           /> : ''}
         <MessagesBox statusMessage={this.state.statusMessage} />
       </div>

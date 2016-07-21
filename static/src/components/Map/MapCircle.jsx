@@ -126,8 +126,9 @@ class MapCircle extends React.Component {
   }
 
   render() {
-    const circleColor = (this.props.isSelected || this.state.isHovered) ?
-      'white' : this.props.sound.rgba;
+    const fillColor = (this.props.isSelected) ? 'white' : this.props.sound.rgba;
+    const strokeColor = (this.props.isSelected || this.state.isHovered) ?
+        'white' : this.props.sound.rgba;
     const { cx, cy } = computeCirclePosition(this.props);
     return (
       <circle
@@ -135,9 +136,9 @@ class MapCircle extends React.Component {
         cy={cy}
         r={DEFAULT_RADIUS / 2}
         ref="circleElement"
-        fill={circleColor}
+        fill={fillColor}
         fillOpacity={DEFAULT_OPACITY}
-        stroke={circleColor}
+        stroke={strokeColor}
         strokeWidth={DEFAULT_STROKE_WIDTH}
         strokeOpacity={DEFAULT_STROKE_OPACITY}
         onMouseEnter={this.onHoverCallback}

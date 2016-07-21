@@ -1,5 +1,5 @@
 import React from 'react';
-import { DEFAULT_RADIUS, DEFAULT_OPACITY, DEFAULT_STROKE_WIDTH, DEFAULT_STROKE_OPACITY,
+import { DEFAULT_RADIUS, DEFAULT_FILL_OPACITY, DEFAULT_STROKE_WIDTH, DEFAULT_STROKE_OPACITY,
   MAP_SCALE_FACTOR }
   from '../../constants';
 import freesound from '../../vendors/freesound';
@@ -42,7 +42,6 @@ class MapCircle extends React.Component {
   constructor(props) {
     super(props);
     this.buffer = undefined;
-    this.isPlaying = false;
     this.onHoverCallback = this.onHoverCallback.bind(this);
     this.onMouseLeaveCallback = this.onMouseLeaveCallback.bind(this);
     this.onClickCallback = this.onClickCallback.bind(this);
@@ -101,6 +100,12 @@ class MapCircle extends React.Component {
     }
   }
 
+  onAudioFinishedPLaying() {
+    this.setState({
+      isPlaying: false,
+    });
+  }
+
   loadAudio(callback) {
     this.props.audioLoader.loadSound(this.props.sound.previewUrl)
       .then(
@@ -113,17 +118,26 @@ class MapCircle extends React.Component {
 
   playAudio() {
     const source = this.props.audioContext.createBufferSource();
+    source.onended = () => {
+      this.onAudioFinishedPLaying();
+    };
     // If buffer audio has not been loaded, first load it and then play
     if (!this.buffer) {
       this.loadAudio(() => {
         source.buffer = this.buffer;
         source.connect(this.props.audioContext.gainNode);
         source.start();
+        this.setState({
+          isPlaying: true,
+        });
       });
     } else {
       source.buffer = this.buffer;
       source.connect(this.props.audioContext.gainNode);
       source.start();
+      this.setState({
+        isPlaying: true,
+      });
     }
   }
 
@@ -142,9 +156,19 @@ class MapCircle extends React.Component {
 
   render() {
     const fillColor = (this.props.isSelected) ? 'white' : this.props.sound.rgba;
-    const strokeColor = (this.props.isSelected || this.state.isHovered) ?
+    const strokeColor = (this.props.isSelected || this.state.isPlaying || this.state.isHovered) ?
         'white' : this.props.sound.rgba;
     const { cx, cy } = computeCirclePosition(this.props);
+    const animationValues = `${DEFAULT_RADIUS / 2}; ${DEFAULT_RADIUS / 1.5}; ${DEFAULT_RADIUS / 2}`;
+    const animation = (this.state.isPlaying) ?
+      <animate
+        attributeName="r"
+        begin="0s"
+        dur="1s"
+        repeatCount="indefinite"
+        values={animationValues}
+        keyTimes="0; 0.5; 1"
+      /> : false;
     return (
       <circle
         cx={cx}
@@ -152,14 +176,14 @@ class MapCircle extends React.Component {
         r={DEFAULT_RADIUS / 2}
         ref="circleElement"
         fill={fillColor}
-        fillOpacity={DEFAULT_OPACITY}
+        fillOpacity={DEFAULT_FILL_OPACITY}
         stroke={strokeColor}
         strokeWidth={DEFAULT_STROKE_WIDTH}
         strokeOpacity={DEFAULT_STROKE_OPACITY}
         onMouseEnter={this.onHoverCallback}
         onMouseLeave={this.onMouseLeaveCallback}
         onClick={this.onClickCallback}
-      />
+      >{animation}</circle>
     );
   }
 }

@@ -34,6 +34,7 @@ class App extends React.Component {
       isLoginModalVisible: false,
       isSidebarVisible: true,
       activeMode: 'SearchMode',
+      playOnHover: true,
     };
     this.onQuerySubmit = this.onQuerySubmit.bind(this);
     this.setMapDescriptor = this.setMapDescriptor.bind(this);
@@ -261,6 +262,7 @@ class App extends React.Component {
             windowSize={this.props.windowSize}
             selectedSound={this.state.selectedSound}
             updateSelectedSound={this.updateSelectedSound}
+            playOnHover={this.state.playOnHover}
           /> : ''}
         <MessagesBox statusMessage={this.state.statusMessage} />
       </div>

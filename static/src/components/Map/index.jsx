@@ -19,6 +19,7 @@ const propTypes = {
   }),
   selectedSound: React.PropTypes.number,
   updateSelectedSound: React.PropTypes.func,
+  playOnHover: React.PropTypes.bool,
 };
 
 class Map extends React.Component {
@@ -110,6 +111,7 @@ class Map extends React.Component {
                 windowSize={this.props.windowSize}
                 audioContext={this.props.audioContext}
                 audioLoader={this.props.audioLoader}
+                playOnHover={this.props.playOnHover}
               />
             );
           })}

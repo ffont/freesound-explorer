@@ -23,6 +23,7 @@ const propTypes = {
   }),
   audioLoader: React.PropTypes.object,
   audioContext: React.PropTypes.object,
+  playOnHover: React.PropTypes.bool,
 };
 
 function computeCirclePosition(props) {
@@ -74,15 +75,7 @@ class MapCircle extends React.Component {
   }
 
   onHoverCallback() {
-    if (!this.buffer) {
-      this.props.audioLoader.loadSound(this.props.sound.previewUrl)
-        .then(
-          decodedAudio => {
-            this.buffer = decodedAudio;
-            this.playAudio();
-          }
-        );
-    } else {
+    if (this.props.playOnHover) {
       this.playAudio();
     }
     this.setState({
@@ -102,14 +95,36 @@ class MapCircle extends React.Component {
       this.props.updateSelectedSound();
     } else {
       this.props.updateSelectedSound(this.props.sound.id);
+      if (!this.props.playOnHover) {
+        this.playAudio();
+      }
     }
+  }
+
+  loadAudio(callback) {
+    this.props.audioLoader.loadSound(this.props.sound.previewUrl)
+      .then(
+        decodedAudio => {
+          this.buffer = decodedAudio;
+          callback();
+        }
+      );
   }
 
   playAudio() {
     const source = this.props.audioContext.createBufferSource();
-    source.buffer = this.buffer;
-    source.connect(this.props.audioContext.gainNode);
-    source.start();
+    // If buffer audio has not been loaded, first load it and then play
+    if (!this.buffer) {
+      this.loadAudio(() => {
+        source.buffer = this.buffer;
+        source.connect(this.props.audioContext.gainNode);
+        source.start();
+      });
+    } else {
+      source.buffer = this.buffer;
+      source.connect(this.props.audioContext.gainNode);
+      source.start();
+    }
   }
 
   bookmarkSound() {

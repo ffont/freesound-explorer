@@ -77,15 +77,11 @@ class MapCircle extends React.Component {
     if (this.props.playOnHover) {
       this.playAudio();
     }
-    this.setState({
-      isHovered: true,
-    });
+    this.setState({ isHovered: true });
   }
 
   onMouseLeaveCallback() {
-    this.setState({
-      isHovered: false,
-    });
+    this.setState({ isHovered: false });
   }
 
   onClickCallback() {
@@ -101,9 +97,7 @@ class MapCircle extends React.Component {
   }
 
   onAudioFinishedPLaying() {
-    this.setState({
-      isPlaying: false,
-    });
+    this.setState({ isPlaying: false });
   }
 
   loadAudio(callback) {
@@ -117,27 +111,22 @@ class MapCircle extends React.Component {
   }
 
   playAudio() {
-    const source = this.props.audioContext.createBufferSource();
-    source.onended = () => {
-      this.onAudioFinishedPLaying();
-    };
+    const self = this;
+    function createAndStartBuffer() {
+      const source = self.props.audioContext.createBufferSource();
+      source.onended = () => { self.onAudioFinishedPLaying(); };
+      source.buffer = self.buffer;
+      source.connect(self.props.audioContext.gainNode);
+      source.start();
+      self.setState({ isPlaying: true });
+    }
     // If buffer audio has not been loaded, first load it and then play
     if (!this.buffer) {
       this.loadAudio(() => {
-        source.buffer = this.buffer;
-        source.connect(this.props.audioContext.gainNode);
-        source.start();
-        this.setState({
-          isPlaying: true,
-        });
+        createAndStartBuffer();
       });
     } else {
-      source.buffer = this.buffer;
-      source.connect(this.props.audioContext.gainNode);
-      source.start();
-      this.setState({
-        isPlaying: true,
-      });
+      createAndStartBuffer();
     }
   }
 

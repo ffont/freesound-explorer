@@ -15,6 +15,7 @@ class SoundInfo extends React.Component {
     this.className = DEFAULT_CLASSNAME;
     this.lastTopPosition = 0;
     this.lastLeftPosition = 0;
+    this.lastSound = undefined;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -35,6 +36,12 @@ class SoundInfo extends React.Component {
     return { top: this.lastTopPosition, left: this.lastLeftPosition };
   }
 
+  updateSoundContent() {
+    if (!!this.props.sound) {
+      this.lastSound = this.props.sound;
+    }
+  }
+
   bookmarkSound() {
     freesound.setToken(sessionStorage.getItem('access_token'), 'oauth');
     const sound = this.props.sound;
@@ -50,8 +57,15 @@ class SoundInfo extends React.Component {
 
   render() {
     const containerStyle = this.getContainerStyle();
+    this.updateSoundContent();
+    if (!this.lastSound) {
+      return null;
+    }
     return (
       <div className={this.className} style={containerStyle}>
+        <div>
+          <div className="sound-info-modal-title">{this.lastSound.name}</div>
+        </div>
       </div>
     );
   }

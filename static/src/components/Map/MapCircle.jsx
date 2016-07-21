@@ -1,8 +1,6 @@
 import React from 'react';
-import { DEFAULT_RADIUS, DEFAULT_OPACITY, DEFAULT_STROKE_WIDTH, DEFAULT_STROKE_OPACITY,
-  MAP_SCALE_FACTOR }
+import { DEFAULT_RADIUS, DEFAULT_OPACITY, DEFAULT_STROKE_WIDTH, DEFAULT_STROKE_OPACITY }
   from '../../constants';
-import freesound from '../../vendors/freesound';
 
 const propTypes = {
   sound: React.PropTypes.object,
@@ -84,19 +82,6 @@ class MapCircle extends React.Component {
     source.buffer = this.buffer;
     source.connect(this.props.audioContext.gainNode);
     source.start();
-  }
-
-  bookmarkSound() {
-    freesound.setToken(sessionStorage.getItem('access_token'), 'oauth');
-    const sound = this.props.sound;
-    const successCallback = () => console.log('Sound bookmarked!');
-    const errorCallback = () => console.log('Error bookmarking sound...');
-    sound.fsObject.bookmark(
-      sound.name,  // Use sound name
-      'Freesound Explorer',  // Category
-      successCallback,
-      errorCallback
-    );
   }
 
   render() {

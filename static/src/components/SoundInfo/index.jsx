@@ -1,4 +1,5 @@
 import React from 'react';
+import freesound from '../../vendors/freesound';
 import '../../stylesheets/SoundInfo.scss';
 
 const propTypes = {
@@ -32,6 +33,19 @@ class SoundInfo extends React.Component {
       this.lastLeftPosition = this.props.position.x;
     }
     return { top: this.lastTopPosition, left: this.lastLeftPosition };
+  }
+
+  bookmarkSound() {
+    freesound.setToken(sessionStorage.getItem('access_token'), 'oauth');
+    const sound = this.props.sound;
+    const successCallback = () => console.log('Sound bookmarked!');
+    const errorCallback = () => console.log('Error bookmarking sound...');
+    sound.bookmark(
+      sound.name,  // Use sound name
+      'Freesound Explorer',  // Category
+      successCallback,
+      errorCallback
+    );
   }
 
   render() {

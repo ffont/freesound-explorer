@@ -27,6 +27,7 @@ class Map extends React.Component {
   constructor(props) {
     super(props);
     this.zoomHandler = this.zoomHandler.bind(this);
+    this.projectPoint = this.projectPoint.bind(this);
     this.stepInterval = undefined;
     this.state = ({
       translateX: 0,
@@ -125,6 +126,7 @@ class Map extends React.Component {
                 audioContext={this.props.audioContext}
                 audioLoader={this.props.audioLoader}
                 playOnHover={this.props.playOnHover}
+                projectPoint={this.projectPoint}
               />
             );
           })}

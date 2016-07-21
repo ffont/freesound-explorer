@@ -1,6 +1,5 @@
 import React from 'react';
-import { DEFAULT_RADIUS, DEFAULT_FILL_OPACITY, DEFAULT_STROKE_WIDTH, DEFAULT_STROKE_OPACITY,
-  MAP_SCALE_FACTOR }
+import { DEFAULT_RADIUS, DEFAULT_FILL_OPACITY, DEFAULT_STROKE_WIDTH, DEFAULT_STROKE_OPACITY }
   from '../../constants';
 import freesound from '../../vendors/freesound';
 
@@ -24,18 +23,8 @@ const propTypes = {
   audioLoader: React.PropTypes.object,
   audioContext: React.PropTypes.object,
   playOnHover: React.PropTypes.bool,
+  projectPoint: React.PropTypes.func,
 };
-
-function computeCirclePosition(props) {
-  const { windowWidth, windowHeight } = props.windowSize;
-  const cx = (props.positionInTsneSolution.x +
-    (windowWidth / (MAP_SCALE_FACTOR * 2))) *
-    MAP_SCALE_FACTOR * props.mapZoom.scale + props.mapZoom.translateX;
-  const cy = (props.positionInTsneSolution.y +
-    (windowHeight / (MAP_SCALE_FACTOR * 2))) *
-    MAP_SCALE_FACTOR * props.mapZoom.scale + props.mapZoom.translateY;
-  return { cx, cy };
-}
 
 
 class MapCircle extends React.Component {
@@ -147,7 +136,7 @@ class MapCircle extends React.Component {
     const fillColor = (this.props.isSelected) ? 'white' : this.props.sound.rgba;
     const strokeColor = (this.props.isSelected || this.state.isPlaying || this.state.isHovered) ?
         'white' : this.props.sound.rgba;
-    const { cx, cy } = computeCirclePosition(this.props);
+    const { cx, cy } = this.props.projectPoint(this.props.positionInTsneSolution);
     const animationValues = `${DEFAULT_RADIUS / 2}; ${DEFAULT_RADIUS / 1.5}; ${DEFAULT_RADIUS / 2}`;
     const animation = (this.state.isPlaying) ?
       <animate

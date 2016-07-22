@@ -23,6 +23,7 @@ const propTypes = {
   updateSelectedSound: React.PropTypes.func,
   playOnHover: React.PropTypes.bool,
   paths: React.PropTypes.array,
+  isUserLoggedIn: React.PropTypes.bool,
 };
 
 class Map extends React.Component {
@@ -173,7 +174,11 @@ class Map extends React.Component {
             })
           ))}
         </svg>
-        <SoundInfo position={soundInfoPosition} sound={soundInfoContent} />
+        <SoundInfo
+          position={soundInfoPosition}
+          sound={soundInfoContent}
+          isUserLoggedIn={this.props.isUserLoggedIn}
+        />
       </div>
     );
   }

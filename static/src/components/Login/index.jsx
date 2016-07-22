@@ -86,7 +86,7 @@ class Login extends React.Component {
     loadJSON(URLS.logout).then(() => {
       clearSession();
       this.props.updateUserLoggedStatus(false);
-      this.props.updateSystemStatusMessage(`Logged out`);
+      this.props.updateSystemStatusMessage('Logged out');
     });
   }
 

@@ -227,7 +227,7 @@ class App extends React.Component {
     if (this.state.sounds.length) {
       const pathSounds = [];
       const nSounds = Math.floor(Math.random() * (this.state.sounds.length / 4));
-      [...Array(nSounds).keys()].map(i => pathSounds.push(getRandomElement(this.state.sounds)));
+      [...Array(nSounds).keys()].map(() => pathSounds.push(getRandomElement(this.state.sounds)));
       const newPath = {
         name: `Random path ${this.state.paths.length + 1}`,
         indexNextToPlay: 0,
@@ -345,6 +345,7 @@ class App extends React.Component {
             updateSelectedSound={this.updateSelectedSound}
             playOnHover={this.state.playOnHover}
             paths={this.state.paths}
+            isUserLoggedIn={this.state.isUserLoggedIn}
           /> : ''}
         <MessagesBox statusMessage={this.state.statusMessage} />
       </div>

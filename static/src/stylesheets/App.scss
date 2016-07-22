@@ -21,3 +21,11 @@ body {
 .app-container {
 	height: 100%;
 }
+
+input:focus {
+	outline: 0;
+}
+
+select:focus {
+	outline: 0;
+}

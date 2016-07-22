@@ -58,6 +58,10 @@ class App extends React.Component {
     this.messageTimer = undefined;
   }
 
+  componentDidMount() {
+    this.setUpMIDIDevices();
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     if (!!this.state.statusMessage.message &&
       this.state.statusMessage.message === nextState.statusMessage.message) {
@@ -87,6 +91,23 @@ class App extends React.Component {
       error => this.handleQueryError(error));
   }
 
+  onMIDIMessage(message) {
+    // const cmd = message.data[0] >> 4;
+    // const channel = message.data[0] & 0xf;
+    const type = message.data[0] & 0xf0;
+    const note = message.data[1];
+    const velocity = message.data[2];
+    switch (type) {
+      case 144: // noteOn message
+        console.log('Note on', note, velocity); break;
+      case 128: // noteOff message
+        console.log('Note off', note, velocity); break;
+      default:
+        break;
+    }
+    return 0;
+  }
+
   setUpAudioContext() {
     this.audioContext = new window.AudioContext();
     // create a main gain node to set general volume
@@ -94,6 +115,23 @@ class App extends React.Component {
     this.audioContext.gainNode.connect(this.audioContext.destination);
     // setup audio engine for loading and playing sounds
     this.audioLoader = audioLoader(this.audioContext);
+  }
+
+  setUpMIDIDevices() {
+    if (window.navigator.requestMIDIAccess) {
+      window.navigator.requestMIDIAccess().then(
+        (midiAccess) => {
+          this.updateSystemStatusMessage('MIDI support enabled ;)');
+          const inputs = midiAccess.inputs.values();
+          // Iterate over all existing MIDI devices and connect them to onMIDIMessage
+          for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
+            input.value.onmidimessage = this.onMIDIMessage;
+          }
+        }, () => this.updateSystemStatusMessage('No MIDI support...', 'error')
+      );
+    } else {
+      this.updateSystemStatusMessage('No MIDI support in your browser...', 'error');
+    }
   }
 
   setMapDescriptor(evt) {

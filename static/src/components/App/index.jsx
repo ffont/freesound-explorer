@@ -226,7 +226,7 @@ class App extends React.Component {
     // Creates a new random path
     if (this.state.sounds.length) {
       const pathSounds = [];
-      const nSounds = Math.floor(Math.random() * (this.state.sounds.length / 4));
+      const nSounds = 2 + Math.floor(Math.random() * (this.state.sounds.length / 4));
       [...Array(nSounds).keys()].map(() => pathSounds.push(getRandomElement(this.state.sounds)));
       const newPath = {
         name: `Random path ${this.state.paths.length + 1}`,

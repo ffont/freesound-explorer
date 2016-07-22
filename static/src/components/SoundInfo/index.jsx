@@ -5,6 +5,7 @@ import '../../stylesheets/SoundInfo.scss';
 const propTypes = {
   position: React.PropTypes.object,
   sound: React.PropTypes.object,
+  isUserLoggedIn: React.PropTypes.bool,
 };
 
 const DEFAULT_CLASSNAME = 'sound-info-modal';
@@ -64,7 +65,13 @@ class SoundInfo extends React.Component {
     return (
       <div className={this.className} style={containerStyle}>
         <div>
-          <div className="sound-info-modal-title">{this.lastSound.name}</div>
+          <a href={this.lastSound.url}>
+            <div className="sound-info-modal-title">
+              {this.lastSound.name}
+            </div>
+          </a>
+          <div className="sound-info-modal-content">
+          </div>
         </div>
       </div>
     );

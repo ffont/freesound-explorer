@@ -1,0 +1,23 @@
+@import "./variables.json";
+
+.paths-list {
+  ul {
+    list-style-type: none;
+  }
+  li {
+    display: block;
+    width: 100%;
+  }
+  button {
+  	padding: 7px;
+  	border-radius: 5px;
+  	border: 0px;
+  	height: 30px;
+  	width: 34px;
+    background: none;
+    color: white;
+  }
+  button:focus {
+    outline: 0;
+  }
+}

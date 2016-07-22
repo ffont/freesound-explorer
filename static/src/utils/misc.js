@@ -30,3 +30,9 @@ export const readObjectByString = (obj, str) => {
   });
   return reshapedObject;
 };
+
+export const getRandomElement = (array) => {
+  const max = array.length;
+  const index = Math.floor(Math.random() * max);
+  return array[index];
+};

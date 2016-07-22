@@ -5,7 +5,7 @@ import Logo from '../Logo';
 import Sidebar from '../Sidebar';
 import MessagesBox from '../MessagesBox';
 import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
-import { readObjectByString } from '../../utils/misc';
+import { readObjectByString, getRandomElement } from '../../utils/misc';
 import audioLoader from '../../utils/audioLoader';
 import tsnejs from '../../vendors/tsne';
 import '../../stylesheets/App.scss';
@@ -51,6 +51,8 @@ class App extends React.Component {
     this.handleFailedLogin = this.handleFailedLogin.bind(this);
     this.setSessionStorage = this.setSessionStorage.bind(this);
     this.tooglePlayOnHover = this.tooglePlayOnHover.bind(this);
+    this.startStopPlayingPath = this.startStopPlayingPath.bind(this);
+    this.createNewPath = this.createNewPath.bind(this);
     this.setUpAudioContext();
     this.tsne = undefined;
     this.messageTimer = undefined;
@@ -75,6 +77,7 @@ class App extends React.Component {
     // first reset the list of sounds in state
     this.setState({
       sounds: [],
+      paths: [],
       error: '',
       isFetching: true,
     });
@@ -143,25 +146,41 @@ class App extends React.Component {
   playNextSoundFromPath(pathIndex) {
     const newPaths = this.state.paths;
     const path = newPaths[pathIndex];
-    const freesoundId = path.sounds[path.indexNextToPlay].id;
-    path.indexNextToPlay += 1;
-    if (path.indexNextToPlay >= path.sounds.length) {
-      path.indexNextToPlay = 0;
+    if (path.isPlaying) {
+      const freesoundId = path.sounds[path.indexNextToPlay].id;
+      path.indexNextToPlay += 1;
+      if (path.indexNextToPlay >= path.sounds.length) {
+        path.indexNextToPlay = 0;
+      }
+      newPaths[pathIndex] = path;
+      this.setState({
+        paths: newPaths,
+      });
+      this.playSoundByFreesoundId(freesoundId, () => {
+        this.playNextSoundFromPath(pathIndex);
+      });
     }
+  }
+
+  startStopPlayingPath(pathIndex) {
+    const newPaths = this.state.paths;
+    const path = newPaths[pathIndex];
+    path.isPlaying = !path.isPlaying;
     newPaths[pathIndex] = path;
     this.setState({
       paths: newPaths,
     });
-    this.playSoundByFreesoundId(freesoundId, () => {
+    if (path.isPlaying) {
       this.playNextSoundFromPath(pathIndex);
-    });
+    }
+    // Force update map to rerender paths
+    this.refs.map.forceUpdate();
   }
 
   tooglePlayOnHover() {
     this.setState({
       playOnHover: !this.state.playOnHover,
     });
-    this.playNextSoundFromPath(0);
   }
 
   updateUserLoggedStatus(isUserLoggedIn) {
@@ -203,36 +222,22 @@ class App extends React.Component {
     this.updateSystemStatusMessage('Failed to log in...', 'error');
   }
 
-  createRandomPaths(sounds) {
-    function getRandomSoundObject() {
-      const max = sounds.length;
-      const index = Math.floor(Math.random() * max);
-      return sounds[index];
-    }
-    const randomPaths = [
-      {
-        name: 'Random path 1',
-        indexNextToPlay: 0,
-        sounds: [
-          getRandomSoundObject(),
-          getRandomSoundObject(),
-          getRandomSoundObject(),
-        ],
-      }, {
-        name: 'Random path 2',
-        indexNextToPlay: 0,
-        sounds: [
-          getRandomSoundObject(),
-          getRandomSoundObject(),
-          getRandomSoundObject(),
-          getRandomSoundObject(),
-          getRandomSoundObject(),
-          getRandomSoundObject(),
-        ],
-      },
-    ];
+  createNewPath() {
+    // Creates a new random path
+    const pathSounds = [];
+    const nSounds = Math.floor(Math.random() * (this.state.sounds.length / 4));
+    [...Array(nSounds).keys()].map(i => pathSounds.push(getRandomElement(this.state.sounds)));
+    const newPath = {
+      name: `Random path ${this.state.paths.length + 1}`,
+      indexNextToPlay: 0,
+      isPlaying: false,
+      isSelected: false,
+      sounds: pathSounds,
+    };
+    const newPaths = this.state.paths;
+    newPaths.push(newPath);
     this.setState({
-      paths: randomPaths,
+      paths: newPaths,
     });
   }
 
@@ -249,9 +254,6 @@ class App extends React.Component {
     });
     this.tsne.initDataRaw(xTsne);
     this.forceUpdate();  // to force render()
-
-    // Create some random paths that we will use for test and development
-    this.createRandomPaths(sounds);
   }
 
   handleQueryError(error) {
@@ -311,6 +313,8 @@ class App extends React.Component {
           playOnHover={this.state.playOnHover}
           tooglePlayOnHover={this.tooglePlayOnHover}
           paths={this.state.paths}
+          startStopPlayingPath={this.startStopPlayingPath}
+          createNewPath={this.createNewPath}
         />
         <Login
           isLoginModalVisible={this.state.isLoginModalVisible}

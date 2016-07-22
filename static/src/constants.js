@@ -12,6 +12,8 @@ export const DEFAULT_RADIUS = 30;
 export const DEFAULT_STROKE_WIDTH = 2;
 export const DEFAULT_FILL_OPACITY = 0.7;
 export const DEFAULT_STROKE_OPACITY = 0.9;
+export const DEFAULT_PATH_STROKE_WIDTH = 2;
+export const DEFAULT_PATH_STROKE_OPACITY = 0.2;
 
 export const MAX_TSNE_ITERATIONS = 250;
 export const TSNE_CONFIG = {

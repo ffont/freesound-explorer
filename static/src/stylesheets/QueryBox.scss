@@ -25,8 +25,12 @@
 	border: 0px;
 	height: 30px;
 	width: 34px;
-  	background: none;
-  	color: white;
+  background: none;
+  color: white;
+}
+
+.search-button:focus {
+	outline: 0;
 }
 
 .query-terms-input {

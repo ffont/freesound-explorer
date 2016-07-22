@@ -3,7 +3,8 @@ import { select, event as d3Event } from 'd3-selection';
 import { zoom } from 'd3-zoom';
 import MapCircle from './MapCircle';
 import '../../polyfills/requestAnimationFrame';
-import { MIN_ZOOM, MAX_ZOOM, MAX_TSNE_ITERATIONS, MAP_SCALE_FACTOR } from '../../constants';
+import { MIN_ZOOM, MAX_ZOOM, MAX_TSNE_ITERATIONS, MAP_SCALE_FACTOR, DEFAULT_PATH_STROKE_WIDTH,
+DEFAULT_PATH_STROKE_OPACITY } from '../../constants';
 import '../../stylesheets/Map.scss';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
@@ -149,7 +150,20 @@ class Map extends React.Component {
               };
               const { cx: x1, cy: y1 } = this.projectPoint(positionFrom);
               const { cx: x2, cy: y2 } = this.projectPoint(positionTo);
-              return <line key={index} x1={x1} y1={y1} x2={x2} y2={y2} />;
+              return (
+                <line
+                  key={index}
+                  x1={x1}
+                  y1={y1}
+                  x2={x2}
+                  y2={y2}
+                  stroke="white"
+                  strokeWidth={DEFAULT_PATH_STROKE_WIDTH}
+                  strokeOpacity={(path.isPlaying) ?
+                    DEFAULT_PATH_STROKE_OPACITY * 2 :
+                    DEFAULT_PATH_STROKE_OPACITY}
+                />
+              );
             })
           ))}
         </svg>

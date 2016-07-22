@@ -224,21 +224,27 @@ class App extends React.Component {
 
   createNewPath() {
     // Creates a new random path
-    const pathSounds = [];
-    const nSounds = Math.floor(Math.random() * (this.state.sounds.length / 4));
-    [...Array(nSounds).keys()].map(i => pathSounds.push(getRandomElement(this.state.sounds)));
-    const newPath = {
-      name: `Random path ${this.state.paths.length + 1}`,
-      indexNextToPlay: 0,
-      isPlaying: false,
-      isSelected: false,
-      sounds: pathSounds,
-    };
-    const newPaths = this.state.paths;
-    newPaths.push(newPath);
-    this.setState({
-      paths: newPaths,
-    });
+    if (this.state.sounds.length) {
+      const pathSounds = [];
+      const nSounds = Math.floor(Math.random() * (this.state.sounds.length / 4));
+      [...Array(nSounds).keys()].map(i => pathSounds.push(getRandomElement(this.state.sounds)));
+      const newPath = {
+        name: `Random path ${this.state.paths.length + 1}`,
+        indexNextToPlay: 0,
+        isPlaying: false,
+        isSelected: false,
+        sounds: pathSounds,
+      };
+      const newPaths = this.state.paths;
+      newPaths.push(newPath);
+      this.setState({
+        paths: newPaths,
+      });
+      this.refs.map.forceUpdate();
+    } else {
+      this.updateSystemStatusMessage('A new path can not be created until there are some sounds ' +
+        'in the map', 'error');
+    }
   }
 
   initializeTsne(sounds) {

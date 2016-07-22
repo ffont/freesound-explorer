@@ -1,29 +1,18 @@
 import React from 'react';
 import { DEFAULT_RADIUS, DEFAULT_FILL_OPACITY, DEFAULT_STROKE_WIDTH, DEFAULT_STROKE_OPACITY }
   from '../../constants';
-import freesound from '../../vendors/freesound';
 
 const propTypes = {
   sound: React.PropTypes.object,
   isSelected: React.PropTypes.bool,
   updateSelectedSound: React.PropTypes.func,
-  mapZoom: React.PropTypes.shape({
-    translateX: React.PropTypes.number,
-    translateY: React.PropTypes.number,
-    scale: React.PropTypes.number,
-  }),
-  positionInTsneSolution: React.PropTypes.shape({
-    x: React.PropTypes.number,
-    y: React.PropTypes.number,
-  }),
-  windowSize: React.PropTypes.shape({
-    windowWidth: React.PropTypes.number,
-    windowHeight: React.PropTypes.number,
+  position: React.PropTypes.shape({
+    cx: React.PropTypes.number,
+    cy: React.PropTypes.number,
   }),
   audioLoader: React.PropTypes.object,
   audioContext: React.PropTypes.object,
   playOnHover: React.PropTypes.bool,
-  projectPoint: React.PropTypes.func,
 };
 
 
@@ -45,15 +34,9 @@ class MapCircle extends React.Component {
     if (this.state !== nextState) {
       return true;
     }
-    // case 2: new solution computed
-    if (this.props.positionInTsneSolution.x !== nextProps.positionInTsneSolution.x ||
-      this.props.positionInTsneSolution.y !== nextProps.positionInTsneSolution.y) {
-      return true;
-    }
-    // case 3: interaction with map (zoom, move)
-    if (this.props.mapZoom.translateX !== nextProps.mapZoom.translateX ||
-      this.props.mapZoom.translateY !== nextProps.mapZoom.translateY ||
-      this.props.mapZoom.scale !== nextProps.mapZoom.scale) {
+    // case 2: new position
+    if (this.props.position.cx !== nextProps.position.cx ||
+      this.props.position.cy !== nextProps.position.cy) {
       return true;
     }
     if (this.props.isSelected !== nextProps.isSelected) {
@@ -124,24 +107,11 @@ class MapCircle extends React.Component {
     }
   }
 
-  bookmarkSound() {
-    freesound.setToken(sessionStorage.getItem('access_token'), 'oauth');
-    const sound = this.props.sound;
-    const successCallback = () => console.log('Sound bookmarked!');
-    const errorCallback = () => console.log('Error bookmarking sound...');
-    sound.fsObject.bookmark(
-      sound.name,  // Use sound name
-      'Freesound Explorer',  // Category
-      successCallback,
-      errorCallback
-    );
-  }
-
   render() {
+    const { cx, cy } = this.props.position;
     const fillColor = (this.props.isSelected) ? 'white' : this.props.sound.rgba;
     const strokeColor = (this.props.isSelected || this.state.isPlaying || this.state.isHovered) ?
         'white' : this.props.sound.rgba;
-    const { cx, cy } = this.props.projectPoint(this.props.positionInTsneSolution);
     const animationValues = `${DEFAULT_RADIUS / 2}; ${DEFAULT_RADIUS / 1.5}; ${DEFAULT_RADIUS / 2}`;
     const animation = (this.state.isPlaying) ?
       <animate

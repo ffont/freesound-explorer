@@ -135,10 +135,33 @@ class App extends React.Component {
     }
   }
 
+  playSoundByFreesoundId(freesoundId, onEndedCallback) {
+    // TODO: check that map is loaded, etc...
+    this.refs.map.refs[`map-point-${freesoundId}`].playAudio(onEndedCallback);
+  }
+
+  playNextSoundFromPath(pathIndex) {
+    const newPaths = this.state.paths;
+    const path = newPaths[pathIndex];
+    const freesoundId = path.sounds[path.indexNextToPlay].id;
+    path.indexNextToPlay += 1;
+    if (path.indexNextToPlay >= path.sounds.length) {
+      path.indexNextToPlay = 0;
+    }
+    newPaths[pathIndex] = path;
+    this.setState({
+      paths: newPaths,
+    });
+    this.playSoundByFreesoundId(freesoundId, () => {
+      this.playNextSoundFromPath(pathIndex);
+    });
+  }
+
   tooglePlayOnHover() {
     this.setState({
       playOnHover: !this.state.playOnHover,
     });
+    this.playNextSoundFromPath(0);
   }
 
   updateUserLoggedStatus(isUserLoggedIn) {
@@ -189,6 +212,7 @@ class App extends React.Component {
     const randomPaths = [
       {
         name: 'Random path 1',
+        indexNextToPlay: 0,
         sounds: [
           getRandomSoundObject(),
           getRandomSoundObject(),
@@ -196,6 +220,7 @@ class App extends React.Component {
         ],
       }, {
         name: 'Random path 2',
+        indexNextToPlay: 0,
         sounds: [
           getRandomSoundObject(),
           getRandomSoundObject(),
@@ -299,6 +324,7 @@ class App extends React.Component {
         />
         {(shouldShowMap) ?
           <Map
+            ref="map"
             sounds={this.state.sounds}
             tsne={this.tsne}
             audioContext={this.audioContext}

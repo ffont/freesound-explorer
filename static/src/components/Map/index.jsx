@@ -107,15 +107,17 @@ class Map extends React.Component {
     const tsneSolution = this.props.tsne.getSolution();
     return (
       <div className="map-container" ref="mapContainer">
-        <svg ref="map" className="map" onClick={this.onClickCallback}>
+        <svg className="map" onClick={this.onClickCallback}>
           // Draw circles (sounds)
           {this.props.sounds.map((sound, index) => {
             const circlePosition = {
               x: tsneSolution[index][0],
               y: tsneSolution[index][1],
             };
+            const circleRef = `map-point-${sound.id}`;
             return (
               <MapCircle
+                ref={circleRef}
                 key={index}
                 sound={sound}
                 mapZoom={mapZoom}

@@ -99,11 +99,16 @@ class MapCircle extends React.Component {
       );
   }
 
-  playAudio() {
+  playAudio(onEndedCallback) {
     const self = this;
     function createAndStartBuffer() {
       const source = self.props.audioContext.createBufferSource();
-      source.onended = () => { self.onAudioFinishedPLaying(); };
+      source.onended = () => {
+        self.onAudioFinishedPLaying();
+        if (onEndedCallback) {
+          onEndedCallback();
+        }
+      };
       source.buffer = self.buffer;
       source.connect(self.props.audioContext.gainNode);
       source.start();

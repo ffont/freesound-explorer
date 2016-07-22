@@ -53,6 +53,7 @@ class App extends React.Component {
     this.tooglePlayOnHover = this.tooglePlayOnHover.bind(this);
     this.startStopPlayingPath = this.startStopPlayingPath.bind(this);
     this.createNewPath = this.createNewPath.bind(this);
+    this.playRandomSound = this.playRandomSound.bind(this);
     this.setUpAudioContext();
     this.tsne = undefined;
     this.messageTimer = undefined;
@@ -99,7 +100,9 @@ class App extends React.Component {
     const velocity = message.data[2];
     switch (type) {
       case 144: // noteOn message
-        console.log('Note on', note, velocity); break;
+        console.log('Note on', note, velocity);
+        this.playRandomSound(); // This is just for testing and fun ;)
+        break;
       case 128: // noteOff message
         console.log('Note off', note, velocity); break;
       default:
@@ -125,7 +128,7 @@ class App extends React.Component {
           const inputs = midiAccess.inputs.values();
           // Iterate over all existing MIDI devices and connect them to onMIDIMessage
           for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
-            input.value.onmidimessage = this.onMIDIMessage;
+            input.value.onmidimessage = (data) => this.onMIDIMessage(data);
           }
         }, () => this.updateSystemStatusMessage('No MIDI support...', 'error')
       );
@@ -179,6 +182,11 @@ class App extends React.Component {
   playSoundByFreesoundId(freesoundId, onEndedCallback) {
     // TODO: check that map is loaded, etc...
     this.refs.map.refs[`map-point-${freesoundId}`].playAudio(onEndedCallback);
+  }
+
+  playRandomSound() {
+    const sound = getRandomElement(this.state.sounds);
+    this.playSoundByFreesoundId(sound.id);
   }
 
   playNextSoundFromPath(pathIndex) {

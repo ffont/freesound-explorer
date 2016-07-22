@@ -67,7 +67,8 @@ export function reshapeReceivedSounds(allPagesResults) {
     results.forEach((sound, index) => {
       const { id, analysis, url, name, username } = sound;
       const previewUrl = sound.previews['preview-lq-mp3'];
-      const bookmark = pageResults.getSound(index).bookmark;
+      const fsObject = pageResults.getSound(index);
+      const { bookmark, download } = fsObject;
       // consider only sounds with non-empty analysis
       if (!!analysis) {
         const rgba = rgbToHex(
@@ -84,6 +85,7 @@ export function reshapeReceivedSounds(allPagesResults) {
           rgba,
           username,
           bookmark,
+          download,
         });
       }
     });

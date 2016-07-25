@@ -22,14 +22,8 @@ function search(query = DEFAULT_QUERY, filter = DEFAULT_FILTER, maxResults = DEF
   const pagesToGet = Math.ceil(maxResults / freesoundMaxPageSize);
   const extraDescriptors = [
     'lowlevel.mfcc.mean',
-    'lowlevel.barkbands.mean',
-    'lowlevel.erb_bands.mean',
-    'lowlevel.frequency_bands.mean',
-    'lowlevel.gfcc.mean',
     'sfx.tristimulus.mean',
     'tonal.hpcp.mean',
-    'lowlevel.spectral_contrast.mean',
-    'lowlevel.scvalleys.mean',
   ];
   const promises = [];
   while (pageCounter < pagesToGet) {

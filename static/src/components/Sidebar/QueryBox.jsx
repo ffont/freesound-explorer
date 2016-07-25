@@ -44,15 +44,8 @@ class QueryBox extends React.Component {
             className="map-descriptors-selector"
             onChange={this.props.onSetMapDescriptor}
           >
-            <option value="lowlevel.mfcc.mean">MFCC</option>
-            <option value="lowlevel.barkbands.mean">Barkbands</option>
-            <option value="lowlevel.erb_bands.mean">ERB bands</option>
-            <option value="lowlevel.frequency_bands.mean">Frequency bands</option>
-            <option value="lowlevel.gfcc.mean">GFCC</option>
-            <option value="sfx.tristimulus.mean">Tristimulus</option>
-            <option value="tonal.hpcp.mean">HPCP</option>
-            <option value="lowlevel.spectral_contrast.mean">Spectral contrast</option>
-            <option value="lowlevel.scvalleys.mean">SC Valleys</option>
+            <option value="lowlevel.mfcc.mean">Arrange by Timbre</option>
+            <option value="tonal.hpcp.mean">Arrange by Tonality</option>
           </select>
           <input
             id="max-results-slider"

@@ -29,10 +29,8 @@ $modal-transition-duration: 0.3s;
   &.active {
     margin-top: -$soundInfoModalHeight;
   }
-  &.active-down {
-  }
   width: $sound-info-modal-width;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .sound-info-modal-title {

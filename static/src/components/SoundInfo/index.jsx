@@ -17,23 +17,21 @@ const DEFAULT_CLASSNAME = 'sound-info-modal';
 class SoundInfo extends React.Component {
   constructor(props) {
     super(props);
-    this.className = DEFAULT_CLASSNAME;
     this.lastTopPosition = 0;
     this.lastLeftPosition = 0;
     this.lastSound = undefined;
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!!this.props.position && !nextProps.position) {
+  getClassName() {
+    if (!this.props.position) {
       // hide modal: reset classname to default (not visible)
-      this.className = DEFAULT_CLASSNAME;
-    } else if (!this.props.position && !!nextProps.position) {
-      // show modal: change classname to contain 'active'
-      this.className += ' active';
-      if (nextProps.position.y < parseInt(sassVariables.soundInfoModalHeight, 10)) {
-        this.className += '-down';
-      }
+      return DEFAULT_CLASSNAME;
     }
+    let className = `${DEFAULT_CLASSNAME} active`;
+    if (this.props.position.y < parseInt(sassVariables.soundInfoModalHeight, 10)) {
+      className += '-down';
+    }
+    return className;
   }
 
   getContainerStyle() {
@@ -71,6 +69,7 @@ class SoundInfo extends React.Component {
   }
 
   render() {
+    const className = this.getClassName();
     const containerStyle = this.getContainerStyle();
     this.updateSoundContent();
     if (!this.lastSound) {
@@ -97,7 +96,7 @@ class SoundInfo extends React.Component {
       );
     }
     return (
-      <div className={this.className} style={containerStyle}>
+      <div className={className} style={containerStyle}>
         <div>
           <a href={this.lastSound.url}>
             <div className="sound-info-modal-title">

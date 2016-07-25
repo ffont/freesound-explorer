@@ -19,6 +19,7 @@ const propTypes = {
 class MapCircle extends React.Component {
   constructor(props) {
     super(props);
+    this.playingSourceNodes = {};
     this.onHoverCallback = this.onHoverCallback.bind(this);
     this.onMouseLeaveCallback = this.onMouseLeaveCallback.bind(this);
     this.onClickCallback = this.onClickCallback.bind(this);
@@ -57,8 +58,11 @@ class MapCircle extends React.Component {
 
   onClickCallback() {
     if (this.props.isSelected) {
-      // undo selection if sound is already selected
+      // undo selection and stop playing if sound is already selected
       this.props.updateSelectedSound();
+      if (this.state.isPlaying) {
+        this.stopAudio();
+      }
     } else {
       this.props.updateSelectedSound(this.props.sound.id);
       if (!this.props.playOnHover) {
@@ -71,37 +75,53 @@ class MapCircle extends React.Component {
     this.setState({ isPlaying: false });
   }
 
-  createAndStartBuffer() {
-    const source = this.props.audioContext.createBufferSource();
-    source.onended = () => {
-      this.onAudioFinishedPLaying();
-      // TODO: this method should return a promise that resolves here
-    };
-    source.buffer = this.props.sound.buffer;
-    source.connect(this.props.audioContext.gainNode);
-    source.start();
-    this.setState({ isPlaying: true });
-  }
-
   loadAudio() {
     return new Promise((resolve, reject) => {
-      this.props.audioLoader.loadSound(this.props.sound.previewUrl)
-      .then(
-        decodedAudio => resolve(decodedAudio),
-        error => reject(error)
-      );
+      if (this.props.sound.buffer) {
+        // if buffer already loaded, resolve immediately
+        resolve(this.props.sound.buffer);
+      } else {
+        this.props.audioLoader.loadSound(this.props.sound.previewUrl)
+        .then(
+          decodedAudio => {
+            this.props.sound.buffer = decodedAudio;
+            resolve();
+          },
+          error => reject(error)
+        );
+      }
     });
   }
 
-  playAudio() {
-    // If buffer audio has not been loaded, first load it and then play
-    if (!this.props.sound.buffer) {
-      this.loadAudio().then((decodedAudio) => {
-        this.props.sound.buffer = decodedAudio;
-        this.createAndStartBuffer();
-      });
+  playAudio(onEndedCallback) {
+    this.loadAudio().then(() => {
+      // add buffer source to audio context and play
+      const source = this.props.audioContext.createBufferSource();
+      const sourceNodeKey = Object.keys(this.playingSourceNodes).length;
+      this.playingSourceNodes[sourceNodeKey] = source;
+      source.onended = () => {
+        this.onAudioFinishedPLaying();
+        delete this.playingSourceNodes[sourceNodeKey];
+        if (onEndedCallback) {
+          onEndedCallback();
+        }
+      };
+      source.buffer = this.props.sound.buffer;
+      source.connect(this.props.audioContext.gainNode);
+      source.start();
+      this.setState({ isPlaying: true });
+      return sourceNodeKey; // return reference to souce node so it can be accessed from outside
+    });
+  }
+
+  stopAudio(sourceNodeKey = -1) {
+    if (sourceNodeKey >= 0) {
+      this.playingSourceNodes[sourceNodeKey].stop();  // this will trigger onended callback
     } else {
-      this.createAndStartBuffer();
+      // If no specific key provided, stop all source nodes
+      Object.keys(this.playingSourceNodes).forEach((key) => {
+        this.playingSourceNodes[key].stop();  // this will trigger onended callback
+      });
     }
   }
 

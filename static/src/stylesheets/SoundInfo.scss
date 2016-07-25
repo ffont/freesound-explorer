@@ -61,5 +61,8 @@ $modal-transition-duration: 0.3s;
     box-shadow: none;
     background-color: transparent;
     border: none;
+    &:focus {
+      outline: none;
+    }
   }
 }

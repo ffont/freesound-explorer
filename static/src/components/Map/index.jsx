@@ -5,7 +5,7 @@ import MapCircle from './MapCircle';
 import SoundInfo from '../SoundInfo';
 import '../../polyfills/requestAnimationFrame';
 import { MIN_ZOOM, MAX_ZOOM, MAX_TSNE_ITERATIONS, MAP_SCALE_FACTOR, DEFAULT_PATH_STROKE_WIDTH,
-DEFAULT_PATH_STROKE_OPACITY, MESSAGE_STATUS } from '../../constants';
+  DEFAULT_PATH_STROKE_OPACITY, MESSAGE_STATUS } from '../../constants';
 import '../../stylesheets/Map.scss';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
@@ -165,7 +165,7 @@ class Map extends React.Component {
                   stroke="white"
                   strokeWidth={DEFAULT_PATH_STROKE_WIDTH}
                   strokeOpacity={(path.isPlaying) ?
-                    DEFAULT_PATH_STROKE_OPACITY * 2 :
+                    DEFAULT_PATH_STROKE_OPACITY * 10 :
                     DEFAULT_PATH_STROKE_OPACITY}
                 />
               );

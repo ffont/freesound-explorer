@@ -166,6 +166,7 @@ class App extends React.Component {
     const newPaths = this.state.paths;
     const path = newPaths[pathIndex];
     path.isPlaying = !path.isPlaying;
+    path.isSelected = path.isPlaying;  // TODO: select on click not on play
     newPaths[pathIndex] = path;
     this.setState({
       paths: newPaths,
@@ -227,7 +228,7 @@ class App extends React.Component {
     // Creates a new random path
     if (this.state.sounds.length) {
       const pathSounds = [];
-      const nSounds = Math.floor(Math.random() * (this.state.sounds.length / 4));
+      const nSounds = 2 + Math.floor(Math.random() * (this.state.sounds.length / 4));
       [...Array(nSounds).keys()].map(() => pathSounds.push(getRandomElement(this.state.sounds)));
       const newPath = {
         name: `Random path ${this.state.paths.length + 1}`,
@@ -314,6 +315,7 @@ class App extends React.Component {
           paths={this.state.paths}
           startStopPlayingPath={this.startStopPlayingPath}
           createNewPath={this.createNewPath}
+          updateSelectedSound={this.updateSelectedSound}
         />
         <Login
           isLoginModalVisible={this.state.isLoginModalVisible}

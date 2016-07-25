@@ -32,25 +32,22 @@ $modal-transition-duration: 0.3s;
   &.active-down {
   }
   width: $sound-info-modal-width;
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .sound-info-modal-title {
   padding: 10px;
   text-align: center;
-  background: $redRegular;
+  background: rgba(0, 0, 0, 0.5);
   color: white;
   font-size: 1.2em;
   cursor: pointer;
 }
 
-.sound-info-modal-content {
-}
-
 .sound-info-buttons-container {
   float: right;
   i.fa {
-    color: $blackBackground;
+    color: white;
   }
   i.fa-star {
     pointer-events: none;
@@ -61,9 +58,8 @@ $modal-transition-duration: 0.3s;
     padding: 10px;
     margin: 10px;
     cursor: pointer;
-    background: white;
-    border: 1px solid rgba(0,0,0,0.5);
-    border-radius: 5px;
     box-shadow: none;
+    background-color: transparent;
+    border: none;
   }
 }

@@ -322,6 +322,7 @@ class App extends React.Component {
           paths={this.state.paths}
           startStopPlayingPath={this.startStopPlayingPath}
           createNewPath={this.createNewPath}
+          updateSelectedSound={this.updateSelectedSound}
         />
         <Login
           isLoginModalVisible={this.state.isLoginModalVisible}

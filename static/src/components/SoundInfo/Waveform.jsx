@@ -11,6 +11,9 @@ const propTypes = {
   sound: React.PropTypes.object,
 };
 
+const buildSymmetricSignal = (signal) => signal.reduce((symmetricSignal, curVal) =>
+  [...symmetricSignal, curVal, -curVal], []);
+
 class Waveform extends React.Component {
   componentDidMount() {
     this.handleComponentUpdate();
@@ -43,11 +46,12 @@ class Waveform extends React.Component {
     }
     const signal = this.props.sound.buffer.getChannelData(0);
     const downsampledSignal = downsampleSignal(signal);
+    const symmetricSignal = buildSymmetricSignal(downsampledSignal);
     const { waveformWidth, waveformHeight } = sassVariables;
-    this.drawWaveForm(downsampledSignal, waveformWidth, waveformHeight);
+    this.drawWaveForm(symmetricSignal, waveformWidth, waveformHeight);
   }
 
-  drawWaveForm(downsampledSignal, waveformWidth, waveformHeight) {
+  drawWaveForm(signal, waveformWidth, waveformHeight) {
     const svg = select(this.refs.waveform);
     svg.selectAll('*').remove();
     const width = parseInt(waveformWidth, 10);
@@ -55,13 +59,13 @@ class Waveform extends React.Component {
     const xScale = scaleBand()
       .range([0, width])
       .padding(0.3);
-    xScale.domain(downsampledSignal.map((val, index) => index));
-    const yMax = Math.max.apply(null, downsampledSignal.map(Math.abs));
+    xScale.domain(signal.map((val, index) => index));
+    const yMax = Math.max.apply(null, signal.map(Math.abs));
     const yScale = scaleLinear()
       .range([0, height / 2])
       .domain([0, yMax]);
     svg.selectAll('.bar')
-      .data(downsampledSignal)
+      .data(signal)
       .enter()
       .append('rect')
       .attr('class', 'bar')

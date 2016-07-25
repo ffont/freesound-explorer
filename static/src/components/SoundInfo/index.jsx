@@ -2,6 +2,7 @@ import React from 'react';
 import freesound from '../../vendors/freesound';
 import '../../stylesheets/SoundInfo.scss';
 import Waveform from './Waveform';
+import sassVariables from 'json!../../stylesheets/variables.json';
 
 const propTypes = {
   position: React.PropTypes.object,
@@ -28,6 +29,9 @@ class SoundInfo extends React.Component {
     } else if (!this.props.position && !!nextProps.position) {
       // show modal: change classname to contain 'active'
       this.className += ' active';
+      if (nextProps.position.y < parseInt(sassVariables.soundInfoModalHeight, 10)) {
+        this.className += '-down';
+      }
     }
   }
 

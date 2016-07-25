@@ -12,5 +12,7 @@
   "sidebarWidth": "400px",
   "sidebarClosedOffset": "40px",
   "waveformHeight": "140px",
-  "waveformWidth": "260px"
+  "waveformWidth": "260px",
+  "soundInfoModalHeight": "300px",
+  "soundInfoModalWidth": "400px"
 }

@@ -13,6 +13,7 @@ const propTypes = {
   audioLoader: React.PropTypes.object,
   audioContext: React.PropTypes.object,
   playOnHover: React.PropTypes.bool,
+  setIsMidiLearningSoundId: React.PropTypes.func,
 };
 
 
@@ -69,6 +70,8 @@ class MapCircle extends React.Component {
         this.playAudio();
       }
     }
+    // Stop current midi learning
+    this.props.setIsMidiLearningSoundId(-1);
   }
 
   onAudioFinishedPLaying() {

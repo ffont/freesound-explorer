@@ -26,6 +26,8 @@ class App extends React.Component {
     this.state = {
       sounds: [],
       paths: [],
+      midiMappings: undefined,
+      isMidiLearningSoundId: -1,
       descriptor: DEFAULT_DESCRIPTOR,
       statusMessage: { message: '', status: '' },
       selectedSound: undefined,
@@ -54,6 +56,7 @@ class App extends React.Component {
     this.startStopPlayingPath = this.startStopPlayingPath.bind(this);
     this.createNewPath = this.createNewPath.bind(this);
     this.playRandomSound = this.playRandomSound.bind(this);
+    this.setIsMidiLearningSoundId = this.setIsMidiLearningSoundId.bind(this);
     this.setUpAudioContext();
     this.tsne = undefined;
   }
@@ -93,18 +96,32 @@ class App extends React.Component {
   }
 
   onMIDIMessage(message) {
-    // const cmd = message.data[0] >> 4;
-    // const channel = message.data[0] & 0xf;
     const type = message.data[0] & 0xf0;
     const note = message.data[1];
     const velocity = message.data[2];
     switch (type) {
-      case 144: // noteOn message
-        console.log('Note on', note, velocity);
-        this.playRandomSound(); // This is just for testing and fun ;)
+      case 144: { // noteOn message
+        if (this.state.isMidiLearningSoundId > -1) {
+          const midiMappings = this.state.midiMappings;
+          midiMappings.notes[note] = this.state.isMidiLearningSoundId;
+          this.setIsMidiLearningSoundId(-1);
+        } else {
+          const soundId = this.state.midiMappings.notes[note];
+          if (soundId) {
+            if (velocity > 0) {  // Some midi sources implement noteoff with velocity = 0
+              this.playSoundByFreesoundId(soundId);
+            } else {
+              this.stopSoundByFreesoundId(soundId);
+            }
+          }
+        }
         break;
-      case 128: // noteOff message
-        console.log('Note off', note, velocity); break;
+      }
+      case 128: { // noteOff message
+        const soundId = this.state.midiMappings.notes[note];
+        if (soundId) { this.stopSoundByFreesoundId(); }
+        break;
+      }
       default:
         break;
     }
@@ -125,6 +142,7 @@ class App extends React.Component {
       window.navigator.requestMIDIAccess().then(
         (midiAccess) => {
           this.updateSystemStatusMessage('MIDI support enabled ;)');
+          this.state.midiMappings = { notes: {} };
           const inputs = midiAccess.inputs.values();
           // Iterate over all existing MIDI devices and connect them to onMIDIMessage
           for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
@@ -141,6 +159,12 @@ class App extends React.Component {
     const newDescriptor = evt.target.value;
     this.setState({
       descriptor: newDescriptor,
+    });
+  }
+
+  setIsMidiLearningSoundId(isMidiLearningSoundId) {
+    this.setState({
+      isMidiLearningSoundId,
     });
   }
 
@@ -392,6 +416,9 @@ class App extends React.Component {
             playOnHover={this.state.playOnHover}
             paths={this.state.paths}
             isUserLoggedIn={this.state.isUserLoggedIn}
+            setIsMidiLearningSoundId={this.setIsMidiLearningSoundId}
+            isMidiLearningSoundId={this.state.isMidiLearningSoundId}
+            midiMappings={this.state.midiMappings}
           /> : ''}
         <MessagesBox statusMessage={this.state.statusMessage} />
       </div>

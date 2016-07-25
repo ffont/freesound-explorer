@@ -24,6 +24,9 @@ const propTypes = {
   playOnHover: React.PropTypes.bool,
   paths: React.PropTypes.array,
   isUserLoggedIn: React.PropTypes.bool,
+  setIsMidiLearningSoundId: React.PropTypes.func,
+  isMidiLearningSoundId: React.PropTypes.number,
+  midiMappings: React.PropTypes.object,
 };
 
 class Map extends React.Component {
@@ -63,6 +66,8 @@ class Map extends React.Component {
     if (evt.target.tagName !== 'circle') {
       // deselect all sounds when not clicking on a circle
       this.props.updateSelectedSound();
+      // turn off current midi learn
+      this.props.setIsMidiLearningSoundId(-1);
     }
   }
 
@@ -135,6 +140,7 @@ class Map extends React.Component {
                 audioLoader={this.props.audioLoader}
                 playOnHover={this.props.playOnHover}
                 projectPoint={this.projectPoint}
+                setIsMidiLearningSoundId={this.props.setIsMidiLearningSoundId}
               />
             );
           })}
@@ -177,6 +183,9 @@ class Map extends React.Component {
           sound={soundInfoContent}
           isUserLoggedIn={this.props.isUserLoggedIn}
           updateSystemStatusMessage={this.props.updateSystemStatusMessage}
+          setIsMidiLearningSoundId={this.props.setIsMidiLearningSoundId}
+          isMidiLearningSoundId={this.props.isMidiLearningSoundId}
+          midiMappings={this.props.midiMappings}
         />
       </div>
     );

@@ -10,6 +10,9 @@ const propTypes = {
   sound: React.PropTypes.object,
   isUserLoggedIn: React.PropTypes.bool,
   updateSystemStatusMessage: React.PropTypes.func,
+  setIsMidiLearningSoundId: React.PropTypes.func,
+  isMidiLearningSoundId: React.PropTypes.number,
+  midiMappings: React.PropTypes.object,
 };
 
 const DEFAULT_CLASSNAME = 'sound-info-modal';
@@ -20,6 +23,16 @@ class SoundInfo extends React.Component {
     this.lastTopPosition = 0;
     this.lastLeftPosition = 0;
     this.lastSound = undefined;
+  }
+
+  getCurrentlyAssignedMidiNoteLabel() {
+    let correspondingKey = '-';
+    Object.keys(this.props.midiMappings.notes).forEach((key) => {
+      if (this.props.midiMappings.notes[key] === this.lastSound.id) {
+        correspondingKey = parseInt(key, 10);
+      }
+    });
+    return correspondingKey;
   }
 
   getClassName() {
@@ -75,9 +88,10 @@ class SoundInfo extends React.Component {
     if (!this.lastSound) {
       return null;
     }
-    let userButtons = null;
+    let bookmarkSoundIcon = null;
+    let dowloadSoundIcon = null;
     if (this.props.isUserLoggedIn) {
-      const bookmarkSoundIcon = (this.lastSound.isBookmarked) ? (
+      bookmarkSoundIcon = (this.lastSound.isBookmarked) ? (
         <button>
           <i className="fa fa-star fa-lg" aria-hidden />
         </button>
@@ -86,15 +100,28 @@ class SoundInfo extends React.Component {
           <i className="fa fa-star-o fa-lg" aria-hidden />
         </button>
       );
-      userButtons = (
-        <div className="sound-info-buttons-container">
-          {bookmarkSoundIcon}
-          <button onClick={this.downloadSound}>
-            <i className="fa fa-download fa-lg" aria-hidden="true" />
-          </button>
-        </div>
+      dowloadSoundIcon = (
+        <button onClick={this.downloadSound}>
+          <i className="fa fa-download fa-lg" aria-hidden="true" />
+        </button>
       );
     }
+    const midiLearnButton = (
+      <button
+        className={(this.props.isMidiLearningSoundId === this.lastSound.id) ? 'learning' : ''}
+        onClick={() => this.props.setIsMidiLearningSoundId(this.lastSound.id)}
+      >
+        MIDI: {(this.props.isMidiLearningSoundId === this.lastSound.id) ? 'learning' :
+          this.getCurrentlyAssignedMidiNoteLabel()}
+      </button>
+    );
+    const userButtons = (
+      <div className="sound-info-buttons-container">
+        {midiLearnButton}
+        {bookmarkSoundIcon}
+        {dowloadSoundIcon}
+      </div>
+    );
     return (
       <div className={className} style={containerStyle}>
         <div>

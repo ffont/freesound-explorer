@@ -4,7 +4,7 @@ svg.waveform {
   width: $waveformWidth;
   height: $waveformHeight;
   display: block;
-  margin: 40px auto;
+  margin: 40px auto 0;
   rect {
     fill: lighten($blackBackground, 0.5);
     stroke: $blackBackground;

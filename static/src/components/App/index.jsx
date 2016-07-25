@@ -166,6 +166,7 @@ class App extends React.Component {
     const newPaths = this.state.paths;
     const path = newPaths[pathIndex];
     path.isPlaying = !path.isPlaying;
+    path.isSelected = path.isPlaying;  // TODO: select on click not on play
     newPaths[pathIndex] = path;
     this.setState({
       paths: newPaths,

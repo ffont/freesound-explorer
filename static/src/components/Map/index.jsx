@@ -167,7 +167,7 @@ class Map extends React.Component {
                   stroke="white"
                   strokeWidth={DEFAULT_PATH_STROKE_WIDTH}
                   strokeOpacity={(path.isPlaying) ?
-                    DEFAULT_PATH_STROKE_OPACITY * 2 :
+                    DEFAULT_PATH_STROKE_OPACITY * 10 :
                     DEFAULT_PATH_STROKE_OPACITY}
                 />
               );

@@ -17,6 +17,15 @@ function PathsList(props) {
               <i className="fa fa-pause fa-lg" aria-hidden="true" /> :
               <i className="fa fa-play fa-lg" aria-hidden="true" />}
           </button> {path.name} ({path.sounds.length} sounds)
+          {(path.isSelected) ?
+            <ul className="sounds-list">
+              {path.sounds.map((sound) => {
+                // Computed vars here
+                return (
+                  <li>{sound.name}</li>
+                );
+              })}
+            </ul> : ''}
         </li>
       )}
       <li>

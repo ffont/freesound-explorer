@@ -9,8 +9,7 @@ import { readObjectByString, getRandomElement } from '../../utils/misc';
 import audioLoader from '../../utils/audioLoader';
 import tsnejs from '../../vendors/tsne';
 import '../../stylesheets/App.scss';
-import { DEFAULT_DESCRIPTOR, TSNE_CONFIG, DEFAULT_MAX_RESULTS,
-  DEFAULT_MESSAGE_DURATION } from '../../constants';
+import { DEFAULT_DESCRIPTOR, TSNE_CONFIG, DEFAULT_MAX_RESULTS, MESSAGE_STATUS } from '../../constants';
 import '../../polyfills/AudioContext';
 
 const propTypes = {
@@ -55,11 +54,11 @@ class App extends React.Component {
     this.createNewPath = this.createNewPath.bind(this);
     this.setUpAudioContext();
     this.tsne = undefined;
-    this.messageTimer = undefined;
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     if (!!this.state.statusMessage.message &&
+      this.state.statusMessage.status === MESSAGE_STATUS.PROGRESS &&
       this.state.statusMessage.message === nextState.statusMessage.message) {
       // avoid wasted renders due to continuous receiving of same message
       return false;
@@ -211,7 +210,8 @@ class App extends React.Component {
       isUserLoggedIn: true,
       isLoginModalVisible: false,
     });
-    this.updateSystemStatusMessage(`Logged in as ${sessionStorage.getItem('username')}`, 'success');
+    this.updateSystemStatusMessage(`Logged in as ${sessionStorage.getItem('username')}`,
+      MESSAGE_STATUS.SUCCESS);
   }
 
   handleFailedLogin() {
@@ -219,7 +219,7 @@ class App extends React.Component {
       isUserLoggedIn: false,
       isLoginModalVisible: false,
     });
-    this.updateSystemStatusMessage('Failed to log in...', 'error');
+    this.updateSystemStatusMessage('Failed to log in...', MESSAGE_STATUS.ERROR);
   }
 
   createNewPath() {
@@ -243,7 +243,7 @@ class App extends React.Component {
       this.refs.map.forceUpdate();
     } else {
       this.updateSystemStatusMessage('A new path can not be created until there are some sounds ' +
-        'in the map', 'error');
+        'in the map', MESSAGE_STATUS.ERROR);
     }
   }
 
@@ -263,7 +263,7 @@ class App extends React.Component {
   }
 
   handleQueryError(error) {
-    this.updateSystemStatusMessage('No sounds found', 'error');
+    this.updateSystemStatusMessage('No sounds found', MESSAGE_STATUS.ERROR);
     this.setState({
       error: error || 'Unexpected error',
       isFetching: false,
@@ -285,21 +285,13 @@ class App extends React.Component {
    * @param {String} message: the message to be shown
    * @param {String} status: the related icon (info, success, error)
    */
-  updateSystemStatusMessage(message, status = 'info', time = DEFAULT_MESSAGE_DURATION) {
+  updateSystemStatusMessage(message, status = MESSAGE_STATUS.INFO) {
     this.setState({
       statusMessage: {
         message,
         status,
       },
     });
-
-    // Clear existing timeouts for hiding the message and set a new one
-    clearTimeout(this.messageTimer);
-    this.messageTimer = setTimeout(
-      () => {
-        this.setState({ statusMessage: { message: '', status: '' } });
-      }, time
-    );
   }
 
   render() {

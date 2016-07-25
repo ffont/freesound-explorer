@@ -2,6 +2,7 @@ import React from 'react';
 import freesound from '../../vendors/freesound';
 import '../../stylesheets/SoundInfo.scss';
 import Waveform from './Waveform';
+import { MESSAGE_STATUS } from '../../constants';
 import sassVariables from 'json!../../stylesheets/variables.json';
 
 const propTypes = {
@@ -59,13 +60,14 @@ class SoundInfo extends React.Component {
       'Freesound Explorer' // Category
     ).then(() => {
       this.lastSound.isBookmarked = true;
-      this.props.updateSystemStatusMessage('Sound bookmarked!', 'success');
+      this.props.updateSystemStatusMessage('Sound bookmarked!', MESSAGE_STATUS.SUCCESS);
     },
-    () => this.props.updateSystemStatusMessage('Error bookmarking sound', 'error'));
+    () => this.props.updateSystemStatusMessage('Error bookmarking sound', MESSAGE_STATUS.ERROR));
   }
 
   downloadSound() {
-    this.props.updateSystemStatusMessage('Downloading sounds is not implemented yet', 'info');
+    this.props.updateSystemStatusMessage('Downloading sounds is not implemented yet',
+      MESSAGE_STATUS.INFO);
   }
 
   render() {

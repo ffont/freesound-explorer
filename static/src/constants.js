@@ -5,6 +5,13 @@ export const DEFAULT_FILTER = 'duration:[0%20TO%205]';
 
 export const DEFAULT_MESSAGE_DURATION = 4000;
 
+export const MESSAGE_STATUS = {
+  INFO: 'info',
+  SUCCESS: 'succes',
+  ERROR: 'error',
+  PROGRESS: 'progress',
+};
+
 export const MIN_ZOOM = 0.2;
 export const MAX_ZOOM = 15;
 export const MAP_SCALE_FACTOR = 20;

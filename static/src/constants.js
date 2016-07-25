@@ -7,7 +7,7 @@ export const DEFAULT_MESSAGE_DURATION = 4000;
 
 export const MESSAGE_STATUS = {
   INFO: 'info',
-  SUCCESS: 'succes',
+  SUCCESS: 'success',
   ERROR: 'error',
   PROGRESS: 'progress',
 };

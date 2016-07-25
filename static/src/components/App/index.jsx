@@ -143,6 +143,11 @@ class App extends React.Component {
     this.refs.map.refs[`map-point-${freesoundId}`].playAudio(onEndedCallback);
   }
 
+  stopSoundByFreesoundId(freesoundId, onEndedCallback) {
+    // TODO: check that map is loaded, etc...
+    this.refs.map.refs[`map-point-${freesoundId}`].stopAudio(onEndedCallback);
+  }
+
   playNextSoundFromPath(pathIndex) {
     const newPaths = this.state.paths;
     const path = newPaths[pathIndex];

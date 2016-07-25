@@ -20,6 +20,7 @@ class MapCircle extends React.Component {
   constructor(props) {
     super(props);
     this.buffer = undefined;
+    this.playingSourceNodes = {};
     this.onHoverCallback = this.onHoverCallback.bind(this);
     this.onMouseLeaveCallback = this.onMouseLeaveCallback.bind(this);
     this.onClickCallback = this.onClickCallback.bind(this);
@@ -58,8 +59,11 @@ class MapCircle extends React.Component {
 
   onClickCallback() {
     if (this.props.isSelected) {
-      // undo selection if sound is already selected
+      // undo selection and stop playing if sound is already selected
       this.props.updateSelectedSound();
+      if (this.state.isPlaying) {
+        this.stopAudio();
+      }
     } else {
       this.props.updateSelectedSound(this.props.sound.id);
       if (!this.props.playOnHover) {
@@ -86,8 +90,11 @@ class MapCircle extends React.Component {
     const self = this;
     function createAndStartBuffer() {
       const source = self.props.audioContext.createBufferSource();
+      const sourceNodeKey = Object.keys(self.playingSourceNodes).length;
+      self.playingSourceNodes[sourceNodeKey] = source;
       source.onended = () => {
         self.onAudioFinishedPLaying();
+        delete self.playingSourceNodes[sourceNodeKey];
         if (onEndedCallback) {
           onEndedCallback();
         }
@@ -96,6 +103,7 @@ class MapCircle extends React.Component {
       source.connect(self.props.audioContext.gainNode);
       source.start();
       self.setState({ isPlaying: true });
+      return sourceNodeKey; // return reference to souce node so it can be accessed from outside
     }
     // If buffer audio has not been loaded, first load it and then play
     if (!this.buffer) {
@@ -104,6 +112,17 @@ class MapCircle extends React.Component {
       });
     } else {
       createAndStartBuffer();
+    }
+  }
+
+  stopAudio(sourceNodeKey = -1) {
+    if (sourceNodeKey >= 0) {
+      this.playingSourceNodes[sourceNodeKey].stop();  // this will trigger onended callback
+    } else {
+      // If no specific key provided, stop all source nodes
+      Object.keys(this.playingSourceNodes).forEach((key) => {
+        this.playingSourceNodes[key].stop();  // this will trigger onended callback
+      });
     }
   }
 

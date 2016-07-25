@@ -102,8 +102,7 @@ class App extends React.Component {
     switch (type) {
       case 144: { // noteOn message
         if (this.state.isMidiLearningSoundId > -1) {
-          const midiMappings = this.state.midiMappings;
-          midiMappings.notes[note] = this.state.isMidiLearningSoundId;
+          this.state.midiMappings.notes[note] = this.state.isMidiLearningSoundId;
           this.setIsMidiLearningSoundId(-1);
         } else {
           const soundId = this.state.midiMappings.notes[note];
@@ -337,6 +336,13 @@ class App extends React.Component {
     });
     this.tsne.initDataRaw(xTsne);
     this.forceUpdate();  // to force render()
+
+    // Randomly initialize MIDI midiMappings
+    let counter = 40;
+    sounds.forEach(sound => {
+      this.state.midiMappings.notes[counter] = sound.id;
+      counter = counter + 1;
+    });
   }
 
   handleQueryError(error) {

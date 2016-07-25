@@ -58,3 +58,6 @@ input.toggle:checked + label:after {
   margin-left: 20px;
   background-color: white;
 }
+input.active + label:before {
+  background-color: rgba(58, 103, 94, 0.7);
+}

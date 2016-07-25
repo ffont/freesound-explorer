@@ -65,7 +65,7 @@ class QueryBox extends React.Component {
             <div style={{ display: 'inline' }}>
               <input
                 id="playOnHoverSwitch"
-                className="toggle"
+                className={`toggle${(this.props.playOnHover) ? ' active' : ''}`}
                 type="checkbox"
                 checked={this.props.playOnHover}
                 onChange={this.props.tooglePlayOnHover}

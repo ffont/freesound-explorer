@@ -7,7 +7,7 @@
   width: $sidebarWidth;
   transition: left 0.3s ease;
   height: 100%;
-
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
   p {
     margin-bottom: 8px;
   }

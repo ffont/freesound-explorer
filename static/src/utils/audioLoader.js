@@ -13,10 +13,18 @@ const audioLoader = (audioContext) => {
           if (xhr.status >= 200 && xhr.status < 300) {
             const buffer = xhr.response;
             if (!!buffer) {
-              audioContext.decodeAudioData(buffer).then(
-                decodedData => resolve(decodedData),
-                error => reject(error)
-              );
+              try {
+                // support for decodeAudioData with promise
+                audioContext.decodeAudioData(buffer).then(
+                  decodedData => resolve(decodedData),
+                  error => reject(error)
+                );
+              } catch (e) {
+                // old syntax with callback
+                audioContext.decodeAudioData(buffer,
+                  (decodedData) => resolve(decodedData)
+                );
+              }
             }
           } else {
             reject('Error in the network');

@@ -1,0 +1,16 @@
+@import "./variables.json";
+
+svg.waveform {
+  width: $waveformWidth;
+  height: $waveformHeight;
+  display: block;
+  margin: 40px auto 0;
+  rect {
+    fill: lighten($blackBackground, 0.5);
+    stroke: $blackBackground;
+    stroke-width: 0.1;
+  }
+  rect.bar {
+    fill: #6a6a6b;
+  }
+}

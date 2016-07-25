@@ -1,7 +1,5 @@
 @import "./variables.json";
-$sound-info-modal-height: 300px;
 $sound-info-modal-width: 400px;
-
 $modal-transition-duration: 0.3s;
 
 .sound-info-modal {
@@ -17,26 +15,52 @@ $modal-transition-duration: 0.3s;
   div {
     opacity: 0;
     pointer-events: none;
-    transition: opacity $modal-transition-duration;
+    transition: opacity $modal-transition-duration/4;
   }
-  &.active {
-    margin-top: -$sound-info-modal-height;
-    height: $sound-info-modal-height;
+  &.active, &.active-down {
+    height: $soundInfoModalHeight;
     div {
       opacity: 1;
       pointer-events: all;
-      // start transition on content only when modal fully visible
+      // wait for modal to be totally spread before showing its content
+      transition: opacity $modal-transition-duration/4 $modal-transition-duration;
     }
   }
+  &.active {
+    margin-top: -$soundInfoModalHeight;
+  }
   width: $sound-info-modal-width;
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .sound-info-modal-title {
   padding: 10px;
   text-align: center;
-  background: $redRegular;
+  background: rgba(0, 0, 0, 0.5);
   color: white;
   font-size: 1.2em;
   cursor: pointer;
+}
+
+.sound-info-buttons-container {
+  float: right;
+  i.fa {
+    color: white;
+  }
+  i.fa-star {
+    pointer-events: none;
+    color: #d3d62f;
+    cursor: default;
+  }
+  button {
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+    box-shadow: none;
+    background-color: transparent;
+    border: none;
+    &:focus {
+      outline: none;
+    }
+  }
 }

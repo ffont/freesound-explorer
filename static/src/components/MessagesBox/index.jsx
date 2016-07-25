@@ -1,5 +1,8 @@
 import React from 'react';
 import '../../stylesheets/MessagesBox.scss';
+import { DEFAULT_MESSAGE_DURATION, MESSAGE_STATUS } from '../../constants';
+
+const DEFAULT_CLASSNAME = 'message-box';
 
 const propTypes = {
   statusMessage: React.PropTypes.shape({
@@ -9,31 +12,48 @@ const propTypes = {
 };
 
 class MessagesBox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.visibilityTimeout = undefined;
+    this.className = DEFAULT_CLASSNAME;
+  }
+
   shouldComponentUpdate(nextProps) {
     // update component only when receiving a new message
     if (this.props.statusMessage.message !== nextProps.statusMessage.message) {
+      clearTimeout(this.visibilityTimeout);
+      this.handleTimedVisibility();
       return true;
     }
     return false;
   }
+
+  handleTimedVisibility() {
+    this.className = `${DEFAULT_CLASSNAME} active`;
+    this.visibilityTimeout = setTimeout(() => {
+      this.hideMessage();
+    }, DEFAULT_MESSAGE_DURATION);
+  }
+
+  hideMessage() {
+    this.className = DEFAULT_CLASSNAME;
+    this.forceUpdate();
+  }
+
   render() {
-    let className = 'message-box';
     const { message, status } = this.props.statusMessage;
-    className += ` ${status}`;
-    if (!!message) {
-      className += ' active';
-    }
+    const className = `${this.className} ${status}`;
     let statusIcon;
     switch (status) {
-      case 'info': {
+      case MESSAGE_STATUS.INFO: {
         statusIcon = 'info-circle';
         break;
       }
-      case 'success': {
+      case MESSAGE_STATUS.SUCCESS: {
         statusIcon = 'check-circle';
         break;
       }
-      case 'error': {
+      case MESSAGE_STATUS.ERROR: {
         statusIcon = 'exclamation';
         break;
       }

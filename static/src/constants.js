@@ -5,6 +5,13 @@ export const DEFAULT_FILTER = 'duration:[0%20TO%205]';
 
 export const DEFAULT_MESSAGE_DURATION = 4000;
 
+export const MESSAGE_STATUS = {
+  INFO: 'info',
+  SUCCESS: 'success',
+  ERROR: 'error',
+  PROGRESS: 'progress',
+};
+
 export const MIN_ZOOM = 0.2;
 export const MAX_ZOOM = 15;
 export const MAP_SCALE_FACTOR = 20;
@@ -13,7 +20,7 @@ export const DEFAULT_STROKE_WIDTH = 2;
 export const DEFAULT_FILL_OPACITY = 0.7;
 export const DEFAULT_STROKE_OPACITY = 0.9;
 export const DEFAULT_PATH_STROKE_WIDTH = 2;
-export const DEFAULT_PATH_STROKE_OPACITY = 0.2;
+export const DEFAULT_PATH_STROKE_OPACITY = 0.05;
 
 export const MAX_TSNE_ITERATIONS = 250;
 export const TSNE_CONFIG = {

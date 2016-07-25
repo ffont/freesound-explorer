@@ -22,14 +22,8 @@ function search(query = DEFAULT_QUERY, filter = DEFAULT_FILTER, maxResults = DEF
   const pagesToGet = Math.ceil(maxResults / freesoundMaxPageSize);
   const extraDescriptors = [
     'lowlevel.mfcc.mean',
-    'lowlevel.barkbands.mean',
-    'lowlevel.erb_bands.mean',
-    'lowlevel.frequency_bands.mean',
-    'lowlevel.gfcc.mean',
     'sfx.tristimulus.mean',
     'tonal.hpcp.mean',
-    'lowlevel.spectral_contrast.mean',
-    'lowlevel.scvalleys.mean',
   ];
   const promises = [];
   while (pageCounter < pagesToGet) {
@@ -69,9 +63,12 @@ export function reshapeReceivedSounds(allPagesResults) {
       const previewUrl = sound.previews['preview-lq-mp3'];
       const fsObject = pageResults.getSound(index);
       const { bookmark, download } = fsObject;
+      // TODO: check whether the sound is actually bookmarked
+      const isBookmarked = false;
+      const buffer = undefined;
       // consider only sounds with non-empty analysis
       if (!!analysis) {
-        const rgba = rgbToHex(
+        const color = rgbToHex(
           Math.floor(255 * analysis.sfx.tristimulus.mean[0]),
           Math.floor(255 * analysis.sfx.tristimulus.mean[1]),
           Math.floor(255 * analysis.sfx.tristimulus.mean[2])
@@ -82,10 +79,12 @@ export function reshapeReceivedSounds(allPagesResults) {
           analysis,
           url,
           name,
-          rgba,
+          color,
           username,
           bookmark,
           download,
+          isBookmarked,
+          buffer,
         });
       }
     });

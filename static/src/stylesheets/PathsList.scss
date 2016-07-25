@@ -7,12 +7,14 @@
   li {
     display: block;
     width: 100%;
+    min-height: $sidebarClosedOffset;
+    line-height: $sidebarClosedOffset;
   }
   button {
   	padding: 7px;
   	border-radius: 5px;
   	border: 0px;
-  	height: 30px;
+  	height: $sidebarClosedOffset;
   	width: 34px;
     background: none;
     color: white;
@@ -20,4 +22,20 @@
   button:focus {
     outline: 0;
   }
+}
+
+.sounds-list {
+  ul {
+    list-style-type: none;
+  }
+  li {
+    display: block;
+    overflow: hidden;
+    padding-left: 10px;
+    width: 100%;
+    height: $sidebarClosedOffset;
+    line-height: $sidebarClosedOffset;
+    background: rgba(70, 70, 70, 0.2);
+  }
+  li:hover { background: $hoverBackground }
 }

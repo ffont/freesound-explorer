@@ -8,12 +8,12 @@
   height: 0;
   background-color: rgba(0, 0, 0, 0.7);
   color: rgba(245, 240, 240, 0.9);
-  transition: height 0.3s ease-in-out;
+  transition: height 0.3s ease-in-out, background-color 0.3s ease-in-out;
   &.success {
-    background-color: rgba(0, 50, 0, 0.7);
+    background-color: rgba(58, 103, 94, 0.7);
   }
   &.error {
-    background-color: rgba(50, 0, 0, 0.7);
+    background-color: rgba(158, 53, 53, 0.7);
   }
   &.active {
     height: $messagesBoxHeight;

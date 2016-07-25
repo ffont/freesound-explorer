@@ -5,7 +5,7 @@ import MapCircle from './MapCircle';
 import SoundInfo from '../SoundInfo';
 import '../../polyfills/requestAnimationFrame';
 import { MIN_ZOOM, MAX_ZOOM, MAX_TSNE_ITERATIONS, MAP_SCALE_FACTOR, DEFAULT_PATH_STROKE_WIDTH,
-DEFAULT_PATH_STROKE_OPACITY } from '../../constants';
+  DEFAULT_PATH_STROKE_OPACITY, MESSAGE_STATUS } from '../../constants';
 import '../../stylesheets/Map.scss';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
@@ -70,7 +70,7 @@ class Map extends React.Component {
     const progress = parseInt(100 * this.currentStepIteration / MAX_TSNE_ITERATIONS, 10);
     const statusMessage =
     `${this.props.sounds.length} sounds loaded, computing map (${progress}%)`;
-    this.props.updateSystemStatusMessage(statusMessage);
+    this.props.updateSystemStatusMessage(statusMessage, MESSAGE_STATUS.PROGRESS);
     if (this.currentStepIteration < MAX_TSNE_ITERATIONS) {
       this.props.tsne.step();
       this.stepInterval = requestAnimationFrame(() => this.computeStepSolution());
@@ -79,9 +79,7 @@ class Map extends React.Component {
       this.forceUpdate();
     } else {
       cancelAnimationFrame(this.stepInterval);
-      this.props.updateSystemStatusMessage('Map computed!', 'success');
-      // hide system status message after 5 seconds
-      // setTimeout(() => this.props.updateSystemStatusMessage(''), 5000);
+      this.props.updateSystemStatusMessage('Map computed!', MESSAGE_STATUS.SUCCESS);
       this.currentStepIteration = 0;
     }
   }
@@ -167,7 +165,7 @@ class Map extends React.Component {
                   stroke="white"
                   strokeWidth={DEFAULT_PATH_STROKE_WIDTH}
                   strokeOpacity={(path.isPlaying) ?
-                    DEFAULT_PATH_STROKE_OPACITY * 2 :
+                    DEFAULT_PATH_STROKE_OPACITY * 10 :
                     DEFAULT_PATH_STROKE_OPACITY}
                 />
               );
@@ -178,6 +176,7 @@ class Map extends React.Component {
           position={soundInfoPosition}
           sound={soundInfoContent}
           isUserLoggedIn={this.props.isUserLoggedIn}
+          updateSystemStatusMessage={this.props.updateSystemStatusMessage}
         />
       </div>
     );

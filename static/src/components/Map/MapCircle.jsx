@@ -19,7 +19,7 @@ const propTypes = {
 class MapCircle extends React.Component {
   constructor(props) {
     super(props);
-    this.buffer = undefined;
+    this.playingSourceNodes = {};
     this.onHoverCallback = this.onHoverCallback.bind(this);
     this.onMouseLeaveCallback = this.onMouseLeaveCallback.bind(this);
     this.onClickCallback = this.onClickCallback.bind(this);
@@ -58,8 +58,11 @@ class MapCircle extends React.Component {
 
   onClickCallback() {
     if (this.props.isSelected) {
-      // undo selection if sound is already selected
+      // undo selection and stop playing if sound is already selected
       this.props.updateSelectedSound();
+      if (this.state.isPlaying) {
+        this.stopAudio();
+      }
     } else {
       this.props.updateSelectedSound(this.props.sound.id);
       if (!this.props.playOnHover) {
@@ -72,46 +75,61 @@ class MapCircle extends React.Component {
     this.setState({ isPlaying: false });
   }
 
-  loadAudio(callback) {
-    this.props.audioLoader.loadSound(this.props.sound.previewUrl)
-      .then(
-        decodedAudio => {
-          this.buffer = decodedAudio;
-          callback();
-        }
-      );
+  loadAudio() {
+    return new Promise((resolve, reject) => {
+      if (this.props.sound.buffer) {
+        // if buffer already loaded, resolve immediately
+        resolve(this.props.sound.buffer);
+      } else {
+        this.props.audioLoader.loadSound(this.props.sound.previewUrl)
+        .then(
+          decodedAudio => {
+            this.props.sound.buffer = decodedAudio;
+            resolve();
+          },
+          error => reject(error)
+        );
+      }
+    });
   }
 
   playAudio(onEndedCallback) {
-    const self = this;
-    function createAndStartBuffer() {
-      const source = self.props.audioContext.createBufferSource();
+    this.loadAudio().then(() => {
+      // add buffer source to audio context and play
+      const source = this.props.audioContext.createBufferSource();
+      const sourceNodeKey = Object.keys(this.playingSourceNodes).length;
+      this.playingSourceNodes[sourceNodeKey] = source;
       source.onended = () => {
-        self.onAudioFinishedPLaying();
+        this.onAudioFinishedPLaying();
+        delete this.playingSourceNodes[sourceNodeKey];
         if (onEndedCallback) {
           onEndedCallback();
         }
       };
-      source.buffer = self.buffer;
-      source.connect(self.props.audioContext.gainNode);
+      source.buffer = this.props.sound.buffer;
+      source.connect(this.props.audioContext.gainNode);
       source.start();
-      self.setState({ isPlaying: true });
-    }
-    // If buffer audio has not been loaded, first load it and then play
-    if (!this.buffer) {
-      this.loadAudio(() => {
-        createAndStartBuffer();
-      });
+      this.setState({ isPlaying: true });
+      return sourceNodeKey; // return reference to souce node so it can be accessed from outside
+    });
+  }
+
+  stopAudio(sourceNodeKey = -1) {
+    if (sourceNodeKey >= 0) {
+      this.playingSourceNodes[sourceNodeKey].stop();  // this will trigger onended callback
     } else {
-      createAndStartBuffer();
+      // If no specific key provided, stop all source nodes
+      Object.keys(this.playingSourceNodes).forEach((key) => {
+        this.playingSourceNodes[key].stop();  // this will trigger onended callback
+      });
     }
   }
 
   render() {
     const { cx, cy } = this.props.position;
-    const fillColor = (this.props.isSelected) ? 'white' : this.props.sound.rgba;
+    const fillColor = (this.props.isSelected) ? 'white' : this.props.sound.color;
     const strokeColor = (this.props.isSelected || this.state.isPlaying || this.state.isHovered) ?
-        'white' : this.props.sound.rgba;
+        'white' : this.props.sound.color;
     const animationValues = `${DEFAULT_RADIUS / 2}; ${DEFAULT_RADIUS / 1.5}; ${DEFAULT_RADIUS / 2}`;
     const animation = (this.state.isPlaying) ?
       <animate

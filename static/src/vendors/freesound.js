@@ -172,7 +172,7 @@ const freesound = (function () {
           if(category)
               data.append("category",category);
           var uri = makeUri(uris.bookmark,[jsonObject.id]);
-          makeRequest(uri, success, error, {}, null, 'POST', data);
+          return makeRequest(uri, success, error, {}, null, 'POST', data);
       };
 
       jsonObject.edit = function (description,success, error){

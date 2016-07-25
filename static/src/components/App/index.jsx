@@ -111,15 +111,15 @@ class App extends React.Component {
             if (velocity > 0) {  // Some midi sources implement noteoff with velocity = 0
               this.playSoundByFreesoundId(soundId);
             } else {
-              this.stopSoundByFreesoundId(soundId);
+              // this.stopSoundByFreesoundId(soundId);
             }
           }
         }
         break;
       }
       case 128: { // noteOff message
-        const soundId = this.state.midiMappings.notes[note];
-        if (soundId) { this.stopSoundByFreesoundId(); }
+        // const soundId = this.state.midiMappings.notes[note];
+        // if (soundId) { this.stopSoundByFreesoundId(soundId); }
         break;
       }
       default:

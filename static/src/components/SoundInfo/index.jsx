@@ -1,11 +1,13 @@
 import React from 'react';
 import freesound from '../../vendors/freesound';
 import '../../stylesheets/SoundInfo.scss';
+import Waveform from './Waveform';
 
 const propTypes = {
   position: React.PropTypes.object,
   sound: React.PropTypes.object,
   isUserLoggedIn: React.PropTypes.bool,
+  updateSystemStatusMessage: React.PropTypes.func,
 };
 
 const DEFAULT_CLASSNAME = 'sound-info-modal';
@@ -40,20 +42,26 @@ class SoundInfo extends React.Component {
   updateSoundContent() {
     if (!!this.props.sound) {
       this.lastSound = this.props.sound;
+      this.bookmarkSound = this.bookmarkSound.bind(this);
+      this.downloadSound = this.downloadSound.bind(this);
     }
   }
 
   bookmarkSound() {
     freesound.setToken(sessionStorage.getItem('access_token'), 'oauth');
-    const sound = this.props.sound;
-    const successCallback = () => console.log('Sound bookmarked!');
-    const errorCallback = () => console.log('Error bookmarking sound...');
+    const sound = this.lastSound;
     sound.bookmark(
       sound.name,  // Use sound name
-      'Freesound Explorer',  // Category
-      successCallback,
-      errorCallback
-    );
+      'Freesound Explorer' // Category
+    ).then(() => {
+      this.lastSound.isBookmarked = true;
+      this.props.updateSystemStatusMessage('Sound bookmarked!', 'success');
+    },
+    () => this.props.updateSystemStatusMessage('Error bookmarking sound', 'error'));
+  }
+
+  downloadSound() {
+    this.props.updateSystemStatusMessage('Downloading sounds is not implemented yet', 'info');
   }
 
   render() {
@@ -62,15 +70,38 @@ class SoundInfo extends React.Component {
     if (!this.lastSound) {
       return null;
     }
+    let userButtons = null;
+    if (this.props.isUserLoggedIn) {
+      const bookmarkSoundIcon = (this.lastSound.isBookmarked) ? (
+        <button>
+          <i className="fa fa-star fa-lg" aria-hidden />
+        </button>
+      ) : (
+        <button onClick={this.bookmarkSound}>
+          <i className="fa fa-star-o fa-lg" aria-hidden />
+        </button>
+      );
+      userButtons = (
+        <div className="sound-info-buttons-container">
+          {bookmarkSoundIcon}
+          <button onClick={this.downloadSound}>
+            <i className="fa fa-download fa-lg" aria-hidden="true" />
+          </button>
+        </div>
+      );
+    }
     return (
       <div className={this.className} style={containerStyle}>
         <div>
           <a href={this.lastSound.url}>
             <div className="sound-info-modal-title">
-              {this.lastSound.name}
+              <div>{this.lastSound.name}</div>
+              <div>by {this.lastSound.username}</div>
             </div>
           </a>
           <div className="sound-info-modal-content">
+            <Waveform sound={this.props.sound} />
+            {userButtons}
           </div>
         </div>
       </div>

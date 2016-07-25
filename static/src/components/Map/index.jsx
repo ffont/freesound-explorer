@@ -178,6 +178,7 @@ class Map extends React.Component {
           position={soundInfoPosition}
           sound={soundInfoContent}
           isUserLoggedIn={this.props.isUserLoggedIn}
+          updateSystemStatusMessage={this.props.updateSystemStatusMessage}
         />
       </div>
     );

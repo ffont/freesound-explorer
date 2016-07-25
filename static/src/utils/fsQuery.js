@@ -69,9 +69,12 @@ export function reshapeReceivedSounds(allPagesResults) {
       const previewUrl = sound.previews['preview-lq-mp3'];
       const fsObject = pageResults.getSound(index);
       const { bookmark, download } = fsObject;
+      // TODO: check whether the sound is actually bookmarked
+      const isBookmarked = false;
+      const buffer = undefined;
       // consider only sounds with non-empty analysis
       if (!!analysis) {
-        const rgba = rgbToHex(
+        const color = rgbToHex(
           Math.floor(255 * analysis.sfx.tristimulus.mean[0]),
           Math.floor(255 * analysis.sfx.tristimulus.mean[1]),
           Math.floor(255 * analysis.sfx.tristimulus.mean[2])
@@ -82,10 +85,12 @@ export function reshapeReceivedSounds(allPagesResults) {
           analysis,
           url,
           name,
-          rgba,
+          color,
           username,
           bookmark,
           download,
+          isBookmarked,
+          buffer,
         });
       }
     });

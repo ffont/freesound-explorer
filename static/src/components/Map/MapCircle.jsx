@@ -19,7 +19,6 @@ const propTypes = {
 class MapCircle extends React.Component {
   constructor(props) {
     super(props);
-    this.buffer = undefined;
     this.onHoverCallback = this.onHoverCallback.bind(this);
     this.onMouseLeaveCallback = this.onMouseLeaveCallback.bind(this);
     this.onClickCallback = this.onClickCallback.bind(this);
@@ -72,46 +71,45 @@ class MapCircle extends React.Component {
     this.setState({ isPlaying: false });
   }
 
-  loadAudio(callback) {
-    this.props.audioLoader.loadSound(this.props.sound.previewUrl)
-      .then(
-        decodedAudio => {
-          this.buffer = decodedAudio;
-          callback();
-        }
-      );
+  createAndStartBuffer() {
+    const source = this.props.audioContext.createBufferSource();
+    source.onended = () => {
+      this.onAudioFinishedPLaying();
+      // TODO: this method should return a promise that resolves here
+    };
+    source.buffer = this.props.sound.buffer;
+    source.connect(this.props.audioContext.gainNode);
+    source.start();
+    this.setState({ isPlaying: true });
   }
 
-  playAudio(onEndedCallback) {
-    const self = this;
-    function createAndStartBuffer() {
-      const source = self.props.audioContext.createBufferSource();
-      source.onended = () => {
-        self.onAudioFinishedPLaying();
-        if (onEndedCallback) {
-          onEndedCallback();
-        }
-      };
-      source.buffer = self.buffer;
-      source.connect(self.props.audioContext.gainNode);
-      source.start();
-      self.setState({ isPlaying: true });
-    }
+  loadAudio() {
+    return new Promise((resolve, reject) => {
+      this.props.audioLoader.loadSound(this.props.sound.previewUrl)
+      .then(
+        decodedAudio => resolve(decodedAudio),
+        error => reject(error)
+      );
+    });
+  }
+
+  playAudio() {
     // If buffer audio has not been loaded, first load it and then play
-    if (!this.buffer) {
-      this.loadAudio(() => {
-        createAndStartBuffer();
+    if (!this.props.sound.buffer) {
+      this.loadAudio().then((decodedAudio) => {
+        this.props.sound.buffer = decodedAudio;
+        this.createAndStartBuffer();
       });
     } else {
-      createAndStartBuffer();
+      this.createAndStartBuffer();
     }
   }
 
   render() {
     const { cx, cy } = this.props.position;
-    const fillColor = (this.props.isSelected) ? 'white' : this.props.sound.rgba;
+    const fillColor = (this.props.isSelected) ? 'white' : this.props.sound.color;
     const strokeColor = (this.props.isSelected || this.state.isPlaying || this.state.isHovered) ?
-        'white' : this.props.sound.rgba;
+        'white' : this.props.sound.color;
     const animationValues = `${DEFAULT_RADIUS / 2}; ${DEFAULT_RADIUS / 1.5}; ${DEFAULT_RADIUS / 2}`;
     const animation = (this.state.isPlaying) ?
       <animate

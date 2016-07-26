@@ -21,6 +21,7 @@ class MapCircle extends React.Component {
   constructor(props) {
     super(props);
     this.playingSourceNodes = {};
+    this.playingGainNodes = {};
     this.onHoverCallback = this.onHoverCallback.bind(this);
     this.onMouseLeaveCallback = this.onMouseLeaveCallback.bind(this);
     this.onClickCallback = this.onClickCallback.bind(this);
@@ -96,34 +97,51 @@ class MapCircle extends React.Component {
     });
   }
 
-  playAudio(onEndedCallback) {
+  playAudio(onEndedCallback, playbackRate = 1.0, customSourceNodeKey) {
     this.loadAudio().then(() => {
       // add buffer source to audio context and play
       const source = this.props.audioContext.createBufferSource();
-      const sourceNodeKey = Object.keys(this.playingSourceNodes).length;
+      const sourceGainNode = this.props.audioContext.createGain();
+      let sourceNodeKey = Object.keys(this.playingSourceNodes).length;
+      if (customSourceNodeKey) { sourceNodeKey = customSourceNodeKey; }
       this.playingSourceNodes[sourceNodeKey] = source;
+      this.playingGainNodes[sourceNodeKey] = sourceGainNode;
       source.onended = () => {
         this.onAudioFinishedPLaying();
         delete this.playingSourceNodes[sourceNodeKey];
+        delete this.playingGainNodes[sourceNodeKey];
         if (onEndedCallback) {
           onEndedCallback();
         }
       };
       source.buffer = this.props.sound.buffer;
-      source.connect(this.props.audioContext.gainNode);
+      source.playbackRate.value = playbackRate;
+      source.connect(sourceGainNode);
+      sourceGainNode.connect(this.props.audioContext.gainNode);
       source.start();
       this.setState({ isPlaying: true });
-      return sourceNodeKey; // return reference to souce node so it can be accessed from outside
+      // return reference to souce node so it can be accessed from outside
+      // TODO: check that works...
+      return sourceNodeKey;
     });
   }
 
   stopAudio(sourceNodeKey = -1) {
+    const fadeOutTime = 0.05; // in seconds
     if (sourceNodeKey >= 0) {
-      this.playingSourceNodes[sourceNodeKey].stop();  // this will trigger onended callback
+      if (this.playingSourceNodes.hasOwnProperty(sourceNodeKey)) {
+        this.playingGainNodes[sourceNodeKey].gain.exponentialRampToValueAtTime(
+          0.01, this.props.audioContext.currentTime + fadeOutTime);
+        this.playingSourceNodes[sourceNodeKey].stop(
+          this.props.audioContext.currentTime + fadeOutTime);  // this will trigger onended callback
+      }
     } else {
       // If no specific key provided, stop all source nodes
       Object.keys(this.playingSourceNodes).forEach((key) => {
-        this.playingSourceNodes[key].stop();  // this will trigger onended callback
+        this.playingGainNodes[key].gain.exponentialRampToValueAtTime(
+          0.01, this.props.audioContext.currentTime + fadeOutTime);
+        this.playingSourceNodes[key].stop(
+          this.props.audioContext.currentTime + fadeOutTime);  // this will trigger onended callback
       });
     }
   }

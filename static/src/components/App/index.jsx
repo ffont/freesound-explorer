@@ -95,6 +95,31 @@ class App extends React.Component {
       error => this.handleQueryError(error));
   }
 
+  handleNoteOn(note, velocity) {
+    // Find closest note with assigned sound and play with adjusted playback rate
+    const closestNote = Object.keys(this.state.midiMappings.notes).reduce((prev, curr) =>
+      (Math.abs(curr - note) < Math.abs(prev - note) ? curr : prev));
+    const soundId = this.state.midiMappings.notes[closestNote];
+    const semitonesDelta = note - closestNote;
+    const playBackRate = Math.pow(2, (semitonesDelta / 12));
+    const sourceNodeKey = `node_${note}`;
+    if (soundId) {
+      if (velocity > 0) {  // Some midi sources implement noteoff with velocity = 0
+        this.playSoundByFreesoundId(soundId, undefined, playBackRate, sourceNodeKey);
+      } else {
+        this.handleNoteOff(note);
+      }
+    }
+  }
+
+  handleNoteOff(note) {
+    const closestNote = Object.keys(this.state.midiMappings.notes).reduce((prev, curr) =>
+      (Math.abs(curr - note) < Math.abs(prev - note) ? curr : prev));
+    const soundId = this.state.midiMappings.notes[closestNote];
+    const sourceNodeKey = `node_${note}`;
+    this.stopSoundByFreesoundId(soundId, sourceNodeKey);
+  }
+
   onMIDIMessage(message) {
     const type = message.data[0] & 0xf0;
     const note = message.data[1];
@@ -105,26 +130,23 @@ class App extends React.Component {
           this.state.midiMappings.notes[note] = this.state.isMidiLearningSoundId;
           this.setIsMidiLearningSoundId(-1);
         } else {
-          const soundId = this.state.midiMappings.notes[note];
-          if (soundId) {
-            if (velocity > 0) {  // Some midi sources implement noteoff with velocity = 0
-              this.playSoundByFreesoundId(soundId);
-            } else {
-              // this.stopSoundByFreesoundId(soundId);
-            }
+          if (Object.keys(this.state.midiMappings.notes).length > 0) {
+            // Only handle message if mappings exist
+            this.handleNoteOn(note, velocity);
           }
         }
         break;
       }
       case 128: { // noteOff message
-        // const soundId = this.state.midiMappings.notes[note];
-        // if (soundId) { this.stopSoundByFreesoundId(soundId); }
+        if (Object.keys(this.state.midiMappings.notes).length > 0) {
+          // Only handle message if mappings exist
+          this.handleNoteOff(note);
+        }
         break;
       }
       default:
         break;
     }
-    return 0;
   }
 
   setUpAudioContext() {
@@ -202,9 +224,10 @@ class App extends React.Component {
     }
   }
 
-  playSoundByFreesoundId(freesoundId, onEndedCallback) {
+  playSoundByFreesoundId(freesoundId, onEndedCallback, playbackRate = 1.0, sourceNodeKey) {
     // TODO: check that map is loaded, etc...
-    this.refs.map.refs[`map-point-${freesoundId}`].playAudio(onEndedCallback);
+    this.refs.map.refs[`map-point-${freesoundId}`].playAudio(
+      onEndedCallback, playbackRate, sourceNodeKey);
   }
 
   playRandomSound() {
@@ -212,9 +235,9 @@ class App extends React.Component {
     this.playSoundByFreesoundId(sound.id);
   }
 
-  stopSoundByFreesoundId(freesoundId, onEndedCallback) {
+  stopSoundByFreesoundId(freesoundId, sourceNodeKey) {
     // TODO: check that map is loaded, etc...
-    this.refs.map.refs[`map-point-${freesoundId}`].stopAudio(onEndedCallback);
+    this.refs.map.refs[`map-point-${freesoundId}`].stopAudio(sourceNodeKey);
   }
 
   playNextSoundFromPath(pathIndex) {
@@ -337,12 +360,8 @@ class App extends React.Component {
     this.tsne.initDataRaw(xTsne);
     this.forceUpdate();  // to force render()
 
-    // Randomly initialize MIDI midiMappings
-    let counter = 40;
-    sounds.forEach(sound => {
-      this.state.midiMappings.notes[counter] = sound.id;
-      counter = counter + 1;
-    });
+    // Reset midiMappings
+    this.state.midiMappings = { notes: {} };
   }
 
   handleQueryError(error) {

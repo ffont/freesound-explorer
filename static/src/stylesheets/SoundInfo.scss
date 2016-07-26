@@ -30,13 +30,13 @@ $modal-transition-duration: 0.3s;
     margin-top: -$soundInfoModalHeight;
   }
   width: $sound-info-modal-width;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(12,12,18,.85);
 }
 
 .sound-info-modal-title {
   padding: 10px;
   text-align: center;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(12,12,18,.5);
   color: white;
   font-size: 1.2em;
   cursor: pointer;

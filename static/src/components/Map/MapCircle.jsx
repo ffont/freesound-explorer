@@ -126,9 +126,9 @@ class MapCircle extends React.Component {
     });
   }
 
-  stopAudio(sourceNodeKey = -1) {
+  stopAudio(sourceNodeKey = undefined) {
     const fadeOutTime = 0.05; // in seconds
-    if (sourceNodeKey >= 0) {
+    if (sourceNodeKey) {
       if (this.playingSourceNodes.hasOwnProperty(sourceNodeKey)) {
         this.playingGainNodes[sourceNodeKey].gain.exponentialRampToValueAtTime(
           0.01, this.props.audioContext.currentTime + fadeOutTime);

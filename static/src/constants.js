@@ -4,7 +4,6 @@ export const DEFAULT_DESCRIPTOR = 'lowlevel.mfcc.mean';
 export const DEFAULT_FILTER = 'duration:[0%20TO%205]';
 
 export const DEFAULT_MESSAGE_DURATION = 4000;
-
 export const MESSAGE_STATUS = {
   INFO: 'info',
   SUCCESS: 'success',
@@ -28,3 +27,6 @@ export const TSNE_CONFIG = {
   perplexity: 10,
   dim: 2,
 };
+
+// redux action types
+export const AT_DISPLAY_MESSAGE = 'DISPLAY_MESSAGE';

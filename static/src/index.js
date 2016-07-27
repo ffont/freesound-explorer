@@ -1,7 +1,10 @@
 import 'babel-polyfill';
 import 'normalize.css';
-import { render } from 'react-dom';
 import React from 'react';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import rootReducer from './reducers';
 import App from './components/App';
 
 // use and expose ReactPerf on development builds
@@ -14,7 +17,12 @@ if (!!ReactPerf) {
 const windowWidth = window.innerWidth;
 const windowHeight = window.innerHeight;
 
-const app = render(<App windowSize={{ windowWidth, windowHeight }} />,
+let store = createStore(rootReducer);
+
+const app = render(
+  <Provider store={store}>
+    <App windowSize={{ windowWidth, windowHeight }} />
+  </Provider>,
   document.getElementById('app'));
 
 window.setSessionStorage = app.setSessionStorage;

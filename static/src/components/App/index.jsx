@@ -12,12 +12,16 @@ import '../../stylesheets/App.scss';
 import { DEFAULT_DESCRIPTOR, TSNE_CONFIG, DEFAULT_MAX_RESULTS, MESSAGE_STATUS }
   from '../../constants';
 import '../../polyfills/AudioContext';
+import { connect } from 'react-redux';
+import { displaySystemMessage } from '../../actions';
+
 
 const propTypes = {
   windowSize: React.PropTypes.shape({
     windowWidth: React.PropTypes.number,
     windowHeight: React.PropTypes.number,
   }),
+  displaySystemMessage: React.PropTypes.func,
 };
 
 
@@ -163,17 +167,17 @@ class App extends React.Component {
     if (window.navigator.requestMIDIAccess) {
       window.navigator.requestMIDIAccess().then(
         (midiAccess) => {
-          this.updateSystemStatusMessage('MIDI support enabled ;)');
+          this.props.displaySystemMessage('MIDI support enabled ;)');
           this.state.midiMappings = { notes: {} };
           const inputs = midiAccess.inputs.values();
           // Iterate over all existing MIDI devices and connect them to onMIDIMessage
           for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
             input.value.onmidimessage = (data) => this.onMIDIMessage(data);
           }
-        }, () => this.updateSystemStatusMessage('No MIDI support...', 'error')
+        }, () => this.props.displaySystemMessage('No MIDI support...', 'error')
       );
     } else {
-      this.updateSystemStatusMessage('No MIDI support in your browser...', 'error');
+      this.props.displaySystemMessage('No MIDI support in your browser...', 'error');
     }
   }
 
@@ -452,5 +456,9 @@ class App extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({});
+
 App.propTypes = propTypes;
-export default App;
+export default connect(mapStateToProps, {
+  displaySystemMessage,
+})(App);

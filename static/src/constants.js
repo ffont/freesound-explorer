@@ -27,6 +27,3 @@ export const TSNE_CONFIG = {
   perplexity: 10,
   dim: 2,
 };
-
-// redux action types
-export const AT_DISPLAY_MESSAGE = 'DISPLAY_MESSAGE';

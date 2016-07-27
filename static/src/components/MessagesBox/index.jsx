@@ -1,14 +1,13 @@
 import React from 'react';
 import '../../stylesheets/MessagesBox.scss';
 import { DEFAULT_MESSAGE_DURATION, MESSAGE_STATUS } from '../../constants';
+import { connect } from 'react-redux';
 
 const DEFAULT_CLASSNAME = 'message-box';
 
 const propTypes = {
-  statusMessage: React.PropTypes.shape({
-    message: React.PropTypes.string,
-    status: React.PropTypes.string,
-  }),
+  message: React.PropTypes.string,
+  status: React.PropTypes.string,
 };
 
 class MessagesBox extends React.Component {
@@ -20,7 +19,7 @@ class MessagesBox extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     // update component only when receiving a new message
-    if (this.props.statusMessage.message !== nextProps.statusMessage.message) {
+    if (this.props.message !== nextProps.message) {
       clearTimeout(this.visibilityTimeout);
       this.handleTimedVisibility();
       return true;
@@ -41,7 +40,7 @@ class MessagesBox extends React.Component {
   }
 
   render() {
-    const { message, status } = this.props.statusMessage;
+    const { message, status } = this.props;
     const className = `${this.className} ${status}`;
     let statusIcon;
     switch (status) {
@@ -73,5 +72,10 @@ class MessagesBox extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  const { message, status } = state.messages;
+  return { message, status };
+};
+
 MessagesBox.propTypes = propTypes;
-export default MessagesBox;
+export default connect(mapStateToProps, {})(MessagesBox);

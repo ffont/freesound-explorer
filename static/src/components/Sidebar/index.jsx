@@ -16,9 +16,11 @@ function Sidebar(props) {
   return (
     <div className={sidebarClassName}>
       <div className="sidebar-content-wrapper">
-        <SearchMode {...props} isActiveMode={props.activeMode === 'SearchMode'} />
-        <PathsMode {...props} isActiveMode={props.activeMode === 'PathsMode'} />
-        <InfoMode isActiveMode={props.activeMode === 'InfoMode'} />
+        <div className="sidebar-vertical-scroll">
+          <SearchMode {...props} isActiveMode={props.activeMode === 'SearchMode'} />
+          <PathsMode {...props} isActiveMode={props.activeMode === 'PathsMode'} />
+          <InfoMode isActiveMode={props.activeMode === 'InfoMode'} />
+        </div>
       </div>
       <div className="sidebar-menu-wrapper">
         <ul>

@@ -22,7 +22,16 @@
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.4);
   height: 100%;
-  overflow: scroll;
+}
+
+.sidebar-vertical-scroll {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.sidebar-vertical-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .sidebar-menu-wrapper {

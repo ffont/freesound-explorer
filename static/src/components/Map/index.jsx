@@ -8,13 +8,14 @@ import { MIN_ZOOM, MAX_ZOOM, MAX_TSNE_ITERATIONS, MAP_SCALE_FACTOR, DEFAULT_PATH
   DEFAULT_PATH_STROKE_OPACITY, MESSAGE_STATUS } from '../../constants';
 import '../../stylesheets/Map.scss';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import { connect } from 'react-redux';
+import { displaySystemMessage } from '../../actions';
 
 const propTypes = {
   sounds: React.PropTypes.array,
   tsne: React.PropTypes.object,
   audioContext: React.PropTypes.object,
   audioLoader: React.PropTypes.object,
-  updateSystemStatusMessage: React.PropTypes.func,
   windowSize: React.PropTypes.shape({
     windowWidth: React.PropTypes.number,
     windowHeight: React.PropTypes.number,
@@ -27,6 +28,7 @@ const propTypes = {
   setIsMidiLearningSoundId: React.PropTypes.func,
   isMidiLearningSoundId: React.PropTypes.number,
   midiMappings: React.PropTypes.object,
+  displaySystemMessage: React.PropTypes.func,
 };
 
 class Map extends React.Component {
@@ -75,7 +77,7 @@ class Map extends React.Component {
     const progress = parseInt(100 * this.currentStepIteration / MAX_TSNE_ITERATIONS, 10);
     const statusMessage =
     `${this.props.sounds.length} sounds loaded, computing map (${progress}%)`;
-    this.props.updateSystemStatusMessage(statusMessage, MESSAGE_STATUS.PROGRESS);
+    this.props.displaySystemMessage(statusMessage, MESSAGE_STATUS.PROGRESS);
     if (this.currentStepIteration < MAX_TSNE_ITERATIONS) {
       this.props.tsne.step();
       this.stepInterval = requestAnimationFrame(() => this.computeStepSolution());
@@ -84,7 +86,7 @@ class Map extends React.Component {
       this.forceUpdate();
     } else {
       cancelAnimationFrame(this.stepInterval);
-      this.props.updateSystemStatusMessage('Map computed!', MESSAGE_STATUS.SUCCESS);
+      this.props.displaySystemMessage('Map computed!', MESSAGE_STATUS.SUCCESS);
       this.currentStepIteration = 0;
     }
   }
@@ -182,7 +184,6 @@ class Map extends React.Component {
           position={soundInfoPosition}
           sound={soundInfoContent}
           isUserLoggedIn={this.props.isUserLoggedIn}
-          updateSystemStatusMessage={this.props.updateSystemStatusMessage}
           setIsMidiLearningSoundId={this.props.setIsMidiLearningSoundId}
           isMidiLearningSoundId={this.props.isMidiLearningSoundId}
           midiMappings={this.props.midiMappings}
@@ -192,5 +193,9 @@ class Map extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({});
+
 Map.propTypes = propTypes;
-export default Map;
+export default connect(mapStateToProps, {
+  displaySystemMessage,
+})(Map);

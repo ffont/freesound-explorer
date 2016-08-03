@@ -48,7 +48,6 @@ class App extends React.Component {
     this.onQuerySubmit = this.onQuerySubmit.bind(this);
     this.setMapDescriptor = this.setMapDescriptor.bind(this);
     this.setMaxResults = this.setMaxResults.bind(this);
-    this.updateSystemStatusMessage = this.updateSystemStatusMessage.bind(this);
     this.updateSelectedSound = this.updateSelectedSound.bind(this);
     this.setLoginModalVisibility = this.setLoginModalVisibility.bind(this);
     this.setSidebarVisibility = this.setSidebarVisibility.bind(this);
@@ -95,7 +94,7 @@ class App extends React.Component {
       error: '',
       isFetching: true,
     });
-    this.updateSystemStatusMessage('Searching for sounds...');
+    this.props.displaySystemMessage('Searching for sounds...');
     submitQuery(query, this.state.maxResults).then(
       allPagesResults => this.storeQueryResults(allPagesResults),
       error => this.handleQueryError(error));
@@ -307,7 +306,7 @@ class App extends React.Component {
       sounds,
       isFetching: false,
     });
-    this.updateSystemStatusMessage(`${sounds.length} sounds loaded, computing map`);
+    this.props.displaySystemMessage(`${sounds.length} sounds loaded, computing map`);
   }
 
   handleSuccessfulLogin() {
@@ -315,7 +314,7 @@ class App extends React.Component {
       isUserLoggedIn: true,
       isLoginModalVisible: false,
     });
-    this.updateSystemStatusMessage(`Logged in as ${sessionStorage.getItem('username')}`,
+    this.props.displaySystemMessage(`Logged in as ${sessionStorage.getItem('username')}`,
       MESSAGE_STATUS.SUCCESS);
   }
 
@@ -324,7 +323,7 @@ class App extends React.Component {
       isUserLoggedIn: false,
       isLoginModalVisible: false,
     });
-    this.updateSystemStatusMessage('Failed to log in...', MESSAGE_STATUS.ERROR);
+    this.props.displaySystemMessage('Failed to log in...', MESSAGE_STATUS.ERROR);
   }
 
   createNewPath() {
@@ -347,7 +346,7 @@ class App extends React.Component {
       });
       this.refs.map.forceUpdate();
     } else {
-      this.updateSystemStatusMessage('A new path can not be created until there are some sounds ' +
+      this.props.displaySystemMessage('A new path can not be created until there are some sounds ' +
         'in the map', MESSAGE_STATUS.ERROR);
     }
   }
@@ -371,7 +370,7 @@ class App extends React.Component {
   }
 
   handleQueryError(error) {
-    this.updateSystemStatusMessage('No sounds found', MESSAGE_STATUS.ERROR);
+    this.props.displaySystemMessage('No sounds found', MESSAGE_STATUS.ERROR);
     this.setState({
       error: error || 'Unexpected error',
       isFetching: false,
@@ -384,21 +383,6 @@ class App extends React.Component {
   updateSelectedSound(soundID) {
     this.setState({
       selectedSound: soundID,
-    });
-  }
-
-  /**
-   * Updates the status message in the UI.
-   *
-   * @param {String} message: the message to be shown
-   * @param {String} status: the related icon (info, success, error)
-   */
-  updateSystemStatusMessage(message, status = MESSAGE_STATUS.INFO) {
-    this.setState({
-      statusMessage: {
-        message,
-        status,
-      },
     });
   }
 
@@ -432,7 +416,6 @@ class App extends React.Component {
           updateUserLoggedStatus={this.updateUserLoggedStatus}
           updateEndUserAuthSupport={this.updateEndUserAuthSupport}
           setSessionStorage={this.setSessionStorage}
-          updateSystemStatusMessage={this.updateSystemStatusMessage}
         />
         {(shouldShowMap) ?
           <Map
@@ -441,7 +424,6 @@ class App extends React.Component {
             tsne={this.tsne}
             audioContext={this.audioContext}
             audioLoader={this.audioLoader}
-            updateSystemStatusMessage={this.updateSystemStatusMessage}
             windowSize={this.props.windowSize}
             selectedSound={this.state.selectedSound}
             updateSelectedSound={this.updateSelectedSound}

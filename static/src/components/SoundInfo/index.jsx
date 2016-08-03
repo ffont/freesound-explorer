@@ -4,12 +4,14 @@ import '../../stylesheets/SoundInfo.scss';
 import Waveform from './Waveform';
 import { MESSAGE_STATUS } from '../../constants';
 import sassVariables from 'json!../../stylesheets/variables.json';
+import { connect } from 'react-redux';
+import { displaySystemMessage } from '../../actions';
 
 const propTypes = {
   position: React.PropTypes.object,
   sound: React.PropTypes.object,
   isUserLoggedIn: React.PropTypes.bool,
-  updateSystemStatusMessage: React.PropTypes.func,
+  displaySystemMessage: React.PropTypes.func,
   setIsMidiLearningSoundId: React.PropTypes.func,
   isMidiLearningSoundId: React.PropTypes.number,
   midiMappings: React.PropTypes.object,
@@ -76,13 +78,13 @@ class SoundInfo extends React.Component {
       'Freesound Explorer' // Category
     ).then(() => {
       this.lastSound.isBookmarked = true;
-      this.props.updateSystemStatusMessage('Sound bookmarked!', MESSAGE_STATUS.SUCCESS);
+      this.props.displaySystemMessage('Sound bookmarked!', MESSAGE_STATUS.SUCCESS);
     },
-    () => this.props.updateSystemStatusMessage('Error bookmarking sound', MESSAGE_STATUS.ERROR));
+    () => this.props.displaySystemMessage('Error bookmarking sound', MESSAGE_STATUS.ERROR));
   }
 
   downloadSound() {
-    this.props.updateSystemStatusMessage('Downloading sounds is not implemented yet',
+    this.props.displaySystemMessage('Downloading sounds is not implemented yet',
       MESSAGE_STATUS.INFO);
   }
 
@@ -146,5 +148,9 @@ class SoundInfo extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({});
+
 SoundInfo.propTypes = propTypes;
-export default SoundInfo;
+export default connect(mapStateToProps, {
+  displaySystemMessage,
+})(SoundInfo);

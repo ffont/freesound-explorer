@@ -4,6 +4,8 @@ import LoginModal from './LoginModal';
 import LoginButton from './LoginButton';
 import '../../stylesheets/Login.scss';
 import '../../polyfills/Array.includes';
+import { connect } from 'react-redux';
+import { displaySystemMessage } from '../../actions';
 
 const URLS = {
   login: '/login/freesound/',
@@ -43,7 +45,6 @@ const propTypes = {
   updateUserLoggedStatus: React.PropTypes.func,
   updateEndUserAuthSupport: React.PropTypes.func,
   setSessionStorage: React.PropTypes.func,
-  updateSystemStatusMessage: React.PropTypes.func,
 };
 
 class Login extends React.Component {
@@ -86,7 +87,7 @@ class Login extends React.Component {
     loadJSON(URLS.logout).then(() => {
       clearSession();
       this.props.updateUserLoggedStatus(false);
-      this.props.updateSystemStatusMessage('Logged out');
+      this.props.displaySystemMessage('Logged out');
     });
   }
 
@@ -111,5 +112,9 @@ class Login extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({});
+
 Login.propTypes = propTypes;
-export default Login;
+export default connect(mapStateToProps, {
+  displaySystemMessage,
+})(Login);

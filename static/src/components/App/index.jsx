@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Map from '../Map';
 import Login from '../Login';
 import Logo from '../Logo';
@@ -451,5 +452,10 @@ class App extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  console.log(state);
+  return state.messagesBox;
+};
+
 App.propTypes = propTypes;
-export default App;
+export default connect(mapStateToProps, {})(App);

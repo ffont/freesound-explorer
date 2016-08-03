@@ -167,7 +167,6 @@ class App extends React.Component {
     if (window.navigator.requestMIDIAccess) {
       window.navigator.requestMIDIAccess().then(
         (midiAccess) => {
-          this.props.displaySystemMessage('MIDI support enabled ;)');
           this.state.midiMappings = { notes: {} };
           const inputs = midiAccess.inputs.values();
           // Iterate over all existing MIDI devices and connect them to onMIDIMessage

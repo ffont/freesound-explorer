@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../stylesheets/Metronome.scss';
-import { LOOKAHEAD, SCHEDULEAHEADTIME, NOTERESOLUTION } from '../../constants';
+import { LOOKAHEAD, SCHEDULEAHEADTIME, NOTERESOLUTION, DEFAULT_TEMPO } from '../../constants';
 
 const propTypes = {
   audioContext: React.PropTypes.object,
@@ -14,11 +14,17 @@ class Metronome extends React.Component {
     this.state = {
       isPlaying: false,
       playSound: false,
-      tempo: 120.0, // tempo (in beats per minute)
+      tempo: DEFAULT_TEMPO, // tempo (in beats per minute)
       bar: 1,  // Global counter of current bar (should be restarted on play/stop)
       beat: 1, // Current beat
       note: 1, // Currently las scheduled note
     };
+  }
+
+  setTempo(newTempo) {
+    this.setState({
+      tempo: newTempo,
+    });
   }
 
   startMetronome() {
@@ -58,12 +64,17 @@ class Metronome extends React.Component {
     }
   }
 
+  toggleMetronomeSound() {
+    this.setState({
+      playSound: !this.state.playSound,
+    });
+  }
+
   audioScheduler() {
     let currentTime = this.props.audioContext.currentTime;
     currentTime = currentTime - this.startTime;
 
     while (this.nextNoteTime < currentTime + SCHEDULEAHEADTIME) {
-      // scheduleNote( currentNote, nextNoteTime );
       if (this.nextNoteTime >= currentTime) {  // Avoid trying to play notes that were missed
         const normNextNoteTime = this.nextNoteTime + this.startTime;
         this.drawNotesInQueue.push({ note: this.currentNote, time: normNextNoteTime });
@@ -101,7 +112,6 @@ class Metronome extends React.Component {
 
   updateStateInSync() {
     if (this.state.isPlaying) {
-      // Get most recent note that should be drawed
       let currentNoteToDraw = this.lastNoteDrawn;
       const currentTime = this.props.audioContext.currentTime;
       while (this.drawNotesInQueue.length && this.drawNotesInQueue[0].time < currentTime) {
@@ -137,7 +147,18 @@ class Metronome extends React.Component {
   render() {
     return (
       <div className="metronome">
-        {this.state.bar} | {this.state.beat} | {this.state.note}
+        <input
+          id="max-results-slider"
+          className="max-results-slider"
+          type="range" onChange={(evt) => this.setTempo(parseInt(evt.target.value, 10))}
+          min="40" max="300" defaultValue={DEFAULT_TEMPO} step="1"
+        /><br />
+        {this.state.tempo} :: {this.state.bar} | {this.state.beat}
+        <button onClick={() => this.toggleMetronomeSound()} >
+          {(this.state.playSound) ?
+            <i className="fa fa-volume-up fa-lg" aria-hidden="true" /> :
+            <i className="fa fa-volume-off fa-lg" aria-hidden="true" />}
+        </button>
         <button onClick={() => this.startStopMetronome()} >
           {(this.state.isPlaying) ?
             <i className="fa fa-stop fa-lg" aria-hidden="true" /> :

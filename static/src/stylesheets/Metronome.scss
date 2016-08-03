@@ -1,0 +1,19 @@
+@import "./variables.json";
+
+.metronome {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  button {
+    padding: 7px;
+    border-radius: 5px;
+    border: 0px;
+    height: $sidebarClosedOffset;
+    width: 34px;
+    background: none;
+    color: white;
+  }
+  button:focus {
+    outline: 0;
+  }
+}

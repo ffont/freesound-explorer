@@ -4,10 +4,10 @@ import Login from '../Login';
 import Logo from '../Logo';
 import Sidebar from '../Sidebar';
 import MessagesBox from '../MessagesBox';
+import Metronome from '../Metronome';
 import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
 import { readObjectByString, getRandomElement } from '../../utils/misc';
 import audioLoader from '../../utils/audioLoader';
-import audioScheduler from '../../utils/audioScheduler';
 import tsnejs from '../../vendors/tsne';
 import '../../stylesheets/App.scss';
 import { DEFAULT_DESCRIPTOR, TSNE_CONFIG, DEFAULT_MAX_RESULTS, MESSAGE_STATUS }
@@ -65,7 +65,6 @@ class App extends React.Component {
     this.setIsMidiLearningSoundId = this.setIsMidiLearningSoundId.bind(this);
     this.setUpAudioContext();
     this.tsne = undefined;
-    audioScheduler();
   }
 
   componentDidMount() {
@@ -408,6 +407,7 @@ class App extends React.Component {
     return (
       <div className="app-container">
         <Logo />
+        <Metronome audioContext={this.audioContext} />
         <Sidebar
           isVisible={this.state.isSidebarVisible}
           setSidebarVisibility={this.setSidebarVisibility}

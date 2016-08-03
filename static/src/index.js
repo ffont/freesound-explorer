@@ -18,6 +18,7 @@ const windowWidth = window.innerWidth;
 const windowHeight = window.innerHeight;
 
 let store = createStore(rootReducer);
+// store.subscribe(() => console.log(store.getState()));  // Log every state change in the store
 
 const app = render(
   <Provider store={store}>

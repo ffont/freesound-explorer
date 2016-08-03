@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 import messages from './messages';
+import metronome from './metronome';
 
 const rootReducer = combineReducers({
-  messages,
+  messages, metronome,
 });
 
 export default rootReducer;

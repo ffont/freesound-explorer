@@ -1,9 +1,13 @@
 import React from 'react';
 import '../../stylesheets/Metronome.scss';
 import { LOOKAHEAD, SCHEDULEAHEADTIME, NOTERESOLUTION, DEFAULT_TEMPO } from '../../constants';
+import { connect } from 'react-redux';
+import { updateMetronomeInfo } from '../../actions';
+
 
 const propTypes = {
   audioContext: React.PropTypes.object,
+  updateMetronomeInfo: React.PropTypes.func,
 };
 
 class Metronome extends React.Component {
@@ -96,6 +100,12 @@ class Metronome extends React.Component {
           note: currentNote + 1,
         });
         */
+        const bar = this.currentBar;
+        const beat = Math.floor(this.currentNote / (NOTERESOLUTION / 4));
+        const note = this.currentNote;
+
+        this.props.updateMetronomeInfo(bar, beat, note, normNextNoteTime);
+
         if (this.state.playSound) {
           this.playMetronomeSound(normNextNoteTime, this.currentNote);
         }
@@ -170,5 +180,9 @@ class Metronome extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({});
+
 Metronome.propTypes = propTypes;
-export default Metronome;
+export default connect(mapStateToProps, {
+  updateMetronomeInfo,
+})(Metronome);

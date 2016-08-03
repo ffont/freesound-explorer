@@ -7,6 +7,7 @@ import MessagesBox from '../MessagesBox';
 import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
 import { readObjectByString, getRandomElement } from '../../utils/misc';
 import audioLoader from '../../utils/audioLoader';
+import audioScheduler from '../../utils/audioScheduler';
 import tsnejs from '../../vendors/tsne';
 import '../../stylesheets/App.scss';
 import { DEFAULT_DESCRIPTOR, TSNE_CONFIG, DEFAULT_MAX_RESULTS, MESSAGE_STATUS }
@@ -64,6 +65,7 @@ class App extends React.Component {
     this.setIsMidiLearningSoundId = this.setIsMidiLearningSoundId.bind(this);
     this.setUpAudioContext();
     this.tsne = undefined;
+    audioScheduler();
   }
 
   componentDidMount() {

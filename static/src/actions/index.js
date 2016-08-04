@@ -6,7 +6,7 @@ export const displaySystemMessage = makeActionCreator(DISPLAY_MESSAGE,
   'message', 'status');
 
 export const updateMetronomeStatus = makeActionCreator(UPDATE_METRONOME_STATUS,
-  'bar', 'beat', 'note');
+  'bar', 'beat', 'tick');
 
 export const setTempo = makeActionCreator(SET_TEMPO,
   'tempo');

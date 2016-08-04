@@ -4,7 +4,7 @@ import { DEFAULT_TEMPO } from '../constants';
 const initialState = {
   bar: 1,
   beat: 0,
-  note: 0,
+  tick: 0,
   tempo: DEFAULT_TEMPO,
   isPlaying: false,
 };
@@ -15,7 +15,7 @@ export default function metronome(state = initialState, action) {
       return Object.assign({}, state, {
         bar: action.bar,
         beat: action.beat,
-        note: action.note,
+        tick: action.tick,
       });
     }
     case SET_TEMPO: {

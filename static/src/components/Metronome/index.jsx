@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../stylesheets/Metronome.scss';
 import MetronomeSynth from './MetronomeSynth';
-import { LOOKAHEAD, SCHEDULEAHEADTIME, NOTERESOLUTION, DEFAULT_TEMPO } from '../../constants';
+import { LOOKAHEAD, SCHEDULEAHEADTIME, TICKRESOLUTION, DEFAULT_TEMPO } from '../../constants';
 import { connect } from 'react-redux';
 import { updateMetronomeStatus, setTempo, startStopMetronome } from '../../actions';
 
@@ -13,7 +13,7 @@ const propTypes = {
   startStopMetronome: React.PropTypes.func,
   bar: React.PropTypes.number,
   beat: React.PropTypes.number,
-  note: React.PropTypes.number,
+  tick: React.PropTypes.number,
   tempo: React.PropTypes.number,
   isPlaying: React.PropTypes.bool,
 };
@@ -30,14 +30,14 @@ class Metronome extends React.Component {
   }
 
   startMetronome() {
-    this.lastNoteDrawn = -1;
-    this.drawNotesInQueue = [];
-    this.currentNote = 0;
+    this.lastTickDrawn = -1;
+    this.drawTicksInQueue = [];
+    this.currentTick = 0;
     this.currentBar = 1;
-    const [bar, beat, note] = [1, 0, 0];
-    this.props.updateMetronomeStatus(bar, beat, note);
+    const [bar, beat, tick] = [1, 0, 0];
+    this.props.updateMetronomeStatus(bar, beat, tick);
     this.props.startStopMetronome(true);
-    this.nextNoteTime = this.props.audioContext.currentTime;
+    this.nextTickTime = this.props.audioContext.currentTime;
     this.schedulerTimer = setTimeout(() => { this.audioScheduler(); }, LOOKAHEAD);
     this.updateStateInSyncTimer = requestAnimationFrame(() => this.updateStateInSync());
   }
@@ -46,8 +46,8 @@ class Metronome extends React.Component {
     clearTimeout(this.schedulerTimer);
     cancelAnimationFrame(this.updateStateInSyncTimer);
     this.props.startStopMetronome(false);
-    const [bar, beat, note] = [1, 0, 0];
-    this.props.updateMetronomeStatus(bar, beat, note);
+    const [bar, beat, tick] = [1, 0, 0];
+    this.props.updateMetronomeStatus(bar, beat, tick);
   }
 
   startStopMetronome() {
@@ -60,27 +60,25 @@ class Metronome extends React.Component {
 
   audioScheduler() {
     const currentTime = this.props.audioContext.currentTime;
-    while (this.nextNoteTime < currentTime + SCHEDULEAHEADTIME) {
-      // Avoid trying to play notes that were missed by more than 10ms
-      if (this.nextNoteTime >= (currentTime - 0.05)) {
-        // Store metronome info in redux store so other components can access it
+    while (this.nextTickTime < currentTime + SCHEDULEAHEADTIME) {
+      // Avoid trying to play ticks that were missed by more than 50ms
+      if (this.nextTickTime >= (currentTime - 0.05)) {
+        // Trigger tick event
         const bar = this.currentBar;
-        const beat = Math.floor(this.currentNote / (NOTERESOLUTION / 4));
-        const note = this.currentNote;
-        const time = this.nextNoteTime;
-
-        // Trigger event
-        const event = new CustomEvent('note', { detail: { bar, beat, note, time } });
+        const beat = Math.floor(this.currentTick / (TICKRESOLUTION / 4));
+        const tick = this.currentTick;
+        const time = this.nextTickTime;
+        const event = new CustomEvent('tick', { detail: { bar, beat, tick, time } });
         window.dispatchEvent(event);
 
-        // Add note info to queue for updating display
-        this.drawNotesInQueue.push({ note, time });
+        // Add tick info to queue for updating display
+        this.drawTicksInQueue.push({ tick, time });
       }
-      // Advance to next note according to note resolution
-      this.nextNoteTime += 4 / NOTERESOLUTION * (60.0 / this.props.tempo);
-      this.currentNote += 1;
-      if (this.currentNote === NOTERESOLUTION) {
-        this.currentNote = 0;
+      // Advance to next tick according to tick resolution
+      this.nextTickTime += 4 / TICKRESOLUTION * (60.0 / this.props.tempo);
+      this.currentTick += 1;
+      if (this.currentTick === TICKRESOLUTION) {
+        this.currentTick = 0;
         this.currentBar += 1;
       }
     }
@@ -89,19 +87,19 @@ class Metronome extends React.Component {
 
   updateStateInSync() {
     if (this.props.isPlaying) {
-      let currentNoteToDraw = this.lastNoteDrawn;
+      let currentTickToDraw = this.lastTickDrawn;
       const currentTime = this.props.audioContext.currentTime;
-      while (this.drawNotesInQueue.length && this.drawNotesInQueue[0].time < currentTime) {
-        currentNoteToDraw = this.drawNotesInQueue[0].note;
-        this.drawNotesInQueue.splice(0, 1);
+      while (this.drawTicksInQueue.length && this.drawTicksInQueue[0].time < currentTime) {
+        currentTickToDraw = this.drawTicksInQueue[0].tick;
+        this.drawTicksInQueue.splice(0, 1);
       }
-      if (this.lastNoteDrawn !== currentNoteToDraw) {
-        // Call function to update UI here (called once per note)
+      if (this.lastTickDrawn !== currentTickToDraw) {
+        // Call function to update UI here (called once per tick)
         const bar = this.currentBar;
-        const beat = Math.floor(this.currentNote / (NOTERESOLUTION / 4));
-        const note = this.currentNote;
-        this.props.updateMetronomeStatus(bar, beat, note);
-        this.lastNoteDrawn = currentNoteToDraw;
+        const beat = Math.floor(this.currentTick / (TICKRESOLUTION / 4));
+        const tick = this.currentTick;
+        this.props.updateMetronomeStatus(bar, beat, tick);
+        this.lastTickDrawn = currentTickToDraw;
       }
       // Call this function at every requestAnimationFrame
       this.updateStateInSyncTimer = requestAnimationFrame(() => { this.updateStateInSync(); });
@@ -131,8 +129,8 @@ class Metronome extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { bar, beat, note, tempo, isPlaying } = state.metronome;
-  return { bar, beat, note, tempo, isPlaying };
+  const { bar, beat, tick, tempo, isPlaying } = state.metronome;
+  return { bar, beat, tick, tempo, isPlaying };
 };
 
 Metronome.propTypes = propTypes;

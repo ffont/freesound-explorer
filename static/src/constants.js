@@ -31,4 +31,4 @@ export const TSNE_CONFIG = {
 export const DEFAULT_TEMPO = 120.0;
 export const LOOKAHEAD = 25; // How often we'll call the scheduler function (in milliseconds)
 export const SCHEDULEAHEADTIME = 0.2; // How far we schedule notes from lookahead call (in seconds)
-export const NOTERESOLUTION = 16; // 16 for 16th note or 32 for 32th note
+export const TICKRESOLUTION = 16; // 16 for 16th note or 32 for 32th note

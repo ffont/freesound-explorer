@@ -39,12 +39,12 @@ class Metronome extends React.Component {
     this.props.startStopMetronome(true);
     this.nextTickTime = this.props.audioContext.currentTime;
     this.schedulerTimer = setTimeout(() => { this.audioScheduler(); }, LOOKAHEAD);
-    this.updateStateInSyncTimer = requestAnimationFrame(() => this.updateStateInSync());
+    this.updateStateInSyncTimer = setTimeout(() => { this.updateStateInSync(); }, LOOKAHEAD * 2);
   }
 
   stopMetronome() {
     clearTimeout(this.schedulerTimer);
-    cancelAnimationFrame(this.updateStateInSyncTimer);
+    clearTimeout(this.updateStateInSyncTimer);
     this.props.startStopMetronome(false);
     const [bar, beat, tick] = [1, 0, 0];
     this.props.updateMetronomeStatus(bar, beat, tick);
@@ -72,7 +72,7 @@ class Metronome extends React.Component {
         window.dispatchEvent(event);
 
         // Add tick info to queue for updating display
-        this.drawTicksInQueue.push({ tick, time });
+        this.drawTicksInQueue.push({ bar, beat, tick, time });
       }
       // Advance to next tick according to tick resolution
       this.nextTickTime += 4 / TICKRESOLUTION * (60.0 / this.props.tempo);
@@ -87,22 +87,23 @@ class Metronome extends React.Component {
 
   updateStateInSync() {
     if (this.props.isPlaying) {
-      let currentTickToDraw = this.lastTickDrawn;
       const currentTime = this.props.audioContext.currentTime;
+      let currentTickToDraw = this.lastTickDrawn;
       while (this.drawTicksInQueue.length && this.drawTicksInQueue[0].time < currentTime) {
-        currentTickToDraw = this.drawTicksInQueue[0].tick;
+        currentTickToDraw = Object.assign({}, this.drawTicksInQueue[0]);
         this.drawTicksInQueue.splice(0, 1);
       }
-      if (this.lastTickDrawn !== currentTickToDraw) {
-        // Call function to update UI here (called once per tick)
-        const bar = this.currentBar;
-        const beat = Math.floor(this.currentTick / (TICKRESOLUTION / 4));
-        const tick = this.currentTick;
-        this.props.updateMetronomeStatus(bar, beat, tick);
+      if (this.lastTickDrawn.tick !== currentTickToDraw.tick) {
+        // Update metronome status so UI is updated too
+        this.props.updateMetronomeStatus(
+          currentTickToDraw.bar,
+          currentTickToDraw.beat,
+          currentTickToDraw.tick
+        );
         this.lastTickDrawn = currentTickToDraw;
       }
       // Call this function at every requestAnimationFrame
-      this.updateStateInSyncTimer = requestAnimationFrame(() => { this.updateStateInSync(); });
+      this.updateStateInSyncTimer = setTimeout(() => { this.updateStateInSync(); }, LOOKAHEAD * 2);
     }
   }
 
@@ -115,7 +116,7 @@ class Metronome extends React.Component {
           type="range" onChange={(evt) => this.setTempo(parseInt(evt.target.value, 10))}
           min="40" max="300" defaultValue={DEFAULT_TEMPO} step="1"
         /><br />
-      {this.props.tempo} :: {this.props.bar} | {this.props.beat + 1}
+      {this.props.tempo} :: {this.props.bar} | {this.props.beat + 1} | {this.props.tick + 1}
         <MetronomeSynth audioContext={this.props.audioContext} />
         <button onClick={() => this.startStopMetronome()} >
           {(this.props.isPlaying) ?

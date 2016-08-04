@@ -230,7 +230,7 @@ class App extends React.Component {
 
   playSoundByFreesoundId(freesoundId, onEndedCallback, playbackRate = 1.0, sourceNodeKey) {
     // TODO: check that map is loaded, etc...
-    this.refs.map.refs[`map-point-${freesoundId}`].playAudio(
+    this.refs.map.getWrappedInstance().refs[`map-point-${freesoundId}`].playAudio(
       onEndedCallback, playbackRate, sourceNodeKey);
   }
 
@@ -241,7 +241,7 @@ class App extends React.Component {
 
   stopSoundByFreesoundId(freesoundId, sourceNodeKey) {
     // TODO: check that map is loaded, etc...
-    this.refs.map.refs[`map-point-${freesoundId}`].stopAudio(sourceNodeKey);
+    this.refs.map.getWrappedInstance().refs[`map-point-${freesoundId}`].stopAudio(sourceNodeKey);
   }
 
   playNextSoundFromPath(pathIndex) {
@@ -276,7 +276,7 @@ class App extends React.Component {
       this.playNextSoundFromPath(pathIndex);
     }
     // Force update map to rerender paths
-    this.refs.map.forceUpdate();
+    this.refs.map.getWrappedInstance().forceUpdate();
   }
 
   tooglePlayOnHover() {
@@ -343,7 +343,7 @@ class App extends React.Component {
       this.setState({
         paths: newPaths,
       });
-      this.refs.map.forceUpdate();
+      this.refs.map.getWrappedInstance().forceUpdate();
     } else {
       this.props.displaySystemMessage('A new path can not be created until there are some sounds ' +
         'in the map', MESSAGE_STATUS.ERROR);

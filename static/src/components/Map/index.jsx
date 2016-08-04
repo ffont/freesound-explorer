@@ -198,4 +198,4 @@ const mapStateToProps = (state) => ({});
 Map.propTypes = propTypes;
 export default connect(mapStateToProps, {
   displaySystemMessage,
-})(Map);
+}, undefined, { withRef: true })(Map);

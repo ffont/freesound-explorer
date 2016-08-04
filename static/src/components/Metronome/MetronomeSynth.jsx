@@ -1,15 +1,12 @@
 import React from 'react';
 import { TICKRESOLUTION } from '../../constants';
+import AudioTickListener from '../App/AudioTickListener';
 
 const propTypes = {
   audioContext: React.PropTypes.object,
-  bar: React.PropTypes.number,
-  beat: React.PropTypes.number,
-  tick: React.PropTypes.number,
-  time: React.PropTypes.number,
 };
 
-class MetronomeSynth extends React.Component {
+class MetronomeSynth extends AudioTickListener {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,27 +14,16 @@ class MetronomeSynth extends React.Component {
     };
   }
 
-  componentDidMount() {
-    window.addEventListener('tick', (e) => {
-      this.scheduleAudioEvents(e.detail.bar, e.detail.beat, e.detail.tick, e.detail.time);
-    }, false);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('tick');
+  onAudioTick(bar, beat, tick, time) {
+    if (this.state.playSound) {
+      this.playMetronomeSound(tick, time);
+    }
   }
 
   toggleMetronomeSound() {
     this.setState({
       playSound: !this.state.playSound,
     });
-  }
-
-  scheduleAudioEvents(bar, beat, tick, time) {
-    // console.log("Scheduling audio events", bar, beat, tick, time);
-    if (this.state.playSound) {
-      this.playMetronomeSound(tick, time);
-    }
   }
 
   playMetronomeSound(tick, time) {

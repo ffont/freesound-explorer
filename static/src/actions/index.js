@@ -5,4 +5,4 @@ export const displaySystemMessage = makeActionCreator(DISPLAY_MESSAGE,
   'message', 'status');
 
 export const updateMetronomeInfo = makeActionCreator(UPDATE_METRONOME_INFO,
-  'bar', 'beat', 'note', 'time');
+  'bar', 'beat', 'note');

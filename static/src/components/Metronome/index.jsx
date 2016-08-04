@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../stylesheets/Metronome.scss';
+import MetronomeSynth from './MetronomeSynth';
 import { LOOKAHEAD, SCHEDULEAHEADTIME, NOTERESOLUTION, DEFAULT_TEMPO } from '../../constants';
 import { connect } from 'react-redux';
 import { updateMetronomeInfo } from '../../actions';
@@ -8,6 +9,9 @@ import { updateMetronomeInfo } from '../../actions';
 const propTypes = {
   audioContext: React.PropTypes.object,
   updateMetronomeInfo: React.PropTypes.func,
+  bar: React.PropTypes.number,
+  beat: React.PropTypes.number,
+  note: React.PropTypes.number,
 };
 
 class Metronome extends React.Component {
@@ -17,11 +21,7 @@ class Metronome extends React.Component {
     this.updateStateInSyncTimer = undefined;
     this.state = {
       isPlaying: false,
-      playSound: false,
       tempo: DEFAULT_TEMPO, // tempo (in beats per minute)
-      bar: 1,  // Global counter of current bar (should be restarted on play/stop)
-      beat: 1, // Current beat
-      note: 1, // Currently las scheduled note
     };
   }
 
@@ -32,32 +32,24 @@ class Metronome extends React.Component {
   }
 
   startMetronome() {
-    this.startTime = this.props.audioContext.currentTime;
-    this.nextNoteTime = 0.0;
     this.lastNoteDrawn = -1;
     this.drawNotesInQueue = [];
     this.currentNote = 0;
-    this.currentBar = 0;
-    this.setState({
-      isPlaying: true,
-      bar: 1,
-      beat: 1,
-      note: 1,
-    });
-    this.audioScheduler();
-    this.schedulerTimer = setInterval(() => { this.audioScheduler(); }, LOOKAHEAD);
+    this.currentBar = 1;
+    this.setState({ isPlaying: true });
+    const [bar, note, time] = [1, 0, 0];
+    this.props.updateMetronomeInfo(bar, note, time);
+    this.nextNoteTime = this.props.audioContext.currentTime;
+    this.schedulerTimer = setTimeout(() => { this.audioScheduler(); }, LOOKAHEAD);
     this.updateStateInSyncTimer = requestAnimationFrame(() => this.updateStateInSync());
   }
 
   stopMetronome() {
-    clearInterval(this.schedulerTimer);
+    clearTimeout(this.schedulerTimer);
     cancelAnimationFrame(this.updateStateInSyncTimer);
-    this.setState({
-      isPlaying: false,
-      bar: 1,
-      beat: 1,
-      note: 1,
-    });
+    const [bar, note, time] = [1, 0, 0];
+    this.props.updateMetronomeInfo(bar, note, time);
+    this.setState({ isPlaying: false });
   }
 
   startStopMetronome() {
@@ -68,47 +60,23 @@ class Metronome extends React.Component {
     }
   }
 
-  toggleMetronomeSound() {
-    this.setState({
-      playSound: !this.state.playSound,
-    });
-  }
-
   audioScheduler() {
-    let currentTime = this.props.audioContext.currentTime;
-    currentTime = currentTime - this.startTime;
-
+    const currentTime = this.props.audioContext.currentTime;
     while (this.nextNoteTime < currentTime + SCHEDULEAHEADTIME) {
-      if (this.nextNoteTime >= currentTime) {  // Avoid trying to play notes that were missed
-        const normNextNoteTime = this.nextNoteTime + this.startTime;
-        this.drawNotesInQueue.push({ note: this.currentNote, time: normNextNoteTime });
-
-        // Here we should let elements that should play notes in sync with the tempo
-        // what will the next note time be so that they can program start events if needed
-        // This funcion will be called once for each note (at specified resolution with respect
-        // to tempo).
-        // For example, if noteResolution is set to 16, at every 16th note of the given tempo
-        // this function should be called.
-        // Parameters for this function should include relevant timing information so that
-        // receiver can decide whether to program audio events or not.
-        // Example:
-        /*
-        playMetronome({
-          shouldTriggerAtTime: normNextNoteTime,
-          bar: currentBar + 1,
-          beat: Math.floor(currentNote / (noteResolution / 4)) + 1,
-          note: currentNote + 1,
-        });
-        */
+      // Avoid trying to play notes that were missed by more than 10ms
+      if (this.nextNoteTime >= (currentTime - 0.05)) {
+        // Store metronome info in redux store so other components can access it
         const bar = this.currentBar;
         const beat = Math.floor(this.currentNote / (NOTERESOLUTION / 4));
         const note = this.currentNote;
+        const time = this.nextNoteTime;
 
-        this.props.updateMetronomeInfo(bar, beat, note, normNextNoteTime);
+        // Trigger event
+        const event = new CustomEvent('note', { detail: { bar, beat, note, time } });
+        window.dispatchEvent(event);
 
-        if (this.state.playSound) {
-          this.playMetronomeSound(normNextNoteTime, this.currentNote);
-        }
+        // Add note info to queue for updating display
+        this.drawNotesInQueue.push({ note, time });
       }
       // Advance to next note according to note resolution
       this.nextNoteTime += 4 / NOTERESOLUTION * (60.0 / this.state.tempo);
@@ -118,6 +86,7 @@ class Metronome extends React.Component {
         this.currentBar += 1;
       }
     }
+    this.schedulerTimer = setTimeout(() => { this.audioScheduler(); }, LOOKAHEAD);
   }
 
   updateStateInSync() {
@@ -130,27 +99,14 @@ class Metronome extends React.Component {
       }
       if (this.lastNoteDrawn !== currentNoteToDraw) {
         // Call function to update UI here (called once per note)
-        this.setState({
-          bar: this.currentBar + 1,
-          beat: Math.floor(this.currentNote / (NOTERESOLUTION / 4)) + 1,
-          note: this.currentNote + 1,
-        });
+        const bar = this.currentBar;
+        const beat = Math.floor(this.currentNote / (NOTERESOLUTION / 4));
+        const note = this.currentNote;
+        this.props.updateMetronomeInfo(bar, beat, note);
         this.lastNoteDrawn = currentNoteToDraw;
       }
       // Call this function at every requestAnimationFrame
       this.updateStateInSyncTimer = requestAnimationFrame(() => { this.updateStateInSync(); });
-    }
-  }
-
-  playMetronomeSound(time, note) {
-    // Play metronome sound (only quarter notes)
-    if (note % (NOTERESOLUTION / 4) === 0) {
-      const frequency = (note % NOTERESOLUTION === 0) ? 880.0 : 440.0;
-      const osc = this.props.audioContext.createOscillator();
-      osc.connect(this.props.audioContext.destination);
-      osc.frequency.value = frequency;
-      osc.start(time);
-      osc.stop(time + 0.05);
     }
   }
 
@@ -163,12 +119,8 @@ class Metronome extends React.Component {
           type="range" onChange={(evt) => this.setTempo(parseInt(evt.target.value, 10))}
           min="40" max="300" defaultValue={DEFAULT_TEMPO} step="1"
         /><br />
-        {this.state.tempo} :: {this.state.bar} | {this.state.beat}
-        <button onClick={() => this.toggleMetronomeSound()} >
-          {(this.state.playSound) ?
-            <i className="fa fa-volume-up fa-lg" aria-hidden="true" /> :
-            <i className="fa fa-volume-off fa-lg" aria-hidden="true" />}
-        </button>
+      {this.state.tempo} :: {this.props.bar} | {this.props.beat + 1}
+        <MetronomeSynth audioContext={this.props.audioContext} />
         <button onClick={() => this.startStopMetronome()} >
           {(this.state.isPlaying) ?
             <i className="fa fa-stop fa-lg" aria-hidden="true" /> :
@@ -180,7 +132,10 @@ class Metronome extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => {
+  const { bar, beat, note } = state.metronome;
+  return { bar, beat, note };
+};
 
 Metronome.propTypes = propTypes;
 export default connect(mapStateToProps, {

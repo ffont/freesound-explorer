@@ -4,7 +4,6 @@ import Login from '../Login';
 import Logo from '../Logo';
 import Sidebar from '../Sidebar';
 import MessagesBox from '../MessagesBox';
-import Metronome from '../Metronome';
 import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
 import { readObjectByString, getRandomElement } from '../../utils/misc';
 import audioLoader from '../../utils/audioLoader';
@@ -390,7 +389,6 @@ class App extends React.Component {
     return (
       <div className="app-container">
         <Logo />
-        <Metronome audioContext={this.audioContext} />
         <Sidebar
           isVisible={this.state.isSidebarVisible}
           setSidebarVisibility={this.setSidebarVisibility}
@@ -406,6 +404,7 @@ class App extends React.Component {
           startStopPlayingPath={this.startStopPlayingPath}
           createNewPath={this.createNewPath}
           updateSelectedSound={this.updateSelectedSound}
+          audioContext={this.audioContext}
         />
         <Login
           isLoginModalVisible={this.state.isLoginModalVisible}

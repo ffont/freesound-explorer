@@ -89,6 +89,7 @@ class MapCircle extends React.Component {
         .then(
           decodedAudio => {
             this.props.sound.buffer = decodedAudio;
+            this.props.sound.duration = this.props.sound.buffer.duration;
             resolve();
           },
           error => reject(error)
@@ -97,7 +98,7 @@ class MapCircle extends React.Component {
     });
   }
 
-  playAudio(onEndedCallback, playbackRate = 1.0, customSourceNodeKey) {
+  playAudio(onEndedCallback, playbackRate = 1.0, customSourceNodeKey, time = 0.0) {
     this.loadAudio().then(() => {
       // add buffer source to audio context and play
       const source = this.props.audioContext.createBufferSource();
@@ -118,7 +119,7 @@ class MapCircle extends React.Component {
       source.playbackRate.value = playbackRate;
       source.connect(sourceGainNode);
       sourceGainNode.connect(this.props.audioContext.gainNode);
-      source.start();
+      source.start(time);
       this.setState({ isPlaying: true });
       // return reference to souce node so it can be accessed from outside
       // TODO: check that works...

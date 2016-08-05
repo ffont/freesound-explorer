@@ -85,6 +85,7 @@ export function reshapeReceivedSounds(allPagesResults) {
           download,
           isBookmarked,
           buffer,
+          duration: 0.0,  // Will be updated once sound is loaded to buffer
         });
       }
     });

@@ -6,6 +6,7 @@ const propTypes = {
   startStopPlayingPath: React.PropTypes.func,
   updateSelectedSound: React.PropTypes.func,
   createNewPath: React.PropTypes.func,
+  setPathSyncMode: React.PropTypes.func,
 };
 
 function PathsList(props) {
@@ -17,7 +18,19 @@ function PathsList(props) {
             {(path.isPlaying) ?
               <i className="fa fa-pause fa-lg" aria-hidden="true" /> :
               <i className="fa fa-play fa-lg" aria-hidden="true" />}
-          </button> {path.name} ({path.sounds.length} sounds)
+          </button> {path.name} ({path.sounds.length} sounds)&nbsp;
+          <button
+            className={(path.metroSync === 'no') ? 'active' : ''}
+            onClick={() => props.setPathSyncMode(pathIndex, 'no')}
+          >no</button>
+          <button
+            className={(path.metroSync === 'beat') ? 'active' : ''}
+            onClick={() => props.setPathSyncMode(pathIndex, 'beat')}
+          >bt</button>
+          <button
+            className={(path.metroSync === 'bar') ? 'active' : ''}
+            onClick={() => props.setPathSyncMode(pathIndex, 'bar')}
+          >ba</button>
           {(path.isSelected) ?
             <ul className="sounds-list">
               {path.sounds.map((sound, soundIndex) => {

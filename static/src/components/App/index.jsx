@@ -1,4 +1,5 @@
 import React from 'react';
+import AudioTickListener from './AudioTickListener';
 import Map from '../Map';
 import Login from '../Login';
 import Logo from '../Logo';
@@ -25,7 +26,7 @@ const propTypes = {
 };
 
 
-class App extends React.Component {
+class App extends AudioTickListener {
   constructor(props) {
     super(props);
     this.state = {
@@ -59,6 +60,7 @@ class App extends React.Component {
     this.tooglePlayOnHover = this.tooglePlayOnHover.bind(this);
     this.startStopPlayingPath = this.startStopPlayingPath.bind(this);
     this.createNewPath = this.createNewPath.bind(this);
+    this.setPathSyncMode = this.setPathSyncMode.bind(this);
     this.playRandomSound = this.playRandomSound.bind(this);
     this.setIsMidiLearningSoundId = this.setIsMidiLearningSoundId.bind(this);
     this.setUpAudioContext();
@@ -66,6 +68,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    super.componentDidMount()
     this.setUpMIDIDevices();
   }
 
@@ -227,10 +230,10 @@ class App extends React.Component {
     }
   }
 
-  playSoundByFreesoundId(freesoundId, onEndedCallback, playbackRate = 1.0, sourceNodeKey) {
+  playSoundByFreesoundId(freesoundId, onEndedCallback, playbackRate = 1.0, sourceNodeKey, time) {
     // TODO: check that map is loaded, etc...
     this.refs.map.getWrappedInstance().refs[`map-point-${freesoundId}`].playAudio(
-      onEndedCallback, playbackRate, sourceNodeKey);
+      onEndedCallback, playbackRate, sourceNodeKey, time);
   }
 
   playRandomSound() {
@@ -243,22 +246,68 @@ class App extends React.Component {
     this.refs.map.getWrappedInstance().refs[`map-point-${freesoundId}`].stopAudio(sourceNodeKey);
   }
 
-  playNextSoundFromPath(pathIndex) {
+  onAudioTick(bar, beat, tick, time) {
+    for (let i = 0; i < this.state.paths.length; i++) {
+      if (this.state.paths[i].isPlaying) {
+        if (this.state.paths[i].metroSync === 'beat') {
+          if (tick % 4 === 0) {
+            if (this.state.paths[i].currentlyPlaying.willFinishAt === undefined) {
+              this.playNextSoundFromPath(i, time);
+            } else {
+              if (this.state.paths[i].currentlyPlaying.willFinishAt <= time) {
+                this.playNextSoundFromPath(i, time);
+              }
+            }
+          }
+        }
+        if (this.state.paths[i].metroSync === 'bar') {
+          if (tick === 0) {
+            if (this.state.paths[i].currentlyPlaying.willFinishAt === undefined) {
+              this.playNextSoundFromPath(i, time);
+            } else {
+              if (this.state.paths[i].currentlyPlaying.willFinishAt <= time) {
+                this.playNextSoundFromPath(i, time);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  playNextSoundFromPath(pathIndex, time) {
     const newPaths = this.state.paths;
     const path = newPaths[pathIndex];
     if (path.isPlaying) {
-      const freesoundId = path.sounds[path.indexNextToPlay].id;
-      path.indexNextToPlay += 1;
-      if (path.indexNextToPlay >= path.sounds.length) {
-        path.indexNextToPlay = 0;
+      let nextSoundToPlayIdx;
+      if ((path.currentlyPlaying.soundIdx === undefined) ||
+        (path.currentlyPlaying.soundIdx + 1 >= path.sounds.length)) {
+        nextSoundToPlayIdx = 0;
+      } else {
+        nextSoundToPlayIdx = path.currentlyPlaying.soundIdx + 1;
       }
+      const nextSoundToPlay = path.sounds[nextSoundToPlayIdx];
+      const currentTime = this.audioContext.currentTime;
+      path.currentlyPlaying = {
+        soundIdx: nextSoundToPlayIdx,
+        willFinishAt: (time === undefined) ?
+          currentTime + nextSoundToPlay.duration : time + nextSoundToPlay.duration,
+      };
       newPaths[pathIndex] = path;
       this.setState({
         paths: newPaths,
       });
-      this.playSoundByFreesoundId(freesoundId, () => {
-        this.playNextSoundFromPath(pathIndex);
-      });
+      if (path.metroSync === 'no') {
+        this.playSoundByFreesoundId(nextSoundToPlay.id, () => {
+          this.playNextSoundFromPath(pathIndex);
+        });
+      } else {
+        // If synched to metronome, sounds will be triggered by onAudioTick events
+        if (time !== undefined) {
+          this.playSoundByFreesoundId(
+            path.sounds[nextSoundToPlayIdx].id, undefined, undefined, undefined, time);
+        }
+      }
     }
   }
 
@@ -267,6 +316,12 @@ class App extends React.Component {
     const path = newPaths[pathIndex];
     path.isPlaying = !path.isPlaying;
     path.isSelected = path.isPlaying;  // TODO: select on click not on play
+    if (!path.isPlaying) {
+      path.currentlyPlaying = {
+        soundIdx: undefined,
+        willFinishAt: undefined,
+      };
+    }
     newPaths[pathIndex] = path;
     this.setState({
       paths: newPaths,
@@ -276,6 +331,21 @@ class App extends React.Component {
     }
     // Force update map to rerender paths
     this.refs.map.getWrappedInstance().forceUpdate();
+  }
+
+  setPathSyncMode(pathIndex, newMode) {
+    const path = this.state.paths[pathIndex];
+    path.metroSync = newMode;
+    const newPaths = this.state.paths;
+    newPaths[pathIndex] = path;
+    this.setState({
+      paths: newPaths,
+    });
+    if (newMode == 'no') {
+      if (path.isPlaying){
+        this.startStopPlayingPath(pathIndex);  // This will stop it
+      }
+    }
   }
 
   tooglePlayOnHover() {
@@ -328,13 +398,17 @@ class App extends React.Component {
     // Creates a new random path
     if (this.state.sounds.length) {
       const pathSounds = [];
-      const nSounds = 2 + Math.floor(Math.random() * (this.state.sounds.length / 4));
+      const nSounds = 2 + Math.floor(Math.random() * 3);
       [...Array(nSounds).keys()].map(() => pathSounds.push(getRandomElement(this.state.sounds)));
       const newPath = {
         name: `Random path ${this.state.paths.length + 1}`,
-        indexNextToPlay: 0,
         isPlaying: false,
         isSelected: false,
+        metroSync: 'beat',
+        currentlyPlaying: {
+          soundIdx: undefined,
+          willFinishAt: undefined,
+        },
         sounds: pathSounds,
       };
       const newPaths = this.state.paths;
@@ -403,6 +477,7 @@ class App extends React.Component {
           paths={this.state.paths}
           startStopPlayingPath={this.startStopPlayingPath}
           createNewPath={this.createNewPath}
+          setPathSyncMode={this.setPathSyncMode}
           updateSelectedSound={this.updateSelectedSound}
           audioContext={this.audioContext}
         />

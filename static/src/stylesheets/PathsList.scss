@@ -8,7 +8,7 @@
     display: block;
     width: 100%;
     min-height: $sidebarClosedOffset;
-    line-height: $sidebarClosedOffset;
+    text-align: middle;
   }
   button {
   	padding: 7px;
@@ -21,6 +21,9 @@
   }
   button:focus {
     outline: 0;
+  }
+  button.active {
+    background-color: $hoverBackground;
   }
 }
 

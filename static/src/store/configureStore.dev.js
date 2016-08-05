@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
-import ReduxDevTools from '../components/ReduxDevTools';
 import { default as fseReducer } from '../reducers';
 
 export default function configureStore(initialState) {
@@ -10,7 +9,7 @@ export default function configureStore(initialState) {
     initialState,
     compose(
       applyMiddleware(thunk, createLogger()),
-      ReduxDevTools.instrument()
+      window.devToolsExtension && window.devToolsExtension()
     )
   );
 

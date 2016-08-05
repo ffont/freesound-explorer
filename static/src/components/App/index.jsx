@@ -7,6 +7,7 @@ import Sidebar from '../Sidebar';
 import MessagesBox from '../MessagesBox';
 import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
 import { readObjectByString, getRandomElement } from '../../utils/misc';
+import { displaySystemMessage } from '../../actions/messagesBox';
 import audioLoader from '../../utils/audioLoader';
 import tsnejs from '../../vendors/tsne';
 import '../../stylesheets/App.scss';
@@ -19,6 +20,7 @@ const propTypes = {
     windowWidth: React.PropTypes.number,
     windowHeight: React.PropTypes.number,
   }),
+  displaySystemMessage: React.PropTypes.func,
 };
 
 class App extends React.Component {
@@ -43,7 +45,6 @@ class App extends React.Component {
     this.onQuerySubmit = this.onQuerySubmit.bind(this);
     this.setMapDescriptor = this.setMapDescriptor.bind(this);
     this.setMaxResults = this.setMaxResults.bind(this);
-    this.updateSystemStatusMessage = this.updateSystemStatusMessage.bind(this);
     this.updateSelectedSound = this.updateSelectedSound.bind(this);
     this.setLoginModalVisibility = this.setLoginModalVisibility.bind(this);
     this.setSidebarVisibility = this.setSidebarVisibility.bind(this);
@@ -66,16 +67,6 @@ class App extends React.Component {
     this.setUpMIDIDevices();
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (!!this.state.statusMessage.message &&
-      this.state.statusMessage.status === MESSAGE_STATUS.PROGRESS &&
-      this.state.statusMessage.message === nextState.statusMessage.message) {
-      // avoid wasted renders due to continuous receiving of same message
-      return false;
-    }
-    return true;
-  }
-
   componentDidUpdate(prevProps, prevState) {
     if (prevState.descriptor !== this.state.descriptor) {
       this.initializeTsne(this.state.sounds);
@@ -90,7 +81,7 @@ class App extends React.Component {
       error: '',
       isFetching: true,
     });
-    this.updateSystemStatusMessage('Searching for sounds...');
+    this.props.displaySystemMessage('Searching for sounds...');
     submitQuery(query, this.state.maxResults).then(
       allPagesResults => this.storeQueryResults(allPagesResults),
       error => this.handleQueryError(error));
@@ -163,17 +154,17 @@ class App extends React.Component {
     if (window.navigator.requestMIDIAccess) {
       window.navigator.requestMIDIAccess().then(
         (midiAccess) => {
-          this.updateSystemStatusMessage('MIDI support enabled ;)');
+          this.props.displaySystemMessage('MIDI support enabled ;)');
           this.state.midiMappings = { notes: {} };
           const inputs = midiAccess.inputs.values();
           // Iterate over all existing MIDI devices and connect them to onMIDIMessage
           for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
             input.value.onmidimessage = (data) => this.onMIDIMessage(data);
           }
-        }, () => this.updateSystemStatusMessage('No MIDI support...', 'error')
+        }, () => this.props.displaySystemMessage('No MIDI support...', 'error')
       );
     } else {
-      this.updateSystemStatusMessage('No MIDI support in your browser...', 'error');
+      this.props.displaySystemMessage('No MIDI support in your browser...', 'error');
     }
   }
 
@@ -302,7 +293,7 @@ class App extends React.Component {
       sounds,
       isFetching: false,
     });
-    this.updateSystemStatusMessage(`${sounds.length} sounds loaded, computing map`);
+    this.props.displaySystemMessage(`${sounds.length} sounds loaded, computing map`);
   }
 
   handleSuccessfulLogin() {
@@ -310,7 +301,7 @@ class App extends React.Component {
       isUserLoggedIn: true,
       isLoginModalVisible: false,
     });
-    this.updateSystemStatusMessage(`Logged in as ${sessionStorage.getItem('username')}`,
+    this.props.displaySystemMessage(`Logged in as ${sessionStorage.getItem('username')}`,
       MESSAGE_STATUS.SUCCESS);
   }
 
@@ -319,7 +310,7 @@ class App extends React.Component {
       isUserLoggedIn: false,
       isLoginModalVisible: false,
     });
-    this.updateSystemStatusMessage('Failed to log in...', MESSAGE_STATUS.ERROR);
+    this.props.displaySystemMessage('Failed to log in...', MESSAGE_STATUS.ERROR);
   }
 
   createNewPath() {
@@ -342,7 +333,7 @@ class App extends React.Component {
       });
       this.refs.map.forceUpdate();
     } else {
-      this.updateSystemStatusMessage('A new path can not be created until there are some sounds ' +
+      this.props.displaySystemMessage('A new path can not be created until there are some sounds ' +
         'in the map', MESSAGE_STATUS.ERROR);
     }
   }
@@ -366,7 +357,7 @@ class App extends React.Component {
   }
 
   handleQueryError(error) {
-    this.updateSystemStatusMessage('No sounds found', MESSAGE_STATUS.ERROR);
+    this.props.displaySystemMessage('No sounds found', MESSAGE_STATUS.ERROR);
     this.setState({
       error: error || 'Unexpected error',
       isFetching: false,
@@ -379,21 +370,6 @@ class App extends React.Component {
   updateSelectedSound(soundID) {
     this.setState({
       selectedSound: soundID,
-    });
-  }
-
-  /**
-   * Updates the status message in the UI.
-   *
-   * @param {String} message: the message to be shown
-   * @param {String} status: the related icon (info, success, error)
-   */
-  updateSystemStatusMessage(message, status = MESSAGE_STATUS.INFO) {
-    this.setState({
-      statusMessage: {
-        message,
-        status,
-      },
     });
   }
 
@@ -426,7 +402,6 @@ class App extends React.Component {
           updateUserLoggedStatus={this.updateUserLoggedStatus}
           updateEndUserAuthSupport={this.updateEndUserAuthSupport}
           setSessionStorage={this.setSessionStorage}
-          updateSystemStatusMessage={this.updateSystemStatusMessage}
         />
         {(shouldShowMap) ?
           <Map
@@ -435,7 +410,6 @@ class App extends React.Component {
             tsne={this.tsne}
             audioContext={this.audioContext}
             audioLoader={this.audioLoader}
-            updateSystemStatusMessage={this.updateSystemStatusMessage}
             windowSize={this.props.windowSize}
             selectedSound={this.state.selectedSound}
             updateSelectedSound={this.updateSelectedSound}
@@ -446,16 +420,11 @@ class App extends React.Component {
             isMidiLearningSoundId={this.state.isMidiLearningSoundId}
             midiMappings={this.state.midiMappings}
           /> : ''}
-        <MessagesBox statusMessage={this.state.statusMessage} />
+        <MessagesBox />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log(state);
-  return state.messagesBox;
-};
-
 App.propTypes = propTypes;
-export default connect(mapStateToProps, {})(App);
+export default connect(() => ({}), { displaySystemMessage })(App);

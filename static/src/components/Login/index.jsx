@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { displaySystemMessage } from '../../actions/messagesBox'
 import { loadJSON } from '../../utils/misc';
 import LoginModal from './LoginModal';
 import LoginButton from './LoginButton';
@@ -43,7 +45,7 @@ const propTypes = {
   updateUserLoggedStatus: React.PropTypes.func,
   updateEndUserAuthSupport: React.PropTypes.func,
   setSessionStorage: React.PropTypes.func,
-  updateSystemStatusMessage: React.PropTypes.func,
+  displaySystemMessage: React.PropTypes.func,
 };
 
 class Login extends React.Component {
@@ -60,7 +62,7 @@ class Login extends React.Component {
   getAccessToken() {
     loadJSON(URLS.prepareAuth).then((data) => {
       this.props.setSessionStorage(data.access_token, data.username);
-      if (!!data.logged) {
+      if (data.logged) {
         this.props.updateUserLoggedStatus(true);
       }
     });
@@ -86,7 +88,7 @@ class Login extends React.Component {
     loadJSON(URLS.logout).then(() => {
       clearSession();
       this.props.updateUserLoggedStatus(false);
-      this.props.updateSystemStatusMessage('Logged out');
+      this.props.displaySystemMessage('Logged out');
     });
   }
 
@@ -112,4 +114,4 @@ class Login extends React.Component {
 }
 
 Login.propTypes = propTypes;
-export default Login;
+export default connect(() => ({}), { displaySystemMessage })(Login);

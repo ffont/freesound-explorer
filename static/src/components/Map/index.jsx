@@ -1,6 +1,8 @@
 import React from 'react';
 import { select, event as d3Event } from 'd3-selection';
 import { zoom } from 'd3-zoom';
+import { connect } from 'react-redux';
+import { displaySystemMessage } from '../../actions/messagesBox';
 import MapCircle from './MapCircle';
 import SoundInfo from '../SoundInfo';
 import '../../polyfills/requestAnimationFrame';
@@ -14,7 +16,6 @@ const propTypes = {
   tsne: React.PropTypes.object,
   audioContext: React.PropTypes.object,
   audioLoader: React.PropTypes.object,
-  updateSystemStatusMessage: React.PropTypes.func,
   windowSize: React.PropTypes.shape({
     windowWidth: React.PropTypes.number,
     windowHeight: React.PropTypes.number,
@@ -27,6 +28,7 @@ const propTypes = {
   setIsMidiLearningSoundId: React.PropTypes.func,
   isMidiLearningSoundId: React.PropTypes.number,
   midiMappings: React.PropTypes.object,
+  displaySystemMessage: React.PropTypes.func,
 };
 
 class Map extends React.Component {
@@ -75,7 +77,7 @@ class Map extends React.Component {
     const progress = parseInt(100 * this.currentStepIteration / MAX_TSNE_ITERATIONS, 10);
     const statusMessage =
     `${this.props.sounds.length} sounds loaded, computing map (${progress}%)`;
-    this.props.updateSystemStatusMessage(statusMessage, MESSAGE_STATUS.PROGRESS);
+    this.props.displaySystemMessage(statusMessage, MESSAGE_STATUS.PROGRESS);
     if (this.currentStepIteration < MAX_TSNE_ITERATIONS) {
       this.props.tsne.step();
       this.stepInterval = requestAnimationFrame(() => this.computeStepSolution());
@@ -84,7 +86,7 @@ class Map extends React.Component {
       this.forceUpdate();
     } else {
       cancelAnimationFrame(this.stepInterval);
-      this.props.updateSystemStatusMessage('Map computed!', MESSAGE_STATUS.SUCCESS);
+      this.props.displaySystemMessage('Map computed!', MESSAGE_STATUS.SUCCESS);
       this.currentStepIteration = 0;
     }
   }
@@ -115,7 +117,7 @@ class Map extends React.Component {
     return (
       <div className="map-container" ref="mapContainer">
         <svg className="map" onClick={this.onClickCallback}>
-          // Draw circles (sounds)
+          {'/* Draw circles (sounds)'}
           {this.props.sounds.map((sound, index) => {
             const tsnePosition = {
               x: tsneSolution[index][0],
@@ -144,7 +146,7 @@ class Map extends React.Component {
               />
             );
           })}
-          // Draw lines (paths)
+          {'/* Draw lines (paths) */'}
           {this.props.paths.map((path) => (
             [...Array(path.sounds.length - 1).keys()].map((sound, index) => {
               const soundFrom = path.sounds[index];
@@ -182,7 +184,7 @@ class Map extends React.Component {
           position={soundInfoPosition}
           sound={soundInfoContent}
           isUserLoggedIn={this.props.isUserLoggedIn}
-          updateSystemStatusMessage={this.props.updateSystemStatusMessage}
+          updateSystemStatusMessage={this.props.displaySystemMessage}
           setIsMidiLearningSoundId={this.props.setIsMidiLearningSoundId}
           isMidiLearningSoundId={this.props.isMidiLearningSoundId}
           midiMappings={this.props.midiMappings}
@@ -193,4 +195,4 @@ class Map extends React.Component {
 }
 
 Map.propTypes = propTypes;
-export default Map;
+export default connect(() => ({}), { displaySystemMessage })(Map);

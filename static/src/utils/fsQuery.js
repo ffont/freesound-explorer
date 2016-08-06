@@ -36,7 +36,7 @@ function search(query = DEFAULT_QUERY, filter = DEFAULT_FILTER, maxResults = DEF
       page_size: maxPageResults,
       group_by_pack: 0,
       filter,
-      fields: 'id,previews,name,analysis,url,username',
+      fields: 'id,previews,name,analysis,url,username,duration',
       descriptors: extraDescriptors.join(),
     }));
     pageCounter++;
@@ -59,7 +59,7 @@ export function reshapeReceivedSounds(allPagesResults) {
   allPagesResults.forEach(pageResults => {
     const results = pageResults.results;
     results.forEach((sound, index) => {
-      const { id, analysis, url, name, username } = sound;
+      const { id, analysis, url, name, username, duration } = sound;
       const previewUrl = sound.previews['preview-lq-mp3'];
       const fsObject = pageResults.getSound(index);
       const { bookmark, download } = fsObject;
@@ -81,11 +81,11 @@ export function reshapeReceivedSounds(allPagesResults) {
           name,
           color,
           username,
+          duration, // Will be updated once sound is loaded to buffer
           bookmark,
           download,
           isBookmarked,
           buffer,
-          duration: 0.0,  // Will be updated once sound is loaded to buffer
         });
       }
     });

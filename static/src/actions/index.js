@@ -1,6 +1,6 @@
 import makeActionCreator from './makeActionCreator';
 import { DISPLAY_MESSAGE, UPDATE_METRONOME_STATUS, SET_TEMPO,
-  STARTSTOP_METRONOME } from './actionTypes';
+  STARTSTOP_METRONOME, ADD_PATH, SET_PATH_SYNC } from './actionTypes';
 
 export const displaySystemMessage = makeActionCreator(DISPLAY_MESSAGE,
   'message', 'status');
@@ -13,3 +13,9 @@ export const setTempo = makeActionCreator(SET_TEMPO,
 
 export const startStopMetronome = makeActionCreator(STARTSTOP_METRONOME,
   'isPlaying');
+
+export const addPath = makeActionCreator(ADD_PATH,
+  'sounds');
+
+export const setPathSync = makeActionCreator(SET_PATH_SYNC,
+  'pathIdx', 'syncMode');

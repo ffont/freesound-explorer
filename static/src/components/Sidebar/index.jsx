@@ -10,6 +10,7 @@ const propTypes = {
   setSidebarVisibility: React.PropTypes.func,
   setActiveMode: React.PropTypes.func,
   audioContext: React.PropTypes.object,
+  sounds: React.PropTypes.array,
 };
 
 function Sidebar(props) {

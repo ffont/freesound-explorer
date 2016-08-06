@@ -26,6 +26,7 @@ const propTypes = {
     windowHeight: React.PropTypes.number,
   }),
   displaySystemMessage: React.PropTypes.func,
+  paths: React.PropTypes.array,
 };
 
 
@@ -34,7 +35,6 @@ class App extends AudioTickListener {
     super(props);
     this.state = {
       sounds: [],
-      paths: [],
       midiMappings: undefined,
       isMidiLearningSoundId: -1,
       descriptor: DEFAULT_DESCRIPTOR,
@@ -62,7 +62,6 @@ class App extends AudioTickListener {
     this.setSessionStorage = this.setSessionStorage.bind(this);
     this.tooglePlayOnHover = this.tooglePlayOnHover.bind(this);
     this.startStopPlayingPath = this.startStopPlayingPath.bind(this);
-    this.createNewPath = this.createNewPath.bind(this);
     this.setPathSyncMode = this.setPathSyncMode.bind(this);
     this.playRandomSound = this.playRandomSound.bind(this);
     this.setIsMidiLearningSoundId = this.setIsMidiLearningSoundId.bind(this);
@@ -250,25 +249,25 @@ class App extends AudioTickListener {
   }
 
   onAudioTick(bar, beat, tick, time) {
-    for (let i = 0; i < this.state.paths.length; i++) {
-      if (this.state.paths[i].isPlaying) {
-        if (this.state.paths[i].metroSync === 'beat') {
+    for (let i = 0; i < this.props.paths.length; i++) {
+      if (this.props.paths[i].isPlaying) {
+        if (this.props.paths[i].syncMode === 'beat') {
           if (tick % 4 === 0) {
-            if (this.state.paths[i].currentlyPlaying.willFinishAt === undefined) {
+            if (this.props.paths[i].currentlyPlaying.willFinishAt === undefined) {
               this.playNextSoundFromPath(i, time);
             } else {
-              if (this.state.paths[i].currentlyPlaying.willFinishAt <= time) {
+              if (this.props.paths[i].currentlyPlaying.willFinishAt <= time) {
                 this.playNextSoundFromPath(i, time);
               }
             }
           }
         }
-        if (this.state.paths[i].metroSync === 'bar') {
+        if (this.props.paths[i].syncMode === 'bar') {
           if (tick === 0) {
-            if (this.state.paths[i].currentlyPlaying.willFinishAt === undefined) {
+            if (this.props.paths[i].currentlyPlaying.willFinishAt === undefined) {
               this.playNextSoundFromPath(i, time);
             } else {
-              if (this.state.paths[i].currentlyPlaying.willFinishAt <= time) {
+              if (this.props.paths[i].currentlyPlaying.willFinishAt <= time) {
                 this.playNextSoundFromPath(i, time);
               }
             }
@@ -279,7 +278,7 @@ class App extends AudioTickListener {
   }
 
   playNextSoundFromPath(pathIndex, time) {
-    const newPaths = this.state.paths;
+    const newPaths = this.props.paths;
     const path = newPaths[pathIndex];
     if (path.isPlaying) {
       let nextSoundToPlayIdx;
@@ -300,7 +299,7 @@ class App extends AudioTickListener {
       this.setState({
         paths: newPaths,
       });
-      if (path.metroSync === 'no') {
+      if (path.syncMode === 'no') {
         this.playSoundByFreesoundId(nextSoundToPlay.id, () => {
           this.playNextSoundFromPath(pathIndex);
         });
@@ -315,7 +314,7 @@ class App extends AudioTickListener {
   }
 
   startStopPlayingPath(pathIndex) {
-    const newPaths = this.state.paths;
+    const newPaths = this.props.paths;
     const path = newPaths[pathIndex];
     path.isPlaying = !path.isPlaying;
     path.isSelected = path.isPlaying;  // TODO: select on click not on play
@@ -337,9 +336,9 @@ class App extends AudioTickListener {
   }
 
   setPathSyncMode(pathIndex, newMode) {
-    const path = this.state.paths[pathIndex];
-    path.metroSync = newMode;
-    const newPaths = this.state.paths;
+    const path = this.props.paths[pathIndex];
+    path.syncMode = newMode;
+    const newPaths = this.props.paths;
     newPaths[pathIndex] = path;
     this.setState({
       paths: newPaths,
@@ -401,35 +400,6 @@ class App extends AudioTickListener {
     this.props.displaySystemMessage('Failed to log in...', MESSAGE_STATUS.ERROR);
   }
 
-  createNewPath() {
-    // Creates a new random path
-    if (this.state.sounds.length) {
-      const pathSounds = [];
-      const nSounds = 2 + Math.floor(Math.random() * 3);
-      [...Array(nSounds).keys()].map(() => pathSounds.push(getRandomElement(this.state.sounds)));
-      const newPath = {
-        name: `Random path ${this.state.paths.length + 1}`,
-        isPlaying: false,
-        isSelected: false,
-        metroSync: 'beat',
-        currentlyPlaying: {
-          soundIdx: undefined,
-          willFinishAt: undefined,
-        },
-        sounds: pathSounds,
-      };
-      const newPaths = this.state.paths;
-      newPaths.push(newPath);
-      this.setState({
-        paths: newPaths,
-      });
-      this.refs.map.getWrappedInstance().forceUpdate();
-    } else {
-      this.props.displaySystemMessage('A new path can not be created until there are some sounds ' +
-        'in the map', MESSAGE_STATUS.ERROR);
-    }
-  }
-
   initializeTsne(sounds) {
     if (!sounds) {
       // don't initialize tsne if no sounds provided
@@ -471,6 +441,7 @@ class App extends AudioTickListener {
       <div className="app-container">
         <Logo />
         <Sidebar
+          sounds={this.state.sounds}
           isVisible={this.state.isSidebarVisible}
           setSidebarVisibility={this.setSidebarVisibility}
           activeMode={this.state.activeMode}
@@ -481,10 +452,8 @@ class App extends AudioTickListener {
           maxResults={this.state.maxResults}
           playOnHover={this.state.playOnHover}
           tooglePlayOnHover={this.tooglePlayOnHover}
-          paths={this.state.paths}
+          paths={this.props.paths}
           startStopPlayingPath={this.startStopPlayingPath}
-          createNewPath={this.createNewPath}
-          setPathSyncMode={this.setPathSyncMode}
           updateSelectedSound={this.updateSelectedSound}
           audioContext={this.audioContext}
         />
@@ -508,7 +477,7 @@ class App extends AudioTickListener {
             selectedSound={this.state.selectedSound}
             updateSelectedSound={this.updateSelectedSound}
             playOnHover={this.state.playOnHover}
-            paths={this.state.paths}
+            paths={this.props.paths}
             isUserLoggedIn={this.state.isUserLoggedIn}
             setIsMidiLearningSoundId={this.setIsMidiLearningSoundId}
             isMidiLearningSoundId={this.state.isMidiLearningSoundId}
@@ -520,7 +489,10 @@ class App extends AudioTickListener {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => {
+  const { paths } = state.paths;
+  return { paths };
+};
 
 App.propTypes = propTypes;
 export default connect(mapStateToProps, {

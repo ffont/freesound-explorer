@@ -23,7 +23,7 @@ function PathsList(props) {
             <button
               className={(path.metroSync === 'no') ? 'active' : ''}
               onClick={() => props.setPathSyncMode(pathIndex, 'no')}
-            ><i className="fa fa-hourglass-end" aria-hidden="true" /></button>
+            >x</button>
             <button
               className={(path.metroSync === 'beat') ? 'active' : ''}
               onClick={() => props.setPathSyncMode(pathIndex, 'beat')}
@@ -31,7 +31,7 @@ function PathsList(props) {
             <button
               className={(path.metroSync === 'bar') ? 'active' : ''}
               onClick={() => props.setPathSyncMode(pathIndex, 'bar')}
-            >&#9836;</button>
+            >o</button>
           </div>
           {(path.isSelected) ?
             <ul className="sounds-list">

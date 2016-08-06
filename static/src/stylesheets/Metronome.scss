@@ -1,18 +1,25 @@
 @import "./variables.json";
 
 .metronome {
-  text-align: left;
+  margin-bottom: 15px;
+}
 
-  button {
-    padding: 7px;
-    border-radius: 5px;
-    border: 0px;
-    height: $sidebarClosedOffset;
-    width: 34px;
-    background: none;
-    color: white;
-  }
-  button:focus {
-    outline: 0;
-  }
+.metronome-controls {
+  display:inline-block;
+  height: 30px;
+  line-height: 30px;
+}
+
+.metronome-transport {
+  margin-left: 4px;
+  display: inline-block;
+  min-width: 80px;
+  text-align: center;
+}
+
+.metronome-slider {
+  display: inline-block;
+  height: 30px;
+  width: $sidebarWidth - $sidebarClosedOffset -220px;
+  vertical-align: bottom;
 }

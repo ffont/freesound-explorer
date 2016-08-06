@@ -10,6 +10,9 @@ import { readObjectByString, getRandomElement } from '../../utils/misc';
 import audioLoader from '../../utils/audioLoader';
 import tsnejs from '../../vendors/tsne';
 import '../../stylesheets/App.scss';
+import '../../stylesheets/toggle.scss';
+import '../../stylesheets/slider.scss';
+import '../../stylesheets/button.scss';
 import { DEFAULT_DESCRIPTOR, TSNE_CONFIG, DEFAULT_MAX_RESULTS, MESSAGE_STATUS }
   from '../../constants';
 import '../../polyfills/AudioContext';

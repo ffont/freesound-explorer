@@ -2,8 +2,10 @@
 // Adapted from http://callmenick.com/post/css-toggle-switch-examples
 
 .toggle-wrapper {
-  height: 22px;
-  line-height:22px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  height: 20px;
+  line-height:20px;
   span {
     vertical-align: top;
   }
@@ -21,8 +23,8 @@
 }
 input.toggle + label {
   padding: 1px;
-  width: 40px;
-  height: 20px;
+  width: 36px;
+  height: 18px;
   background-color: white;
   border-radius: 20px;
   transition: background 0.4s;
@@ -39,15 +41,17 @@ input.toggle + label:before {
   bottom: 1px;
   right: 1px;
   background-color: $menuBackground;
-  border-radius: 20px;
+  border-radius: 18px;
   transition: background 0.4s;
 }
 input.toggle + label:after {
-  top: 2px;
-  left: 2px;
-  bottom: 2px;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
   width: 18px;
-  background-color: white;
+  background-color: rgba(58, 103, 94, 0.9);
+  border: 1px solid white;
   border-radius: 18px;
   transition: margin 0.4s, background 0.4s;
 }
@@ -55,9 +59,9 @@ input.toggle:checked + label {
   background-color: white;
 }
 input.toggle:checked + label:after {
-  margin-left: 20px;
+  margin-left: 18px;
   background-color: white;
 }
 input.active + label:before {
-  background-color: rgba(58, 103, 94, 0.7);
+  background-color: rgba(58, 103, 94, 0.9);
 }

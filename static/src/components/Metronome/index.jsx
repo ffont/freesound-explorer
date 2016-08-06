@@ -110,20 +110,28 @@ class Metronome extends React.Component {
   render() {
     return (
       <div className="metronome">
-        <input
-          id="max-results-slider"
-          className="max-results-slider"
-          type="range" onChange={(evt) => this.setTempo(parseInt(evt.target.value, 10))}
-          min="40" max="300" defaultValue={DEFAULT_TEMPO} step="1"
-        /><br />
-      {this.props.tempo} :: {this.props.bar} | {this.props.beat + 1} | {this.props.tick + 1}
-        <MetronomeSynth audioContext={this.props.audioContext} />
-        <button onClick={() => this.startStopMetronome()} >
-          {(this.props.isPlaying) ?
-            <i className="fa fa-stop fa-lg" aria-hidden="true" /> :
-            <i className="fa fa-play fa-lg" aria-hidden="true" />}
-        </button>
-
+        <div className="metronome-slider">
+          <div className="slider-wrapper">
+            <input
+              id="max-results-slider"
+              className="max-results-slider"
+              type="range" onChange={(evt) => this.setTempo(parseInt(evt.target.value, 10))}
+              min="40" max="300" defaultValue={DEFAULT_TEMPO} step="1"
+            />
+          </div>
+        </div>
+        <div className="metronome-controls">
+          {this.props.tempo}
+          <div className="metronome-transport">
+            {this.props.bar} | {this.props.beat + 1} | {this.props.tick + 1}
+          </div>
+          <MetronomeSynth audioContext={this.props.audioContext} />
+          <button onClick={() => this.startStopMetronome()} >
+            {(this.props.isPlaying) ?
+              <i className="fa fa-stop fa-lg" aria-hidden="true" /> :
+              <i className="fa fa-play fa-lg" aria-hidden="true" />}
+          </button>
+        </div>
       </div>
       );
   }

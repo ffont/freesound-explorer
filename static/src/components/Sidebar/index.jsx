@@ -11,6 +11,7 @@ const propTypes = {
   setActiveMode: React.PropTypes.func,
   audioContext: React.PropTypes.object,
   sounds: React.PropTypes.array,
+  playSoundByFreesoundId: React.PropTypes.func,
 };
 
 function Sidebar(props) {

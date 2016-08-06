@@ -11,11 +11,9 @@
     text-align: middle;
   }
   button {
-  	padding: 7px;
-  	border-radius: 5px;
-  	border: 0px;
-  	height: $sidebarClosedOffset;
-  	width: 34px;
+    border: 0px;
+    border-radius: 5px;
+  	padding: 6px;
     background: none;
     color: white;
   }
@@ -23,7 +21,19 @@
     outline: 0;
   }
   button.active {
-    background-color: $hoverBackground;
+    background-color: rgba(58, 103, 94, 0.7);
+  }
+}
+
+.paths-list .button-group {
+  display: inline-block;
+  vertical-align: bottom;
+  margin-left: 5px;
+  border: 1px solid white;
+  border-radius: 5px;
+  overflow: hidden;
+  button {
+    border-radius: 0px;
   }
 }
 

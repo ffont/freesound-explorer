@@ -19,18 +19,20 @@ function PathsList(props) {
               <i className="fa fa-pause fa-lg" aria-hidden="true" /> :
               <i className="fa fa-play fa-lg" aria-hidden="true" />}
           </button> {path.name} ({path.sounds.length} sounds)&nbsp;
-          <button
-            className={(path.metroSync === 'no') ? 'active' : ''}
-            onClick={() => props.setPathSyncMode(pathIndex, 'no')}
-          >no</button>
-          <button
-            className={(path.metroSync === 'beat') ? 'active' : ''}
-            onClick={() => props.setPathSyncMode(pathIndex, 'beat')}
-          >bt</button>
-          <button
-            className={(path.metroSync === 'bar') ? 'active' : ''}
-            onClick={() => props.setPathSyncMode(pathIndex, 'bar')}
-          >ba</button>
+          <div className="button-group">
+            <button
+              className={(path.metroSync === 'no') ? 'active' : ''}
+              onClick={() => props.setPathSyncMode(pathIndex, 'no')}
+            ><i className="fa fa-hourglass-end" aria-hidden="true" /></button>
+            <button
+              className={(path.metroSync === 'beat') ? 'active' : ''}
+              onClick={() => props.setPathSyncMode(pathIndex, 'beat')}
+            >&#9833;</button>
+            <button
+              className={(path.metroSync === 'bar') ? 'active' : ''}
+              onClick={() => props.setPathSyncMode(pathIndex, 'bar')}
+            >&#9836;</button>
+          </div>
           {(path.isSelected) ?
             <ul className="sounds-list">
               {path.sounds.map((sound, soundIndex) => {

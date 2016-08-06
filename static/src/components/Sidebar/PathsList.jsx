@@ -40,10 +40,10 @@ class PathsList extends AudioTickListener {
         if (this.props.paths[i].syncMode === 'beat') {
           if (tick % 4 === 0) {
             if (this.props.paths[i].currentlyPlaying.willFinishAt === undefined) {
-              this.playNextSoundFromPath(i, time);
+              this.playNextSoundFromPath(undefined, i, time);
             } else {
               if (this.props.paths[i].currentlyPlaying.willFinishAt <= time) {
-                this.playNextSoundFromPath(i, time);
+                this.playNextSoundFromPath(undefined, i, time);
               }
             }
           }
@@ -51,10 +51,10 @@ class PathsList extends AudioTickListener {
         if (this.props.paths[i].syncMode === 'bar') {
           if (tick === 0) {
             if (this.props.paths[i].currentlyPlaying.willFinishAt === undefined) {
-              this.playNextSoundFromPath(i, time);
+              this.playNextSoundFromPath(undefined, i, time);
             } else {
               if (this.props.paths[i].currentlyPlaying.willFinishAt <= time) {
-                this.playNextSoundFromPath(i, time);
+                this.playNextSoundFromPath(undefined, i, time);
               }
             }
           }
@@ -63,30 +63,58 @@ class PathsList extends AudioTickListener {
     }
   }
 
-  playNextSoundFromPath(pathIdx, time) {
-    const path = this.props.paths[pathIdx];
-    if (path.isPlaying) {
+  componentWillUpdate(nextProps, nextState) {
+    // For some reason we need to hook componentWillUpdate to see if a path should
+    // start playing (state changed from isPlaying = false to isPlaying = true) and call
+    // this.playNextSoundFromPath... apparently if we do it after startStopPath this.props is
+    // not updated accordingly or fast enough... TODO: investigate this...
+    // Same thing we do for when changing sync mode to 'no'
+    for (let i = 0; i < this.props.paths.length; i++) {
+      if ((!this.props.paths[i].isPlaying) && (nextProps.paths[i].isPlaying)) {
+        this.playNextSoundFromPath(nextProps.paths[i], i);
+      }
+      if ((this.props.paths[i].syncMode !== 'no') && (nextProps.paths[i].syncMode === 'no')) {
+        if (nextProps.paths[i].isPlaying) {
+          if (nextProps.paths[i].currentlyPlaying.willFinishAt === undefined) {
+            this.playNextSoundFromPath(nextProps.paths[i], i);
+          } else {
+            this.playNextSoundFromPath(nextProps.paths[i], i,
+              nextProps.paths[i].currentlyPlaying.willFinishAt);
+          }
+        }
+      }
+    }
+  }
+
+  playNextSoundFromPath(path, pathIdx, time) {
+    let myPath = undefined;
+    if (path === undefined) {
+      myPath = this.props.paths[pathIdx];
+    } else {
+      myPath = path;
+    }
+    if (myPath.isPlaying) {
       let nextSoundToPlayIdx;
-      if ((path.currentlyPlaying.soundIdx === undefined) ||
-        (path.currentlyPlaying.soundIdx + 1 >= path.sounds.length)) {
+      if ((myPath.currentlyPlaying.soundIdx === undefined) ||
+        (myPath.currentlyPlaying.soundIdx + 1 >= myPath.sounds.length)) {
         nextSoundToPlayIdx = 0;
       } else {
-        nextSoundToPlayIdx = path.currentlyPlaying.soundIdx + 1;
+        nextSoundToPlayIdx = myPath.currentlyPlaying.soundIdx + 1;
       }
-      const nextSoundToPlay = path.sounds[nextSoundToPlayIdx];
+      const nextSoundToPlay = myPath.sounds[nextSoundToPlayIdx];
       const willFinishAt = (time === undefined) ?
         this.props.audioContext.currentTime + nextSoundToPlay.duration :
         time + nextSoundToPlay.duration;
       this.props.setPathCurrentlyPlaying(pathIdx, nextSoundToPlayIdx, willFinishAt);
-      if (path.syncMode === 'no') {
+      if (myPath.syncMode === 'no') {
         this.props.playSoundByFreesoundId(nextSoundToPlay.id, () => {
-          this.playNextSoundFromPath(pathIdx);
+          this.playNextSoundFromPath(undefined, pathIdx);
         });
       } else {
         // If synched to metronome, sounds will be triggered by onAudioTick events
         if (time !== undefined) {
           this.props.playSoundByFreesoundId(
-            path.sounds[nextSoundToPlayIdx].id, undefined, undefined, undefined, time);
+            myPath.sounds[nextSoundToPlayIdx].id, undefined, undefined, undefined, time);
         }
       }
     }
@@ -97,22 +125,11 @@ class PathsList extends AudioTickListener {
       this.props.startStopPath(pathIdx, false);
     } else {
       this.props.startStopPath(pathIdx, true);
-      this.playNextSoundFromPath(pathIdx);
     }
   }
 
   setPathSyncMode(pathIdx, newMode) {
     this.props.setPathSync(pathIdx, newMode);
-    const path = this.props.paths[pathIdx];
-    if (newMode === 'no') {
-      if (path.isPlaying) {
-        if (path.currentlyPlaying.willFinishAt === undefined) {
-          this.playNextSoundFromPath(pathIdx);
-        } else {
-          this.playNextSoundFromPath(pathIdx, path.currentlyPlaying.willFinishAt);
-        }
-      }
-    }
   }
 
   render() {

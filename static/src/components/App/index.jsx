@@ -341,9 +341,13 @@ class App extends AudioTickListener {
     this.setState({
       paths: newPaths,
     });
-    if (newMode == 'no') {
-      if (path.isPlaying){
-        this.startStopPlayingPath(pathIndex);  // This will stop it
+    if (newMode === 'no') {
+      if (path.isPlaying) {
+        if (path.currentlyPlaying.willFinishAt === undefined) {
+          this.playNextSoundFromPath(pathIndex);
+        } else {
+          this.playNextSoundFromPath(pathIndex, path.currentlyPlaying.willFinishAt);
+        }
       }
     }
   }

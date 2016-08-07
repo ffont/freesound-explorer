@@ -148,7 +148,7 @@ class Map extends React.Component {
           })}
           // Draw lines (paths)
           {this.props.paths.map((path) => (
-            [...Array(path.sounds.length - 1).keys()].map((sound, index) => {
+            [...Array((path.sounds.length) ? path.sounds.length - 1: 0).keys()].map((sound, index) => {
               const soundFrom = path.sounds[index];
               const soundTo = path.sounds[index + 1];
               const indexSoundFrom = this.props.sounds.indexOf(soundFrom);
@@ -193,7 +193,10 @@ class Map extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => {
+  const { paths } = state.paths;
+  return { paths };
+};
 
 Map.propTypes = propTypes;
 export default connect(mapStateToProps, {

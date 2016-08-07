@@ -16,7 +16,7 @@ import { DEFAULT_DESCRIPTOR, TSNE_CONFIG, DEFAULT_MAX_RESULTS, MESSAGE_STATUS }
   from '../../constants';
 import '../../polyfills/AudioContext';
 import { connect } from 'react-redux';
-import { displaySystemMessage } from '../../actions';
+import { displaySystemMessage, clearAllPaths } from '../../actions';
 
 
 const propTypes = {
@@ -25,7 +25,7 @@ const propTypes = {
     windowHeight: React.PropTypes.number,
   }),
   displaySystemMessage: React.PropTypes.func,
-  paths: React.PropTypes.array,
+  clearAllPaths: React.PropTypes.func,
 };
 
 
@@ -89,9 +89,9 @@ class App extends React.Component {
 
   onQuerySubmit(query) {
     // first reset the list of sounds in state
+    this.props.clearAllPaths();
     this.setState({
       sounds: [],
-      paths: [],
       error: '',
       isFetching: true,
     });
@@ -230,9 +230,10 @@ class App extends React.Component {
   }
 
   playSoundByFreesoundId(freesoundId, onEndedCallback, playbackRate = 1.0, sourceNodeKey, time) {
-    // TODO: check that map is loaded, etc...
-    this.refs.map.getWrappedInstance().refs[`map-point-${freesoundId}`].playAudio(
-      onEndedCallback, playbackRate, sourceNodeKey, time);
+    if (this.refs.map) {
+      this.refs.map.getWrappedInstance().refs[`map-point-${freesoundId}`].playAudio(
+        onEndedCallback, playbackRate, sourceNodeKey, time);
+    }
   }
 
   playRandomSound() {
@@ -241,8 +242,9 @@ class App extends React.Component {
   }
 
   stopSoundByFreesoundId(freesoundId, sourceNodeKey) {
-    // TODO: check that map is loaded, etc...
-    this.refs.map.getWrappedInstance().refs[`map-point-${freesoundId}`].stopAudio(sourceNodeKey);
+    if (this.refs.map) {
+      this.refs.map.getWrappedInstance().refs[`map-point-${freesoundId}`].stopAudio(sourceNodeKey);
+    }
   }
 
   tooglePlayOnHover() {
@@ -343,7 +345,6 @@ class App extends React.Component {
           maxResults={this.state.maxResults}
           playOnHover={this.state.playOnHover}
           tooglePlayOnHover={this.tooglePlayOnHover}
-          paths={this.props.paths}
           startStopPlayingPath={this.startStopPlayingPath}
           updateSelectedSound={this.updateSelectedSound}
           audioContext={this.audioContext}
@@ -369,7 +370,6 @@ class App extends React.Component {
             selectedSound={this.state.selectedSound}
             updateSelectedSound={this.updateSelectedSound}
             playOnHover={this.state.playOnHover}
-            paths={this.props.paths}
             isUserLoggedIn={this.state.isUserLoggedIn}
             setIsMidiLearningSoundId={this.setIsMidiLearningSoundId}
             isMidiLearningSoundId={this.state.isMidiLearningSoundId}
@@ -381,12 +381,9 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { paths } = state.paths;
-  return { paths };
-};
+const mapStateToProps = (state) => ({});
 
 App.propTypes = propTypes;
 export default connect(mapStateToProps, {
-  displaySystemMessage,
+  displaySystemMessage, clearAllPaths,
 })(App);

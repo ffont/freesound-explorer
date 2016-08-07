@@ -16,7 +16,7 @@ class AudioTickListener extends React.Component {
     }, false);
   }
   componentWillUnmount() {
-    window.removeEventListener('tick');
+    window.removeEventListener('tick', () => {});
   }
   onAudioTick(bar, beat, tick, time) {
     // Compoenents extending AudioTickListener should override this function.

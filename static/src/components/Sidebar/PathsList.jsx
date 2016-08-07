@@ -1,11 +1,11 @@
 import React from 'react';
 import AudioTickListener from '../App/AudioTickListener';
 import '../../stylesheets/PathsList.scss';
-import { getRandomElement } from '../../utils/misc';
+import { getRandomElement, truncatedString } from '../../utils/misc';
 import { MESSAGE_STATUS } from '../../constants';
 import { connect } from 'react-redux';
 import { displaySystemMessage, setPathSync, addPath, startStopPath,
-  setPathCurrentlyPlaying, selectPath } from '../../actions';
+  setPathCurrentlyPlaying, selectPath, deleteSoundFromPath } from '../../actions';
 
 const propTypes = {
   paths: React.PropTypes.array,
@@ -19,6 +19,7 @@ const propTypes = {
   startStopPath: React.PropTypes.func,
   setPathCurrentlyPlaying: React.PropTypes.func,
   selectPath: React.PropTypes.func,
+  deleteSoundFromPath: React.PropTypes.func,
   playSoundByFreesoundId: React.PropTypes.func,
   audioContext: React.PropTypes.object,
 };
@@ -71,17 +72,19 @@ class PathsList extends AudioTickListener {
     // this.playNextSoundFromPath... apparently if we do it after startStopPath this.props is
     // not updated accordingly or fast enough... TODO: investigate this...
     // Same thing we do for when changing sync mode to 'no'
-    for (let i = 0; i < this.props.paths.length; i++) {
-      if ((!this.props.paths[i].isPlaying) && (nextProps.paths[i].isPlaying)) {
-        this.playNextSoundFromPath(nextProps.paths[i], i);
-      }
-      if ((this.props.paths[i].syncMode !== 'no') && (nextProps.paths[i].syncMode === 'no')) {
-        if (nextProps.paths[i].isPlaying) {
-          if (nextProps.paths[i].currentlyPlaying.willFinishAt === undefined) {
-            this.playNextSoundFromPath(nextProps.paths[i], i);
-          } else {
-            this.playNextSoundFromPath(nextProps.paths[i], i,
-              nextProps.paths[i].currentlyPlaying.willFinishAt);
+    if (nextProps.paths.length > 0) {
+      for (let i = 0; i < this.props.paths.length; i++) {
+        if ((!this.props.paths[i].isPlaying) && (nextProps.paths[i].isPlaying)) {
+          this.playNextSoundFromPath(nextProps.paths[i], i);
+        }
+        if ((this.props.paths[i].syncMode !== 'no') && (nextProps.paths[i].syncMode === 'no')) {
+          if (nextProps.paths[i].isPlaying) {
+            if (nextProps.paths[i].currentlyPlaying.willFinishAt === undefined) {
+              this.playNextSoundFromPath(nextProps.paths[i], i);
+            } else {
+              this.playNextSoundFromPath(nextProps.paths[i], i,
+                nextProps.paths[i].currentlyPlaying.willFinishAt);
+            }
           }
         }
       }
@@ -146,7 +149,7 @@ class PathsList extends AudioTickListener {
                 <i className="fa fa-pause fa-lg" aria-hidden="true" /> :
                 <i className="fa fa-play fa-lg" aria-hidden="true" />}
             </button>
-            <a className="path-name" onClick={() => this.props.selectPath(pathIdx)} >
+            <a className="cursor-pointer" onClick={() => this.props.selectPath(pathIdx)} >
               {path.name} ({path.sounds.length} sounds)
             </a>&nbsp;
             <div className="button-group">
@@ -163,15 +166,24 @@ class PathsList extends AudioTickListener {
                 onClick={() => this.setPathSyncMode(pathIdx, 'bar')}
               >o</button>
             </div>
+            {((pathIdx === this.props.selectedPath) && (path.sounds.length === 0)) ?
+              <ul className="sounds-list"><li>Select a sound and click 'Add to path'</li></ul>
+                : false
+            }
             {(pathIdx === this.props.selectedPath) ?
               <ul className="sounds-list">
                 {path.sounds.map((sound, soundIndex) => {
                   // Computed vars here
                   return (
-                    <li
-                      key={soundIndex}
-                      onClick={() => this.props.updateSelectedSound(sound.id)}
-                    >{sound.name}</li>
+                    <li key={soundIndex}>
+                      <a
+                        className="cursor-pointer"
+                        onClick={() => this.props.updateSelectedSound(sound.id)}
+                      >{truncatedString(sound.name, 40)}</a>
+                      <a onClick={() => this.props.deleteSoundFromPath(soundIndex, pathIdx)} >
+                        &nbsp;<i className="fa fa-trash-o fa-lg" aria-hidden="true" />
+                      </a>
+                    </li>
                   );
                 })}
               </ul> : ''}
@@ -195,5 +207,5 @@ const mapStateToProps = (state) => {
 PathsList.propTypes = propTypes;
 export default connect(mapStateToProps, {
   addPath, displaySystemMessage, setPathSync, startStopPath, setPathCurrentlyPlaying,
-  selectPath,
+  selectPath, deleteSoundFromPath,
 }, undefined, { withRef: true })(PathsList);

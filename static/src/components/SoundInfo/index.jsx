@@ -5,7 +5,7 @@ import Waveform from './Waveform';
 import { MESSAGE_STATUS } from '../../constants';
 import sassVariables from 'json!../../stylesheets/variables.json';
 import { connect } from 'react-redux';
-import { displaySystemMessage } from '../../actions';
+import { displaySystemMessage, addSoundToPath } from '../../actions';
 
 const propTypes = {
   position: React.PropTypes.object,
@@ -15,6 +15,8 @@ const propTypes = {
   setIsMidiLearningSoundId: React.PropTypes.func,
   isMidiLearningSoundId: React.PropTypes.number,
   midiMappings: React.PropTypes.object,
+  selectedPath: React.PropTypes.number,
+  addSoundToPath: React.PropTypes.func,
 };
 
 const DEFAULT_CLASSNAME = 'sound-info-modal';
@@ -122,8 +124,18 @@ class SoundInfo extends React.Component {
           this.getCurrentlyAssignedMidiNoteLabel()}
       </button>
     );
+    let addToPathButton = null;
+    if (this.props.selectedPath !== undefined) {
+      addToPathButton = (
+        <button
+          onClick={() => this.props.addSoundToPath(
+            this.props.sound, this.props.selectedPath)}
+        >Add to path</button>
+      );
+    }
     const userButtons = (
       <div className="sound-info-buttons-container">
+        {addToPathButton}
         {midiLearnButton}
         {bookmarkSoundIcon}
         {dowloadSoundIcon}
@@ -148,9 +160,12 @@ class SoundInfo extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => {
+  const { selectedPath } = state.paths;
+  return { selectedPath };
+};
 
 SoundInfo.propTypes = propTypes;
 export default connect(mapStateToProps, {
-  displaySystemMessage,
+  displaySystemMessage, addSoundToPath,
 })(SoundInfo);

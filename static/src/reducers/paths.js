@@ -1,5 +1,6 @@
 import { ADD_PATH, SET_PATH_SYNC, STARTSTOP_PATH,
-  SET_PATH_CURRENTLY_PLAYING, SELECT_PATH } from '../actions/actionTypes';
+  SET_PATH_CURRENTLY_PLAYING, SELECT_PATH, DELETE_SOUND_FROM_PATH,
+  ADD_SOUND_TO_PATH, CLEAR_ALL_PATHS } from '../actions/actionTypes';
 
 const initialState = {
   paths: [],
@@ -77,6 +78,40 @@ export default function paths(state = initialState, action) {
       return Object.assign({}, state, {
         selectedPath: action.pathIdx,
       });
+    }
+    case DELETE_SOUND_FROM_PATH: {
+      const updatedPath = Object.assign({}, state.paths[action.pathIdx], {
+        sounds: [
+          ...state.paths[action.pathIdx].sounds.slice(0, action.pathSoundIdx),
+          ...state.paths[action.pathIdx].sounds.slice(action.pathSoundIdx + 1),
+        ],
+      });
+      return Object.assign({}, state, {
+        paths: [
+          ...state.paths.slice(0, action.pathIdx),
+          updatedPath,
+          ...state.paths.slice(action.pathIdx + 1),
+        ],
+      });
+    }
+    case ADD_SOUND_TO_PATH: {
+      const pathIdx = (action.pathIdx) ? action.pathIdx : state.selectedPath;
+      const updatedPath = Object.assign({}, state.paths[pathIdx], {
+        sounds: [
+          ...state.paths[pathIdx].sounds,
+          action.sound,
+        ],
+      });
+      return Object.assign({}, state, {
+        paths: [
+          ...state.paths.slice(0, pathIdx),
+          updatedPath,
+          ...state.paths.slice(pathIdx + 1),
+        ],
+      });
+    }
+    case CLEAR_ALL_PATHS: {
+      return initialState;
     }
     default:
       return state;

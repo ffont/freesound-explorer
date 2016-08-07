@@ -8,6 +8,7 @@ const DEFAULT_CLASSNAME = 'message-box';
 const propTypes = {
   message: React.PropTypes.string,
   status: React.PropTypes.string,
+  messageCount: React.PropTypes.number,
 };
 
 class MessagesBox extends React.Component {
@@ -19,7 +20,7 @@ class MessagesBox extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     // update component only when receiving a new message
-    if (this.props.message !== nextProps.message) {
+    if (this.props.messageCount !== nextProps.messageCount) {
       clearTimeout(this.visibilityTimeout);
       this.handleTimedVisibility();
       return true;
@@ -73,8 +74,8 @@ class MessagesBox extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { message, status } = state.messages;
-  return { message, status };
+  const { message, status, messageCount } = state.messages;
+  return { message, status, messageCount };
 };
 
 MessagesBox.propTypes = propTypes;

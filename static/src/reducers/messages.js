@@ -4,6 +4,7 @@ import { MESSAGE_STATUS } from '../constants';
 const initialState = {
   message: '',
   status: MESSAGE_STATUS.INFO,
+  messageCount: 0,
 };
 
 export default function messages(state = initialState, action) {
@@ -13,6 +14,8 @@ export default function messages(state = initialState, action) {
       return {
         message: action.message,
         status,
+         // We store number of total messages issued to trigger state chanegs with repeated messages
+        messageCount: state.messageCount + 1,
       };
     }
     default:

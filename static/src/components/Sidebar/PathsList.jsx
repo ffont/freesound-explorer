@@ -5,10 +5,11 @@ import { getRandomElement } from '../../utils/misc';
 import { MESSAGE_STATUS } from '../../constants';
 import { connect } from 'react-redux';
 import { displaySystemMessage, setPathSync, addPath, startStopPath,
-  setPathCurrentlyPlaying } from '../../actions';
+  setPathCurrentlyPlaying, selectPath } from '../../actions';
 
 const propTypes = {
   paths: React.PropTypes.array,
+  selectedPath: React.PropTypes.number,
   sounds: React.PropTypes.array,
   startStopPlayingPath: React.PropTypes.func,
   updateSelectedSound: React.PropTypes.func,
@@ -17,6 +18,7 @@ const propTypes = {
   setPathSync: React.PropTypes.func,
   startStopPath: React.PropTypes.func,
   setPathCurrentlyPlaying: React.PropTypes.func,
+  selectPath: React.PropTypes.func,
   playSoundByFreesoundId: React.PropTypes.func,
   audioContext: React.PropTypes.object,
 };
@@ -124,7 +126,9 @@ class PathsList extends AudioTickListener {
     if (this.props.paths[pathIdx].isPlaying) {
       this.props.startStopPath(pathIdx, false);
     } else {
-      this.props.startStopPath(pathIdx, true);
+      if (this.props.paths[pathIdx].sounds.length) {
+        this.props.startStopPath(pathIdx, true);
+      }
     }
   }
 
@@ -141,7 +145,10 @@ class PathsList extends AudioTickListener {
               {(path.isPlaying) ?
                 <i className="fa fa-pause fa-lg" aria-hidden="true" /> :
                 <i className="fa fa-play fa-lg" aria-hidden="true" />}
-            </button> {path.name} ({path.sounds.length} sounds)&nbsp;
+            </button>
+            <a className="path-name" onClick={() => this.props.selectPath(pathIdx)} >
+              {path.name} ({path.sounds.length} sounds)
+            </a>&nbsp;
             <div className="button-group">
               <button
                 className={(path.syncMode === 'no') ? 'active' : ''}
@@ -156,7 +163,7 @@ class PathsList extends AudioTickListener {
                 onClick={() => this.setPathSyncMode(pathIdx, 'bar')}
               >o</button>
             </div>
-            {(path.isSelected) ?
+            {(pathIdx === this.props.selectedPath) ?
               <ul className="sounds-list">
                 {path.sounds.map((sound, soundIndex) => {
                   // Computed vars here
@@ -181,11 +188,12 @@ class PathsList extends AudioTickListener {
 }
 
 const mapStateToProps = (state) => {
-  const { paths } = state.paths;
-  return { paths };
+  const { paths, selectedPath } = state.paths;
+  return { paths, selectedPath };
 };
 
 PathsList.propTypes = propTypes;
 export default connect(mapStateToProps, {
   addPath, displaySystemMessage, setPathSync, startStopPath, setPathCurrentlyPlaying,
+  selectPath,
 }, undefined, { withRef: true })(PathsList);

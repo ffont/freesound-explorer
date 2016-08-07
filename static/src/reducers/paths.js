@@ -1,20 +1,21 @@
 import { ADD_PATH, SET_PATH_SYNC, STARTSTOP_PATH,
-  SET_PATH_CURRENTLY_PLAYING } from '../actions/actionTypes';
+  SET_PATH_CURRENTLY_PLAYING, SELECT_PATH } from '../actions/actionTypes';
 
 const initialState = {
   paths: [],
+  selectedPath: undefined,
 };
 
 export default function paths(state = initialState, action) {
   switch (action.type) {
     case ADD_PATH: {
       return Object.assign({}, state, {
+        selectedPath: state.paths.length,
         paths: [
           ...state.paths,
           {
             name: `Path ${state.paths.length + 1}`,
             isPlaying: false,
-            isSelected: false,
             syncMode: 'beat',
             currentlyPlaying: {
               soundIdx: undefined,
@@ -47,7 +48,6 @@ export default function paths(state = initialState, action) {
       }
       const updatedPath = Object.assign({}, state.paths[action.pathIdx], {
         isPlaying: action.isPlaying,
-        isSelected: action.isPlaying,  // Set paths as selected when play
         currentlyPlaying: newCurrentlyPlaying,
       });
       return Object.assign({}, state, {
@@ -71,6 +71,11 @@ export default function paths(state = initialState, action) {
           updatedPath,
           ...state.paths.slice(action.pathIdx + 1),
         ],
+      });
+    }
+    case SELECT_PATH: {
+      return Object.assign({}, state, {
+        selectedPath: action.pathIdx,
       });
     }
     default:

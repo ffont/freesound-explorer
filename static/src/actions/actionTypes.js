@@ -6,3 +6,4 @@ export const ADD_PATH = 'ADD_PATH';
 export const SET_PATH_SYNC = 'SET_PATH_SYNC';
 export const STARTSTOP_PATH = 'STARTSTOP_PATH';
 export const SET_PATH_CURRENTLY_PLAYING = 'SET_PATH_CURRENTLY_PLAYING';
+export const SELECT_PATH = 'SELECT_PATH';

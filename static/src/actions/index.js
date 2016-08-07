@@ -20,21 +20,21 @@ export const addPath = makeActionCreator(ADD_PATH,
   'sounds');
 
 export const setPathSync = makeActionCreator(SET_PATH_SYNC,
-  'pathIdx', 'syncMode');
+  'pathId', 'syncMode');
 
 export const startStopPath = makeActionCreator(STARTSTOP_PATH,
-  'pathIdx', 'isPlaying');
+  'pathId', 'isPlaying');
 
 export const setPathCurrentlyPlaying = makeActionCreator(SET_PATH_CURRENTLY_PLAYING,
-  'pathIdx', 'soundIdx', 'willFinishAt');
+  'pathId', 'soundIdx', 'willFinishAt');
 
 export const selectPath = makeActionCreator(SELECT_PATH,
-  'pathIdx');
+  'pathId');
 
 export const deleteSoundFromPath = makeActionCreator(DELETE_SOUND_FROM_PATH,
-  'pathSoundIdx', 'pathIdx');
+  'pathSoundIdx', 'pathId');
 
 export const addSoundToPath = makeActionCreator(ADD_SOUND_TO_PATH,
-  'sound', 'pathIdx');
+  'sound', 'pathId');
 
 export const clearAllPaths = makeActionCreator(CLEAR_ALL_PATHS);

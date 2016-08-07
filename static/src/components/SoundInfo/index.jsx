@@ -15,7 +15,7 @@ const propTypes = {
   setIsMidiLearningSoundId: React.PropTypes.func,
   isMidiLearningSoundId: React.PropTypes.number,
   midiMappings: React.PropTypes.object,
-  selectedPath: React.PropTypes.number,
+  selectedPath: React.PropTypes.string,
   addSoundToPath: React.PropTypes.func,
 };
 

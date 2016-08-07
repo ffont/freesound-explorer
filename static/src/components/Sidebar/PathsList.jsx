@@ -51,6 +51,17 @@ class PathsList extends AudioTickListener {
             }
           }
         }
+        if (this.props.paths[i].syncMode === '2xbeat') {
+          if (tick % 8 === 0) {
+            if (this.props.paths[i].currentlyPlaying.willFinishAt === undefined) {
+              this.playNextSoundFromPath(undefined, i, time);
+            } else {
+              if (this.props.paths[i].currentlyPlaying.willFinishAt <= time) {
+                this.playNextSoundFromPath(undefined, i, time);
+              }
+            }
+          }
+        }
         if (this.props.paths[i].syncMode === 'bar') {
           if (tick === 0) {
             if (this.props.paths[i].currentlyPlaying.willFinishAt === undefined) {
@@ -98,28 +109,30 @@ class PathsList extends AudioTickListener {
     } else {
       myPath = path;
     }
-    if (myPath.isPlaying) {
-      let nextSoundToPlayIdx;
-      if ((myPath.currentlyPlaying.soundIdx === undefined) ||
-        (myPath.currentlyPlaying.soundIdx + 1 >= myPath.sounds.length)) {
-        nextSoundToPlayIdx = 0;
-      } else {
-        nextSoundToPlayIdx = myPath.currentlyPlaying.soundIdx + 1;
-      }
-      const nextSoundToPlay = myPath.sounds[nextSoundToPlayIdx];
-      const willFinishAt = (time === undefined) ?
-        this.props.audioContext.currentTime + nextSoundToPlay.duration :
-        time + nextSoundToPlay.duration;
-      this.props.setPathCurrentlyPlaying(pathIdx, nextSoundToPlayIdx, willFinishAt);
-      if (myPath.syncMode === 'no') {
-        this.props.playSoundByFreesoundId(nextSoundToPlay.id, () => {
-          this.playNextSoundFromPath(undefined, pathIdx);
-        });
-      } else {
-        // If synched to metronome, sounds will be triggered by onAudioTick events
-        if (time !== undefined) {
-          this.props.playSoundByFreesoundId(
-            myPath.sounds[nextSoundToPlayIdx].id, undefined, undefined, undefined, time);
+    if (myPath !== undefined) {
+      if (myPath.isPlaying) {
+        let nextSoundToPlayIdx;
+        if ((myPath.currentlyPlaying.soundIdx === undefined) ||
+          (myPath.currentlyPlaying.soundIdx + 1 >= myPath.sounds.length)) {
+          nextSoundToPlayIdx = 0;
+        } else {
+          nextSoundToPlayIdx = myPath.currentlyPlaying.soundIdx + 1;
+        }
+        const nextSoundToPlay = myPath.sounds[nextSoundToPlayIdx];
+        const willFinishAt = (time === undefined) ?
+          this.props.audioContext.currentTime + nextSoundToPlay.duration :
+          time + nextSoundToPlay.duration;
+        this.props.setPathCurrentlyPlaying(pathIdx, nextSoundToPlayIdx, willFinishAt);
+        if (myPath.syncMode === 'no') {
+          this.props.playSoundByFreesoundId(nextSoundToPlay.id, () => {
+            this.playNextSoundFromPath(undefined, pathIdx);
+          });
+        } else {
+          // If synched to metronome, sounds will be triggered by onAudioTick events
+          if (time !== undefined) {
+            this.props.playSoundByFreesoundId(
+              myPath.sounds[nextSoundToPlayIdx].id, undefined, undefined, undefined, time);
+          }
         }
       }
     }
@@ -156,15 +169,19 @@ class PathsList extends AudioTickListener {
               <button
                 className={(path.syncMode === 'no') ? 'active' : ''}
                 onClick={() => this.setPathSyncMode(pathIdx, 'no')}
-              >x</button>
+              >none</button>
               <button
                 className={(path.syncMode === 'beat') ? 'active' : ''}
                 onClick={() => this.setPathSyncMode(pathIdx, 'beat')}
-              >&#9833;</button>
+              >1/4</button>
+              <button
+                className={(path.syncMode === '2xbeat') ? 'active' : ''}
+                onClick={() => this.setPathSyncMode(pathIdx, '2xbeat')}
+              >1/2</button>
               <button
                 className={(path.syncMode === 'bar') ? 'active' : ''}
                 onClick={() => this.setPathSyncMode(pathIdx, 'bar')}
-              >o</button>
+              >1</button>
             </div>
             {((pathIdx === this.props.selectedPath) && (path.sounds.length === 0)) ?
               <ul className="sounds-list"><li>Select a sound and click 'Add to path'</li></ul>

@@ -32,7 +32,7 @@ class PathsList extends AudioTickListener {
       [...Array(nSounds).keys()].map(() => pathSounds.push(getRandomElement(this.props.sounds)));
       this.props.addPath(pathSounds);
     } else {
-      this.props.displaySystemMessage('A new path can not be created until there are some sounds ' +
+      this.props.displaySystemMessage('New paths can not be created until there are some sounds ' +
         'in the map', MESSAGE_STATUS.ERROR);
     }
   }

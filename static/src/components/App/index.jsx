@@ -8,6 +8,8 @@ import MessagesBox from '../MessagesBox';
 import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
 import { readObjectByString, getRandomElement } from '../../utils/misc';
 import { displaySystemMessage } from '../../actions/messagesBox';
+import { updateUserLoggedStatus, updateLoginModalVisibilility }
+  from '../../actions/login';
 import audioLoader from '../../utils/audioLoader';
 import tsnejs from '../../vendors/tsne';
 import '../../stylesheets/App.scss';
@@ -21,6 +23,8 @@ const propTypes = {
     windowHeight: React.PropTypes.number,
   }),
   displaySystemMessage: React.PropTypes.func,
+  updateUserLoggedStatus: React.PropTypes.func,
+  updateLoginModalVisibilility: React.PropTypes.func,
 };
 
 class App extends React.Component {
@@ -35,9 +39,6 @@ class App extends React.Component {
       statusMessage: { message: '', status: '' },
       selectedSound: undefined,
       maxResults: DEFAULT_MAX_RESULTS,
-      isUserLoggedIn: false,
-      isEndUserAuthSupported: false,
-      isLoginModalVisible: false,
       isSidebarVisible: true,
       activeMode: 'SearchMode',
       playOnHover: false,
@@ -46,11 +47,8 @@ class App extends React.Component {
     this.setMapDescriptor = this.setMapDescriptor.bind(this);
     this.setMaxResults = this.setMaxResults.bind(this);
     this.updateSelectedSound = this.updateSelectedSound.bind(this);
-    this.setLoginModalVisibility = this.setLoginModalVisibility.bind(this);
     this.setSidebarVisibility = this.setSidebarVisibility.bind(this);
     this.setActiveMode = this.setActiveMode.bind(this);
-    this.updateUserLoggedStatus = this.updateUserLoggedStatus.bind(this);
-    this.updateEndUserAuthSupport = this.updateEndUserAuthSupport.bind(this);
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
     this.handleFailedLogin = this.handleFailedLogin.bind(this);
     this.setSessionStorage = this.setSessionStorage.bind(this);
@@ -193,12 +191,6 @@ class App extends React.Component {
     });
   }
 
-  setLoginModalVisibility(isLoginModalVisible) {
-    this.setState({
-      isLoginModalVisible,
-    });
-  }
-
   setSidebarVisibility(isSidebarVisible) {
     this.setState({
       isSidebarVisible,
@@ -273,18 +265,6 @@ class App extends React.Component {
     });
   }
 
-  updateUserLoggedStatus(isUserLoggedIn) {
-    this.setState({
-      isUserLoggedIn,
-    });
-  }
-
-  updateEndUserAuthSupport(isEndUserAuthSupported) {
-    this.setState({
-      isEndUserAuthSupported,
-    });
-  }
-
   storeQueryResults(allPagesResults) {
     const sounds = reshapeReceivedSounds(allPagesResults);
     // initialize tsne data
@@ -297,19 +277,15 @@ class App extends React.Component {
   }
 
   handleSuccessfulLogin() {
-    this.setState({
-      isUserLoggedIn: true,
-      isLoginModalVisible: false,
-    });
+    this.props.updateUserLoggedStatus(true);
+    this.props.updateLoginModalVisibilility(false);
     this.props.displaySystemMessage(`Logged in as ${sessionStorage.getItem('username')}`,
       MESSAGE_STATUS.SUCCESS);
   }
 
   handleFailedLogin() {
-    this.setState({
-      isUserLoggedIn: false,
-      isLoginModalVisible: false,
-    });
+    this.props.updateUserLoggedStatus(false);
+    this.props.updateLoginModalVisibilility(false);
     this.props.displaySystemMessage('Failed to log in...', MESSAGE_STATUS.ERROR);
   }
 
@@ -395,12 +371,6 @@ class App extends React.Component {
           updateSelectedSound={this.updateSelectedSound}
         />
         <Login
-          isLoginModalVisible={this.state.isLoginModalVisible}
-          isUserLoggedIn={this.state.isUserLoggedIn}
-          isEndUserAuthSupported={this.state.isEndUserAuthSupported}
-          setLoginModalVisibility={this.setLoginModalVisibility}
-          updateUserLoggedStatus={this.updateUserLoggedStatus}
-          updateEndUserAuthSupport={this.updateEndUserAuthSupport}
           setSessionStorage={this.setSessionStorage}
         />
         {(shouldShowMap) ?
@@ -415,7 +385,6 @@ class App extends React.Component {
             updateSelectedSound={this.updateSelectedSound}
             playOnHover={this.state.playOnHover}
             paths={this.state.paths}
-            isUserLoggedIn={this.state.isUserLoggedIn}
             setIsMidiLearningSoundId={this.setIsMidiLearningSoundId}
             isMidiLearningSoundId={this.state.isMidiLearningSoundId}
             midiMappings={this.state.midiMappings}
@@ -427,4 +396,8 @@ class App extends React.Component {
 }
 
 App.propTypes = propTypes;
-export default connect(() => ({}), { displaySystemMessage })(App);
+export default connect(() => ({}), {
+  displaySystemMessage,
+  updateUserLoggedStatus,
+  updateLoginModalVisibilility,
+})(App);

@@ -15,6 +15,8 @@ const propTypes = {
   midiMappings: React.PropTypes.object,
 };
 
+// TODO: SoundInfo component must read isUserLoggedIn from state.login (redux)
+
 const DEFAULT_CLASSNAME = 'sound-info-modal';
 
 class SoundInfo extends React.Component {

@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { displaySystemMessage } from '../../actions/messagesBox';
+import { updateLoginModalVisibilility, updateBackEndAuthSupport, updateUserLoggedStatus }
+  from '../../actions/login';
 import { loadJSON } from '../../utils/misc';
 import LoginModal from './LoginModal';
 import LoginButton from './LoginButton';
@@ -38,12 +40,12 @@ const getAppToken = () => new Promise((resolve, reject) => {
 });
 
 const propTypes = {
-  isLoginModalVisible: React.PropTypes.bool,
+  isModalVisible: React.PropTypes.bool,
   isUserLoggedIn: React.PropTypes.bool,
   isEndUserAuthSupported: React.PropTypes.bool,
-  setLoginModalVisibility: React.PropTypes.func,
+  updateLoginModalVisibilility: React.PropTypes.func,
+  updateBackEndAuthSupport: React.PropTypes.func,
   updateUserLoggedStatus: React.PropTypes.func,
-  updateEndUserAuthSupport: React.PropTypes.func,
   setSessionStorage: React.PropTypes.func,
   displaySystemMessage: React.PropTypes.func,
 };
@@ -73,7 +75,7 @@ class Login extends React.Component {
     getAppToken().then(
       () => {
         // getAppToken success: back-end available
-        this.props.updateEndUserAuthSupport(true);
+        this.props.updateBackEndAuthSupport(true);
         this.getAccessToken();
       },
       () => { // getAppToken error: no back-end available
@@ -81,7 +83,7 @@ class Login extends React.Component {
   }
 
   handleFreesoundLogin() {
-    this.props.setLoginModalVisibility(true);
+    this.props.updateLoginModalVisibilility(true);
   }
 
   handleFreesoundLogout() {
@@ -104,14 +106,30 @@ class Login extends React.Component {
           isUserLoggedIn={this.props.isUserLoggedIn}
         />
         <LoginModal
-          isVisible={this.props.isLoginModalVisible}
+          isVisible={this.props.isModalVisible}
           contentURL={URLS.login}
-          setLoginModalVisibility={this.props.setLoginModalVisibility}
+          setLoginModalVisibility={this.props.updateLoginModalVisibilility}
         />
       </div>
     );
   }
 }
 
+const mapStateToProps = (state, ownProps) => {
+  const { setSessionStorage } = ownProps;
+  const { isModalVisible, isUserLoggedIn, isEndUserAuthSupported } = state;
+  return {
+    isModalVisible,
+    isUserLoggedIn,
+    isEndUserAuthSupported,
+    setSessionStorage,
+  };
+};
+
 Login.propTypes = propTypes;
-export default connect(() => ({}), { displaySystemMessage })(Login);
+export default connect(mapStateToProps, {
+  displaySystemMessage,
+  updateLoginModalVisibilility,
+  updateBackEndAuthSupport,
+  updateUserLoggedStatus,
+})(Login);

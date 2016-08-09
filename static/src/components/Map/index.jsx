@@ -117,7 +117,7 @@ class Map extends React.Component {
     return (
       <div className="map-container" ref="mapContainer">
         <svg className="map" onClick={this.onClickCallback}>
-          {'/* Draw circles (sounds)'}
+          {'/* Draw circles (sounds) */'}
           {this.props.sounds.map((sound, index) => {
             const tsnePosition = {
               x: tsneSolution[index][0],

@@ -40,6 +40,7 @@ class App extends React.Component {
       statusMessage: { message: '', status: '' },
       selectedSound: undefined,
       maxResults: DEFAULT_MAX_RESULTS,
+      maxDuration: 5,
       isUserLoggedIn: false,
       isEndUserAuthSupported: false,
       isLoginModalVisible: false,
@@ -50,6 +51,7 @@ class App extends React.Component {
     this.onQuerySubmit = this.onQuerySubmit.bind(this);
     this.setMapDescriptor = this.setMapDescriptor.bind(this);
     this.setMaxResults = this.setMaxResults.bind(this);
+    this.setMaxDuration = this.setMaxDuration.bind(this);
     this.updateSelectedSound = this.updateSelectedSound.bind(this);
     this.setLoginModalVisibility = this.setLoginModalVisibility.bind(this);
     this.setSidebarVisibility = this.setSidebarVisibility.bind(this);
@@ -96,7 +98,7 @@ class App extends React.Component {
       isFetching: true,
     });
     this.props.displaySystemMessage('Searching for sounds...');
-    submitQuery(query, this.state.maxResults).then(
+    submitQuery(query, this.state.maxResults, this.state.maxDuration).then(
       allPagesResults => this.storeQueryResults(allPagesResults),
       error => this.handleQueryError(error));
   }
@@ -203,6 +205,13 @@ class App extends React.Component {
     const newMaxResults = parseInt(evt.target.value, 10);
     this.setState({
       maxResults: newMaxResults,
+    });
+  }
+
+  setMaxDuration(evt) {
+    const newMaxDuration = parseFloat(evt.target.value, 10);
+    this.setState({
+      maxDuration: newMaxDuration,
     });
   }
 
@@ -342,7 +351,9 @@ class App extends React.Component {
           onQuerySubmit={this.onQuerySubmit}
           onSetMapDescriptor={this.setMapDescriptor}
           onSetMaxResults={this.setMaxResults}
+          onSetMaxDuration={this.setMaxDuration}
           maxResults={this.state.maxResults}
+          maxDuration={this.state.maxDuration}
           playOnHover={this.state.playOnHover}
           tooglePlayOnHover={this.tooglePlayOnHover}
           startStopPlayingPath={this.startStopPlayingPath}

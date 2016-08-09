@@ -2,7 +2,7 @@ import React from 'react';
 import AudioTickListener from '../App/AudioTickListener';
 import '../../stylesheets/PathsList.scss';
 import { getRandomElement, truncatedString } from '../../utils/misc';
-import { indexElementWithId, elementWithId } from '../../utils/arrayUtils';
+import { elementWithId } from '../../utils/arrayUtils';
 import { MESSAGE_STATUS } from '../../constants';
 import { connect } from 'react-redux';
 import { displaySystemMessage, setPathSync, addPath, startStopPath,
@@ -26,6 +26,33 @@ const propTypes = {
 };
 
 class PathsList extends AudioTickListener {
+
+  componentDidUpdate(prevProps) {
+    // Look for state changes we are interested in monitoring and trigger corresponding methods
+    // if needed (i.e. to triger component methods after redux actions have been completed).
+    for (let i = 0; i < this.props.paths.length; i++) {
+      const newPath = this.props.paths[i];
+      const prevPath = prevProps.paths[i];
+      let shouldPlayNextSound = false;
+      let shouldPlayNextSoundAtTime = 0;
+      if ((newPath.isPlaying) && (!prevPath.isPlaying) && (newPath.syncMode === 'no')) {
+        // A path changed form isPlaying = false to isPlaying = true and syncMode is 'no'
+        shouldPlayNextSound = true;
+      }
+      if ((newPath.syncMode === 'no') && (prevPath.syncMode !== 'no')) {
+        // A path changed from syncMode != 'no' to syncMode = 'no'
+        if (newPath.isPlaying) {
+          shouldPlayNextSoundAtTime = (newPath.currentlyPlaying.willFinishAt === undefined) ?
+            0 : newPath.currentlyPlaying.willFinishAt;
+          shouldPlayNextSound = true;
+        }
+      }
+      if (shouldPlayNextSound) {
+        this.playNextSoundFromPath(newPath.id, shouldPlayNextSoundAtTime);
+      }
+    }
+  }
+
   createNewPath() {
     if (this.props.sounds.length) {
       const pathSounds = [];
@@ -39,38 +66,31 @@ class PathsList extends AudioTickListener {
   }
 
   onAudioTick(bar, beat, tick, time) {
+    // Iterate over all paths and check if some should trigger next sound
     for (let i = 0; i < this.props.paths.length; i++) {
-      if (this.props.paths[i].isPlaying) {
-        if (this.props.paths[i].syncMode === 'beat') {
+      const path = this.props.paths[i];
+      if (path.isPlaying) {
+        if (path.syncMode === 'beat') {
           if (tick % 4 === 0) {
-            if (this.props.paths[i].currentlyPlaying.willFinishAt === undefined) {
-              this.playNextSoundFromPath(undefined, this.props.paths[i].id, time);
-            } else {
-              if (this.props.paths[i].currentlyPlaying.willFinishAt <= time) {
-                this.playNextSoundFromPath(undefined, this.props.paths[i].id, time);
-              }
+            if ((path.currentlyPlaying.willFinishAt === undefined)
+              || (path.currentlyPlaying.willFinishAt <= time)) {
+              this.playNextSoundFromPath(path.id, time);
             }
           }
         }
-        if (this.props.paths[i].syncMode === '2xbeat') {
+        if (path.syncMode === '2xbeat') {
           if (tick % 8 === 0) {
-            if (this.props.paths[i].currentlyPlaying.willFinishAt === undefined) {
-              this.playNextSoundFromPath(undefined, this.props.paths[i].id, time);
-            } else {
-              if (this.props.paths[i].currentlyPlaying.willFinishAt <= time) {
-                this.playNextSoundFromPath(undefined, this.props.paths[i].id, time);
-              }
+            if ((path.currentlyPlaying.willFinishAt === undefined)
+              || (path.currentlyPlaying.willFinishAt <= time)) {
+              this.playNextSoundFromPath(path.id, time);
             }
           }
         }
-        if (this.props.paths[i].syncMode === 'bar') {
+        if (path.syncMode === 'bar') {
           if (tick === 0) {
-            if (this.props.paths[i].currentlyPlaying.willFinishAt === undefined) {
-              this.playNextSoundFromPath(undefined, this.props.paths[i].id, time);
-            } else {
-              if (this.props.paths[i].currentlyPlaying.willFinishAt <= time) {
-                this.playNextSoundFromPath(undefined, this.props.paths[i].id, time);
-              }
+            if ((path.currentlyPlaying.willFinishAt === undefined)
+              || (path.currentlyPlaying.willFinishAt <= time)) {
+              this.playNextSoundFromPath(path.id, time);
             }
           }
         }
@@ -78,61 +98,31 @@ class PathsList extends AudioTickListener {
     }
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    // For some reason we need to hook componentWillUpdate to see if a path should
-    // start playing (state changed from isPlaying = false to isPlaying = true) and call
-    // this.playNextSoundFromPath... apparently if we do it after startStopPath this.props is
-    // not updated accordingly or fast enough... TODO: investigate this...
-    // Same thing we do for when changing sync mode to 'no'
-    if (nextProps.paths.length > 0) {
-      for (let i = 0; i < this.props.paths.length; i++) {
-        if ((!this.props.paths[i].isPlaying) && (nextProps.paths[i].isPlaying)) {
-          this.playNextSoundFromPath(nextProps.paths[i], this.props.paths[i].id);
-        }
-        if ((this.props.paths[i].syncMode !== 'no') && (nextProps.paths[i].syncMode === 'no')) {
-          if (nextProps.paths[i].isPlaying) {
-            if (nextProps.paths[i].currentlyPlaying.willFinishAt === undefined) {
-              this.playNextSoundFromPath(nextProps.paths[i], this.props.paths[i].id);
-            } else {
-              this.playNextSoundFromPath(nextProps.paths[i], this.props.paths[i].id,
-                nextProps.paths[i].currentlyPlaying.willFinishAt);
-            }
-          }
-        }
-      }
-    }
-  }
-
-  playNextSoundFromPath(path, pathId, time) {
-    let myPath = undefined;
-    if (path === undefined) {
-      myPath = elementWithId(this.props.paths, pathId);
-    } else {
-      myPath = path;
-    }
-    if (myPath !== undefined) {
-      if (myPath.isPlaying) {
+  playNextSoundFromPath(pathId, time) {
+    const path = elementWithId(this.props.paths, pathId);
+    if (path) {
+      if (path.isPlaying) {
         let nextSoundToPlayIdx;
-        if ((myPath.currentlyPlaying.soundIdx === undefined) ||
-          (myPath.currentlyPlaying.soundIdx + 1 >= myPath.sounds.length)) {
+        if ((path.currentlyPlaying.soundIdx === undefined) ||
+          (path.currentlyPlaying.soundIdx + 1 >= path.sounds.length)) {
           nextSoundToPlayIdx = 0;
         } else {
-          nextSoundToPlayIdx = myPath.currentlyPlaying.soundIdx + 1;
+          nextSoundToPlayIdx = path.currentlyPlaying.soundIdx + 1;
         }
-        const nextSoundToPlay = myPath.sounds[nextSoundToPlayIdx];
+        const nextSoundToPlay = path.sounds[nextSoundToPlayIdx];
         const willFinishAt = (time === undefined) ?
           this.props.audioContext.currentTime + nextSoundToPlay.duration :
           time + nextSoundToPlay.duration;
-        this.props.setPathCurrentlyPlaying(myPath.id, nextSoundToPlayIdx, willFinishAt);
-        if (myPath.syncMode === 'no') {
+        this.props.setPathCurrentlyPlaying(path.id, nextSoundToPlayIdx, willFinishAt);
+        if (path.syncMode === 'no') {
           this.props.playSoundByFreesoundId(nextSoundToPlay.id, () => {
-            this.playNextSoundFromPath(undefined, myPath.id);
+            this.playNextSoundFromPath(path.id);
           });
         } else {
           // If synched to metronome, sounds will be triggered by onAudioTick events
           if (time !== undefined) {
             this.props.playSoundByFreesoundId(
-              myPath.sounds[nextSoundToPlayIdx].id, undefined, undefined, undefined, time);
+              path.sounds[nextSoundToPlayIdx].id, undefined, undefined, undefined, time);
           }
         }
       }
@@ -187,20 +177,16 @@ class PathsList extends AudioTickListener {
             }
             {(path.id === this.props.selectedPath) ?
               <ul className="sounds-list">
-                {path.sounds.map((sound, soundIndex) => {
-                  // Computed vars here
-                  return (
-                    <li key={soundIndex}>
-                      <a
-                        className="cursor-pointer"
-                        onClick={() => this.props.updateSelectedSound(sound.id)}
-                      >{truncatedString(sound.name, 40)}</a>
-                      <a onClick={() => this.props.deleteSoundFromPath(soundIndex, path.id)} >
-                        &nbsp;<i className="fa fa-trash-o fa-lg" aria-hidden="true" />
-                      </a>
-                    </li>
-                  );
-                })}
+                {path.sounds.map((sound, soundIndex) => (
+                  <li key={soundIndex}>
+                    <a
+                      className="cursor-pointer"
+                      onClick={() => this.props.updateSelectedSound(sound.id)}
+                    >{truncatedString(sound.name, 40)}</a>
+                    <a onClick={() => this.props.deleteSoundFromPath(soundIndex, path.id)} >
+                      &nbsp;<i className="fa fa-trash-o fa-lg" aria-hidden="true" />
+                    </a>
+                  </li>))}
               </ul> : ''}
           </li>
         )}

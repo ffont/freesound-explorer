@@ -1,14 +1,15 @@
 import React from 'react';
 import '../../stylesheets/QueryBox.scss';
-import '../../stylesheets/toggle.scss';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { DEFAULT_MAX_RESULTS } from '../../constants';
+import { DEFAULT_MAX_RESULTS, DEFAULT_MAX_DURATION } from '../../constants';
 
 const propTypes = {
   onSetMapDescriptor: React.PropTypes.func,
   onSetMaxResults: React.PropTypes.func,
+  onSetMaxDuration: React.PropTypes.func,
   onQuerySubmit: React.PropTypes.func,
   maxResults: React.PropTypes.number,
+  maxDuration: React.PropTypes.number,
   playOnHover: React.PropTypes.bool,
   tooglePlayOnHover: React.PropTypes.func,
 };
@@ -47,12 +48,22 @@ class QueryBox extends React.Component {
             <option value="lowlevel.mfcc.mean">Arrange by Timbre</option>
             <option value="tonal.hpcp.mean">Arrange by Tonality</option>
           </select>
-          <input
-            id="max-results-slider"
-            className="max-results-slider"
-            type="range" onChange={this.props.onSetMaxResults}
-            min="20" max="450" defaultValue={DEFAULT_MAX_RESULTS} step="1"
-          /><span>{this.props.maxResults}</span>
+          <div className="slider-wrapper">
+            Number of results:
+            <input
+              id="max-results-slider"
+              type="range" onChange={this.props.onSetMaxResults}
+              min="20" max="450" defaultValue={DEFAULT_MAX_RESULTS} step="1"
+            /><span>{this.props.maxResults}</span>
+          </div>
+          <div className="slider-wrapper">
+            Maximum duration (s):
+            <input
+              id="max-duration-slider"
+              type="range" onChange={this.props.onSetMaxDuration}
+              min="0.5" max="30" defaultValue={DEFAULT_MAX_DURATION} step="0.5"
+            /><span>{this.props.maxDuration}</span>
+          </div>
           <div className="toggle-wrapper">
             <span>Play on hover:</span>
             <div style={{ display: 'inline' }}>

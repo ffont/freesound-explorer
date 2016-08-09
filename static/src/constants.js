@@ -1,10 +1,9 @@
 export const DEFAULT_QUERY = 'instrument note';
 export const DEFAULT_MAX_RESULTS = 60;
+export const DEFAULT_MAX_DURATION = 5;
 export const DEFAULT_DESCRIPTOR = 'lowlevel.mfcc.mean';
-export const DEFAULT_FILTER = 'duration:[0%20TO%205]';
 
 export const DEFAULT_MESSAGE_DURATION = 4000;
-
 export const MESSAGE_STATUS = {
   INFO: 'info',
   SUCCESS: 'success',
@@ -28,3 +27,8 @@ export const TSNE_CONFIG = {
   perplexity: 10,
   dim: 2,
 };
+
+export const DEFAULT_TEMPO = 120.0;
+export const LOOKAHEAD = 25; // How often we'll call the scheduler function (in milliseconds)
+export const SCHEDULEAHEADTIME = 0.2; // How far we schedule notes from lookahead call (in seconds)
+export const TICKRESOLUTION = 16; // 16 for 16th note or 32 for 32th note

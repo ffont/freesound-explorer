@@ -17,6 +17,7 @@ describe('messsagesBox reducer', () => {
     const stateAfter = Object.assign({}, stateBefore, {
       message: testMessage,
       status: MESSAGE_STATUS.INFO,
+      messageCount: stateBefore.messageCount + 1,
     });
     it('correctly updates state', () => {
       expect(reducer(stateBefore, action)).toEqual(stateAfter);
@@ -24,12 +25,16 @@ describe('messsagesBox reducer', () => {
     // 'info' status should be assigned by default
     const actionWithoutStatus = displaySystemMessage(testMessage);
     it('correctly assigns default status', () => {
-      expect(reducer(stateBefore, actionWithoutStatus)).toEqual(stateAfter);
+      expect(reducer(stateBefore, actionWithoutStatus)).toEqual(
+        Object.assign({}, stateAfter, {
+          messageCount: stateBefore.messageCount + 1,
+        }));
     });
     const actionWithErrorStatus = displaySystemMessage(testMessage, MESSAGE_STATUS.ERROR);
     const stateAfterErrorStatus = Object.assign({}, stateBefore, {
       message: testMessage,
       status: MESSAGE_STATUS.ERROR,
+      messageCount: stateBefore.messageCount + 1,
     });
     it('correctly assign error status', () => {
       expect(reducer(stateBefore, actionWithErrorStatus)).toEqual(stateAfterErrorStatus);

@@ -1,4 +1,4 @@
-import { DEFAULT_FILTER, DEFAULT_QUERY, DEFAULT_MAX_RESULTS } from '../constants';
+import { DEFAULT_QUERY, DEFAULT_MAX_RESULTS } from '../constants';
 import freesound from '../vendors/freesound';
 import { rgbToHex } from './colors';
 
@@ -15,7 +15,7 @@ function parseFreesoundSearchUrl(url) {
   return { query, filter };
 }
 
-function search(query = DEFAULT_QUERY, filter = DEFAULT_FILTER, maxResults = DEFAULT_MAX_RESULTS) {
+function search(query = DEFAULT_QUERY, filter = "", maxResults = DEFAULT_MAX_RESULTS) {
   // Search sounds and start loading them
   let pageCounter = 0;
   const freesoundMaxPageSize = 150;
@@ -36,7 +36,7 @@ function search(query = DEFAULT_QUERY, filter = DEFAULT_FILTER, maxResults = DEF
       page_size: maxPageResults,
       group_by_pack: 0,
       filter,
-      fields: 'id,previews,name,analysis,url,username',
+      fields: 'id,previews,name,analysis,url,username,duration',
       descriptors: extraDescriptors.join(),
     }));
     pageCounter++;
@@ -44,14 +44,21 @@ function search(query = DEFAULT_QUERY, filter = DEFAULT_FILTER, maxResults = DEF
   return Promise.all(promises);
 }
 
-export function submitQuery(submittedQuery, maxResults) {
+export function submitQuery(submittedQuery, maxResults, maxDuration) {
+  let query = undefined;
+  let filter = '';
   if ((submittedQuery.startsWith('http')) && (submittedQuery.indexOf('freesound.org') !== -1)) {
     // Freesound url, parse query and filter and search
-    const { query, filter } = parseFreesoundSearchUrl(submittedQuery);
-    return search(query, filter, maxResults);
+    const { query2, filter2 } = parseFreesoundSearchUrl(submittedQuery);
+    query = query2;
+    filter = filter2;
+  } else {
+    // Standard query
+    const parsedMaxDuration = parseInt(maxDuration, 10);
+    filter = `duration:[0%20TO%20${parsedMaxDuration}]`;
+    query = submittedQuery;
   }
-  // normal query
-  return search(submittedQuery, DEFAULT_FILTER, maxResults);
+  return search(query, filter, maxResults);
 }
 
 export function reshapeReceivedSounds(allPagesResults) {
@@ -59,7 +66,7 @@ export function reshapeReceivedSounds(allPagesResults) {
   allPagesResults.forEach(pageResults => {
     const results = pageResults.results;
     results.forEach((sound, index) => {
-      const { id, analysis, url, name, username } = sound;
+      const { id, analysis, url, name, username, duration } = sound;
       const previewUrl = sound.previews['preview-lq-mp3'];
       const fsObject = pageResults.getSound(index);
       const { bookmark, download } = fsObject;
@@ -81,6 +88,7 @@ export function reshapeReceivedSounds(allPagesResults) {
           name,
           color,
           username,
+          duration, // Will be updated once sound is loaded to buffer
           bookmark,
           download,
           isBookmarked,

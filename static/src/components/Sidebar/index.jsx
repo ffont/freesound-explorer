@@ -9,6 +9,9 @@ const propTypes = {
   activeMode: React.PropTypes.string,
   setSidebarVisibility: React.PropTypes.func,
   setActiveMode: React.PropTypes.func,
+  audioContext: React.PropTypes.object,
+  sounds: React.PropTypes.array,
+  playSoundByFreesoundId: React.PropTypes.func,
 };
 
 function Sidebar(props) {
@@ -16,9 +19,11 @@ function Sidebar(props) {
   return (
     <div className={sidebarClassName}>
       <div className="sidebar-content-wrapper">
-        <SearchMode {...props} isActiveMode={props.activeMode === 'SearchMode'} />
-        <PathsMode {...props} isActiveMode={props.activeMode === 'PathsMode'} />
-        <InfoMode isActiveMode={props.activeMode === 'InfoMode'} />
+        <div className="sidebar-vertical-scroll">
+          <SearchMode {...props} isActiveMode={props.activeMode === 'SearchMode'} />
+          <PathsMode {...props} isActiveMode={props.activeMode === 'PathsMode'} />
+          <InfoMode isActiveMode={props.activeMode === 'InfoMode'} />
+        </div>
       </div>
       <div className="sidebar-menu-wrapper">
         <ul>

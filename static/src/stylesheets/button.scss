@@ -1,0 +1,28 @@
+@import "./variables.json";
+
+button {
+  border: 0px;
+  border-radius: 5px;
+  padding: 6px;
+  background: none;
+  color: white;
+  min-width:30px;
+}
+button:focus {
+  outline: 0;
+}
+button.active {
+  background-color: rgba(58, 103, 94, 0.9);
+}
+
+.button-group {
+  display: inline-block;
+  vertical-align: bottom;
+  margin-left: 5px;
+  border: 1px solid white;
+  border-radius: 5px;
+  overflow: hidden;
+  button {
+    border-radius: 0px;
+  }
+}

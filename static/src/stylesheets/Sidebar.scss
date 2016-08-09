@@ -11,6 +11,7 @@
   p {
     margin-bottom: 8px;
   }
+  margin-bottom: 50px;
 }
 
 .sidebar.active {
@@ -22,7 +23,17 @@
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.4);
   height: 100%;
-  overflow: scroll;
+}
+
+.sidebar-vertical-scroll {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.sidebar-vertical-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .sidebar-menu-wrapper {
@@ -65,6 +76,7 @@
 
 .sidebar .mode-active {
   display: block;
+  margin-bottom: 40px;
 }
 
 .sidebar .mode-inactive {

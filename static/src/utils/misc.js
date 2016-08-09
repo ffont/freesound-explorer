@@ -47,3 +47,11 @@ export const downsampleSignal = (signal, numberOfPoints = 50) => {
   });
   return downsampledSignal;
 };
+
+export const truncatedString = (string, length = 40, extraChars = '...') => {
+  let newString = string.substr(0, length);
+  if (string.length > length) {
+    newString += extraChars;
+  }
+  return newString;
+};

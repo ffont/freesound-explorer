@@ -8,23 +8,17 @@
     display: block;
     width: 100%;
     min-height: $sidebarClosedOffset;
-    line-height: $sidebarClosedOffset;
-  }
-  button {
-  	padding: 7px;
-  	border-radius: 5px;
-  	border: 0px;
-  	height: $sidebarClosedOffset;
-  	width: 34px;
-    background: none;
-    color: white;
-  }
-  button:focus {
-    outline: 0;
+    text-align: middle;
   }
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .sounds-list {
+  margin-top: 5px;
+  margin-bottom: 15px;
   ul {
     list-style-type: none;
   }

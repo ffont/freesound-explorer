@@ -8,14 +8,17 @@ import MessagesBox from '../MessagesBox';
 import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
 import { readObjectByString, getRandomElement } from '../../utils/misc';
 import { displaySystemMessage } from '../../actions/messagesBox';
-import { updateUserLoggedStatus, updateLoginModalVisibilility }
-  from '../../actions/login';
 import audioLoader from '../../utils/audioLoader';
 import tsnejs from '../../vendors/tsne';
 import '../../stylesheets/App.scss';
+import '../../stylesheets/toggle.scss';
+import '../../stylesheets/slider.scss';
+import '../../stylesheets/button.scss';
 import { DEFAULT_DESCRIPTOR, TSNE_CONFIG, DEFAULT_MAX_RESULTS, MESSAGE_STATUS }
   from '../../constants';
 import '../../polyfills/AudioContext';
+import { clearAllPaths } from '../../actions';
+
 
 const propTypes = {
   windowSize: React.PropTypes.shape({
@@ -23,21 +26,21 @@ const propTypes = {
     windowHeight: React.PropTypes.number,
   }),
   displaySystemMessage: React.PropTypes.func,
-  updateUserLoggedStatus: React.PropTypes.func,
-  updateLoginModalVisibilility: React.PropTypes.func,
+  clearAllPaths: React.PropTypes.func,
 };
+
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       sounds: [],
-      paths: [],
       midiMappings: undefined,
       isMidiLearningSoundId: -1,
       descriptor: DEFAULT_DESCRIPTOR,
       selectedSound: undefined,
       maxResults: DEFAULT_MAX_RESULTS,
+      maxDuration: 5,
       isSidebarVisible: true,
       activeMode: 'SearchMode',
       playOnHover: false,
@@ -45,14 +48,14 @@ class App extends React.Component {
     this.onQuerySubmit = this.onQuerySubmit.bind(this);
     this.setMapDescriptor = this.setMapDescriptor.bind(this);
     this.setMaxResults = this.setMaxResults.bind(this);
+    this.setMaxDuration = this.setMaxDuration.bind(this);
     this.updateSelectedSound = this.updateSelectedSound.bind(this);
     this.setSidebarVisibility = this.setSidebarVisibility.bind(this);
     this.setActiveMode = this.setActiveMode.bind(this);
     this.tooglePlayOnHover = this.tooglePlayOnHover.bind(this);
-    this.startStopPlayingPath = this.startStopPlayingPath.bind(this);
-    this.createNewPath = this.createNewPath.bind(this);
     this.playRandomSound = this.playRandomSound.bind(this);
     this.setIsMidiLearningSoundId = this.setIsMidiLearningSoundId.bind(this);
+    this.playSoundByFreesoundId = this.playSoundByFreesoundId.bind(this);
     this.setUpAudioContext();
     this.tsne = undefined;
   }
@@ -69,14 +72,14 @@ class App extends React.Component {
 
   onQuerySubmit(query) {
     // first reset the list of sounds in state
+    this.props.clearAllPaths();
     this.setState({
       sounds: [],
-      paths: [],
       error: '',
       isFetching: true,
     });
     this.props.displaySystemMessage('Searching for sounds...');
-    submitQuery(query, this.state.maxResults).then(
+    submitQuery(query, this.state.maxResults, this.state.maxDuration).then(
       allPagesResults => this.storeQueryResults(allPagesResults),
       error => this.handleQueryError(error));
   }
@@ -148,7 +151,6 @@ class App extends React.Component {
     if (window.navigator.requestMIDIAccess) {
       window.navigator.requestMIDIAccess().then(
         (midiAccess) => {
-          this.props.displaySystemMessage('MIDI support enabled ;)');
           this.state.midiMappings = { notes: {} };
           const inputs = midiAccess.inputs.values();
           // Iterate over all existing MIDI devices and connect them to onMIDIMessage
@@ -182,6 +184,19 @@ class App extends React.Component {
     });
   }
 
+  setMaxDuration(evt) {
+    const newMaxDuration = parseFloat(evt.target.value, 10);
+    this.setState({
+      maxDuration: newMaxDuration,
+    });
+  }
+
+  setLoginModalVisibility(isLoginModalVisible) {
+    this.setState({
+      isLoginModalVisible,
+    });
+  }
+
   setSidebarVisibility(isSidebarVisible) {
     this.setState({
       isSidebarVisible,
@@ -199,10 +214,11 @@ class App extends React.Component {
     }
   }
 
-  playSoundByFreesoundId(freesoundId, onEndedCallback, playbackRate = 1.0, sourceNodeKey) {
-    // TODO: check that map is loaded, etc...
-    this.refs.map.refs[`map-point-${freesoundId}`].playAudio(
-      onEndedCallback, playbackRate, sourceNodeKey);
+  playSoundByFreesoundId(freesoundId, onEndedCallback, playbackRate = 1.0, sourceNodeKey, time) {
+    if (this.refs.map) {
+      this.refs.map.getWrappedInstance().refs[`map-point-${freesoundId}`].playAudio(
+        onEndedCallback, playbackRate, sourceNodeKey, time);
+    }
   }
 
   playRandomSound() {
@@ -211,43 +227,9 @@ class App extends React.Component {
   }
 
   stopSoundByFreesoundId(freesoundId, sourceNodeKey) {
-    // TODO: check that map is loaded, etc...
-    this.refs.map.refs[`map-point-${freesoundId}`].stopAudio(sourceNodeKey);
-  }
-
-  playNextSoundFromPath(pathIndex) {
-    const newPaths = this.state.paths;
-    const path = newPaths[pathIndex];
-    if (path.isPlaying) {
-      const freesoundId = path.sounds[path.indexNextToPlay].id;
-      path.indexNextToPlay += 1;
-      if (path.indexNextToPlay >= path.sounds.length) {
-        path.indexNextToPlay = 0;
-      }
-      newPaths[pathIndex] = path;
-      this.setState({
-        paths: newPaths,
-      });
-      this.playSoundByFreesoundId(freesoundId, () => {
-        this.playNextSoundFromPath(pathIndex);
-      });
+    if (this.refs.map) {
+      this.refs.map.getWrappedInstance().refs[`map-point-${freesoundId}`].stopAudio(sourceNodeKey);
     }
-  }
-
-  startStopPlayingPath(pathIndex) {
-    const newPaths = this.state.paths;
-    const path = newPaths[pathIndex];
-    path.isPlaying = !path.isPlaying;
-    path.isSelected = path.isPlaying;  // TODO: select on click not on play
-    newPaths[pathIndex] = path;
-    this.setState({
-      paths: newPaths,
-    });
-    if (path.isPlaying) {
-      this.playNextSoundFromPath(pathIndex);
-    }
-    // Force update map to rerender paths
-    this.refs.map.forceUpdate();
   }
 
   tooglePlayOnHover() {
@@ -267,30 +249,6 @@ class App extends React.Component {
     this.props.displaySystemMessage(`${sounds.length} sounds loaded, computing map`);
   }
 
-  createNewPath() {
-    // Creates a new random path
-    if (this.state.sounds.length) {
-      const pathSounds = [];
-      const nSounds = 2 + Math.floor(Math.random() * (this.state.sounds.length / 4));
-      [...Array(nSounds).keys()].map(() => pathSounds.push(getRandomElement(this.state.sounds)));
-      const newPath = {
-        name: `Random path ${this.state.paths.length + 1}`,
-        indexNextToPlay: 0,
-        isPlaying: false,
-        isSelected: false,
-        sounds: pathSounds,
-      };
-      const newPaths = this.state.paths;
-      newPaths.push(newPath);
-      this.setState({
-        paths: newPaths,
-      });
-      this.refs.map.forceUpdate();
-    } else {
-      this.props.displaySystemMessage('A new path can not be created until there are some sounds ' +
-        'in the map', MESSAGE_STATUS.ERROR);
-    }
-  }
 
   initializeTsne(sounds) {
     if (!sounds) {
@@ -333,6 +291,7 @@ class App extends React.Component {
       <div className="app-container">
         <Logo />
         <Sidebar
+          sounds={this.state.sounds}
           isVisible={this.state.isSidebarVisible}
           setSidebarVisibility={this.setSidebarVisibility}
           activeMode={this.state.activeMode}
@@ -340,13 +299,15 @@ class App extends React.Component {
           onQuerySubmit={this.onQuerySubmit}
           onSetMapDescriptor={this.setMapDescriptor}
           onSetMaxResults={this.setMaxResults}
+          onSetMaxDuration={this.setMaxDuration}
           maxResults={this.state.maxResults}
+          maxDuration={this.state.maxDuration}
           playOnHover={this.state.playOnHover}
           tooglePlayOnHover={this.tooglePlayOnHover}
-          paths={this.state.paths}
           startStopPlayingPath={this.startStopPlayingPath}
-          createNewPath={this.createNewPath}
           updateSelectedSound={this.updateSelectedSound}
+          audioContext={this.audioContext}
+          playSoundByFreesoundId={this.playSoundByFreesoundId}
         />
         <Login />
         {(shouldShowMap) ?
@@ -360,7 +321,6 @@ class App extends React.Component {
             selectedSound={this.state.selectedSound}
             updateSelectedSound={this.updateSelectedSound}
             playOnHover={this.state.playOnHover}
-            paths={this.state.paths}
             setIsMidiLearningSoundId={this.setIsMidiLearningSoundId}
             isMidiLearningSoundId={this.state.isMidiLearningSoundId}
             midiMappings={this.state.midiMappings}
@@ -374,6 +334,5 @@ class App extends React.Component {
 App.propTypes = propTypes;
 export default connect(() => ({}), {
   displaySystemMessage,
-  updateUserLoggedStatus,
-  updateLoginModalVisibilility,
+  clearAllPaths,
 })(App);

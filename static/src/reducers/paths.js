@@ -13,13 +13,17 @@ export default function paths(state = initialState, action) {
   switch (action.type) {
     case ADD_PATH: {
       const pathId = UUID.v4();
+      let pathName = String.fromCharCode(65 + (state.paths.length % 26));
+      if (Math.floor(state.paths.length / 26) > 0) {
+        pathName += 1 + Math.floor(state.paths.length / 26);
+      }
       return Object.assign({}, state, {
         selectedPath: pathId,
         paths: [
           ...state.paths,
           {
             id: pathId,
-            name: `Path ${state.paths.length + 1}`,
+            name: pathName,
             isPlaying: false,
             syncMode: 'beat',
             waitUntilFinished: true,

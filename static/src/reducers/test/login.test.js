@@ -28,4 +28,32 @@ describe('login reducer', () => {
         .toEqual(stateAfterHiding);
     });
   });
+  describe('updateUserLoggedStatus', () => {
+    const stateBefore = initialState;
+    const stateAfter = Object.assign({}, initialState, { isUserLoggedIn: true });
+    it('user status correctly updates when loggin in', () => {
+      expect(reducer(stateBefore, updateUserLoggedStatus(true))).toEqual(stateAfter);
+    });
+    const stateBeforeLoggingOut = stateAfter;
+    const stateAfterLoggingOut = stateBefore;
+    it('user status correctly updates when loggin out', () => {
+      expect(reducer(stateBeforeLoggingOut, updateUserLoggedStatus(false)))
+        .toEqual(stateAfterLoggingOut);
+    });
+  });
+  describe('updateBackEndAuthSupport', () => {
+    const stateBefore = initialState;
+    const stateAfter = Object.assign({}, initialState, { isEndUserAuthSupported: true });
+    it('correctly updates when back-end available', () => {
+      expect(reducer(stateBefore, updateBackEndAuthSupport(true))).toEqual(stateAfter);
+    });
+  });
+  describe('updateLoggedUsername', () => {
+    const stateBefore = initialState;
+    const username = 'sixstrings89';
+    const stateAfter = Object.assign({}, initialState, { username });
+    it('correctly updates the username', () => {
+      expect(reducer(stateBefore, updateLoggedUsername(username))).toEqual(stateAfter);
+    });
+  });
 });

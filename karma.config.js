@@ -14,7 +14,7 @@ module.exports = (config) => {
 
     // list of files / patterns to load in the browser
     files: [
-      './static/test/**/**.js',
+      './static/src/**/**.test.js',
     ],
 
     // list of files to exclude
@@ -25,7 +25,7 @@ module.exports = (config) => {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './static/test/**/**.js': ['webpack', 'sourcemap'],
+      './static/src/**/**.test.js': ['webpack', 'sourcemap'],
     },
 
     // test results reporter to use

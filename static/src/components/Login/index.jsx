@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { displaySystemMessage } from '../../actions/messagesBox'
+import { displaySystemMessage } from '../../actions/messagesBox';
 import { loadJSON } from '../../utils/misc';
 import LoginModal from './LoginModal';
 import LoginButton from './LoginButton';

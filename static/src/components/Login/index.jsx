@@ -117,7 +117,7 @@ class Login extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   const { setSessionStorage } = ownProps;
-  const { isModalVisible, isUserLoggedIn, isEndUserAuthSupported } = state;
+  const { isModalVisible, isUserLoggedIn, isEndUserAuthSupported } = state.login;
   return {
     isModalVisible,
     isUserLoggedIn,

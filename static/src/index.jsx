@@ -19,11 +19,7 @@ if (ReactPerf) {
 const windowWidth = window.innerWidth;
 const windowHeight = window.innerHeight;
 
-const app = render(
+render(
   <Provider store={store}>
     <App windowSize={{ windowWidth, windowHeight }} />
   </Provider>, document.getElementById('app'));
-
-window.setSessionStorage = app.setSessionStorage;
-window.handleSuccessfulLogin = app.handleSuccessfulLogin;
-window.handleFailedLogin = app.handleFailedLogin;

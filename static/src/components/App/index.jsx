@@ -49,16 +49,20 @@ class App extends React.Component {
     this.updateSelectedSound = this.updateSelectedSound.bind(this);
     this.setSidebarVisibility = this.setSidebarVisibility.bind(this);
     this.setActiveMode = this.setActiveMode.bind(this);
-    this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
-    this.handleFailedLogin = this.handleFailedLogin.bind(this);
-    this.setSessionStorage = this.setSessionStorage.bind(this);
     this.tooglePlayOnHover = this.tooglePlayOnHover.bind(this);
     this.startStopPlayingPath = this.startStopPlayingPath.bind(this);
     this.createNewPath = this.createNewPath.bind(this);
     this.playRandomSound = this.playRandomSound.bind(this);
     this.setIsMidiLearningSoundId = this.setIsMidiLearningSoundId.bind(this);
+    this.setSessionStorage = this.setSessionStorage.bind(this);
+    this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
+    this.handleFailedLogin = this.handleFailedLogin.bind(this);
     this.setUpAudioContext();
     this.tsne = undefined;
+    // expose functions to global context
+    window.setSessionStorage = this.setSessionStorage;
+    window.handleSuccessfulLogin = this.handleSuccessfulLogin;
+    window.handleFailedLogin = this.handleFailedLogin;
   }
 
   componentDidMount() {

@@ -2,7 +2,7 @@ import makeActionCreator from './makeActionCreator';
 import { DISPLAY_MESSAGE, UPDATE_METRONOME_STATUS, SET_TEMPO,
   STARTSTOP_METRONOME, ADD_PATH, SET_PATH_SYNC, STARTSTOP_PATH,
   SET_PATH_CURRENTLY_PLAYING, SELECT_PATH, DELETE_SOUND_FROM_PATH,
-  ADD_SOUND_TO_PATH, CLEAR_ALL_PATHS } from './actionTypes';
+  ADD_SOUND_TO_PATH, CLEAR_ALL_PATHS, SET_PATH_WAIT_UNTL_FINISHED } from './actionTypes';
 
 export const displaySystemMessage = makeActionCreator(DISPLAY_MESSAGE,
   'message', 'status');
@@ -38,3 +38,6 @@ export const addSoundToPath = makeActionCreator(ADD_SOUND_TO_PATH,
   'sound', 'pathId');
 
 export const clearAllPaths = makeActionCreator(CLEAR_ALL_PATHS);
+
+export const setPathWaitUntilFinished = makeActionCreator(SET_PATH_WAIT_UNTL_FINISHED,
+  'pathId', 'waitUntilFinished');

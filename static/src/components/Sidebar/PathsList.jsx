@@ -6,7 +6,8 @@ import { elementWithId } from '../../utils/arrayUtils';
 import { MESSAGE_STATUS } from '../../constants';
 import { connect } from 'react-redux';
 import { displaySystemMessage, setPathSync, addPath, startStopPath,
-  setPathCurrentlyPlaying, selectPath, deleteSoundFromPath } from '../../actions';
+  setPathCurrentlyPlaying, selectPath, deleteSoundFromPath,
+  setPathWaitUntilFinished } from '../../actions';
 
 const propTypes = {
   paths: React.PropTypes.array,
@@ -19,6 +20,7 @@ const propTypes = {
   setPathSync: React.PropTypes.func,
   startStopPath: React.PropTypes.func,
   setPathCurrentlyPlaying: React.PropTypes.func,
+  setPathWaitUntilFinished: React.PropTypes.func,
   selectPath: React.PropTypes.func,
   deleteSoundFromPath: React.PropTypes.func,
   playSoundByFreesoundId: React.PropTypes.func,
@@ -65,6 +67,18 @@ class PathsList extends AudioTickListener {
     }
   }
 
+  triggerSoundHelper(path, time) {
+    if (path.waitUntilFinished) {
+      // Check if sound will be finished at time
+      if ((path.currentlyPlaying.willFinishAt === undefined)
+        || (path.currentlyPlaying.willFinishAt <= time)) {
+        this.playNextSoundFromPath(path.id, time);
+      }
+    } else {
+      this.playNextSoundFromPath(path.id, time);
+    }
+  }
+
   onAudioTick(bar, beat, tick, time) {
     // Iterate over all paths and check if some should trigger next sound
     for (let i = 0; i < this.props.paths.length; i++) {
@@ -72,26 +86,17 @@ class PathsList extends AudioTickListener {
       if (path.isPlaying) {
         if (path.syncMode === 'beat') {
           if (tick % 4 === 0) {
-            if ((path.currentlyPlaying.willFinishAt === undefined)
-              || (path.currentlyPlaying.willFinishAt <= time)) {
-              this.playNextSoundFromPath(path.id, time);
-            }
+            this.triggerSoundHelper(path, time);
           }
         }
         if (path.syncMode === '2xbeat') {
           if (tick % 8 === 0) {
-            if ((path.currentlyPlaying.willFinishAt === undefined)
-              || (path.currentlyPlaying.willFinishAt <= time)) {
-              this.playNextSoundFromPath(path.id, time);
-            }
+            this.triggerSoundHelper(path, time);
           }
         }
         if (path.syncMode === 'bar') {
           if (tick === 0) {
-            if ((path.currentlyPlaying.willFinishAt === undefined)
-              || (path.currentlyPlaying.willFinishAt <= time)) {
-              this.playNextSoundFromPath(path.id, time);
-            }
+            this.triggerSoundHelper(path, time);
           }
         }
       }
@@ -157,7 +162,7 @@ class PathsList extends AudioTickListener {
               <button
                 className={(path.syncMode === 'no') ? 'active' : ''}
                 onClick={() => this.props.setPathSync(path.id, 'no')}
-              >none</button>
+              >x</button>
               <button
                 className={(path.syncMode === 'beat') ? 'active' : ''}
                 onClick={() => this.props.setPathSync(path.id, 'beat')}
@@ -170,6 +175,12 @@ class PathsList extends AudioTickListener {
                 className={(path.syncMode === 'bar') ? 'active' : ''}
                 onClick={() => this.props.setPathSync(path.id, 'bar')}
               >1</button>
+            </div>
+            <div className="button-group">
+              <button
+                className={(path.waitUntilFinished === false) ? 'active' : ''}
+                onClick={() => this.props.setPathWaitUntilFinished(path.id, !path.waitUntilFinished)}
+              >></button>
             </div>
             {((path.id === this.props.selectedPath) && (path.sounds.length === 0)) ?
               <ul className="sounds-list"><li>Select a sound and click 'Add to path'</li></ul>
@@ -208,5 +219,5 @@ const mapStateToProps = (state) => {
 PathsList.propTypes = propTypes;
 export default connect(mapStateToProps, {
   addPath, displaySystemMessage, setPathSync, startStopPath, setPathCurrentlyPlaying,
-  selectPath, deleteSoundFromPath,
+  selectPath, deleteSoundFromPath, setPathWaitUntilFinished,
 }, undefined, { withRef: true })(PathsList);

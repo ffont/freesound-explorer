@@ -8,6 +8,7 @@ import LoginModal from './LoginModal';
 import LoginButton from './LoginButton';
 import '../../stylesheets/Login.scss';
 import '../../polyfills/Array.includes';
+import { MESSAGE_STATUS } from '../../constants';
 
 const URLS = {
   login: '/login/freesound/',
@@ -23,6 +24,11 @@ const clearSession = () => {
   sessionKeys.forEach((key) => {
     sessionStorage.removeItem(key);
   });
+};
+
+const setSessionStorage = (accessToken, userName) => {
+  sessionStorage.setItem('access_token', accessToken);
+  sessionStorage.setItem('username', userName);
 };
 
 const getAppToken = () => new Promise((resolve, reject) => {
@@ -46,7 +52,6 @@ const propTypes = {
   updateLoginModalVisibilility: React.PropTypes.func,
   updateBackEndAuthSupport: React.PropTypes.func,
   updateUserLoggedStatus: React.PropTypes.func,
-  setSessionStorage: React.PropTypes.func,
   displaySystemMessage: React.PropTypes.func,
 };
 
@@ -55,6 +60,11 @@ class Login extends React.Component {
     super(props);
     this.handleFreesoundLogin = this.handleFreesoundLogin.bind(this);
     this.handleFreesoundLogout = this.handleFreesoundLogout.bind(this);
+    this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
+    this.handleFailedLogin = this.handleFailedLogin.bind(this);
+    window.setSessionStorage = setSessionStorage;
+    window.handleSuccessfulLogin = this.handleSuccessfulLogin;
+    window.handleFailedLogin = this.handleFailedLogin;
   }
 
   componentWillMount() {
@@ -63,7 +73,7 @@ class Login extends React.Component {
 
   getAccessToken() {
     loadJSON(URLS.prepareAuth).then((data) => {
-      this.props.setSessionStorage(data.access_token, data.username);
+      setSessionStorage(data.access_token, data.username);
       if (data.logged) {
         this.props.updateUserLoggedStatus(true);
       }
@@ -94,6 +104,19 @@ class Login extends React.Component {
     });
   }
 
+  handleSuccessfulLogin() {
+    this.props.updateUserLoggedStatus(true);
+    this.props.updateLoginModalVisibilility(false);
+    this.props.displaySystemMessage(`Logged in as ${sessionStorage.getItem('username')}`,
+      MESSAGE_STATUS.SUCCESS);
+  }
+
+  handleFailedLogin() {
+    this.props.updateUserLoggedStatus(false);
+    this.props.updateLoginModalVisibilility(false);
+    this.props.displaySystemMessage('Failed to log in...', MESSAGE_STATUS.ERROR);
+  }
+
   render() {
     if (!this.props.isEndUserAuthSupported) {
       return null;
@@ -115,14 +138,12 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const { setSessionStorage } = ownProps;
+const mapStateToProps = (state) => {
   const { isModalVisible, isUserLoggedIn, isEndUserAuthSupported } = state.login;
   return {
     isModalVisible,
     isUserLoggedIn,
     isEndUserAuthSupported,
-    setSessionStorage,
   };
 };
 

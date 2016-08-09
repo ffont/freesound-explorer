@@ -36,7 +36,6 @@ class App extends React.Component {
       midiMappings: undefined,
       isMidiLearningSoundId: -1,
       descriptor: DEFAULT_DESCRIPTOR,
-      statusMessage: { message: '', status: '' },
       selectedSound: undefined,
       maxResults: DEFAULT_MAX_RESULTS,
       isSidebarVisible: true,
@@ -54,15 +53,8 @@ class App extends React.Component {
     this.createNewPath = this.createNewPath.bind(this);
     this.playRandomSound = this.playRandomSound.bind(this);
     this.setIsMidiLearningSoundId = this.setIsMidiLearningSoundId.bind(this);
-    this.setSessionStorage = this.setSessionStorage.bind(this);
-    this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
-    this.handleFailedLogin = this.handleFailedLogin.bind(this);
     this.setUpAudioContext();
     this.tsne = undefined;
-    // expose functions to global context
-    window.setSessionStorage = this.setSessionStorage;
-    window.handleSuccessfulLogin = this.handleSuccessfulLogin;
-    window.handleFailedLogin = this.handleFailedLogin;
   }
 
   componentDidMount() {
@@ -183,11 +175,6 @@ class App extends React.Component {
     });
   }
 
-  setSessionStorage(accessToken, userName) {
-    sessionStorage.setItem('access_token', accessToken);
-    sessionStorage.setItem('username', userName);
-  }
-
   setMaxResults(evt) {
     const newMaxResults = parseInt(evt.target.value, 10);
     this.setState({
@@ -280,19 +267,6 @@ class App extends React.Component {
     this.props.displaySystemMessage(`${sounds.length} sounds loaded, computing map`);
   }
 
-  handleSuccessfulLogin() {
-    this.props.updateUserLoggedStatus(true);
-    this.props.updateLoginModalVisibilility(false);
-    this.props.displaySystemMessage(`Logged in as ${sessionStorage.getItem('username')}`,
-      MESSAGE_STATUS.SUCCESS);
-  }
-
-  handleFailedLogin() {
-    this.props.updateUserLoggedStatus(false);
-    this.props.updateLoginModalVisibilility(false);
-    this.props.displaySystemMessage('Failed to log in...', MESSAGE_STATUS.ERROR);
-  }
-
   createNewPath() {
     // Creates a new random path
     if (this.state.sounds.length) {
@@ -374,9 +348,7 @@ class App extends React.Component {
           createNewPath={this.createNewPath}
           updateSelectedSound={this.updateSelectedSound}
         />
-        <Login
-          setSessionStorage={this.setSessionStorage}
-        />
+        <Login />
         {(shouldShowMap) ?
           <Map
             ref="map"

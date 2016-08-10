@@ -4,6 +4,7 @@ import Map from '../Map';
 import Login from '../Login';
 import Logo from '../Logo';
 import Sidebar from '../Sidebar';
+import Bottombar from '../Bottombar';
 import MessagesBox from '../MessagesBox';
 import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
 import { readObjectByString, getRandomElement } from '../../utils/misc';
@@ -42,6 +43,7 @@ class App extends React.Component {
       maxResults: DEFAULT_MAX_RESULTS,
       maxDuration: 5,
       isSidebarVisible: true,
+      isBottombarVisible: false,
       activeMode: 'SearchMode',
       playOnHover: false,
     };
@@ -51,6 +53,7 @@ class App extends React.Component {
     this.setMaxDuration = this.setMaxDuration.bind(this);
     this.updateSelectedSound = this.updateSelectedSound.bind(this);
     this.setSidebarVisibility = this.setSidebarVisibility.bind(this);
+    this.setBottombarVisibility = this.setBottombarVisibility.bind(this);
     this.setActiveMode = this.setActiveMode.bind(this);
     this.tooglePlayOnHover = this.tooglePlayOnHover.bind(this);
     this.playRandomSound = this.playRandomSound.bind(this);
@@ -203,6 +206,12 @@ class App extends React.Component {
     });
   }
 
+  setBottombarVisibility(isBottombarVisible) {
+    this.setState({
+      isBottombarVisible,
+    });
+  }
+
   setActiveMode(activeMode) {
     this.setState({
       activeMode,
@@ -294,6 +303,7 @@ class App extends React.Component {
           sounds={this.state.sounds}
           isVisible={this.state.isSidebarVisible}
           setSidebarVisibility={this.setSidebarVisibility}
+          setBottombarVisibility={this.setBottombarVisibility}
           activeMode={this.state.activeMode}
           setActiveMode={this.setActiveMode}
           onQuerySubmit={this.onQuerySubmit}
@@ -308,6 +318,10 @@ class App extends React.Component {
           updateSelectedSound={this.updateSelectedSound}
           audioContext={this.audioContext}
           playSoundByFreesoundId={this.playSoundByFreesoundId}
+        />
+        <Bottombar
+          isVisible={this.state.isBottombarVisible}
+          isSidebarVisible={this.state.isSidebarVisible}
         />
         <Login />
         {(shouldShowMap) ?

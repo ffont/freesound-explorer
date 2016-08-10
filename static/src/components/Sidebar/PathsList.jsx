@@ -62,6 +62,8 @@ class PathsList extends AudioTickListener {
       const nSounds = 2 + Math.floor(Math.random() * 3);
       [...Array(nSounds).keys()].map(() => pathSounds.push(getRandomElement(this.props.sounds)));
       this.props.addPath(pathSounds);
+      // TODO: the line below should be done in the action itself
+      this.props.setBottombarVisibility(true);
     } else {
       this.props.displaySystemMessage('New paths can not be created until there are some sounds ' +
         'in the map', MESSAGE_STATUS.ERROR);
@@ -146,6 +148,12 @@ class PathsList extends AudioTickListener {
     }
   }
 
+  selectPathHelper(pathId) {
+    this.props.selectPath(pathId);
+    // TODO: the line below should be done in the action itself
+    this.props.setBottombarVisibility(!(this.props.selectedPath === pathId));
+  }
+
   render() {
     return (
       <ul className="paths-list">
@@ -156,7 +164,7 @@ class PathsList extends AudioTickListener {
                 <i className="fa fa-pause fa-lg" aria-hidden="true" /> :
                 <i className="fa fa-play fa-lg" aria-hidden="true" />}
             </button>
-            <a className="cursor-pointer" onClick={() => this.props.selectPath(path.id)} >
+            <a className="cursor-pointer" onClick={() => this.selectPathHelper(path.id)} >
               {path.name} ({path.sounds.length} sounds)
             </a>&nbsp;
             <div className="button-group">

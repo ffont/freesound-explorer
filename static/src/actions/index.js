@@ -33,5 +33,5 @@ export const addSoundToPath = makeActionCreator(at.ADD_SOUND_TO_PATH,
 
 export const clearAllPaths = makeActionCreator(at.CLEAR_ALL_PATHS);
 
-export const setPathWaitUntilFinished = makeActionCreator(at.SET_PATH_WAIT_UNTL_FINISHED,
+export const setPathWaitUntilFinished = makeActionCreator(at.SET_PATH_WAIT_UNTIL_FINISHED,
   'pathId', 'waitUntilFinished');

@@ -2,7 +2,7 @@ import { default as UUID } from 'node-uuid';
 import { indexElementWithId } from '../utils/arrayUtils';
 import { ADD_PATH, SET_PATH_SYNC, STARTSTOP_PATH,
   SET_PATH_CURRENTLY_PLAYING, SELECT_PATH, DELETE_SOUND_FROM_PATH,
-  ADD_SOUND_TO_PATH, CLEAR_ALL_PATHS, SET_PATH_WAIT_UNTL_FINISHED } from '../actions/actionTypes';
+  ADD_SOUND_TO_PATH, CLEAR_ALL_PATHS, SET_PATH_WAIT_UNTIL_FINISHED } from '../actions/actionTypes';
 
 const initialState = {
   paths: [],
@@ -128,7 +128,7 @@ export default function paths(state = initialState, action) {
     case CLEAR_ALL_PATHS: {
       return initialState;
     }
-    case SET_PATH_WAIT_UNTL_FINISHED: {
+    case SET_PATH_WAIT_UNTIL_FINISHED: {
       const pathIdx = indexElementWithId(state.paths, action.pathId);
       const updatedPath = Object.assign({}, state.paths[pathIdx], {
         waitUntilFinished: action.waitUntilFinished,

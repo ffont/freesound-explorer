@@ -59,7 +59,6 @@ class App extends React.Component {
     this.setIsMidiLearningSoundId = this.setIsMidiLearningSoundId.bind(this);
     this.playSoundByFreesoundId = this.playSoundByFreesoundId.bind(this);
     this.setUpAudioContext();
-    this.tsne = undefined;
   }
 
   componentDidMount() {
@@ -79,17 +78,6 @@ class App extends React.Component {
       maxDuration: this.state.maxDuration,
     };
     this.props.getSounds(query, queryParams);
-    // first reset the list of sounds in state
-    // this.props.clearAllPaths();
-    // this.setState({
-    //   sounds: [],
-    //   error: '',
-    //   isFetching: true,
-    // });
-    // this.props.displaySystemMessage('Searching for sounds...');
-    // submitQuery(query, this.state.maxResults, this.state.maxDuration).then(
-    //   allPagesResults => this.storeQueryResults(allPagesResults),
-    //   error => this.handleQueryError(error));
   }
 
   handleNoteOn(note, velocity) {
@@ -199,12 +187,6 @@ class App extends React.Component {
     });
   }
 
-  setLoginModalVisibility(isLoginModalVisible) {
-    this.setState({
-      isLoginModalVisible,
-    });
-  }
-
   setSidebarVisibility(isSidebarVisible) {
     this.setState({
       isSidebarVisible,
@@ -246,44 +228,6 @@ class App extends React.Component {
     });
   }
 
-  storeQueryResults(allPagesResults) {
-    const sounds = reshapeReceivedSounds(allPagesResults);
-    // initialize tsne data
-    this.initializeTsne(sounds);
-    this.setState({
-      sounds,
-      isFetching: false,
-    });
-    this.props.displaySystemMessage(`${sounds.length} sounds loaded, computing map`);
-  }
-
-
-  initializeTsne(sounds) {
-    if (!sounds) {
-      // don't initialize tsne if no sounds provided
-      return;
-    }
-    this.tsne = new tsnejs.Tsne(TSNE_CONFIG);
-    const xTsne = [];
-    sounds.forEach(sound => {
-      const soundFeatureVector = readObjectByString(sound, `analysis.${this.state.descriptor}`);
-      xTsne.push(soundFeatureVector);
-    });
-    this.tsne.initDataRaw(xTsne);
-    this.forceUpdate();  // to force render()
-
-    // Reset midiMappings
-    this.state.midiMappings = { notes: {} };
-  }
-
-  handleQueryError(error) {
-    this.props.displaySystemMessage('No sounds found', MESSAGE_STATUS.ERROR);
-    this.setState({
-      error: error || 'Unexpected error',
-      isFetching: false,
-    });
-  }
-
   /**
    * Updates the sound for which to show a modal with details
    */
@@ -321,8 +265,6 @@ class App extends React.Component {
         {(shouldShowMap) ?
           <Map
             ref="map"
-            sounds={this.state.sounds}
-            tsne={this.tsne}
             audioContext={this.audioContext}
             audioLoader={this.audioLoader}
             windowSize={this.props.windowSize}

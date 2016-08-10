@@ -13,7 +13,6 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 const propTypes = {
   sounds: React.PropTypes.array,
-  tsne: React.PropTypes.object,
   audioContext: React.PropTypes.object,
   audioLoader: React.PropTypes.object,
   windowSize: React.PropTypes.shape({
@@ -36,13 +35,11 @@ class Map extends React.Component {
     super(props);
     this.zoomHandler = this.zoomHandler.bind(this);
     this.projectPoint = this.projectPoint.bind(this);
-    this.stepInterval = undefined;
     this.state = ({
       translateX: 0,
       translateY: 0,
       scale: 1,
     });
-    this.currentStepIteration = 0;
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     this.onClickCallback = this.onClickCallback.bind(this);
   }
@@ -55,13 +52,6 @@ class Map extends React.Component {
     zoomBehaviour(container);
     // disable double click zoom
     container.on('dblclick.zoom', null);
-    this.computeStepSolution();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.tsne !== this.props.tsne) {
-      this.computeStepSolution();
-    }
   }
 
   onClickCallback(evt) {
@@ -70,24 +60,6 @@ class Map extends React.Component {
       this.props.updateSelectedSound();
       // turn off current midi learn
       this.props.setIsMidiLearningSoundId(-1);
-    }
-  }
-
-  computeStepSolution() {
-    const progress = parseInt(100 * this.currentStepIteration / MAX_TSNE_ITERATIONS, 10);
-    const statusMessage =
-    `${this.props.sounds.length} sounds loaded, computing map (${progress}%)`;
-    this.props.displaySystemMessage(statusMessage, MESSAGE_STATUS.PROGRESS);
-    if (this.currentStepIteration < MAX_TSNE_ITERATIONS) {
-      this.props.tsne.step();
-      this.stepInterval = requestAnimationFrame(() => this.computeStepSolution());
-      this.currentStepIteration++;
-      // force render with new solution
-      this.forceUpdate();
-    } else {
-      cancelAnimationFrame(this.stepInterval);
-      this.props.displaySystemMessage('Map computed!', MESSAGE_STATUS.SUCCESS);
-      this.currentStepIteration = 0;
     }
   }
 

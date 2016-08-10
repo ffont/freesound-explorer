@@ -15,7 +15,7 @@ function parseFreesoundSearchUrl(url) {
   return { query, filter };
 }
 
-function search(query = DEFAULT_QUERY, filter = "", maxResults = DEFAULT_MAX_RESULTS) {
+function search(query = DEFAULT_QUERY, filter = '', maxResults = DEFAULT_MAX_RESULTS) {
   // Search sounds and start loading them
   let pageCounter = 0;
   const freesoundMaxPageSize = 150;
@@ -45,7 +45,7 @@ function search(query = DEFAULT_QUERY, filter = "", maxResults = DEFAULT_MAX_RES
 }
 
 export function submitQuery(submittedQuery, maxResults, maxDuration) {
-  let query = undefined;
+  let query;
   let filter = '';
   if ((submittedQuery.startsWith('http')) && (submittedQuery.indexOf('freesound.org') !== -1)) {
     // Freesound url, parse query and filter and search
@@ -74,7 +74,7 @@ export function reshapeReceivedSounds(allPagesResults) {
       const isBookmarked = false;
       const buffer = undefined;
       // consider only sounds with non-empty analysis
-      if (!!analysis) {
+      if (analysis) {
         const color = rgbToHex(
           Math.floor(255 * analysis.sfx.tristimulus.mean[0]),
           Math.floor(255 * analysis.sfx.tristimulus.mean[1]),
@@ -93,6 +93,8 @@ export function reshapeReceivedSounds(allPagesResults) {
           download,
           isBookmarked,
           buffer,
+          x: 0,
+          y: 0,
         });
       }
     });

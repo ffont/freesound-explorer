@@ -1,4 +1,3 @@
-import lodash from 'lodash';
 import { displaySystemMessage } from './messagesBox';
 import makeActionCreator from './makeActionCreator';
 import * as at from './actionTypes';
@@ -7,12 +6,12 @@ import { MESSAGE_STATUS, TSNE_CONFIG, DEFAULT_DESCRIPTOR, MAX_TSNE_ITERATIONS }
   from '../constants';
 import { readObjectByString } from '../utils/misc';
 import tsnejs from '../vendors/tsne';
+import '../polyfills/requestAnimationFrame';
 
 const fetchRequest = makeActionCreator(at.FETCH_SOUNDS_REQUEST, 'query', 'queryParams');
 const fetchSuccess = makeActionCreator(at.FETCH_SOUNDS_SUCCESS, 'sounds', 'query', 'queryParams');
 const fetchFailure = makeActionCreator(at.FETCH_SOUNDS_FAILURE, 'error', 'query', 'queryParams');
-const updateSoundsPosition = makeActionCreator(at.UPDATE_SOUNDS_POSITION, 'sounds',
-  'query', 'queryParams');
+const updateSoundsPosition = makeActionCreator(at.UPDATE_SOUNDS_POSITION, 'soundsPositions');
 
 const trainTsne = (sounds, queryParams) => {
   const tsne = new tsnejs.Tsne(TSNE_CONFIG);
@@ -23,11 +22,24 @@ const trainTsne = (sounds, queryParams) => {
   return tsne;
 };
 
-const computeTsneSolution = (tsne, sounds, dispatch) => {
-  let progress = 0;
-  let stepIteration = 0;
-  const throttledDispatch = lodash.throttle(dispatch, 16);
-  while (stepIteration <= MAX_TSNE_ITERATIONS) {
+let clearTimeoutId;
+let stepIteration = 0;
+let progress = 0;
+
+const computePointsPositionInSolution = (tsne, sounds) => {
+  const tsneSolution = tsne.getSolution();
+  const pointsPositions = sounds.reduce((prevState, sound, index) =>
+    Object.assign(prevState, {
+      [sound.id]: {
+        x: tsneSolution[index][0],
+        y: tsneSolution[index][1],
+      },
+    }), {});
+  return pointsPositions;
+};
+
+const computeStepSolution = (tsne, sounds, dispatch, query, queryParams) => {
+  if (stepIteration < MAX_TSNE_ITERATIONS) {
     // compute step solution
     tsne.step();
     stepIteration++;
@@ -38,11 +50,20 @@ const computeTsneSolution = (tsne, sounds, dispatch) => {
       progress = computedProgressPercentage;
       const statusMessage =
         `${sounds.length} sounds loaded, computing map (${progress}%)`;
-      throttledDispatch(displaySystemMessage(statusMessage));
+      dispatch(displaySystemMessage(statusMessage));
     }
-    throttledDispatch(updateSoundsPosition(sounds, '', ''));
+    const positions = computePointsPositionInSolution(tsne, sounds);
+    dispatch(updateSoundsPosition(positions, '', ''));
+    clearTimeoutId = requestAnimationFrame(() => computeStepSolution(tsne, sounds, dispatch));
+  } else {
+    cancelAnimationFrame(clearTimeoutId);
+    stepIteration = 0;
+    progress = 0;
+    dispatch(displaySystemMessage('Map computed!', MESSAGE_STATUS.SUCCESS));
+    dispatch(fetchSuccess(sounds, query, queryParams));
   }
 };
+
 
 /**
  * Function for calling FS and creating a map for the received sounds.
@@ -60,9 +81,7 @@ export const getSounds = (query, queryParams) => (dispatch) => {
       const sounds = reshapeReceivedSounds(allPagesResults);
       dispatch(displaySystemMessage(`${sounds.length} sounds loaded, computing map`));
       const tsne = trainTsne(sounds, queryParams);
-      computeTsneSolution(tsne, sounds, dispatch);
-      dispatch(displaySystemMessage('Map computed!', MESSAGE_STATUS.SUCCESS));
-      dispatch(fetchSuccess(sounds, query, queryParams));
+      computeStepSolution(tsne, sounds, dispatch, query, queryParams);
     },
     error => {
       dispatch(displaySystemMessage('No sounds found', MESSAGE_STATUS.ERROR));

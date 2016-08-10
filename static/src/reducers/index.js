@@ -3,6 +3,8 @@ import login from './login';
 import messagesBox from './messagesBox';
 import metronome from './metronome';
 import paths from './paths';
+import sounds from './sounds';
+import spaces from './spaces';
 
 
 const rootReducer = combineReducers({
@@ -10,6 +12,8 @@ const rootReducer = combineReducers({
   messagesBox,
   metronome,
   paths,
+  sounds,
+  spaces,
 });
 
 export default rootReducer;

@@ -25,10 +25,6 @@ class Metronome extends React.Component {
     this.updateStateInSyncTimer = undefined;
   }
 
-  componentDidMount() {
-    this.startMetronome();  // Start on load
-  }
-
   setTempo(newTempo) {
     this.props.setTempo(newTempo);
   }

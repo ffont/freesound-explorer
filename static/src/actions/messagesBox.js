@@ -1,5 +1,5 @@
 import makeActionCreator from './makeActionCreator';
-import { DISPLAY_MESSAGE } from './actionTypes';
+import * as at from './actionTypes';
 
-export const displaySystemMessage = makeActionCreator(DISPLAY_MESSAGE,
+export const displaySystemMessage = makeActionCreator(at.DISPLAY_MESSAGE,
   'message', 'status');

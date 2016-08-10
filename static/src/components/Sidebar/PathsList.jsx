@@ -1,13 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import AudioTickListener from '../App/AudioTickListener';
 import '../../stylesheets/PathsList.scss';
 import { getRandomElement, truncatedString } from '../../utils/misc';
 import { elementWithId } from '../../utils/arrayUtils';
 import { MESSAGE_STATUS } from '../../constants';
-import { connect } from 'react-redux';
-import { displaySystemMessage, setPathSync, addPath, startStopPath,
+import { setPathSync, addPath, startStopPath,
   setPathCurrentlyPlaying, selectPath, deleteSoundFromPath,
   setPathWaitUntilFinished } from '../../actions';
+import { displaySystemMessage } from '../../actions/messagesBox';
 
 const propTypes = {
   paths: React.PropTypes.array,

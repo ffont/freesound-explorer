@@ -9,6 +9,7 @@ import { lighten } from '../../utils/colors';
 
 const propTypes = {
   sound: React.PropTypes.object,
+  loadSoundByFreesoundId: React.PropTypes.func,
 };
 
 const buildSymmetricSignal = (signal) => signal.reduce((symmetricSignal, curVal) =>
@@ -39,9 +40,9 @@ class Waveform extends React.Component {
       return;
     }
     if (!this.props.sound.buffer) {
-      // retry later to check if buffer is available then
-      const WAIT_TILL_RETRY = 500;
-      setTimeout(() => this.forceUpdate(), WAIT_TILL_RETRY);
+      this.props.loadSoundByFreesoundId(this.props.sound.id, () => {
+        this.handleComponentUpdate();
+      });
       return;
     }
     const signal = this.props.sound.buffer.getChannelData(0);

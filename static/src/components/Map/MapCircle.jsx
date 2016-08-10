@@ -28,6 +28,7 @@ class MapCircle extends React.Component {
     this.state = {
       isHovered: false,
       isPlaying: false,
+      isLoading: false,
     };
   }
 
@@ -85,14 +86,18 @@ class MapCircle extends React.Component {
         // if buffer already loaded, resolve immediately
         resolve(this.props.sound.buffer);
       } else {
+        this.setState({ isLoading: true });
         this.props.audioLoader.loadSound(this.props.sound.previewUrl)
         .then(
           decodedAudio => {
             this.props.sound.buffer = decodedAudio;
             this.props.sound.duration = this.props.sound.buffer.duration;
-            resolve();
+            this.setState({ isLoading: false });
+            resolve(this.props.sound.buffer);
           },
-          error => reject(error)
+          error => {
+            reject(error)
+          }
         );
       }
     });

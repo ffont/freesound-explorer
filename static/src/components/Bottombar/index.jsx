@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../stylesheets/Bottombar.scss';
+import PathDisplay from '../Paths/PathDisplay';
 
 const propTypes = {
   isVisible: React.PropTypes.bool,
@@ -14,6 +15,7 @@ function Bottombar(props) {
     <div className={bottombarClassName}>
       <div className="bottombar-content-wrapper">
         <div className="bottombar-horizontal-scroll">
+          <PathDisplay {...props} />
         </div>
       </div>
       <div className="bottombar-menu-wrapper" />

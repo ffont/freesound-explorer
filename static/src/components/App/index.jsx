@@ -59,6 +59,7 @@ class App extends React.Component {
     this.playRandomSound = this.playRandomSound.bind(this);
     this.setIsMidiLearningSoundId = this.setIsMidiLearningSoundId.bind(this);
     this.playSoundByFreesoundId = this.playSoundByFreesoundId.bind(this);
+    this.loadSoundByFreesoundId = this.loadSoundByFreesoundId.bind(this);
     this.setUpAudioContext();
     this.tsne = undefined;
   }
@@ -230,6 +231,17 @@ class App extends React.Component {
     }
   }
 
+  loadSoundByFreesoundId(freesoundId, onEndedCallback = undefined) {
+    if (this.refs.map) {
+      this.refs.map.getWrappedInstance().refs[`map-point-${freesoundId}`].loadAudio().then(
+        () => {
+          if (onEndedCallback !== undefined) { onEndedCallback(); }
+        },
+        error => { console.log('Error loading audio', error); }
+      );
+    }
+  }
+
   playRandomSound() {
     const sound = getRandomElement(this.state.sounds);
     this.playSoundByFreesoundId(sound.id);
@@ -322,6 +334,7 @@ class App extends React.Component {
         <Bottombar
           isVisible={this.state.isBottombarVisible}
           isSidebarVisible={this.state.isSidebarVisible}
+          loadSoundByFreesoundId={this.loadSoundByFreesoundId}
         />
         <Login />
         {(shouldShowMap) ?
@@ -338,6 +351,7 @@ class App extends React.Component {
             setIsMidiLearningSoundId={this.setIsMidiLearningSoundId}
             isMidiLearningSoundId={this.state.isMidiLearningSoundId}
             midiMappings={this.state.midiMappings}
+            loadSoundByFreesoundId={this.loadSoundByFreesoundId}
           /> : ''}
         <MessagesBox />
       </div>

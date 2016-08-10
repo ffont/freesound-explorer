@@ -17,6 +17,7 @@ const propTypes = {
   midiMappings: React.PropTypes.object,
   selectedPath: React.PropTypes.string,
   addSoundToPath: React.PropTypes.func,
+  loadSoundByFreesoundId: React.PropTypes.func,
 };
 
 // TODO: SoundInfo component must read isUserLoggedIn from state.login (redux)
@@ -153,7 +154,10 @@ class SoundInfo extends React.Component {
             </div>
           </a>
           <div className="sound-info-modal-content">
-            <Waveform sound={this.props.sound} />
+            <Waveform
+              sound={this.props.sound}
+              loadSoundByFreesoundId={this.props.loadSoundByFreesoundId}
+            />
             {userButtons}
           </div>
         </div>

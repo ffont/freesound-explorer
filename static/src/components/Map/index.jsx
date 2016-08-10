@@ -29,6 +29,7 @@ const propTypes = {
   isMidiLearningSoundId: React.PropTypes.number,
   midiMappings: React.PropTypes.object,
   displaySystemMessage: React.PropTypes.func,
+  loadSoundByFreesoundId: React.PropTypes.func,
 };
 
 class Map extends React.Component {
@@ -188,6 +189,7 @@ class Map extends React.Component {
           setIsMidiLearningSoundId={this.props.setIsMidiLearningSoundId}
           isMidiLearningSoundId={this.props.isMidiLearningSoundId}
           midiMappings={this.props.midiMappings}
+          loadSoundByFreesoundId={this.props.loadSoundByFreesoundId}
         />
       </div>
     );

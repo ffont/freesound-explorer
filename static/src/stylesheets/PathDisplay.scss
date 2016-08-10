@@ -1,0 +1,14 @@
+@import "./variables.json";
+
+.path-sounds-list {
+  display: flex;
+  ul {
+    list-style-type: none;
+  }
+  li {
+    display: inline-block;
+    overflow: hidden;
+    height: 100%;
+  }
+  li:hover { background: $hoverBackground }
+}

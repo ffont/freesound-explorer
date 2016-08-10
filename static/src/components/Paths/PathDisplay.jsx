@@ -21,11 +21,11 @@ class PathDisplay extends React.Component {
       <ul className="path-sounds-list">
         {this.props.path.sounds.map((sound, soundIndex) => (
           <li key={soundIndex}>
-            {truncatedString(sound.name, 10)}
-            <a onClick={() => this.props.deleteSoundFromPath(soundIndex, this.props.path.id)} >
-              &nbsp;<i className="fa fa-trash-o fa-lg" aria-hidden="true" />
-            </a>
-            <Waveform sound={sound} loadSoundByFreesoundId={this.props.loadSoundByFreesoundId} />
+            <Waveform
+              sound={sound}
+              loadSoundByFreesoundId={this.props.loadSoundByFreesoundId}
+              useProportionalWidth
+            />
           </li>))}
       </ul>
     );

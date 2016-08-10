@@ -5,11 +5,13 @@ import '../../stylesheets/Waveform.scss';
 import sassVariables from 'json!../../stylesheets/variables.json';
 import { downsampleSignal } from '../../utils/misc';
 import { lighten } from '../../utils/colors';
+import { PIXELS_PER_SECOND, POINTS_PER_SECOND } from '../../constants';
 
 
 const propTypes = {
   sound: React.PropTypes.object,
   loadSoundByFreesoundId: React.PropTypes.func,
+  useProportionalWidth: React.PropTypes.bool,
 };
 
 const buildSymmetricSignal = (signal) => signal.reduce((symmetricSignal, curVal) =>
@@ -42,13 +44,19 @@ class Waveform extends React.Component {
     if (!this.props.sound.buffer) {
       this.props.loadSoundByFreesoundId(this.props.sound.id, () => {
         this.handleComponentUpdate();
+        this.forceUpdate();
       });
       return;
     }
     const signal = this.props.sound.buffer.getChannelData(0);
-    const downsampledSignal = downsampleSignal(signal);
+    const numberOfPoints = (this.props.useProportionalWidth) ?
+      parseInt(POINTS_PER_SECOND * this.props.sound.duration, 10) : undefined;
+    const downsampledSignal = downsampleSignal(signal, numberOfPoints);
     const symmetricSignal = buildSymmetricSignal(downsampledSignal);
-    const { waveformWidth, waveformHeight } = sassVariables;
+    let { waveformWidth, waveformHeight } = sassVariables;
+    if (this.props.useProportionalWidth) {
+      waveformWidth = parseInt(PIXELS_PER_SECOND * this.props.sound.duration, 10);
+    }
     this.drawWaveForm(symmetricSignal, waveformWidth, waveformHeight);
   }
 
@@ -93,8 +101,14 @@ class Waveform extends React.Component {
   }
 
   render() {
+    const width = (this.props.useProportionalWidth) ?
+      parseInt(PIXELS_PER_SECOND * (this.props.sound.duration), 10) : sassVariables.waveformWidth;
     return (
-      <svg ref="waveform" className="waveform" />
+      <svg
+        width={width}
+        ref="waveform"
+        className={(this.props.useProportionalWidth) ? 'waveform proportional-width' : 'waveform'}
+      />
     );
   }
 }

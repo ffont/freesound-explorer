@@ -10,5 +10,8 @@
     overflow: hidden;
     height: 100%;
   }
+  li:nth-child(even) {
+    background-color: $darkerHoverBackground;
+  }
   li:hover { background: $hoverBackground }
 }

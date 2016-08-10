@@ -11,6 +11,9 @@ export const MESSAGE_STATUS = {
   PROGRESS: 'progress',
 };
 
+export const PIXELS_PER_SECOND = 500;
+export const POINTS_PER_SECOND = 50;
+
 export const MIN_ZOOM = 0.2;
 export const MAX_ZOOM = 15;
 export const MAP_SCALE_FACTOR = 20;

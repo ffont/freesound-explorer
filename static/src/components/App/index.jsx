@@ -8,6 +8,7 @@ import MessagesBox from '../MessagesBox';
 import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
 import { readObjectByString, getRandomElement } from '../../utils/misc';
 import { displaySystemMessage } from '../../actions/messagesBox';
+import { getSounds } from '../../actions/sounds';
 import audioLoader from '../../utils/audioLoader';
 import tsnejs from '../../vendors/tsne';
 import '../../stylesheets/App.scss';
@@ -27,6 +28,7 @@ const propTypes = {
   }),
   displaySystemMessage: React.PropTypes.func,
   clearAllPaths: React.PropTypes.func,
+  getSounds: React.PropTypes.func,
 };
 
 
@@ -71,17 +73,23 @@ class App extends React.Component {
   }
 
   onQuerySubmit(query) {
+    const queryParams = {
+      descriptor: this.state.descriptor,
+      maxResults: this.state.maxResults,
+      maxDuration: this.state.maxDuration,
+    };
+    this.props.getSounds(query, queryParams);
     // first reset the list of sounds in state
-    this.props.clearAllPaths();
-    this.setState({
-      sounds: [],
-      error: '',
-      isFetching: true,
-    });
-    this.props.displaySystemMessage('Searching for sounds...');
-    submitQuery(query, this.state.maxResults, this.state.maxDuration).then(
-      allPagesResults => this.storeQueryResults(allPagesResults),
-      error => this.handleQueryError(error));
+    // this.props.clearAllPaths();
+    // this.setState({
+    //   sounds: [],
+    //   error: '',
+    //   isFetching: true,
+    // });
+    // this.props.displaySystemMessage('Searching for sounds...');
+    // submitQuery(query, this.state.maxResults, this.state.maxDuration).then(
+    //   allPagesResults => this.storeQueryResults(allPagesResults),
+    //   error => this.handleQueryError(error));
   }
 
   handleNoteOn(note, velocity) {
@@ -335,4 +343,5 @@ App.propTypes = propTypes;
 export default connect(() => ({}), {
   displaySystemMessage,
   clearAllPaths,
+  getSounds,
 })(App);

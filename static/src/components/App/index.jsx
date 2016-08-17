@@ -5,18 +5,13 @@ import Login from '../Login';
 import Logo from '../Logo';
 import Sidebar from '../Sidebar';
 import MessagesBox from '../MessagesBox';
-import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
-import { readObjectByString, getRandomElement } from '../../utils/misc';
+import { getRandomElement } from '../../utils/misc';
 import { displaySystemMessage } from '../../actions/messagesBox';
-import { getSounds } from '../../actions/sounds';
 import audioLoader from '../../utils/audioLoader';
-import tsnejs from '../../vendors/tsne';
 import '../../stylesheets/App.scss';
 import '../../stylesheets/toggle.scss';
 import '../../stylesheets/slider.scss';
 import '../../stylesheets/button.scss';
-import { DEFAULT_DESCRIPTOR, TSNE_CONFIG, DEFAULT_MAX_RESULTS, MESSAGE_STATUS }
-  from '../../constants';
 import '../../polyfills/AudioContext';
 import { clearAllPaths } from '../../actions';
 
@@ -28,7 +23,6 @@ const propTypes = {
   }),
   displaySystemMessage: React.PropTypes.func,
   clearAllPaths: React.PropTypes.func,
-  getSounds: React.PropTypes.func,
 };
 
 
@@ -236,5 +230,4 @@ App.propTypes = propTypes;
 export default connect(() => ({}), {
   displaySystemMessage,
   clearAllPaths,
-  getSounds,
 })(App);

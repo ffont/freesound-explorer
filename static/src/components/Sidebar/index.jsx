@@ -44,12 +44,10 @@ function Sidebar(props) {
           className="toggle-visibility-button"
           onClick={() => props.setSidebarVisibility(!props.isVisible)}
         >
-          {(() => {
-            switch (props.isVisible) {
-              case true: return <i className="fa fa-arrow-left" aria-hidden="true" />;
-              default: return <i className="fa fa-arrow-right" aria-hidden="true" />;
-            }
-          })()}
+          {(props.isVisible) ?
+            <i className="fa fa-arrow-left" aria-hidden="true" /> :
+            <i className="fa fa-arrow-right" aria-hidden="true" />
+          }
         </div>
       </div>
     </div>

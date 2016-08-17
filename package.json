@@ -37,6 +37,7 @@
     "loader-utils": "^0.2.15",
     "node-sass": "^3.8.0",
     "node-sass-json-importer": "^2.1.1",
+    "node-uuid": "^1.4.7",
     "normalize.css": "^4.2.0",
     "postcss-loader": "^0.9.1",
     "precss": "^1.4.0",

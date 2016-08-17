@@ -3,13 +3,13 @@ import { select, event as d3Event } from 'd3-selection';
 import { zoom } from 'd3-zoom';
 import { connect } from 'react-redux';
 import { displaySystemMessage } from '../../actions/messagesBox';
+import { updateMapPosition } from '../../actions/map';
 import MapCircle from './MapCircle';
 import SoundInfo from '../SoundInfo';
 import '../../polyfills/requestAnimationFrame';
 import { MIN_ZOOM, MAX_ZOOM, MAX_TSNE_ITERATIONS, MAP_SCALE_FACTOR, DEFAULT_PATH_STROKE_WIDTH,
   DEFAULT_PATH_STROKE_OPACITY, MESSAGE_STATUS } from '../../constants';
 import '../../stylesheets/Map.scss';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 const propTypes = {
   sounds: React.PropTypes.array,
@@ -23,11 +23,17 @@ const propTypes = {
   updateSelectedSound: React.PropTypes.func,
   playOnHover: React.PropTypes.bool,
   paths: React.PropTypes.array,
+  position: React.PropTypes.shape({
+    translateX: React.PropTypes.number,
+    translateY: React.PropTypes.number,
+    scale: React.PropTypes.number,
+  }),
   isUserLoggedIn: React.PropTypes.bool,
   setIsMidiLearningSoundId: React.PropTypes.func,
   isMidiLearningSoundId: React.PropTypes.number,
   midiMappings: React.PropTypes.object,
   displaySystemMessage: React.PropTypes.func,
+  updateMapPosition: React.PropTypes.func,
 };
 
 class Map extends React.Component {
@@ -35,12 +41,6 @@ class Map extends React.Component {
     super(props);
     this.zoomHandler = this.zoomHandler.bind(this);
     this.projectPoint = this.projectPoint.bind(this);
-    this.state = ({
-      translateX: 0,
-      translateY: 0,
-      scale: 1,
-    });
-    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     this.onClickCallback = this.onClickCallback.bind(this);
   }
 
@@ -67,12 +67,12 @@ class Map extends React.Component {
     const translateX = d3Event.transform.x;
     const translateY = d3Event.transform.y;
     const scale = d3Event.transform.k;
-    this.setState({ translateX, translateY, scale });
+    this.props.updateMapPosition({ translateX, translateY, scale });
   }
 
   projectPoint(positionInTsneSolution) {
     const { windowWidth, windowHeight } = this.props.windowSize;
-    const { translateX, translateY, scale } = this.state;
+    const { translateX, translateY, scale } = this.props.position;
     const cx = (positionInTsneSolution.x +
       (windowWidth / (MAP_SCALE_FACTOR * 2))) *
       MAP_SCALE_FACTOR * scale + translateX;
@@ -168,10 +168,12 @@ class Map extends React.Component {
 
 const mapStateToProps = (state) => {
   const { paths } = state.paths;
-  return { paths };
+  const position = state.map;
+  return { paths, position };
 };
 
 Map.propTypes = propTypes;
 export default connect(mapStateToProps, {
   displaySystemMessage,
+  updateMapPosition,
 }, undefined, { withRef: true })(Map);

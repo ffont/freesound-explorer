@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import login from './login';
+import map from './map';
 import messagesBox from './messagesBox';
 import metronome from './metronome';
 import paths from './paths';
@@ -10,6 +11,7 @@ import spaces from './spaces';
 
 const rootReducer = combineReducers({
   login,
+  map,
   messagesBox,
   metronome,
   paths,

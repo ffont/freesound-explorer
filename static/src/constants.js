@@ -1,5 +1,6 @@
 export const DEFAULT_QUERY = 'instrument note';
 export const DEFAULT_MAX_RESULTS = 60;
+export const DEFAULT_MIN_DURATION = 0;
 export const DEFAULT_MAX_DURATION = 5;
 export const DEFAULT_DESCRIPTOR = 'lowlevel.mfcc.mean';
 

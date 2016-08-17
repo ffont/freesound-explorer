@@ -8,6 +8,7 @@ import { readObjectByString } from '../utils/misc';
 import tsnejs from '../vendors/tsne';
 import '../polyfills/requestAnimationFrame';
 
+// no need to exports all these actions as they will be used internally in getSounds
 const fetchRequest = makeActionCreator(at.FETCH_SOUNDS_REQUEST, 'query', 'queryParams');
 const fetchSuccess = makeActionCreator(at.FETCH_SOUNDS_SUCCESS, 'sounds', 'query', 'queryParams');
 const fetchFailure = makeActionCreator(at.FETCH_SOUNDS_FAILURE, 'error', 'query', 'queryParams');
@@ -36,7 +37,7 @@ const computePointsPositionInSolution = (tsne, sounds) => {
     }));
 };
 
-const computeStepSolution = (tsne, sounds, dispatch) => {
+const computeTsneSolution = (tsne, sounds, dispatch) => {
   if (stepIteration <= MAX_TSNE_ITERATIONS) {
     // compute step solution
     tsne.step();
@@ -53,7 +54,7 @@ const computeStepSolution = (tsne, sounds, dispatch) => {
     const soundsWithUpdatedPosition = computePointsPositionInSolution(tsne, sounds);
     dispatch(updateSoundsPosition(soundsWithUpdatedPosition, '', ''));
     clearTimeoutId = requestAnimationFrame(() =>
-      computeStepSolution(tsne, soundsWithUpdatedPosition, dispatch));
+      computeTsneSolution(tsne, soundsWithUpdatedPosition, dispatch));
   } else {
     cancelAnimationFrame(clearTimeoutId);
     stepIteration = 0;
@@ -80,7 +81,7 @@ export const getSounds = (query, queryParams) => (dispatch) => {
       dispatch(fetchSuccess(sounds, query, queryParams));
       dispatch(displaySystemMessage(`${sounds.length} sounds loaded, computing map`));
       const tsne = trainTsne(sounds, queryParams);
-      computeStepSolution(tsne, sounds, dispatch);
+      computeTsneSolution(tsne, sounds, dispatch);
     },
     error => {
       dispatch(displaySystemMessage('No sounds found', MESSAGE_STATUS.ERROR));

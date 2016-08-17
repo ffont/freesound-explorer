@@ -39,18 +39,11 @@ class App extends React.Component {
       sounds: [],
       midiMappings: undefined,
       isMidiLearningSoundId: -1,
-      descriptor: DEFAULT_DESCRIPTOR,
       selectedSound: undefined,
-      maxResults: DEFAULT_MAX_RESULTS,
-      maxDuration: 5,
       isSidebarVisible: true,
       activeMode: 'SearchMode',
       playOnHover: false,
     };
-    this.onQuerySubmit = this.onQuerySubmit.bind(this);
-    this.setMapDescriptor = this.setMapDescriptor.bind(this);
-    this.setMaxResults = this.setMaxResults.bind(this);
-    this.setMaxDuration = this.setMaxDuration.bind(this);
     this.updateSelectedSound = this.updateSelectedSound.bind(this);
     this.setSidebarVisibility = this.setSidebarVisibility.bind(this);
     this.setActiveMode = this.setActiveMode.bind(this);
@@ -63,21 +56,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.setUpMIDIDevices();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.descriptor !== this.state.descriptor) {
-      this.initializeTsne(this.state.sounds);
-    }
-  }
-
-  onQuerySubmit(query) {
-    const queryParams = {
-      descriptor: this.state.descriptor,
-      maxResults: this.state.maxResults,
-      maxDuration: this.state.maxDuration,
-    };
-    this.props.getSounds(query, queryParams);
   }
 
   handleNoteOn(note, velocity) {
@@ -160,30 +138,9 @@ class App extends React.Component {
     }
   }
 
-  setMapDescriptor(evt) {
-    const newDescriptor = evt.target.value;
-    this.setState({
-      descriptor: newDescriptor,
-    });
-  }
-
   setIsMidiLearningSoundId(isMidiLearningSoundId) {
     this.setState({
       isMidiLearningSoundId,
-    });
-  }
-
-  setMaxResults(evt) {
-    const newMaxResults = parseInt(evt.target.value, 10);
-    this.setState({
-      maxResults: newMaxResults,
-    });
-  }
-
-  setMaxDuration(evt) {
-    const newMaxDuration = parseFloat(evt.target.value, 10);
-    this.setState({
-      maxDuration: newMaxDuration,
     });
   }
 
@@ -248,12 +205,6 @@ class App extends React.Component {
           setSidebarVisibility={this.setSidebarVisibility}
           activeMode={this.state.activeMode}
           setActiveMode={this.setActiveMode}
-          onQuerySubmit={this.onQuerySubmit}
-          onSetMapDescriptor={this.setMapDescriptor}
-          onSetMaxResults={this.setMaxResults}
-          onSetMaxDuration={this.setMaxDuration}
-          maxResults={this.state.maxResults}
-          maxDuration={this.state.maxDuration}
           playOnHover={this.state.playOnHover}
           tooglePlayOnHover={this.tooglePlayOnHover}
           startStopPlayingPath={this.startStopPlayingPath}

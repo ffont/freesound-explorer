@@ -1,24 +1,44 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import '../../stylesheets/QueryBox.scss';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { DEFAULT_MAX_RESULTS, DEFAULT_MAX_DURATION } from '../../constants';
+import { getSounds } from '../../actions/sounds';
+import { updateDescriptor, updateMinDuration, updateMaxDuration,
+  updateMaxResults, updateQuery }
+  from '../../actions/search';
+import { DEFAULT_MAX_RESULTS, DEFAULT_MAX_DURATION, DEFAULT_QUERY } from '../../constants';
 
 const propTypes = {
-  onSetMapDescriptor: React.PropTypes.func,
-  onSetMaxResults: React.PropTypes.func,
-  onSetMaxDuration: React.PropTypes.func,
-  onQuerySubmit: React.PropTypes.func,
   maxResults: React.PropTypes.number,
   maxDuration: React.PropTypes.number,
+  minDuration: React.PropTypes.number,
+  descriptor: React.PropTypes.string,
+  query: React.PropTypes.string,
   playOnHover: React.PropTypes.bool,
   tooglePlayOnHover: React.PropTypes.func,
+  getSounds: React.PropTypes.func,
+  updateDescriptor: React.PropTypes.func,
+  updateMinDuration: React.PropTypes.func,
+  updateMaxDuration: React.PropTypes.func,
+  updateMaxResults: React.PropTypes.func,
+  updateQuery: React.PropTypes.func,
 };
 
 class QueryBox extends React.Component {
   constructor(props) {
     super(props);
-    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    this.submitQuery = this.submitQuery.bind(this);
   }
+
+  submitQuery() {
+    let { query } = this.props;
+    const { descriptor, maxResults, minDuration, maxDuration } = this.props;
+    const queryParams = { descriptor, maxResults, minDuration, maxDuration };
+    if (!query.length) {
+      query = DEFAULT_QUERY;
+    }
+    this.props.getSounds(query, queryParams);
+  }
+
   render() {
     return (
       <div id="query-box" className="query-box">
@@ -28,14 +48,17 @@ class QueryBox extends React.Component {
             className="query-terms-input"
             type="text"
             placeholder="query terms, e.g.: instrument note"
-            ref="query"
+            onChange={() => {
+              const query = document.getElementById('query-terms-input').value;
+              this.props.updateQuery(query);
+            }}
           />
           <button
             id="search-button"
             className="search-button"
             onClick={(evt) => {
               evt.preventDefault();
-              this.props.onQuerySubmit(this.refs.query.value);
+              this.submitQuery();
             }}
           >
             <i className="fa fa-arrow-circle-right fa-lg" aria-hidden="true" />
@@ -43,7 +66,10 @@ class QueryBox extends React.Component {
           <select
             id="map-descriptors-selector"
             className="map-descriptors-selector"
-            onChange={this.props.onSetMapDescriptor}
+            onChange={(evt) => {
+              const descriptor = evt.target.value;
+              this.props.updateDescriptor(descriptor);
+            }}
           >
             <option value="lowlevel.mfcc.mean">Arrange by Timbre</option>
             <option value="tonal.hpcp.mean">Arrange by Tonality</option>
@@ -52,16 +78,24 @@ class QueryBox extends React.Component {
             Number of results:
             <input
               id="max-results-slider"
-              type="range" onChange={this.props.onSetMaxResults}
+              type="range"
               min="20" max="450" defaultValue={DEFAULT_MAX_RESULTS} step="1"
+              onChange={(evt) => {
+                const maxResults = evt.target.value;
+                this.props.updateMaxResults(maxResults);
+              }}
             /><span>{this.props.maxResults}</span>
           </div>
           <div className="slider-wrapper">
             Maximum duration (s):
             <input
               id="max-duration-slider"
-              type="range" onChange={this.props.onSetMaxDuration}
+              type="range"
               min="0.5" max="30" defaultValue={DEFAULT_MAX_DURATION} step="0.5"
+              onChange={(evt) => {
+                const maxDuration = evt.target.value;
+                this.props.updateMaxDuration(maxDuration);
+              }}
             /><span>{this.props.maxDuration}</span>
           </div>
           <div className="toggle-wrapper">
@@ -74,7 +108,7 @@ class QueryBox extends React.Component {
                 checked={this.props.playOnHover}
                 onChange={this.props.tooglePlayOnHover}
               />
-              <label htmlFor="playOnHoverSwitch"></label>
+              <label htmlFor="playOnHoverSwitch" />
             </div>
           </div>
         </form>
@@ -83,6 +117,14 @@ class QueryBox extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => state.search;
 
 QueryBox.propTypes = propTypes;
-export default QueryBox;
+export default connect(mapStateToProps, {
+  getSounds,
+  updateDescriptor,
+  updateMinDuration,
+  updateMaxDuration,
+  updateMaxResults,
+  updateQuery,
+})(QueryBox);

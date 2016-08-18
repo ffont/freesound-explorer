@@ -1,7 +1,8 @@
+import { combineReducers } from 'redux';
 import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE }
   from '../actions/actionTypes';
 
-export const computeSpacePosition = (spaceIndex) => ({ x: 0, y: 0 });
+export const computeSpacePosition = (spaceIndex) => ({ x: (spaceIndex + 1), y: 1 });
 
 export const spaceInitialState = {
   sounds: [],
@@ -48,9 +49,7 @@ export const singleSpace = (state = spaceInitialState, action, spacesInMap) => {
   }
 };
 
-export const initialState = [];
-
-const spaces = (state = initialState, action) => {
+const spaces = (state = [], action) => {
   switch (action.type) {
     case FETCH_SOUNDS_REQUEST: {
       const spacesInMap = state.length;
@@ -69,4 +68,11 @@ const spaces = (state = initialState, action) => {
   }
 };
 
-export default spaces;
+const currentSpace = (state = '', action) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({ spaces, currentSpace });

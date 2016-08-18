@@ -6,6 +6,7 @@ import { submitQuery, reshapeReceivedSounds } from '../utils/fsQuery';
 import { MESSAGE_STATUS, TSNE_CONFIG, DEFAULT_DESCRIPTOR, MAX_TSNE_ITERATIONS }
   from '../constants';
 import { readObjectByString } from '../utils/misc';
+import { computeSoundGlobalPosition } from '../reducers/sounds';
 import tsnejs from '../vendors/tsne';
 import '../polyfills/requestAnimationFrame';
 
@@ -28,16 +29,42 @@ let clearTimeoutId;
 let stepIteration = 0;
 let progress = 0;
 
-const computePointsPositionInSolution = (tsne, sounds) => {
-  const tsneSolution = tsne.getSolution();
-  return sounds.map((sound, index) =>
-    Object.assign(sound, {
-      x: tsneSolution[index][0],
-      y: tsneSolution[index][1],
-    }));
+function findSpaceForSound(space) {
+  // `this` refers to the sound object itself
+  return space.sounds.includes(this.id);
+}
+
+const computeSpacePositionForSound = (sound, store) => {
+  const { spaces } = store.spaces;
+  const space = spaces.find(findSpaceForSound, sound);
+  return space.position;
 };
 
-const computeTsneSolution = (tsne, sounds, dispatch, queryID) => {
+const computePointsPositionInSolution = (tsne, sounds, getStore) => {
+  /** we retrieve the store at each step to take into account user zooming/moving
+  while map being computed */
+  const store = getStore();
+  const tsneSolution = tsne.getSolution();
+  return sounds.map((sound, index) => {
+    const mapPosition = store.map;
+    let { spacePosition } = sound;
+    if (!spacePosition) {
+      spacePosition = computeSpacePositionForSound(sound, store);
+    }
+    const tsnePosition = {
+      x: tsneSolution[index][0],
+      y: tsneSolution[index][1],
+    };
+    const position = computeSoundGlobalPosition(tsnePosition, spacePosition, mapPosition);
+    return Object.assign(sound, {
+      position,
+      spacePosition, // tsne and spacePosition could be useful later (e.g.: when user moves map)
+      tsnePosition,
+    });
+  });
+};
+
+const computeTsneSolution = (tsne, sounds, dispatch, queryID, getStore) => {
   if (stepIteration <= MAX_TSNE_ITERATIONS) {
     // compute step solution
     tsne.step();
@@ -51,10 +78,10 @@ const computeTsneSolution = (tsne, sounds, dispatch, queryID) => {
         `${sounds.length} sounds loaded, computing map (${progress}%)`;
       dispatch(displaySystemMessage(statusMessage));
     }
-    const soundsWithUpdatedPosition = computePointsPositionInSolution(tsne, sounds);
+    const soundsWithUpdatedPosition = computePointsPositionInSolution(tsne, sounds, getStore);
     dispatch(updateSoundsPosition(soundsWithUpdatedPosition, queryID));
     clearTimeoutId = requestAnimationFrame(() =>
-      computeTsneSolution(tsne, soundsWithUpdatedPosition, dispatch, queryID));
+      computeTsneSolution(tsne, soundsWithUpdatedPosition, dispatch, queryID, getStore));
   } else {
     cancelAnimationFrame(clearTimeoutId);
     stepIteration = 0;
@@ -71,7 +98,7 @@ const computeTsneSolution = (tsne, sounds, dispatch, queryID) => {
  * @type {object} queryParams: the parameters of the query
  *       (descriptor, maxResults, maxDuration, minDuration)
  */
-export const getSounds = (query, queryParams) => (dispatch) => {
+export const getSounds = (query, queryParams) => (dispatch, getStore) => {
   dispatch(displaySystemMessage('Searching for sounds...'));
   const queryID = UUID.v4();
   dispatch(fetchRequest(queryID, query, queryParams));
@@ -82,7 +109,7 @@ export const getSounds = (query, queryParams) => (dispatch) => {
       dispatch(fetchSuccess(sounds, queryID));
       dispatch(displaySystemMessage(`${sounds.length} sounds loaded, computing map`));
       const tsne = trainTsne(sounds, queryParams);
-      computeTsneSolution(tsne, sounds, dispatch, queryID);
+      computeTsneSolution(tsne, sounds, dispatch, queryID, getStore);
     },
     error => {
       dispatch(displaySystemMessage('No sounds found', MESSAGE_STATUS.ERROR));

@@ -29,7 +29,7 @@ function search(query = DEFAULT_QUERY, filter = '', maxResults = DEFAULT_MAX_RES
   while (pageCounter < pagesToGet) {
     const maxPageResults = (pageCounter + 1 !== pagesToGet) ?
       Math.min(maxResults, freesoundMaxPageSize) :
-      maxResults - pageCounter * freesoundMaxPageSize;
+      maxResults - (pageCounter * freesoundMaxPageSize);
     freesound.setToken(sessionStorage.getItem('app_token'));
     promises.push(freesound.textSearch(query, {
       page: pageCounter + 1,
@@ -93,8 +93,6 @@ export function reshapeReceivedSounds(allPagesResults) {
           download,
           isBookmarked,
           buffer,
-          x: 0,
-          y: 0,
         });
       }
     });

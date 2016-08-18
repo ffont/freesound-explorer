@@ -16,10 +16,7 @@ if (ReactPerf) {
   window.ReactPerf = ReactPerf;
 }
 
-const windowWidth = window.innerWidth;
-const windowHeight = window.innerHeight;
-
 render(
   <Provider store={store}>
-    <App windowSize={{ windowWidth, windowHeight }} />
+    <App />
   </Provider>, document.getElementById('app'));

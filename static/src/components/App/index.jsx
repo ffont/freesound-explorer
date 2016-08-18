@@ -17,10 +17,6 @@ import { clearAllPaths } from '../../actions';
 
 
 const propTypes = {
-  windowSize: React.PropTypes.shape({
-    windowWidth: React.PropTypes.number,
-    windowHeight: React.PropTypes.number,
-  }),
   displaySystemMessage: React.PropTypes.func,
   clearAllPaths: React.PropTypes.func,
 };
@@ -189,7 +185,6 @@ class App extends React.Component {
   }
 
   render() {
-    const shouldShowMap = !!this.state.sounds.length;
     return (
       <div className="app-container">
         <Logo />
@@ -207,19 +202,17 @@ class App extends React.Component {
           playSoundByFreesoundId={this.playSoundByFreesoundId}
         />
         <Login />
-        {(shouldShowMap) ?
-          <Map
-            ref="map"
-            audioContext={this.audioContext}
-            audioLoader={this.audioLoader}
-            windowSize={this.props.windowSize}
-            selectedSound={this.state.selectedSound}
-            updateSelectedSound={this.updateSelectedSound}
-            playOnHover={this.state.playOnHover}
-            setIsMidiLearningSoundId={this.setIsMidiLearningSoundId}
-            isMidiLearningSoundId={this.state.isMidiLearningSoundId}
-            midiMappings={this.state.midiMappings}
-          /> : ''}
+        <Map
+          ref="map"
+          audioContext={this.audioContext}
+          audioLoader={this.audioLoader}
+          selectedSound={this.state.selectedSound}
+          updateSelectedSound={this.updateSelectedSound}
+          playOnHover={this.state.playOnHover}
+          setIsMidiLearningSoundId={this.setIsMidiLearningSoundId}
+          isMidiLearningSoundId={this.state.isMidiLearningSoundId}
+          midiMappings={this.state.midiMappings}
+        />
         <MessagesBox />
       </div>
     );

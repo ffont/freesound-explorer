@@ -5,24 +5,22 @@ import { connect } from 'react-redux';
 import { displaySystemMessage } from '../../actions/messagesBox';
 import { updateMapPosition } from '../../actions/map';
 import MapCircle from './MapCircle';
+import Space from './Space';
 import SoundInfo from '../SoundInfo';
 import '../../polyfills/requestAnimationFrame';
-import { MIN_ZOOM, MAX_ZOOM, MAX_TSNE_ITERATIONS, MAP_SCALE_FACTOR, DEFAULT_PATH_STROKE_WIDTH,
-  DEFAULT_PATH_STROKE_OPACITY, MESSAGE_STATUS } from '../../constants';
+import { MIN_ZOOM, MAX_ZOOM, MAP_SCALE_FACTOR, DEFAULT_PATH_STROKE_WIDTH,
+  DEFAULT_PATH_STROKE_OPACITY } from '../../constants';
 import '../../stylesheets/Map.scss';
 
 const propTypes = {
   sounds: React.PropTypes.array,
   audioContext: React.PropTypes.object,
   audioLoader: React.PropTypes.object,
-  windowSize: React.PropTypes.shape({
-    windowWidth: React.PropTypes.number,
-    windowHeight: React.PropTypes.number,
-  }),
   selectedSound: React.PropTypes.number,
   updateSelectedSound: React.PropTypes.func,
   playOnHover: React.PropTypes.bool,
   paths: React.PropTypes.array,
+  spaces: React.PropTypes.array,
   position: React.PropTypes.shape({
     translateX: React.PropTypes.number,
     translateY: React.PropTypes.number,
@@ -45,7 +43,7 @@ class Map extends React.Component {
   }
 
   componentDidMount() {
-    const container = select(this.refs.mapContainer);
+    const container = select(this.mapContainer);
     const zoomBehaviour = zoom()
       .scaleExtent([MIN_ZOOM, MAX_ZOOM])
       .on('zoom', this.zoomHandler);
@@ -83,74 +81,15 @@ class Map extends React.Component {
   }
 
   render() {
-    const tsneSolution = this.props.tsne.getSolution();
     let soundInfoPosition;
     let soundInfoContent;
     return (
-      <div className="map-container" ref="mapContainer">
+      <div
+        className="map-container"
+        ref={(mapContainer) => { this.mapContainer = mapContainer; }}
+      >
         <svg className="map" onClick={this.onClickCallback}>
-          {'/* Draw circles (sounds) */'}
-          {this.props.sounds.map((sound, index) => {
-            const tsnePosition = {
-              x: tsneSolution[index][0],
-              y: tsneSolution[index][1],
-            };
-            const circleRef = `map-point-${sound.id}`;
-            const { cx, cy } = this.projectPoint(tsnePosition);
-            const isSoundSelected = this.props.selectedSound === sound.id;
-            if (isSoundSelected) {
-              soundInfoPosition = { x: cx, y: cy };
-              soundInfoContent = sound;
-            }
-            return (
-              <MapCircle
-                ref={circleRef}
-                key={index}
-                sound={sound}
-                position={{ cx, cy }}
-                isSelected={isSoundSelected}
-                updateSelectedSound={this.props.updateSelectedSound}
-                audioContext={this.props.audioContext}
-                audioLoader={this.props.audioLoader}
-                playOnHover={this.props.playOnHover}
-                projectPoint={this.projectPoint}
-                setIsMidiLearningSoundId={this.props.setIsMidiLearningSoundId}
-              />
-            );
-          })}
-          {'/* Draw lines (paths) */'}
-          {this.props.paths.map((path) => (
-            [...Array((path.sounds.length) ? path.sounds.length - 1: 0).keys()].map((sound, index) => {
-              const soundFrom = path.sounds[index];
-              const soundTo = path.sounds[index + 1];
-              const indexSoundFrom = this.props.sounds.indexOf(soundFrom);
-              const positionFrom = {
-                x: tsneSolution[indexSoundFrom][0],
-                y: tsneSolution[indexSoundFrom][1],
-              };
-              const indexSoundTo = this.props.sounds.indexOf(soundTo);
-              const positionTo = {
-                x: tsneSolution[indexSoundTo][0],
-                y: tsneSolution[indexSoundTo][1],
-              };
-              const { cx: x1, cy: y1 } = this.projectPoint(positionFrom);
-              const { cx: x2, cy: y2 } = this.projectPoint(positionTo);
-              return (
-                <line
-                  key={index}
-                  x1={x1}
-                  y1={y1}
-                  x2={x2}
-                  y2={y2}
-                  stroke="white"
-                  strokeWidth={DEFAULT_PATH_STROKE_WIDTH}
-                  strokeOpacity={(path.isPlaying) ?
-                    DEFAULT_PATH_STROKE_OPACITY * 10 :
-                    DEFAULT_PATH_STROKE_OPACITY}
-                />
-              );
-            })
-          ))}
+          {this.props.spaces.map(space => <Space key={space.queryID} {...space} />)}
         </svg>
         <SoundInfo
           position={soundInfoPosition}
@@ -168,8 +107,9 @@ class Map extends React.Component {
 
 const mapStateToProps = (state) => {
   const { paths } = state.paths;
+  const { spaces } = state.spaces;
   const position = state.map;
-  return { paths, position };
+  return { paths, position, spaces };
 };
 
 Map.propTypes = propTypes;

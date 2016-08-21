@@ -4,16 +4,13 @@ import { zoom } from 'd3-zoom';
 import { connect } from 'react-redux';
 import { displaySystemMessage } from '../../actions/messagesBox';
 import { updateMapPosition } from '../../actions/map';
-import MapCircle from './MapCircle';
 import Space from './Space';
 import SoundInfo from '../SoundInfo';
 import '../../polyfills/requestAnimationFrame';
-import { MIN_ZOOM, MAX_ZOOM, MAP_SCALE_FACTOR, DEFAULT_PATH_STROKE_WIDTH,
-  DEFAULT_PATH_STROKE_OPACITY } from '../../constants';
+import { MIN_ZOOM, MAX_ZOOM } from '../../constants';
 import '../../stylesheets/Map.scss';
 
 const propTypes = {
-  sounds: React.PropTypes.array,
   audioContext: React.PropTypes.object,
   audioLoader: React.PropTypes.object,
   selectedSound: React.PropTypes.number,
@@ -38,7 +35,6 @@ class Map extends React.Component {
   constructor(props) {
     super(props);
     this.zoomHandler = this.zoomHandler.bind(this);
-    this.projectPoint = this.projectPoint.bind(this);
     this.onClickCallback = this.onClickCallback.bind(this);
   }
 
@@ -68,26 +64,11 @@ class Map extends React.Component {
     this.props.updateMapPosition({ translateX, translateY, scale });
   }
 
-  projectPoint(positionInTsneSolution) {
-    const { windowWidth, windowHeight } = this.props.windowSize;
-    const { translateX, translateY, scale } = this.props.position;
-    const cx = (positionInTsneSolution.x +
-      (windowWidth / (MAP_SCALE_FACTOR * 2))) *
-      MAP_SCALE_FACTOR * scale + translateX;
-    const cy = (positionInTsneSolution.y +
-      (windowHeight / (MAP_SCALE_FACTOR * 2))) *
-      MAP_SCALE_FACTOR * scale + translateY;
-    return { cx, cy };
-  }
-
   render() {
     let soundInfoPosition;
     let soundInfoContent;
     return (
-      <div
-        className="map-container"
-        ref={(mapContainer) => { this.mapContainer = mapContainer; }}
-      >
+      <div className="map-container" ref={(mapContainer) => { this.mapContainer = mapContainer; }}>
         <svg className="map" onClick={this.onClickCallback}>
           {this.props.spaces.map(space => <Space key={space.queryID} {...space} />)}
         </svg>

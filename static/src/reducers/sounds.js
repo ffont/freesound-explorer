@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
-import { FETCH_SOUNDS_SUCCESS, UPDATE_SOUNDS_POSITION, UPDATE_MAP_POSITION }
+import { FETCH_SOUNDS_SUCCESS, UPDATE_SOUNDS_POSITION, UPDATE_MAP_POSITION,
+  SELECT_SOUND_BY_ID }
   from '../actions/actionTypes';
 import { MAP_SCALE_FACTOR } from '../constants';
 
@@ -8,17 +9,15 @@ const windowHeight = window.innerHeight;
 
 export const computeSoundGlobalPosition = (tsnePosition, spacePosition, mapPosition) => {
   const { translateX, translateY, scale } = mapPosition;
-  const cx = ((tsnePosition.x +
-    (windowWidth / (MAP_SCALE_FACTOR * 2))) *
+  const cx = ((tsnePosition.x + (windowWidth / (MAP_SCALE_FACTOR * 2))) *
     MAP_SCALE_FACTOR * scale * spacePosition.x) + translateX;
-  const cy = ((tsnePosition.y +
-    (windowHeight / (MAP_SCALE_FACTOR * 2))) *
+  const cy = ((tsnePosition.y + (windowHeight / (MAP_SCALE_FACTOR * 2))) *
     MAP_SCALE_FACTOR * scale * spacePosition.y) + translateY;
   return { cx, cy };
 };
 
 const mapSoundsToObject = (sounds, queryID) => sounds.reduce((curState, curSound) => {
-  const soundObj = Object.assign({}, curSound, { queryID });
+  const soundObj = (queryID) ? Object.assign({}, curSound, { queryID }) : curSound;
   return Object.assign({}, curState, { [curSound.id]: soundObj });
 }, {});
 
@@ -29,12 +28,8 @@ const byID = (state = {}, action) => {
       return Object.assign({}, state, receivedSounds);
     }
     case UPDATE_SOUNDS_POSITION: {
-      const updatedSounds = action.sounds;
-      const stateSoundsToUpdate = updatedSounds.reduce((curState, sound) =>
-        Object.assign(curState, {
-          [sound.id]: sound,
-        }), {});
-      return Object.assign({}, state, stateSoundsToUpdate);
+      const updatedSounds = mapSoundsToObject(action.sounds);
+      return Object.assign({}, state, updatedSounds);
     }
     case UPDATE_MAP_POSITION: {
       const mapPosition = action.position;
@@ -55,6 +50,8 @@ const byID = (state = {}, action) => {
 
 const selectedSound = (state = 0, action) => {
   switch (action.type) {
+    case SELECT_SOUND_BY_ID:
+      return action.soundID;
     default:
       return state;
   }

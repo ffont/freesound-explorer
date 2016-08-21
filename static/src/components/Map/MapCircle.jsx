@@ -1,173 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { DEFAULT_RADIUS, DEFAULT_FILL_OPACITY, DEFAULT_STROKE_WIDTH, DEFAULT_STROKE_OPACITY }
   from '../../constants';
 
 const propTypes = {
   sound: React.PropTypes.object,
-  isSelected: React.PropTypes.bool,
-  updateSelectedSound: React.PropTypes.func,
-  position: React.PropTypes.shape({
-    cx: React.PropTypes.number,
-    cy: React.PropTypes.number,
-  }),
-  audioLoader: React.PropTypes.object,
-  audioContext: React.PropTypes.object,
-  playOnHover: React.PropTypes.bool,
-  setIsMidiLearningSoundId: React.PropTypes.func,
 };
 
 
 class MapCircle extends React.Component {
-  constructor(props) {
-    super(props);
-    this.playingSourceNodes = {};
-    this.playingGainNodes = {};
-    this.onHoverCallback = this.onHoverCallback.bind(this);
-    this.onMouseLeaveCallback = this.onMouseLeaveCallback.bind(this);
-    this.onClickCallback = this.onClickCallback.bind(this);
-    this.state = {
-      isHovered: false,
-      isPlaying: false,
-    };
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    // case 1: state updated
-    if (this.state !== nextState) {
-      return true;
-    }
-    // case 2: new position
-    if (this.props.position.cx !== nextProps.position.cx ||
-      this.props.position.cy !== nextProps.position.cy) {
-      return true;
-    }
-    if (this.props.isSelected !== nextProps.isSelected) {
-      return true;
-    }
-    return false;
-  }
-
-  onHoverCallback() {
-    if (this.props.playOnHover) {
-      this.playAudio();
-    }
-    this.setState({ isHovered: true });
-  }
-
-  onMouseLeaveCallback() {
-    this.setState({ isHovered: false });
-  }
-
-  onClickCallback() {
-    if (this.props.isSelected) {
-      // undo selection and stop playing if sound is already selected
-      this.props.updateSelectedSound();
-      if (this.state.isPlaying) {
-        this.stopAudio();
-      }
-    } else {
-      this.props.updateSelectedSound(this.props.sound.id);
-      if (!this.props.playOnHover) {
-        this.playAudio();
-      }
-    }
-    // Stop current midi learning
-    this.props.setIsMidiLearningSoundId(-1);
-  }
-
-  onAudioFinishedPLaying() {
-    this.setState({ isPlaying: false });
-  }
-
-  loadAudio() {
-    return new Promise((resolve, reject) => {
-      if (this.props.sound.buffer) {
-        // if buffer already loaded, resolve immediately
-        resolve(this.props.sound.buffer);
-      } else {
-        this.props.audioLoader.loadSound(this.props.sound.previewUrl)
-        .then(
-          decodedAudio => {
-            this.props.sound.buffer = decodedAudio;
-            this.props.sound.duration = this.props.sound.buffer.duration;
-            resolve();
-          },
-          error => reject(error)
-        );
-      }
-    });
-  }
-
-  playAudio(onEndedCallback, playbackRate = 1.0, customSourceNodeKey, time = 0.0) {
-    this.loadAudio().then(() => {
-      // add buffer source to audio context and play
-      const source = this.props.audioContext.createBufferSource();
-      const sourceGainNode = this.props.audioContext.createGain();
-      let sourceNodeKey = Object.keys(this.playingSourceNodes).length;
-      if (customSourceNodeKey) { sourceNodeKey = customSourceNodeKey; }
-      this.playingSourceNodes[sourceNodeKey] = source;
-      this.playingGainNodes[sourceNodeKey] = sourceGainNode;
-      source.onended = () => {
-        this.onAudioFinishedPLaying();
-        delete this.playingSourceNodes[sourceNodeKey];
-        delete this.playingGainNodes[sourceNodeKey];
-        if (onEndedCallback) {
-          onEndedCallback();
-        }
-      };
-      source.buffer = this.props.sound.buffer;
-      source.playbackRate.value = playbackRate;
-      source.connect(sourceGainNode);
-      sourceGainNode.connect(this.props.audioContext.gainNode);
-      source.start(time);
-      this.setState({ isPlaying: true });
-      // return reference to souce node so it can be accessed from outside
-      // TODO: check that works...
-      return sourceNodeKey;
-    });
-  }
-
-  stopAudio(sourceNodeKey = undefined) {
-    const fadeOutTime = 0.05; // in seconds
-    if (sourceNodeKey) {
-      if (this.playingSourceNodes.hasOwnProperty(sourceNodeKey)) {
-        this.playingGainNodes[sourceNodeKey].gain.exponentialRampToValueAtTime(
-          0.01, this.props.audioContext.currentTime + fadeOutTime);
-        this.playingSourceNodes[sourceNodeKey].stop(
-          this.props.audioContext.currentTime + fadeOutTime);  // this will trigger onended callback
-      }
-    } else {
-      // If no specific key provided, stop all source nodes
-      Object.keys(this.playingSourceNodes).forEach((key) => {
-        this.playingGainNodes[key].gain.exponentialRampToValueAtTime(
-          0.01, this.props.audioContext.currentTime + fadeOutTime);
-        this.playingSourceNodes[key].stop(
-          this.props.audioContext.currentTime + fadeOutTime);  // this will trigger onended callback
-      });
-    }
-  }
-
   render() {
-    const { cx, cy } = this.props.position;
-    const fillColor = (this.props.isSelected) ? 'white' : this.props.sound.color;
-    const strokeColor = (this.props.isSelected || this.state.isPlaying || this.state.isHovered) ?
-        'white' : this.props.sound.color;
-    const animationValues = `${DEFAULT_RADIUS / 2}; ${DEFAULT_RADIUS / 1.5}; ${DEFAULT_RADIUS / 2}`;
-    const animation = (this.state.isPlaying) ?
-      <animate
-        attributeName="r"
-        begin="0s"
-        dur="1s"
-        repeatCount="indefinite"
-        values={animationValues}
-        keyTimes="0; 0.5; 1"
-      /> : false;
+    if (!this.props.sound.position) {
+      return null;
+    }
+    const { cx, cy } = this.props.sound.position;
+    const fillColor = this.props.sound.color;
+    const strokeColor = this.props.sound.color;
     return (
       <circle
         cx={cx}
         cy={cy}
         r={DEFAULT_RADIUS / 2}
-        ref="circleElement"
         fill={fillColor}
         fillOpacity={DEFAULT_FILL_OPACITY}
         stroke={strokeColor}
@@ -176,10 +29,20 @@ class MapCircle extends React.Component {
         onMouseEnter={this.onHoverCallback}
         onMouseLeave={this.onMouseLeaveCallback}
         onClick={this.onClickCallback}
-      >{animation}</circle>
+      />
     );
   }
 }
 
+const makeMapStateToProps = (_, ownProps) => {
+  const { soundID } = ownProps;
+  return (state) => {
+    const sound = state.sounds.byID[soundID];
+    return {
+      sound,
+    };
+  };
+};
+
 MapCircle.propTypes = propTypes;
-export default MapCircle;
+export default connect(makeMapStateToProps, {})(MapCircle);

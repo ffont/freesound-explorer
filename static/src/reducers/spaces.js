@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux';
-import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE }
+import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE,
+  UPDATE_MAP_POSITION }
   from '../actions/actionTypes';
 
-export const computeSpacePosition = (spaceIndex) => ({ x: (spaceIndex + 1), y: 1 });
+const computeSpacePosition = (spaceIndex) => ({ x: (spaceIndex + 1), y: 1 });
 
-export const spaceInitialState = {
+const spaceInitialState = {
   sounds: [],
   isFetching: true,
   query: undefined,
@@ -22,7 +23,7 @@ export const spaceInitialState = {
   },
 };
 
-export const singleSpace = (state = spaceInitialState, action, spacesInMap) => {
+const singleSpace = (state = spaceInitialState, action, spacesInMap) => {
   switch (action.type) {
     case FETCH_SOUNDS_REQUEST: {
       const spacePosition = computeSpacePosition(spacesInMap);
@@ -70,6 +71,11 @@ const spaces = (state = [], action) => {
 
 const currentSpace = (state = '', action) => {
   switch (action.type) {
+    case FETCH_SOUNDS_SUCCESS:
+      return action.queryID;
+    case UPDATE_MAP_POSITION:
+      // TODO: update current space when user moves to another one
+      return state;
     default:
       return state;
   }

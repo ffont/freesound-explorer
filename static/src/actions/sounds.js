@@ -16,7 +16,7 @@ const fetchSuccess = makeActionCreator(at.FETCH_SOUNDS_SUCCESS, 'sounds', 'query
 const fetchFailure = makeActionCreator(at.FETCH_SOUNDS_FAILURE, 'error', 'queryID');
 const updateSoundsPosition = makeActionCreator(at.UPDATE_SOUNDS_POSITION, 'sounds', 'queryID');
 
-const trainTsne = (sounds, queryParams) => {
+const getTrainedTsne = (sounds, queryParams) => {
   const tsne = new tsnejs.Tsne(TSNE_CONFIG);
   const descriptor = queryParams.descriptor || DEFAULT_DESCRIPTOR;
   const descriptorKey = `analysis.${descriptor}`;
@@ -29,27 +29,20 @@ let clearTimeoutId;
 let stepIteration = 0;
 let progress = 0;
 
-function findSpaceForSound(space) {
-  // `this` refers to the sound object itself
-  return space.sounds.includes(this.id);
-}
-
-const computeSpacePositionForSound = (sound, store) => {
+const getSoundSpacePosition = (sound, store) => {
   const { spaces } = store.spaces;
-  const space = spaces.find(findSpaceForSound, sound);
+  // find the space to which sound belongs to
+  const space = spaces.find(curSpace => curSpace.sounds.includes(sound.id));
   return space.position;
 };
 
-const computePointsPositionInSolution = (tsne, sounds, getStore) => {
-  /** we retrieve the store at each step to take into account user zooming/moving
-  while map being computed */
-  const store = getStore();
+const computePointsPositionInSolution = (tsne, sounds, store) => {
   const tsneSolution = tsne.getSolution();
   return sounds.map((sound, index) => {
     const mapPosition = store.map;
     let { spacePosition } = sound;
     if (!spacePosition) {
-      spacePosition = computeSpacePositionForSound(sound, store);
+      spacePosition = getSoundSpacePosition(sound, store);
     }
     const tsnePosition = {
       x: tsneSolution[index][0],
@@ -64,7 +57,21 @@ const computePointsPositionInSolution = (tsne, sounds, getStore) => {
   });
 };
 
+
+/**
+ * [computeTsneSolution description]
+ * @param  {[type]} tsne     [description]
+ * @param  {[type]} sounds   [description]
+ * @param  {[type]} dispatch [description]
+ * @param  {[type]} queryID  [description]
+ * @param  {[type]} getStore [description]
+ * @return {[type]}          [description]
+ */
 const computeTsneSolution = (tsne, sounds, dispatch, queryID, getStore) => {
+  /** we retrieve the store at each step to take into account user zooming/moving
+  while map being computed */
+  const store = getStore();
+  // TODO: dispatch updateMapPosition to automatically focus on new space
   if (stepIteration <= MAX_TSNE_ITERATIONS) {
     // compute step solution
     tsne.step();
@@ -78,10 +85,10 @@ const computeTsneSolution = (tsne, sounds, dispatch, queryID, getStore) => {
         `${sounds.length} sounds loaded, computing map (${progress}%)`;
       dispatch(displaySystemMessage(statusMessage));
     }
-    const soundsWithUpdatedPosition = computePointsPositionInSolution(tsne, sounds, getStore);
+    const soundsWithUpdatedPosition = computePointsPositionInSolution(tsne, sounds, store);
     dispatch(updateSoundsPosition(soundsWithUpdatedPosition, queryID));
     clearTimeoutId = requestAnimationFrame(() =>
-      computeTsneSolution(tsne, soundsWithUpdatedPosition, dispatch, queryID, getStore));
+      computeTsneSolution(tsne, sounds, dispatch, queryID, getStore));
   } else {
     cancelAnimationFrame(clearTimeoutId);
     stepIteration = 0;
@@ -108,7 +115,7 @@ export const getSounds = (query, queryParams) => (dispatch, getStore) => {
       const sounds = reshapeReceivedSounds(allPagesResults);
       dispatch(fetchSuccess(sounds, queryID));
       dispatch(displaySystemMessage(`${sounds.length} sounds loaded, computing map`));
-      const tsne = trainTsne(sounds, queryParams);
+      const tsne = getTrainedTsne(sounds, queryParams);
       computeTsneSolution(tsne, sounds, dispatch, queryID, getStore);
     },
     error => {

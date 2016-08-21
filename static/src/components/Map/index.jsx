@@ -18,16 +18,10 @@ const propTypes = {
   playOnHover: React.PropTypes.bool,
   paths: React.PropTypes.array,
   spaces: React.PropTypes.array,
-  position: React.PropTypes.shape({
-    translateX: React.PropTypes.number,
-    translateY: React.PropTypes.number,
-    scale: React.PropTypes.number,
-  }),
   isUserLoggedIn: React.PropTypes.bool,
   setIsMidiLearningSoundId: React.PropTypes.func,
   isMidiLearningSoundId: React.PropTypes.number,
   midiMappings: React.PropTypes.object,
-  displaySystemMessage: React.PropTypes.func,
   updateMapPosition: React.PropTypes.func,
 };
 
@@ -65,22 +59,12 @@ class Map extends React.Component {
   }
 
   render() {
-    let soundInfoPosition;
-    let soundInfoContent;
     return (
       <div className="map-container" ref={(mapContainer) => { this.mapContainer = mapContainer; }}>
         <svg className="map" onClick={this.onClickCallback}>
           {this.props.spaces.map(space => <Space key={space.queryID} {...space} />)}
         </svg>
-        <SoundInfo
-          position={soundInfoPosition}
-          sound={soundInfoContent}
-          isUserLoggedIn={this.props.isUserLoggedIn}
-          updateSystemStatusMessage={this.props.displaySystemMessage}
-          setIsMidiLearningSoundId={this.props.setIsMidiLearningSoundId}
-          isMidiLearningSoundId={this.props.isMidiLearningSoundId}
-          midiMappings={this.props.midiMappings}
-        />
+        <SoundInfo />
       </div>
     );
   }
@@ -89,12 +73,11 @@ class Map extends React.Component {
 const mapStateToProps = (state) => {
   const { paths } = state.paths;
   const { spaces } = state.spaces;
-  const position = state.map;
-  return { paths, position, spaces };
+  return { paths, spaces };
 };
 
 Map.propTypes = propTypes;
 export default connect(mapStateToProps, {
   displaySystemMessage,
   updateMapPosition,
-}, undefined, { withRef: true })(Map);
+})(Map);

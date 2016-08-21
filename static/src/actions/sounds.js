@@ -20,7 +20,8 @@ const getTrainedTsne = (sounds, queryParams) => {
   const tsne = new tsnejs.Tsne(TSNE_CONFIG);
   const descriptor = queryParams.descriptor || DEFAULT_DESCRIPTOR;
   const descriptorKey = `analysis.${descriptor}`;
-  const trainingData = sounds.map(sound => readObjectByString(sound, descriptorKey));
+  const trainingData = Object.keys(sounds).map(
+    soundID => readObjectByString(sounds[soundID], descriptorKey));
   tsne.initDataRaw(trainingData);
   return tsne;
 };
@@ -38,35 +39,29 @@ const getSoundSpacePosition = (sound, store) => {
 
 const computePointsPositionInSolution = (tsne, sounds, store) => {
   const tsneSolution = tsne.getSolution();
-  return sounds.map((sound, index) => {
+  return Object.keys(sounds).reduce((curState, curSoundID, curIndex) => {
+    const sound = sounds[curSoundID];
     const mapPosition = store.map;
     let { spacePosition } = sound;
     if (!spacePosition) {
       spacePosition = getSoundSpacePosition(sound, store);
     }
     const tsnePosition = {
-      x: tsneSolution[index][0],
-      y: tsneSolution[index][1],
+      x: tsneSolution[curIndex][0],
+      y: tsneSolution[curIndex][1],
     };
     const position = computeSoundGlobalPosition(tsnePosition, spacePosition, mapPosition);
-    return Object.assign(sound, {
-      position,
-      spacePosition, // tsne and spacePosition could be useful later (e.g.: when user moves map)
-      tsnePosition,
+    return Object.assign({}, curState, {
+      [curSoundID]: {
+        position,
+        spacePosition, // tsne and spacePosition could be useful later (e.g.: when user moves map)
+        tsnePosition,
+      },
     });
-  });
+  }, {});
 };
 
 
-/**
- * [computeTsneSolution description]
- * @param  {[type]} tsne     [description]
- * @param  {[type]} sounds   [description]
- * @param  {[type]} dispatch [description]
- * @param  {[type]} queryID  [description]
- * @param  {[type]} getStore [description]
- * @return {[type]}          [description]
- */
 const computeTsneSolution = (tsne, sounds, dispatch, queryID, getStore) => {
   /** we retrieve the store at each step to take into account user zooming/moving
   while map being computed */
@@ -81,14 +76,15 @@ const computeTsneSolution = (tsne, sounds, dispatch, queryID, getStore) => {
     if (progress !== computedProgressPercentage) {
       // update status message only with new percentage
       progress = computedProgressPercentage;
+      const soundsLength = Object.keys(sounds).length;
       const statusMessage =
-        `${sounds.length} sounds loaded, computing map (${progress}%)`;
+        `${soundsLength} sounds loaded, computing map (${progress}%)`;
       dispatch(displaySystemMessage(statusMessage));
     }
     const soundsWithUpdatedPosition = computePointsPositionInSolution(tsne, sounds, store);
     dispatch(updateSoundsPosition(soundsWithUpdatedPosition, queryID));
     clearTimeoutId = requestAnimationFrame(() =>
-      computeTsneSolution(tsne, sounds, dispatch, queryID, getStore));
+      computeTsneSolution(tsne, soundsWithUpdatedPosition, dispatch, queryID, getStore));
   } else {
     cancelAnimationFrame(clearTimeoutId);
     stepIteration = 0;
@@ -114,7 +110,7 @@ export const getSounds = (query, queryParams) => (dispatch, getStore) => {
     allPagesResults => {
       const sounds = reshapeReceivedSounds(allPagesResults);
       dispatch(fetchSuccess(sounds, queryID));
-      dispatch(displaySystemMessage(`${sounds.length} sounds loaded, computing map`));
+      dispatch(displaySystemMessage(`${Object.keys(sounds).length} sounds loaded, computing map`));
       const tsne = getTrainedTsne(sounds, queryParams);
       computeTsneSolution(tsne, sounds, dispatch, queryID, getStore);
     },

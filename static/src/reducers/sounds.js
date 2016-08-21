@@ -16,19 +16,18 @@ export const computeSoundGlobalPosition = (tsnePosition, spacePosition, mapPosit
   return { cx, cy };
 };
 
-const mapSoundsToObject = (sounds, queryID) => sounds.reduce((curState, curSound) => {
-  const soundObj = (queryID) ? Object.assign({}, curSound, { queryID }) : curSound;
-  return Object.assign({}, curState, { [curSound.id]: soundObj });
-}, {});
-
 const byID = (state = {}, action) => {
   switch (action.type) {
     case FETCH_SOUNDS_SUCCESS: {
-      const receivedSounds = mapSoundsToObject(action.sounds, action.queryID);
-      return Object.assign({}, state, receivedSounds);
+      return Object.assign({}, state, action.sounds);
     }
     case UPDATE_SOUNDS_POSITION: {
-      const updatedSounds = mapSoundsToObject(action.sounds);
+      const updatedSounds = Object.keys(action.sounds).reduce((curState, curSoundID) => {
+        const sound = state[curSoundID];
+        return Object.assign({}, curState, {
+          [curSoundID]: Object.assign({}, sound, action.sounds[curSoundID]),
+        });
+      }, {});
       return Object.assign({}, state, updatedSounds);
     }
     case UPDATE_MAP_POSITION: {

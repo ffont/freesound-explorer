@@ -1,26 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import Map from '../Map';
 import Login from '../Login';
 import Logo from '../Logo';
 import Sidebar from '../Sidebar';
 import MessagesBox from '../MessagesBox';
 import { getRandomElement } from '../../utils/misc';
-import { displaySystemMessage } from '../../actions/messagesBox';
 import audioLoader from '../../utils/audioLoader';
 import '../../stylesheets/App.scss';
 import '../../stylesheets/toggle.scss';
 import '../../stylesheets/slider.scss';
 import '../../stylesheets/button.scss';
 import '../../polyfills/AudioContext';
-import { clearAllPaths } from '../../actions';
-
-
-const propTypes = {
-  displaySystemMessage: React.PropTypes.func,
-  clearAllPaths: React.PropTypes.func,
-};
-
 
 class App extends React.Component {
   constructor(props) {
@@ -45,7 +35,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.setUpMIDIDevices();
+    // this.setUpMIDIDevices();
   }
 
   handleNoteOn(note, velocity) {
@@ -203,15 +193,8 @@ class App extends React.Component {
         />
         <Login />
         <Map
-          ref="map"
           audioContext={this.audioContext}
           audioLoader={this.audioLoader}
-          selectedSound={this.state.selectedSound}
-          updateSelectedSound={this.updateSelectedSound}
-          playOnHover={this.state.playOnHover}
-          setIsMidiLearningSoundId={this.setIsMidiLearningSoundId}
-          isMidiLearningSoundId={this.state.isMidiLearningSoundId}
-          midiMappings={this.state.midiMappings}
         />
         <MessagesBox />
       </div>
@@ -219,8 +202,4 @@ class App extends React.Component {
   }
 }
 
-App.propTypes = propTypes;
-export default connect(() => ({}), {
-  displaySystemMessage,
-  clearAllPaths,
-})(App);
+export default App;

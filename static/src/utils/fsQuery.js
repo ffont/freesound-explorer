@@ -61,26 +61,25 @@ export function submitQuery(submittedQuery, maxResults, maxDuration) {
   return search(query, filter, maxResults);
 }
 
-export function reshapeReceivedSounds(allPagesResults) {
-  const receivedSounds = [];
-  allPagesResults.forEach(pageResults => {
-    const results = pageResults.results;
-    results.forEach((sound, index) => {
-      const { id, analysis, url, name, username, duration } = sound;
-      const previewUrl = sound.previews['preview-lq-mp3'];
-      const fsObject = pageResults.getSound(index);
-      const { bookmark, download } = fsObject;
-      // TODO: check whether the sound is actually bookmarked
-      const isBookmarked = false;
-      const buffer = undefined;
-      // consider only sounds with non-empty analysis
-      if (analysis) {
-        const color = rgbToHex(
-          Math.floor(255 * analysis.sfx.tristimulus.mean[0]),
-          Math.floor(255 * analysis.sfx.tristimulus.mean[1]),
-          Math.floor(255 * analysis.sfx.tristimulus.mean[2])
-        );
-        receivedSounds.push({
+const reshapePageResults = (pageResults) => {
+  const results = pageResults.results;
+  return results.reduce((curState, curSound, curIndex) => {
+    const { id, analysis, url, name, username, duration } = curSound;
+    const previewUrl = curSound.previews['preview-lq-mp3'];
+    const fsObject = pageResults.getSound(curIndex);
+    const { bookmark, download } = fsObject;
+    // TODO: check whether the sound is actually bookmarked
+    const isBookmarked = false;
+    const buffer = undefined;
+    // consider only sounds with non-empty analysis
+    if (analysis) {
+      const color = rgbToHex(
+        Math.floor(255 * analysis.sfx.tristimulus.mean[0]),
+        Math.floor(255 * analysis.sfx.tristimulus.mean[1]),
+        Math.floor(255 * analysis.sfx.tristimulus.mean[2])
+      );
+      Object.assign(curState, {
+        [curSound.id]: {
           id,
           previewUrl,
           analysis,
@@ -93,9 +92,18 @@ export function reshapeReceivedSounds(allPagesResults) {
           download,
           isBookmarked,
           buffer,
-        });
-      }
-    });
+        },
+      });
+    }
+    return curState;
+  }, {});
+};
+
+export function reshapeReceivedSounds(allPagesResults) {
+  let receivedSounds = {};
+  allPagesResults.forEach(pageResults => {
+    const reshapedPageResults = reshapePageResults(pageResults);
+    receivedSounds = Object.assign({}, receivedSounds, reshapedPageResults);
   });
   return receivedSounds;
 }

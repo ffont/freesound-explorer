@@ -42,7 +42,7 @@ const singleSpace = (state = spaceInitialState, action, spacesInMap) => {
       }
       return Object.assign({}, state, {
         isFetching: false,
-        sounds: sounds.map(sound => sound.id),
+        sounds: Object.keys(sounds).map(soundID => parseInt(soundID, 10)),
       });
     }
     default:

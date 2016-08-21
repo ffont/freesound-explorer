@@ -1,22 +1,21 @@
 import React from 'react';
 import Map from '../Map';
+import AudioContext from '../AudioContext';
 import Login from '../Login';
 import Logo from '../Logo';
+import MIDI from '../MIDI';
 import Sidebar from '../Sidebar';
 import MessagesBox from '../MessagesBox';
 import { getRandomElement } from '../../utils/misc';
-import audioLoader from '../../utils/audioLoader';
 import '../../stylesheets/App.scss';
 import '../../stylesheets/toggle.scss';
 import '../../stylesheets/slider.scss';
 import '../../stylesheets/button.scss';
-import '../../polyfills/AudioContext';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sounds: [],
       midiMappings: undefined,
       isMidiLearningSoundId: -1,
       selectedSound: undefined,
@@ -31,7 +30,6 @@ class App extends React.Component {
     this.playRandomSound = this.playRandomSound.bind(this);
     this.setIsMidiLearningSoundId = this.setIsMidiLearningSoundId.bind(this);
     this.playSoundByFreesoundId = this.playSoundByFreesoundId.bind(this);
-    this.setUpAudioContext();
   }
 
   componentDidMount() {
@@ -90,15 +88,6 @@ class App extends React.Component {
       default:
         break;
     }
-  }
-
-  setUpAudioContext() {
-    this.audioContext = new window.AudioContext();
-    // create a main gain node to set general volume
-    this.audioContext.gainNode = this.audioContext.createGain();
-    this.audioContext.gainNode.connect(this.audioContext.destination);
-    // setup audio engine for loading and playing sounds
-    this.audioLoader = audioLoader(this.audioContext);
   }
 
   setUpMIDIDevices() {
@@ -165,21 +154,13 @@ class App extends React.Component {
     });
   }
 
-  /**
-   * Updates the sound for which to show a modal with details
-   */
-  updateSelectedSound(soundID) {
-    this.setState({
-      selectedSound: soundID,
-    });
-  }
-
   render() {
     return (
       <div className="app-container">
         <Logo />
+        <AudioContext />
+        <MIDI />
         <Sidebar
-          sounds={this.state.sounds}
           isVisible={this.state.isSidebarVisible}
           setSidebarVisibility={this.setSidebarVisibility}
           activeMode={this.state.activeMode}
@@ -192,10 +173,7 @@ class App extends React.Component {
           playSoundByFreesoundId={this.playSoundByFreesoundId}
         />
         <Login />
-        <Map
-          audioContext={this.audioContext}
-          audioLoader={this.audioLoader}
-        />
+        <Map />
         <MessagesBox />
       </div>
     );

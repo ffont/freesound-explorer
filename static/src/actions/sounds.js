@@ -122,3 +122,4 @@ export const getSounds = (query, queryParams) => (dispatch, getStore) => {
 };
 
 export const selectSound = makeActionCreator(at.SELECT_SOUND_BY_ID, 'soundID');
+export const updateSoundBuffer = makeActionCreator(at.UPDATE_SOUND_BUFFER, 'soundID', 'buffer');

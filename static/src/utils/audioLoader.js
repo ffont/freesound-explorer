@@ -12,7 +12,7 @@ const audioLoader = (audioContext) => {
         xhr.onreadystatechange = () => {
           if (xhr.status >= 200 && xhr.status < 300) {
             const buffer = xhr.response;
-            if (!!buffer) {
+            if (buffer) {
               try {
                 // support for decodeAudioData with promise
                 audioContext.decodeAudioData(buffer).then(

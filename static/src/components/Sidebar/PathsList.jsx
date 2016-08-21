@@ -7,7 +7,7 @@ import { elementWithId } from '../../utils/arrayUtils';
 import { MESSAGE_STATUS } from '../../constants';
 import { setPathSync, addPath, startStopPath,
   setPathCurrentlyPlaying, selectPath, deleteSoundFromPath,
-  setPathWaitUntilFinished } from '../../actions';
+  setPathWaitUntilFinished } from '../../actions/paths';
 import { displaySystemMessage } from '../../actions/messagesBox';
 
 const propTypes = {

@@ -1,9 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import '../../stylesheets/Metronome.scss';
 import MetronomeSynth from './MetronomeSynth';
 import { LOOKAHEAD, SCHEDULEAHEADTIME, TICKRESOLUTION, DEFAULT_TEMPO } from '../../constants';
-import { connect } from 'react-redux';
-import { updateMetronomeStatus, setTempo, startStopMetronome } from '../../actions';
+import { updateMetronomeStatus, setTempo, startStopMetronome } from '../../actions/metronome';
 
 
 const propTypes = {

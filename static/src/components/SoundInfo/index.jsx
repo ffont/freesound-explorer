@@ -4,8 +4,9 @@ import freesound from '../../vendors/freesound';
 import '../../stylesheets/SoundInfo.scss';
 import Waveform from './Waveform';
 import { MESSAGE_STATUS } from '../../constants';
+import { addSoundToPath } from '../../actions/paths';
+import { displaySystemMessage } from '../../actions/messagesBox';
 import sassVariables from 'json!../../stylesheets/variables.json';
-import { displaySystemMessage, addSoundToPath } from '../../actions';
 
 const propTypes = {
   position: React.PropTypes.object,
@@ -169,5 +170,6 @@ const mapStateToProps = (state) => {
 
 SoundInfo.propTypes = propTypes;
 export default connect(mapStateToProps, {
-  displaySystemMessage, addSoundToPath,
+  displaySystemMessage,
+  addSoundToPath,
 })(SoundInfo);

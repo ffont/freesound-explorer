@@ -8,7 +8,7 @@ const propTypes = {
 };
 
 
-class MapCircle extends React.Component {
+class MapCircle extends React.PureComponent {
   render() {
     if (!this.props.sound.position) {
       return null;
@@ -26,9 +26,6 @@ class MapCircle extends React.Component {
         stroke={strokeColor}
         strokeWidth={DEFAULT_STROKE_WIDTH}
         strokeOpacity={DEFAULT_STROKE_OPACITY}
-        onMouseEnter={this.onHoverCallback}
-        onMouseLeave={this.onMouseLeaveCallback}
-        onClick={this.onClickCallback}
       />
     );
   }

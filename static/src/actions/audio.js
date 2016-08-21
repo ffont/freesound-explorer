@@ -12,8 +12,12 @@ const initAudioContext = () => {
   return audioContext;
 };
 
+// action dispatched, used by reducer to save in store the actual audio context
 const initAudioContextAction = makeActionCreator(INIT_AUDIO_CONTEXT, 'context');
 
+/**
+ * Function called by external component to init audio context
+ */
 export const initAudio = () => (dispatch, getStore) => {
   const store = getStore();
   if (!store.audioContext || store.audioContext.state !== 'running') {

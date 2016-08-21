@@ -1,17 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { toggleSidebarVisibility, setSidebarTab } from '../../actions/sidebar';
 import SearchMode from './SearchMode';
 import PathsMode from './PathsMode';
 import InfoMode from './InfoMode';
+import { SIDEBAR_TABS } from '../../constants';
 import '../../stylesheets/Sidebar.scss';
 
 const propTypes = {
   isVisible: React.PropTypes.bool,
-  activeMode: React.PropTypes.string,
-  setSidebarVisibility: React.PropTypes.func,
-  setActiveMode: React.PropTypes.func,
-  audioContext: React.PropTypes.object,
-  sounds: React.PropTypes.array,
-  playSoundByFreesoundId: React.PropTypes.func,
+  activeTab: React.PropTypes.string,
+  toggleSidebarVisibility: React.PropTypes.func,
+  setSidebarTab: React.PropTypes.func,
 };
 
 function Sidebar(props) {
@@ -20,29 +20,29 @@ function Sidebar(props) {
     <div className={sidebarClassName}>
       <div className="sidebar-content-wrapper">
         <div className="sidebar-vertical-scroll">
-          <SearchMode {...props} isActiveMode={props.activeMode === 'SearchMode'} />
-          <PathsMode {...props} isActiveMode={props.activeMode === 'PathsMode'} />
-          <InfoMode isActiveMode={props.activeMode === 'InfoMode'} />
+          <SearchMode {...props} isActiveMode={props.activeTab === SIDEBAR_TABS.SEARCH} />
+          <PathsMode {...props} isActiveMode={props.activeTab === SIDEBAR_TABS.PATHS} />
+          <InfoMode isActiveMode={props.activeTab === SIDEBAR_TABS.INFO} />
         </div>
       </div>
       <div className="sidebar-menu-wrapper">
         <ul>
           <li
-            className={(props.activeMode === 'SearchMode') ? 'active' : ''}
-            onClick={() => props.setActiveMode('SearchMode')}
+            className={(props.activeTab === SIDEBAR_TABS.SEARCH) ? 'active' : ''}
+            onClick={() => props.setSidebarTab(SIDEBAR_TABS.SEARCH)}
           ><i className="fa fa-search fa-lg" aria-hidden="true" /></li>
           <li
-            className={(props.activeMode === 'PathsMode') ? 'active' : ''}
-            onClick={() => props.setActiveMode('PathsMode')}
+            className={(props.activeTab === SIDEBAR_TABS.PATHS) ? 'active' : ''}
+            onClick={() => props.setSidebarTab(SIDEBAR_TABS.PATHS)}
           ><i className="fa fa-exchange fa-lg" aria-hidden="true" /></li>
           <li
-            className={(props.activeMode === 'InfoMode') ? 'active' : ''}
-            onClick={() => props.setActiveMode('InfoMode')}
+            className={(props.activeTab === SIDEBAR_TABS.INFO) ? 'active' : ''}
+            onClick={() => props.setSidebarTab(SIDEBAR_TABS.INFO)}
           ><i className="fa fa-info fa-lg" aria-hidden="true" /></li>
         </ul>
         <div
           className="toggle-visibility-button"
-          onClick={() => props.setSidebarVisibility(!props.isVisible)}
+          onClick={() => props.toggleSidebarVisibility(!props.isVisible)}
         >
           {(props.isVisible) ?
             <i className="fa fa-arrow-left" aria-hidden="true" /> :
@@ -54,5 +54,10 @@ function Sidebar(props) {
   );
 }
 
+const mapStateToProps = (state) => state.sidebar;
+
 Sidebar.propTypes = propTypes;
-export default Sidebar;
+export default connect(mapStateToProps, {
+  toggleSidebarVisibility,
+  setSidebarTab,
+})(Sidebar);

@@ -7,6 +7,7 @@ import metronome from './metronome';
 import paths from './paths';
 import search from './search';
 import settings from './settings';
+import sidebar from './sidebar';
 import sounds from './sounds';
 import spaces from './spaces';
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   paths,
   search,
   settings,
+  sidebar,
   sounds,
   spaces,
 });

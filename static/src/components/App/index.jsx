@@ -13,25 +13,6 @@ import '../../stylesheets/slider.scss';
 import '../../stylesheets/button.scss';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      midiMappings: undefined,
-      isMidiLearningSoundId: -1,
-      selectedSound: undefined,
-      isSidebarVisible: true,
-      activeMode: 'SearchMode',
-      playOnHover: false,
-    };
-    this.updateSelectedSound = this.updateSelectedSound.bind(this);
-    this.setSidebarVisibility = this.setSidebarVisibility.bind(this);
-    this.setActiveMode = this.setActiveMode.bind(this);
-    this.tooglePlayOnHover = this.tooglePlayOnHover.bind(this);
-    this.playRandomSound = this.playRandomSound.bind(this);
-    this.setIsMidiLearningSoundId = this.setIsMidiLearningSoundId.bind(this);
-    this.playSoundByFreesoundId = this.playSoundByFreesoundId.bind(this);
-  }
-
   componentDidMount() {
     // this.setUpMIDIDevices();
   }
@@ -160,18 +141,7 @@ class App extends React.Component {
         <Logo />
         <AudioContext />
         <MIDI />
-        <Sidebar
-          isVisible={this.state.isSidebarVisible}
-          setSidebarVisibility={this.setSidebarVisibility}
-          activeMode={this.state.activeMode}
-          setActiveMode={this.setActiveMode}
-          playOnHover={this.state.playOnHover}
-          tooglePlayOnHover={this.tooglePlayOnHover}
-          startStopPlayingPath={this.startStopPlayingPath}
-          updateSelectedSound={this.updateSelectedSound}
-          audioContext={this.audioContext}
-          playSoundByFreesoundId={this.playSoundByFreesoundId}
-        />
+        <Sidebar />
         <Login />
         <Map />
         <MessagesBox />

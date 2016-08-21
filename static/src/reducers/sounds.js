@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { FETCH_SOUNDS_SUCCESS, UPDATE_SOUNDS_POSITION, UPDATE_MAP_POSITION,
-  SELECT_SOUND_BY_ID }
+  SELECT_SOUND_BY_ID, GET_SOUND_BUFFER }
   from '../actions/actionTypes';
 import { MAP_SCALE_FACTOR } from '../constants';
 
@@ -41,6 +41,11 @@ const byID = (state = {}, action) => {
         return Object.assign({}, curState, { [soundID]: updateSound });
       }, {});
       return Object.assign({}, state, updatedSounds);
+    }
+    case GET_SOUND_BUFFER: {
+      const { soundID, buffer } = action;
+      const updatedSound = { [soundID]: Object.assign({}, state[soundID], { buffer }) };
+      return Object.assign({}, state, updatedSound);
     }
     default:
       return state;

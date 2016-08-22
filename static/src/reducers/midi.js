@@ -12,7 +12,7 @@ const midi = (state = initialState, action) => {
       let newNotes = {};
       if (soundId !== -1) {
         // Add new note mapping
-        newNotes = Object.assign({}, state.midiMappings.notes, { note: soundId });
+        newNotes = Object.assign({}, state.midiMappings.notes, { [note]: soundId });
       } else {
         // Remove existing note mapping
         newNotes = Object.assign({}, state.midiMappings.notes, {});  // Copy existing notes

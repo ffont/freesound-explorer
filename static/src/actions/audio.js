@@ -2,8 +2,7 @@ import makeActionCreator from './makeActionCreator';
 import { INIT_AUDIO_CONTEXT, ADD_AUDIO_SRC, STOP_AUDIO_SRC,
   STOP_ALL_AUDIO, PLAY_AUDIO_SRC }
   from './actionTypes';
-import { displaySystemMessage } from './messagesBox';
-import { MESSAGE_STATUS } from '../constants';
+import { getSoundBuffer } from './sounds';
 import audioLoader from '../utils/audioLoader';
 import '../polyfills/AudioContext';
 
@@ -57,6 +56,7 @@ export const playAudio = (sound, playbackOptions = {}, onEnded, customSourceNode
         const source = context.createBufferSource();
         const sourceGainNode = context.createGain();
         const sourceNodeKey = customSourceNodeKey || Object.keys(playingSourceNodes).length;
+        dispatch(getSoundBuffer(sound.id, buffer));
         dispatch(addAudioSource(sourceNodeKey, source, sourceGainNode));
         source.onended = () => {
           dispatch(stopAudioSrc(sourceNodeKey, sound.id));

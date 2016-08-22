@@ -10,7 +10,6 @@ import { setIsMidiLearningSoundId } from '../../actions/midi';
 import sassVariables from 'json!../../stylesheets/variables.json';
 
 const propTypes = {
-  position: React.PropTypes.object,
   sound: React.PropTypes.object,
   isUserLoggedIn: React.PropTypes.bool,
   displaySystemMessage: React.PropTypes.func,
@@ -49,27 +48,27 @@ class SoundInfo extends React.Component {
   }
 
   getClassName() {
-    if (!this.props.position) {
+    if (!this.props.sound) {
       // hide modal: reset classname to default (not visible)
       return DEFAULT_CLASSNAME;
     }
     let className = `${DEFAULT_CLASSNAME} active`;
-    if (this.props.position.y < parseInt(sassVariables.soundInfoModalHeight, 10)) {
+    if (this.props.sound.position.cy < parseInt(sassVariables.soundInfoModalHeight, 10)) {
       className += '-down';
     }
     return className;
   }
 
   getContainerStyle() {
-    if (!!this.props.position) {
-      this.lastTopPosition = this.props.position.y;
-      this.lastLeftPosition = this.props.position.x;
+    if (this.props.sound) {
+      this.lastTopPosition = this.props.sound.position.cy;
+      this.lastLeftPosition = this.props.sound.position.cx;
     }
     return { top: this.lastTopPosition, left: this.lastLeftPosition };
   }
 
   updateSoundContent() {
-    if (!!this.props.sound) {
+    if (this.props.sound) {
       this.lastSound = this.props.sound;
       this.bookmarkSound = this.bookmarkSound.bind(this);
       this.downloadSound = this.downloadSound.bind(this);
@@ -165,8 +164,11 @@ class SoundInfo extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  const { selectedSound } = state.sounds;
+  const sound = state.sounds.byID[selectedSound];
+  const { midiMappings } = state.midi;
   const { selectedPath } = state.paths;
-  return { selectedPath };
+  return { selectedPath, sound, midiMappings };
 };
 
 SoundInfo.propTypes = propTypes;

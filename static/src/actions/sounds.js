@@ -108,7 +108,7 @@ export const getSounds = (query, queryParams) => (dispatch, getStore) => {
   const { maxResults, maxDuration } = queryParams;
   submitQuery(query, maxResults, maxDuration).then(
     allPagesResults => {
-      const sounds = reshapeReceivedSounds(allPagesResults);
+      const sounds = reshapeReceivedSounds(allPagesResults, queryID);
       dispatch(fetchSuccess(sounds, queryID));
       dispatch(displaySystemMessage(`${Object.keys(sounds).length} sounds loaded, computing map`));
       const tsne = getTrainedTsne(sounds, queryParams);

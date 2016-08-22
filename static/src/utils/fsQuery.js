@@ -61,10 +61,11 @@ export function submitQuery(submittedQuery, maxResults, maxDuration) {
   return search(query, filter, maxResults);
 }
 
-const reshapePageResults = (pageResults) => {
+const reshapePageResults = (pageResults, queryID) => {
   const results = pageResults.results;
   return results.reduce((curState, curSound, curIndex) => {
-    const { id, analysis, url, name, username, duration } = curSound;
+    const { analysis, url, name, username, duration } = curSound;
+    const id = `${curSound.id}-${queryID}`;
     const previewUrl = curSound.previews['preview-lq-mp3'];
     const fsObject = pageResults.getSound(curIndex);
     const { bookmark, download } = fsObject;
@@ -79,7 +80,7 @@ const reshapePageResults = (pageResults) => {
         Math.floor(255 * analysis.sfx.tristimulus.mean[2])
       );
       Object.assign(curState, {
-        [curSound.id]: {
+        [id]: {
           id,
           previewUrl,
           analysis,
@@ -99,10 +100,10 @@ const reshapePageResults = (pageResults) => {
   }, {});
 };
 
-export function reshapeReceivedSounds(allPagesResults) {
+export function reshapeReceivedSounds(allPagesResults, queryID) {
   let receivedSounds = {};
   allPagesResults.forEach(pageResults => {
-    const reshapedPageResults = reshapePageResults(pageResults);
+    const reshapedPageResults = reshapePageResults(pageResults, queryID);
     receivedSounds = Object.assign({}, receivedSounds, reshapedPageResults);
   });
   return receivedSounds;

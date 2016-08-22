@@ -6,6 +6,7 @@ import Waveform from './Waveform';
 import { MESSAGE_STATUS } from '../../constants';
 import { addSoundToPath } from '../../actions/paths';
 import { displaySystemMessage } from '../../actions/messagesBox';
+import { setIsMidiLearningSoundId } from '../../actions/midi';
 import sassVariables from 'json!../../stylesheets/variables.json';
 
 const propTypes = {
@@ -172,4 +173,5 @@ SoundInfo.propTypes = propTypes;
 export default connect(mapStateToProps, {
   displaySystemMessage,
   addSoundToPath,
+  setIsMidiLearningSoundId,
 })(SoundInfo);

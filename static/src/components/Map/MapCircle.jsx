@@ -1,14 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { playAudio, stopAudio } from '../../actions/audio';
+import { selectSound, toggleHoveringSound } from '../../actions/sounds';
 import { DEFAULT_RADIUS, DEFAULT_FILL_OPACITY, DEFAULT_STROKE_WIDTH, DEFAULT_STROKE_OPACITY }
   from '../../constants';
 
 const propTypes = {
   sound: React.PropTypes.object,
   playOnHover: React.PropTypes.bool,
+  isSelected: React.PropTypes.bool,
   playAudio: React.PropTypes.func,
   stopAudio: React.PropTypes.func,
+  selectSound: React.PropTypes.func,
+  toggleHoveringSound: React.PropTypes.func,
 };
 
 class MapCircle extends React.PureComponent {
@@ -23,12 +27,14 @@ class MapCircle extends React.PureComponent {
     if (this.props.playOnHover) {
       this.props.playAudio(this.props.sound);
     }
+    this.props.toggleHoveringSound(this.props.sound.id);
   }
 
   onMouseLeave() {
     if (this.props.playOnHover && this.props.sound.isPlaying) {
       this.props.stopAudio(this.props.sound);
     }
+    this.props.toggleHoveringSound(this.props.sound.id);
   }
 
   onClick() {
@@ -37,15 +43,21 @@ class MapCircle extends React.PureComponent {
     } else {
       this.props.playAudio(this.props.sound);
     }
+    if (this.props.sound.isSelected) {
+      this.props.selectSound();
+    } else {
+      this.props.selectSound(this.props.sound.id);
+    }
   }
 
   render() {
-    if (!this.props.sound.position) {
+    const { position, color, isHovered } = this.props.sound;
+    const { isSelected } = this.props;
+    if (!position) {
       return null;
     }
-    const { cx, cy } = this.props.sound.position;
-    const fillColor = this.props.sound.color;
-    const strokeColor = this.props.sound.color;
+    const { cx, cy } = position;
+    const fillColor = (isHovered || isSelected) ? 'white' : color;
     return (
       <circle
         cx={cx}
@@ -53,7 +65,7 @@ class MapCircle extends React.PureComponent {
         r={DEFAULT_RADIUS / 2}
         fill={fillColor}
         fillOpacity={DEFAULT_FILL_OPACITY}
-        stroke={strokeColor}
+        stroke={fillColor}
         strokeWidth={DEFAULT_STROKE_WIDTH}
         strokeOpacity={DEFAULT_STROKE_OPACITY}
         onMouseEnter={this.onMouseEnter}
@@ -68,10 +80,13 @@ const makeMapStateToProps = (_, ownProps) => {
   const { soundID } = ownProps;
   return (state) => {
     const sound = state.sounds.byID[soundID];
+    const { selectedSound } = state.sounds;
     const { playOnHover } = state.settings;
+    const isSelected = selectedSound === soundID;
     return {
       sound,
       playOnHover,
+      isSelected,
     };
   };
 };
@@ -80,4 +95,6 @@ MapCircle.propTypes = propTypes;
 export default connect(makeMapStateToProps, {
   playAudio,
   stopAudio,
+  selectSound,
+  toggleHoveringSound,
 })(MapCircle);

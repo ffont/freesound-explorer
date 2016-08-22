@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { FETCH_SOUNDS_SUCCESS, UPDATE_SOUNDS_POSITION, UPDATE_MAP_POSITION,
-  SELECT_SOUND_BY_ID, GET_SOUND_BUFFER }
+  SELECT_SOUND_BY_ID, GET_SOUND_BUFFER, TOGGLE_HOVERING_SOUND }
   from '../actions/actionTypes';
 import { MAP_SCALE_FACTOR } from '../constants';
 
@@ -47,6 +47,13 @@ const byID = (state = {}, action) => {
       const updatedSound = { [soundID]: Object.assign({}, state[soundID], { buffer }) };
       return Object.assign({}, state, updatedSound);
     }
+    case TOGGLE_HOVERING_SOUND: {
+      const { soundID } = action;
+      const updatedSound = { [soundID]: Object.assign({}, state[soundID], {
+        isHovered: !state[soundID].isHovered,
+      }) };
+      return Object.assign({}, state, updatedSound);
+    }
     default:
       return state;
   }
@@ -55,7 +62,7 @@ const byID = (state = {}, action) => {
 const selectedSound = (state = 0, action) => {
   switch (action.type) {
     case SELECT_SOUND_BY_ID:
-      return action.soundID;
+      return action.soundID || 0;
     default:
       return state;
   }

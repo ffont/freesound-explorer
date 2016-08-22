@@ -123,3 +123,4 @@ export const getSounds = (query, queryParams) => (dispatch, getStore) => {
 
 export const selectSound = makeActionCreator(at.SELECT_SOUND_BY_ID, 'soundID');
 export const getSoundBuffer = makeActionCreator(at.GET_SOUND_BUFFER, 'soundID', 'buffer');
+export const toggleHoveringSound = makeActionCreator(at.TOGGLE_HOVERING_SOUND, 'soundID');

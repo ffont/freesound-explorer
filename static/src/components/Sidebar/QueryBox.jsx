@@ -5,6 +5,7 @@ import { getSounds } from '../../actions/sounds';
 import { updateDescriptor, updateMinDuration, updateMaxDuration,
   updateMaxResults, updateQuery }
   from '../../actions/search';
+import { togglePlayOnHover } from '../../actions/settings';
 import { DEFAULT_MAX_RESULTS, DEFAULT_MAX_DURATION, DEFAULT_QUERY } from '../../constants';
 
 const propTypes = {
@@ -14,7 +15,7 @@ const propTypes = {
   descriptor: React.PropTypes.string,
   query: React.PropTypes.string,
   playOnHover: React.PropTypes.bool,
-  tooglePlayOnHover: React.PropTypes.func,
+  togglePlayOnHover: React.PropTypes.func,
   getSounds: React.PropTypes.func,
   updateDescriptor: React.PropTypes.func,
   updateMinDuration: React.PropTypes.func,
@@ -106,7 +107,7 @@ class QueryBox extends React.Component {
                 className={`toggle${(this.props.playOnHover) ? ' active' : ''}`}
                 type="checkbox"
                 checked={this.props.playOnHover}
-                onChange={this.props.tooglePlayOnHover}
+                onChange={this.props.togglePlayOnHover}
               />
               <label htmlFor="playOnHoverSwitch" />
             </div>
@@ -117,11 +118,12 @@ class QueryBox extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => state.search;
+const mapStateToProps = (state) => Object.assign({}, state.search, state.settings);
 
 QueryBox.propTypes = propTypes;
 export default connect(mapStateToProps, {
   getSounds,
+  togglePlayOnHover,
   updateDescriptor,
   updateMinDuration,
   updateMaxDuration,

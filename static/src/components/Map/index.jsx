@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { displaySystemMessage } from '../../actions/messagesBox';
 import { updateMapPosition } from '../../actions/map';
 import { setIsMidiLearningSoundId } from '../../actions/midi';
+import { selectSound } from '../../actions/sounds';
 import Space from './Space';
 import SoundInfo from '../SoundInfo';
 import '../../polyfills/requestAnimationFrame';
@@ -15,7 +16,7 @@ const propTypes = {
   audioContext: React.PropTypes.object,
   audioLoader: React.PropTypes.object,
   selectedSound: React.PropTypes.number,
-  updateSelectedSound: React.PropTypes.func,
+  selectSound: React.PropTypes.func,
   playOnHover: React.PropTypes.bool,
   paths: React.PropTypes.array,
   spaces: React.PropTypes.array,
@@ -46,7 +47,7 @@ class Map extends React.Component {
   onClickCallback(evt) {
     if (evt.target.tagName !== 'circle') {
       // deselect all sounds when not clicking on a circle
-      this.props.updateSelectedSound();
+      this.props.selectSound();
       // turn off current midi learn
       this.props.setIsMidiLearningSoundId(-1);
     }
@@ -82,4 +83,5 @@ export default connect(mapStateToProps, {
   displaySystemMessage,
   updateMapPosition,
   setIsMidiLearningSoundId,
+  selectSound,
 })(Map);

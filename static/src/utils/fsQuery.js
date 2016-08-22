@@ -93,6 +93,8 @@ const reshapePageResults = (pageResults, queryID) => {
           download,
           isBookmarked,
           buffer,
+          isPlaying: false,
+          isHovered: false,
         },
       });
     }

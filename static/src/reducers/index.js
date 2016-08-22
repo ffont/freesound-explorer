@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import audio from './audio';
+import midi from './midi';
 import login from './login';
 import map from './map';
 import messagesBox from './messagesBox';
@@ -14,6 +15,7 @@ import spaces from './spaces';
 
 const rootReducer = combineReducers({
   audio,
+  midi,
   login,
   map,
   messagesBox,

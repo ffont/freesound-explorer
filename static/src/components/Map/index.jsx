@@ -4,6 +4,7 @@ import { zoom } from 'd3-zoom';
 import { connect } from 'react-redux';
 import { displaySystemMessage } from '../../actions/messagesBox';
 import { updateMapPosition } from '../../actions/map';
+import { setIsMidiLearningSoundId } from '../../actions/midi';
 import Space from './Space';
 import SoundInfo from '../SoundInfo';
 import '../../polyfills/requestAnimationFrame';
@@ -80,4 +81,5 @@ Map.propTypes = propTypes;
 export default connect(mapStateToProps, {
   displaySystemMessage,
   updateMapPosition,
+  setIsMidiLearningSoundId,
 })(Map);

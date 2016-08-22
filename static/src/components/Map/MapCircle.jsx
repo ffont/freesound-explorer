@@ -51,19 +51,21 @@ class MapCircle extends React.PureComponent {
   }
 
   render() {
-    const { position, color, isHovered } = this.props.sound;
+    const { position, color, isHovered, isPlaying } = this.props.sound;
     const { isSelected } = this.props;
     if (!position) {
       return null;
     }
     const { cx, cy } = position;
-    const fillColor = (isHovered || isSelected) ? 'white' : color;
+    const fillColor = (isHovered || isSelected || isPlaying) ? 'white' : color;
+    const className = (isPlaying) ? 'playing' : '';
     return (
       <circle
         cx={cx}
         cy={cy}
         r={DEFAULT_RADIUS / 2}
         fill={fillColor}
+        className={className}
         fillOpacity={DEFAULT_FILL_OPACITY}
         stroke={fillColor}
         strokeWidth={DEFAULT_STROKE_WIDTH}

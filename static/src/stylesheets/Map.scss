@@ -6,5 +6,19 @@ svg.map {
   width: 100%;
   circle {
     mix-blend-mode: screen;
+    &.playing {
+      animation: wobble 0.5s linear infinite alternate;
+    }
+  }
+}
+
+@keyframes wobble {
+  from {
+    transform: scale(1);
+    transform-origin: center;
+  }
+  to {
+    transform: scale(1.5);
+    transform-origin: center;
   }
 }

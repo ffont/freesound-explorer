@@ -32,8 +32,8 @@ export const initAudio = () => (dispatch, getStore) => {
 };
 
 const addAudioSource = makeActionCreator(ADD_AUDIO_SRC, 'sourceKey', 'source', 'gain');
-export const playAudioSrc = makeActionCreator(PLAY_AUDIO_SRC, 'source');
-export const stopAudioSrc = makeActionCreator(STOP_AUDIO_SRC, 'sourceKey');
+export const playAudioSrc = makeActionCreator(PLAY_AUDIO_SRC, 'sourceKey', 'soundID');
+export const stopAudioSrc = makeActionCreator(STOP_AUDIO_SRC, 'sourceKey', 'soundID');
 export const stopAllAudio = makeActionCreator(STOP_ALL_AUDIO);
 
 const loadAudio = (sound, loader) => new Promise((resolve, reject) => {
@@ -59,7 +59,7 @@ export const playAudio = (sound, playbackOptions = {}, onEnded, customSourceNode
         const sourceNodeKey = customSourceNodeKey || Object.keys(playingSourceNodes).length;
         dispatch(addAudioSource(sourceNodeKey, source, sourceGainNode));
         source.onended = () => {
-          dispatch(stopAudioSrc(sourceNodeKey));
+          dispatch(stopAudioSrc(sourceNodeKey, sound.id));
           if (onEnded) onEnded();
         };
         source.buffer = buffer;
@@ -68,14 +68,10 @@ export const playAudio = (sound, playbackOptions = {}, onEnded, customSourceNode
         // TODO: sourceGainNode should change with MIDI velocity
         sourceGainNode.connect(context.gainNode);
         source.start();
-      },
-      () => {
-        dispatch(displaySystemMessage(
-          'There was a problem while playing the sound', MESSAGE_STATUS.ERROR));
+        dispatch(playAudioSrc(sourceNodeKey, sound.id));
       }
     );
   };
 
 export const stopAudio = (sound) => (dispatch, getStore) => {
-  console.log(sound);
 };

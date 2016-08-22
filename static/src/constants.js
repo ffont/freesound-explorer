@@ -16,6 +16,8 @@ export const SIDEBAR_TABS = {
   SEARCH: 'search',
   PATHS: 'paths',
   INFO: 'info',
+  SPACES: 'spaces',
+  SETTINGS: 'settings',
 };
 
 export const DEFAULT_SIDEBAR_TAB = SIDEBAR_TABS.SEARCH;

@@ -14,13 +14,13 @@ import '../../stylesheets/button.scss';
 function App() {
   return (
     <div className="app-container">
-      <Logo />
       <AudioContext />
       <MIDI />
-      <Sidebar />
       <Login />
       <Map />
+      <Sidebar />
       <MessagesBox />
+      <Logo />
     </div>
   );
 }

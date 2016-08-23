@@ -30,6 +30,10 @@ class QueryBox extends React.Component {
     this.submitQuery = this.submitQuery.bind(this);
   }
 
+  componentDidMount() {
+    this.submitQuery();
+  }
+
   submitQuery() {
     let { query } = this.props;
     const { descriptor, maxResults, minDuration, maxDuration } = this.props;
@@ -49,8 +53,8 @@ class QueryBox extends React.Component {
             className="query-terms-input"
             type="text"
             placeholder="query terms, e.g.: instrument note"
-            onChange={() => {
-              const query = document.getElementById('query-terms-input').value;
+            onChange={(evt) => {
+              const query = evt.target.value;
               this.props.updateQuery(query);
             }}
           />

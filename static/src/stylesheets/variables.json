@@ -15,5 +15,6 @@
   "waveformWidth": "260px",
   "soundInfoModalHeight": "300px",
   "soundInfoModalWidth": "400px",
-  "hoverBackground": "rgba(70, 70, 70, 0.5)"
+  "hoverBackground": "rgba(70, 70, 70, 0.5)",
+  "titleNegativePadding": "-500px"
 }

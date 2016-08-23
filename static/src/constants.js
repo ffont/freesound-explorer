@@ -29,8 +29,8 @@ export const MAX_ZOOM = 15;
 export const MAP_SCALE_FACTOR = 20;
 export const DEFAULT_RADIUS = 30;
 export const DEFAULT_STROKE_WIDTH = 2;
-export const DEFAULT_FILL_OPACITY = 0.7;
-export const DEFAULT_STROKE_OPACITY = 0.9;
+export const DEFAULT_FILL_OPACITY = 0.9;
+export const DEFAULT_STROKE_OPACITY = 1;
 export const DEFAULT_PATH_STROKE_WIDTH = 2;
 export const DEFAULT_PATH_STROKE_OPACITY = 0.05;
 

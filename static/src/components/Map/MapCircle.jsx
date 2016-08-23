@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { playAudio, stopAudio } from '../../actions/audio';
 import { selectSound, toggleHoveringSound } from '../../actions/sounds';
+import { lighten } from '../../utils/colors';
 import { DEFAULT_RADIUS, DEFAULT_FILL_OPACITY, DEFAULT_STROKE_WIDTH, DEFAULT_STROKE_OPACITY }
   from '../../constants';
 
@@ -57,7 +58,7 @@ class MapCircle extends React.PureComponent {
       return null;
     }
     const { cx, cy } = position;
-    const fillColor = (isHovered || isSelected || isPlaying) ? 'white' : color;
+    const fillColor = (isHovered || isSelected || isPlaying) ? lighten(color, 1.5) : color;
     const className = (isPlaying) ? 'playing' : '';
     return (
       <circle

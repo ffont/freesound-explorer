@@ -3,7 +3,7 @@ import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE,
   UPDATE_MAP_POSITION }
   from '../actions/actionTypes';
 
-const computeSpacePosition = (spaceIndex) => ({ x: (spaceIndex + 1), y: 1 });
+const computeSpacePosition = (spaceIndex) => ({ x: (spaceIndex * 4) + 1, y: 1 });
 
 const spaceInitialState = {
   sounds: [],

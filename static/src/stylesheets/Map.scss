@@ -1,3 +1,5 @@
+@import "./variables.json";
+
 .map-container, svg.map {
   height: 100%;
 }
@@ -6,6 +8,7 @@ svg.map {
   width: 100%;
   circle {
     mix-blend-mode: screen;
+    opacity: 70%;
     &.playing {
       animation: wobble 0.5s linear infinite alternate;
     }
@@ -20,5 +23,28 @@ svg.map {
   to {
     transform: scale(1.5);
     transform-origin: center;
+  }
+}
+
+.space-title {
+  // out-of-screen parent div with abs positioning
+  // needed to properly use z-index on actual space title (to hover on circles above it)
+  position: absolute;
+  top: $titleNegativePadding;
+  left: $titleNegativePadding;
+  color: white;
+  header {
+    text-transform: capitalize;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  p {
+    font-size: 16px;
+    ol {
+      list-style: none
+    }
+    li {
+      padding-left: 0;
+    }
   }
 }

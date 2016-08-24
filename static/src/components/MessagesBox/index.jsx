@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import '../../stylesheets/MessagesBox.scss';
 import { DEFAULT_MESSAGE_DURATION, MESSAGE_STATUS } from '../../constants';
+import { moveSidebarArrow } from '../../actions/sidebar';
+import { messagesBoxHeight } from 'json!../../stylesheets/variables.json';
 
 const DEFAULT_CLASSNAME = 'message-box';
 
@@ -9,6 +11,7 @@ const propTypes = {
   message: React.PropTypes.string,
   status: React.PropTypes.string,
   messageCount: React.PropTypes.number,
+  moveSidebarArrow: React.PropTypes.func,
 };
 
 class MessagesBox extends React.Component {
@@ -29,6 +32,8 @@ class MessagesBox extends React.Component {
   }
 
   handleTimedVisibility() {
+    // move close-sidebar icon to avoid covering it with the message
+    this.props.moveSidebarArrow(messagesBoxHeight);
     this.className = `${DEFAULT_CLASSNAME} active`;
     this.visibilityTimeout = setTimeout(() => {
       this.hideMessage();
@@ -36,6 +41,8 @@ class MessagesBox extends React.Component {
   }
 
   hideMessage() {
+    // reset close-sidebar icon position
+    this.props.moveSidebarArrow(0);
     this.className = DEFAULT_CLASSNAME;
     this.forceUpdate();
   }
@@ -77,4 +84,4 @@ class MessagesBox extends React.Component {
 const mapStateToProps = (state) => state.messagesBox;
 
 MessagesBox.propTypes = propTypes;
-export default connect(mapStateToProps, {})(MessagesBox);
+export default connect(mapStateToProps, { moveSidebarArrow })(MessagesBox);

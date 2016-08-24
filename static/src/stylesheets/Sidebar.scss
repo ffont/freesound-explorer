@@ -3,7 +3,7 @@
 
 .sidebar {
   position: absolute;
-  top: 0px;
+  top: 0;
   left: $sidebarClosedOffset - $sidebarWidth;
   width: $sidebarWidth;
   transition: left 0.3s ease;
@@ -52,8 +52,8 @@
 
 .sidebar-menu-wrapper {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 0;
+  right: 0;
   height: 100%;
   width: $sidebarClosedOffset;
   background-color: $sidebarColor;
@@ -65,8 +65,8 @@
   }
   .toggle-visibility-button {
     position:absolute;
-    bottom: 0px;
-    left: 0px;
+    left: 0;
     @extend .sidebar-nav-button;
+    transition: bottom 0.3s ease-in-out;
   }
 }

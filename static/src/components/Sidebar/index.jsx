@@ -13,6 +13,7 @@ import '../../stylesheets/Sidebar.scss';
 const propTypes = {
   isVisible: React.PropTypes.bool,
   activeTab: React.PropTypes.string,
+  bottomArrowPosition: React.PropTypes.number,
   toggleSidebarVisibility: React.PropTypes.func,
   setSidebarTab: React.PropTypes.func,
 };
@@ -74,6 +75,7 @@ function Sidebar(props) {
           <div
             className="toggle-visibility-button"
             onClick={() => props.toggleSidebarVisibility(!props.isVisible)}
+            style={{ bottom: props.bottomArrowPosition }}
           >
             {(props.isVisible) ?
               <i className="fa fa-arrow-left" aria-hidden="true" /> :

@@ -1,6 +1,5 @@
 import React from 'react';
 import Map from '../Map';
-import AudioContext from '../AudioContext';
 import Login from '../Login';
 import Logo from '../Logo';
 import MIDI from '../MIDI';
@@ -14,7 +13,6 @@ import '../../stylesheets/button.scss';
 function App() {
   return (
     <div className="app-container">
-      <AudioContext />
       <MIDI />
       <Login />
       <Map />

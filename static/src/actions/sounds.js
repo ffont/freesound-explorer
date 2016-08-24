@@ -15,6 +15,7 @@ const fetchRequest = makeActionCreator(at.FETCH_SOUNDS_REQUEST, 'queryID', 'quer
 const fetchSuccess = makeActionCreator(at.FETCH_SOUNDS_SUCCESS, 'sounds', 'queryID');
 const fetchFailure = makeActionCreator(at.FETCH_SOUNDS_FAILURE, 'error', 'queryID');
 const updateSoundsPosition = makeActionCreator(at.UPDATE_SOUNDS_POSITION, 'sounds', 'queryID');
+const mapComputationComplete = makeActionCreator(at.MAP_COMPUTATION_COMPLETE);
 
 const getTrainedTsne = (sounds, queryParams) => {
   const tsne = new tsnejs.Tsne(TSNE_CONFIG);
@@ -90,6 +91,7 @@ const computeTsneSolution = (tsne, sounds, dispatch, queryID, getStore) => {
     stepIteration = 0;
     progress = 0;
     dispatch(displaySystemMessage('Map computed!', MESSAGE_STATUS.SUCCESS));
+    dispatch(mapComputationComplete());
   }
 };
 

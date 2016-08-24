@@ -2,11 +2,13 @@ import { DEFAULT_MAX_DURATION, DEFAULT_DESCRIPTOR, DEFAULT_MAX_RESULTS,
   DEFAULT_MIN_DURATION }
   from '../constants';
 import { UPDATE_DESCRIPTOR, UPDATE_MAX_RESULTS, UPDATE_MIN_DURATION,
-  UPDATE_MAX_DURATION, UPDATE_QUERY }
+  UPDATE_MAX_DURATION, UPDATE_QUERY, FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_FAILURE,
+  MAP_COMPUTATION_COMPLETE }
   from '../actions/actionTypes';
 
 export const initialState = {
   query: '',
+  isSearchEnabled: true,
   maxResults: DEFAULT_MAX_RESULTS,
   minDuration: DEFAULT_MIN_DURATION,
   maxDuration: DEFAULT_MAX_DURATION,
@@ -38,6 +40,14 @@ const search = (state = initialState, action) => {
     case UPDATE_QUERY: {
       return Object.assign({}, state, {
         query: action.query,
+      });
+    }
+    case FETCH_SOUNDS_REQUEST:
+    case FETCH_SOUNDS_FAILURE:
+    case MAP_COMPUTATION_COMPLETE: {
+      return Object.assign({}, state, {
+        // disabled with every new query
+        isSearchEnabled: action.type !== FETCH_SOUNDS_REQUEST,
       });
     }
     default:

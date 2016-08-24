@@ -35,12 +35,12 @@ const getAppToken = () => new Promise((resolve, reject) => {
   loadJSON(URLS.getAppToken).then(
     data => {
       sessionStorage.setItem('app_token', data.app_token);
-      // we can safely assume a back-end app is running, inform with resolve()
+      // back-end app is running, inform with resolve()
       resolve();
     },
     () => {
       sessionStorage.setItem('app_token', staticAppToken);
-      // we can safely assume we're in client-only mode, inform with reject()
+      // client-only mode, inform with reject()
       reject();
     });
 });

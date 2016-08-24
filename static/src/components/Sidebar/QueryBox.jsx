@@ -28,10 +28,20 @@ class QueryBox extends React.Component {
   constructor(props) {
     super(props);
     this.submitQuery = this.submitQuery.bind(this);
+    this.tryQueryAtMount = this.tryQueryAtMount.bind(this);
   }
 
   componentDidMount() {
-    this.submitQuery();
+    // query at mount to have the user play with something with no additional interaction
+    this.tryQueryAtMount();
+  }
+
+  tryQueryAtMount() {
+    if (sessionStorage.getItem('app_token')) {
+      this.submitQuery();
+    } else {
+      setTimeout(this.tryQueryAtMount, 500);
+    }
   }
 
   submitQuery() {

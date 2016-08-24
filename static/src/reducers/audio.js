@@ -1,9 +1,6 @@
-import { INIT_AUDIO_CONTEXT, ADD_AUDIO_SRC, STOP_AUDIO_SRC } from '../actions/actionTypes';
+import { ADD_AUDIO_SRC, STOP_AUDIO_SRC } from '../actions/actionTypes';
 
 const initialState = {
-  initialised: false,
-  context: {},
-  loader: {},
   playingSourceNodes: {},
 };
 
@@ -31,17 +28,6 @@ const sourceNodes = (state, action) => {
 
 const audio = (state = initialState, action) => {
   switch (action.type) {
-    case INIT_AUDIO_CONTEXT: {
-      if (!state.initialised) {
-        const { context, loader } = action;
-        return Object.assign({}, state, {
-          context,
-          loader,
-          initialised: true,
-        });
-      }
-      return state;
-    }
     case ADD_AUDIO_SRC: {
       return Object.assign({}, state, {
         playingSourceNodes: sourceNodes(state.playingSourceNodes, action),

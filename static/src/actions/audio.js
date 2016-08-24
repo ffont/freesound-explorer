@@ -1,5 +1,5 @@
 import makeActionCreator from './makeActionCreator';
-import { INIT_AUDIO_CONTEXT, ADD_AUDIO_SRC, STOP_AUDIO_SRC,
+import { ADD_AUDIO_SRC, STOP_AUDIO_SRC,
   STOP_ALL_AUDIO, PLAY_AUDIO_SRC }
   from './actionTypes';
 import { getSoundBuffer } from './sounds';
@@ -15,27 +15,14 @@ const initAudioContext = () => {
   return { audioContext, loader };
 };
 
-// action dispatched, used by reducer to save in store the actual audio context
-const initAudioContextAction = makeActionCreator(INIT_AUDIO_CONTEXT, 'context', 'loader');
-
-/**
- * Function called by external component to init audio context
- */
-export const initAudio = () => (dispatch, getStore) => {
-  const store = getStore();
-  if (!store.audioContext || store.audioContext.state !== 'running') {
-    // initialize audioContext only if not initialized yet
-    const { audioContext, loader } = initAudioContext();
-    dispatch(initAudioContextAction(audioContext, loader));
-  }
-};
+export const { audioContext, loader } = initAudioContext();
 
 const addAudioSource = makeActionCreator(ADD_AUDIO_SRC, 'sourceKey', 'source', 'gain');
 export const playAudioSrc = makeActionCreator(PLAY_AUDIO_SRC, 'sourceKey', 'soundID');
 export const stopAudioSrc = makeActionCreator(STOP_AUDIO_SRC, 'sourceKey', 'soundID');
 export const stopAllAudio = makeActionCreator(STOP_ALL_AUDIO);
 
-const loadAudio = (sound, loader) => new Promise((resolve, reject) => {
+const loadAudio = (sound) => new Promise((resolve, reject) => {
   if (sound.buffer) {
     resolve(sound.buffer);
   } else {
@@ -50,11 +37,11 @@ export const playAudio = (sound, playbackOptions = {}, onEnded, customSourceNode
   (dispatch, getStore) => {
     const store = getStore();
     const { playbackRate = 1 } = playbackOptions;
-    const { context, loader, playingSourceNodes } = store.audio;
-    loadAudio(sound, loader).then(
+    const { playingSourceNodes } = store.audio;
+    loadAudio(sound).then(
       buffer => {
-        const source = context.createBufferSource();
-        const sourceGainNode = context.createGain();
+        const source = audioContext.createBufferSource();
+        const sourceGainNode = audioContext.createGain();
         const sourceNodeKey = customSourceNodeKey || Object.keys(playingSourceNodes).length;
         dispatch(getSoundBuffer(sound.id, buffer));
         dispatch(addAudioSource(sourceNodeKey, source, sourceGainNode));
@@ -66,7 +53,7 @@ export const playAudio = (sound, playbackOptions = {}, onEnded, customSourceNode
         source.playbackRate.value = playbackRate;
         source.connect(sourceGainNode);
         // TODO: sourceGainNode should change with MIDI velocity
-        sourceGainNode.connect(context.gainNode);
+        sourceGainNode.connect(audioContext.gainNode);
         source.start();
         dispatch(playAudioSrc(sourceNodeKey, sound.id));
       }

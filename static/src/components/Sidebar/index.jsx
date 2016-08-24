@@ -1,9 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toggleSidebarVisibility, setSidebarTab } from '../../actions/sidebar';
-import SearchMode from './SearchMode';
-import PathsMode from './PathsMode';
-import InfoMode from './InfoMode';
+import HomeTab from './HomeTab';
+import SearchTab from './SearchTab';
+import PathsTab from './PathsTab';
+import SpacesTab from './SpacesTab';
+import MidiTab from './MidiTab';
+import InfoTab from './InfoTab';
 import { SIDEBAR_TABS } from '../../constants';
 import '../../stylesheets/Sidebar.scss';
 
@@ -14,43 +17,72 @@ const propTypes = {
   setSidebarTab: React.PropTypes.func,
 };
 
+const icons = {
+  [SIDEBAR_TABS.HOME]: 'fa-home',
+  [SIDEBAR_TABS.SEARCH]: 'fa-search',
+  [SIDEBAR_TABS.SPACES]: 'fa-object-group',
+  [SIDEBAR_TABS.PATHS]: 'fa-exchange',
+  [SIDEBAR_TABS.MIDI]: 'fa-keyboard-o',
+  [SIDEBAR_TABS.INFO]: 'fa-info',
+};
+
+const getSidebarContent = (activeTab) => {
+  switch (activeTab) {
+    case SIDEBAR_TABS.HOME:
+      return <HomeTab />;
+    case SIDEBAR_TABS.SEARCH:
+      return <SearchTab />;
+    case SIDEBAR_TABS.PATHS:
+      return <PathsTab />;
+    case SIDEBAR_TABS.SPACES:
+      return <SpacesTab />;
+    case SIDEBAR_TABS.MIDI:
+      return <MidiTab />;
+    case SIDEBAR_TABS.INFO:
+      return <InfoTab />;
+    default:
+      return <SearchTab />;
+  }
+};
+
 function Sidebar(props) {
   const sidebarClassName = `sidebar${(props.isVisible) ? ' active' : ''}`;
+  const sideBarContent = getSidebarContent(props.activeTab);
   return (
-    <div className={sidebarClassName}>
-      <div className="sidebar-content-wrapper">
-        <div className="sidebar-vertical-scroll">
-          <SearchMode {...props} isActiveMode={props.activeTab === SIDEBAR_TABS.SEARCH} />
-          <PathsMode {...props} isActiveMode={props.activeTab === SIDEBAR_TABS.PATHS} />
-          <InfoMode isActiveMode={props.activeTab === SIDEBAR_TABS.INFO} />
+    <aside>
+      <div className={sidebarClassName}>
+        <div className="sidebar-content-wrapper">
+          <div className="sidebar-vertical-scroll">
+            {sideBarContent}
+          </div>
+        </div>
+        <div className="sidebar-menu-wrapper">
+          <nav>
+            <ol>
+            {Object.keys(SIDEBAR_TABS).map(tab => (
+              <li
+                className={(props.activeTab === SIDEBAR_TABS[tab]) ? 'active' : ''}
+                onClick={() => props.setSidebarTab(SIDEBAR_TABS[tab])}
+              >
+                <button>
+                  <i className={`fa ${icons[SIDEBAR_TABS[tab]]} fa-lg`} aria-hidden="true" />
+                </button>
+              </li>
+            ))}
+            </ol>
+          </nav>
+          <div
+            className="toggle-visibility-button"
+            onClick={() => props.toggleSidebarVisibility(!props.isVisible)}
+          >
+            {(props.isVisible) ?
+              <i className="fa fa-arrow-left" aria-hidden="true" /> :
+              <i className="fa fa-arrow-right" aria-hidden="true" />
+            }
+          </div>
         </div>
       </div>
-      <div className="sidebar-menu-wrapper">
-        <ul>
-          <li
-            className={(props.activeTab === SIDEBAR_TABS.SEARCH) ? 'active' : ''}
-            onClick={() => props.setSidebarTab(SIDEBAR_TABS.SEARCH)}
-          ><i className="fa fa-search fa-lg" aria-hidden="true" /></li>
-          <li
-            className={(props.activeTab === SIDEBAR_TABS.PATHS) ? 'active' : ''}
-            onClick={() => props.setSidebarTab(SIDEBAR_TABS.PATHS)}
-          ><i className="fa fa-exchange fa-lg" aria-hidden="true" /></li>
-          <li
-            className={(props.activeTab === SIDEBAR_TABS.INFO) ? 'active' : ''}
-            onClick={() => props.setSidebarTab(SIDEBAR_TABS.INFO)}
-          ><i className="fa fa-info fa-lg" aria-hidden="true" /></li>
-        </ul>
-        <div
-          className="toggle-visibility-button"
-          onClick={() => props.toggleSidebarVisibility(!props.isVisible)}
-        >
-          {(props.isVisible) ?
-            <i className="fa fa-arrow-left" aria-hidden="true" /> :
-            <i className="fa fa-arrow-right" aria-hidden="true" />
-          }
-        </div>
-      </div>
-    </div>
+    </aside>
   );
 }
 

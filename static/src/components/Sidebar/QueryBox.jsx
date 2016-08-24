@@ -5,6 +5,7 @@ import { getSounds } from '../../actions/sounds';
 import { updateDescriptor, updateMinDuration, updateMaxDuration,
   updateMaxResults, updateQuery }
   from '../../actions/search';
+import { setExampleQueryDone } from '../../actions/sidebar';
 import { togglePlayOnHover } from '../../actions/settings';
 import { DEFAULT_MAX_RESULTS, DEFAULT_MAX_DURATION, DEFAULT_QUERY } from '../../constants';
 
@@ -17,11 +18,14 @@ const propTypes = {
   playOnHover: React.PropTypes.bool,
   togglePlayOnHover: React.PropTypes.func,
   getSounds: React.PropTypes.func,
+  sounds: React.PropTypes.object,
+  exampleQueryDone: React.PropTypes.bool,
   updateDescriptor: React.PropTypes.func,
   updateMinDuration: React.PropTypes.func,
   updateMaxDuration: React.PropTypes.func,
   updateMaxResults: React.PropTypes.func,
   updateQuery: React.PropTypes.func,
+  setExampleQueryDone: React.PropTypes.func,
 };
 
 class QueryBox extends React.Component {
@@ -33,12 +37,15 @@ class QueryBox extends React.Component {
 
   componentDidMount() {
     // query at mount to have the user play with something with no additional interaction
-    this.tryQueryAtMount();
+    if (!this.props.exampleQueryDone) {
+      this.tryQueryAtMount();
+    }
   }
 
   tryQueryAtMount() {
     if (sessionStorage.getItem('app_token')) {
       this.submitQuery();
+      this.props.setExampleQueryDone();
     } else {
       setTimeout(this.tryQueryAtMount, 500);
     }
@@ -67,6 +74,7 @@ class QueryBox extends React.Component {
               const query = evt.target.value;
               this.props.updateQuery(query);
             }}
+            tabIndex="1"
           />
           <button
             id="search-button"
@@ -132,11 +140,16 @@ class QueryBox extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => Object.assign({}, state.search, state.settings);
+const mapStateToProps = (state) => {
+  const sounds = state.sounds.byID;
+  const { exampleQueryDone } = state.sidebar;
+  return Object.assign({}, { sounds, exampleQueryDone }, state.search, state.settings);
+};
 
 QueryBox.propTypes = propTypes;
 export default connect(mapStateToProps, {
   getSounds,
+  setExampleQueryDone,
   togglePlayOnHover,
   updateDescriptor,
   updateMinDuration,

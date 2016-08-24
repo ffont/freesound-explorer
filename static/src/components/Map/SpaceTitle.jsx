@@ -43,14 +43,14 @@ const computeStyle = (props) => {
 function SpaceTitle(props) {
   return (<div className="space-title">
     <div style={computeStyle(props)}>
-      <header>{props.query}</header>
-      <p><ol>
+      <header><h1>{props.query}</h1></header>
+      <ol>
         <li>{props.sounds.length} sounds</li>
         <li>Arranged by {
             (props.queryParams.descriptor) === 'lowlevel.mfcc.mean' ? 'Timbre' : 'Tonality'}
         </li>
         <li>Duration: [{props.queryParams.minDuration}, {props.queryParams.maxDuration}]s</li>
-      </ol></p>
+      </ol>
     </div>
   </div>);
 }

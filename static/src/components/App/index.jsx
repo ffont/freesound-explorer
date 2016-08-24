@@ -6,9 +6,6 @@ import MIDI from '../MIDI';
 import Sidebar from '../Sidebar';
 import MessagesBox from '../MessagesBox';
 import '../../stylesheets/App.scss';
-import '../../stylesheets/toggle.scss';
-import '../../stylesheets/slider.scss';
-import '../../stylesheets/button.scss';
 
 function App() {
   return (

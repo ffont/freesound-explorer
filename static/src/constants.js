@@ -13,18 +13,19 @@ export const MESSAGE_STATUS = {
 };
 
 export const SIDEBAR_TABS = {
+  HOME: 'home',
   SEARCH: 'search',
   PATHS: 'paths',
-  INFO: 'info',
   SPACES: 'spaces',
-  SETTINGS: 'settings',
+  MIDI: 'midi',
+  INFO: 'info',
 };
 
 export const DEFAULT_SIDEBAR_TAB = SIDEBAR_TABS.SEARCH;
 
 export const REQUEST_POOL_SIZE = 50;
 
-export const MIN_ZOOM = 0.2;
+export const MIN_ZOOM = 0.15;
 export const MAX_ZOOM = 15;
 export const MAP_SCALE_FACTOR = 20;
 export const DEFAULT_RADIUS = 30;

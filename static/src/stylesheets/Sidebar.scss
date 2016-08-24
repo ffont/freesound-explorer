@@ -1,4 +1,5 @@
 @import "./variables.json";
+@import "./button";
 
 .sidebar {
   position: absolute;
@@ -8,20 +9,18 @@
   transition: left 0.3s ease;
   height: 100%;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  p {
+  p.info-paragraph {
     margin-bottom: 8px;
   }
-  margin-bottom: 50px;
-}
-
-.sidebar.active {
-  left: 0px;
+  &.active {
+    left: 0;
+  }
 }
 
 .sidebar-content-wrapper {
-  width: $sidebarWidth - $sidebarClosedOffset -40px;
-  padding: 20px;
-  background-color: rgba(0, 0, 0, 0.4);
+  width: $sidebarWidth - $sidebarClosedOffset - 2 * $sidebarContentPadding;
+  padding: $sidebarContentPadding;
+  background-color: $sidebarColor;
   height: 100%;
 }
 
@@ -30,10 +29,25 @@
   height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
-.sidebar-vertical-scroll::-webkit-scrollbar {
-  display: none;
+.sidebar-nav-button {
+  width: 100%;
+  height: $sidebarClosedOffset;
+  text-align: center;
+  line-height: $sidebarClosedOffset;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out,
+    color 0.3s ease-in-out;
+  &:hover, &.active {
+    background-color: $sidebarIconHoverColor;
+    i {
+      color: $blackBackground;
+    }
+  }
 }
 
 .sidebar-menu-wrapper {
@@ -42,43 +56,17 @@
   right: 0px;
   height: 100%;
   width: $sidebarClosedOffset;
-  background-color: rgba(0, 0, 0, 0.5);
-  ul {
+  background-color: $sidebarColor;
+  ol {
     list-style-type: none;
   }
   li {
-    display: block;
-    width: 100%;
-    height: $sidebarClosedOffset;
-    text-align: center;
-    line-height: $sidebarClosedOffset;
-    cursor: pointer;
+    @extend .sidebar-nav-button;
   }
-  li:hover {
-    background-color: $hoverBackground;
+  .toggle-visibility-button {
+    position:absolute;
+    bottom: 0px;
+    left: 0px;
+    @extend .sidebar-nav-button;
   }
-  li.active {
-    background-color: rgba(100, 100, 100, 0.5);
-  }
-}
-
-.sidebar-menu-wrapper .toggle-visibility-button {
-  position:absolute;
-  bottom: 0px;
-  left: 0px;
-  display:block;
-  width: 100%;
-  height: $sidebarClosedOffset;
-  line-height: $sidebarClosedOffset;
-  text-align: center;
-  cursor: pointer;
-}
-
-.sidebar .mode-active {
-  display: block;
-  margin-bottom: 40px;
-}
-
-.sidebar .mode-inactive {
-  display: none;
 }

@@ -1,4 +1,4 @@
-import { TOGGLE_SIDEBAR_VISIBILITY, SET_SIDEBAR_TAB }
+import { TOGGLE_SIDEBAR_VISIBILITY, SET_SIDEBAR_TAB, EXAMPLE_QUERY_DONE }
   from '../actions/actionTypes';
 import { DEFAULT_SIDEBAR_TAB, SIDEBAR_TABS } from '../constants';
 import '../polyfills/Array.includes';
@@ -6,6 +6,7 @@ import '../polyfills/Array.includes';
 const initialState = {
   isVisible: true,
   activeTab: DEFAULT_SIDEBAR_TAB,
+  exampleQueryDone: false,
 };
 
 const sidebar = (state = initialState, action) => {
@@ -25,6 +26,11 @@ const sidebar = (state = initialState, action) => {
         });
       }
       return state;
+    }
+    case EXAMPLE_QUERY_DONE: {
+      return Object.assign({}, state, {
+        exampleQueryDone: true,
+      });
     }
     default:
       return state;

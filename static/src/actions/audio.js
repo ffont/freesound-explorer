@@ -33,7 +33,7 @@ const loadAudio = (sound) => new Promise((resolve, reject) => {
   }
 });
 
-export const playAudio = (sound, playbackOptions = {}, onEnded, customSourceNodeKey) =>
+export const playAudio = (sound, playbackOptions = {}, customSourceNodeKey, onEnded) =>
   (dispatch, getStore) => {
     const store = getStore();
     const { playbackRate = 1 } = playbackOptions;
@@ -46,7 +46,7 @@ export const playAudio = (sound, playbackOptions = {}, onEnded, customSourceNode
         dispatch(getSoundBuffer(sound.id, buffer));
         dispatch(addAudioSource(sourceNodeKey, source, sourceGainNode));
         source.onended = () => {
-          dispatch(stopAudioSrc(sourceNodeKey, sound.id));
+          dispatch(stopAudioSrc(sourceNodeKey, sound.id, onEnded));
           if (onEnded) onEnded();
         };
         source.buffer = buffer;

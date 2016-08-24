@@ -4,7 +4,7 @@ import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE,
   from '../actions/actionTypes';
 
 const computeSpacePosition = (spaceIndex) => ({
-  x: ((spaceIndex % 2) * 4) + 1,
+  x: (spaceIndex * 4) + 1,
   y: 1,
 });
 

@@ -23,6 +23,10 @@ const defaultProps = {
 };
 
 class SliderRange extends React.Component {
+  componentDidMount() {
+    // hack to ensure adjustPositionWithThumbWidth gets called correctly
+    this.forceUpdate();
+  }
   getThumbLabelStyle() {
     let position = this.computePosition();
     position = this.adjustPositionWithThumbWidth(position);

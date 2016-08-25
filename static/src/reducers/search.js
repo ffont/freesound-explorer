@@ -29,12 +29,12 @@ const search = (state = initialState, action) => {
     }
     case UPDATE_MIN_DURATION: {
       return Object.assign({}, state, {
-        minDuration: parseInt(action.minDuration, 10),
+        minDuration: Number(action.minDuration),
       });
     }
     case UPDATE_MAX_DURATION: {
       return Object.assign({}, state, {
-        maxDuration: parseInt(action.maxDuration, 10),
+        maxDuration: Number(action.maxDuration),
       });
     }
     case UPDATE_QUERY: {

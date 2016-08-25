@@ -64,6 +64,7 @@ function Sidebar(props) {
               <li
                 className={(props.activeTab === SIDEBAR_TABS[tab]) ? 'active' : ''}
                 onClick={() => props.setSidebarTab(SIDEBAR_TABS[tab])}
+                key={tab}
               >
                 <button>
                   <i className={`fa ${icons[SIDEBAR_TABS[tab]]} fa-lg`} aria-hidden="true" />

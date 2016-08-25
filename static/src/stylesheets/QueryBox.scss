@@ -1,44 +1,7 @@
-@import "./mixins";
+@import "./variables.json";
 
-.query-box {
+.query-form {
 	width: 100%;
 	height: 100px;
 	opacity: 0.9;
-	select {
-		margin-top: 8px;
-		margin-bottom: 10px;
-		background-color: white;
-		color: black;
-		display: block;
-		width: 100%;
-		height: 30px;
-		border-radius: 5px;
-		border: 0;
-	}
-	span {
-		color: white;
-	}
-}
-
-.search-button {
-	padding: 7px;
-	border-radius: 5px;
-	border: 0;
-	height: 30px;
-	width: 34px;
-  background: none;
-  color: white;
-}
-
-.search-button:focus {
-	outline: 0;
-}
-
-.query-terms-input {
-	width: calc(100% - 50px);
-	padding: 7px;
-	border-radius: 5px;
-	border: 0;
-	height: 18px;
-	color: black;
 }

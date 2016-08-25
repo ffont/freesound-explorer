@@ -75,8 +75,8 @@ class Map extends React.Component {
   render() {
     return (
       <div className="map-container" ref={(mapContainer) => { this.mapContainer = mapContainer; }}>
-          {this.props.spaces.map(space =>
-            <SpaceTitle key={space.queryID} {...space} mapPosition={this.props.map} />)}
+        {this.props.spaces.map(space =>
+          <SpaceTitle key={space.queryID} {...space} mapPosition={this.props.map} />)}
         <svg className="map" onClick={this.onClickCallback}>
           {this.props.spaces.map(space =>
             <Space key={space.queryID} {...space} mapPosition={this.props.map} />)}

@@ -8,6 +8,9 @@ import { updateDescriptor, updateMinDuration, updateMaxDuration,
 import { setExampleQueryDone } from '../../actions/sidebar';
 import { togglePlayOnHover } from '../../actions/settings';
 import { DEFAULT_MAX_RESULTS, DEFAULT_MAX_DURATION, DEFAULT_QUERY } from '../../constants';
+import InputTextButton from '../Input/InputTextButton';
+import SelectWithLabel from '../Input/SelectWithLabel';
+import SliderRange from '../Input/SliderRange';
 
 const propTypes = {
   maxResults: React.PropTypes.number,
@@ -63,79 +66,66 @@ class QueryBox extends React.Component {
 
   render() {
     return (
-      <div id="query-box" className="query-box">
-        <form id="query-form" className="query-form">
-          <input
-            id="query-terms-input"
-            className="query-terms-input"
-            type="text"
-            placeholder="query terms, e.g.: instrument note"
-            onChange={(evt) => {
-              const query = evt.target.value;
-              this.props.updateQuery(query);
-            }}
-            tabIndex="1"
-          />
-          <button
-            id="search-button"
-            className="search-button"
-            onClick={(evt) => {
-              evt.preventDefault();
-              this.submitQuery();
-            }}
-          >
-            <i className="fa fa-arrow-circle-right fa-lg" aria-hidden="true" />
-          </button>
-          <select
-            id="map-descriptors-selector"
-            className="map-descriptors-selector"
-            onChange={(evt) => {
-              const descriptor = evt.target.value;
-              this.props.updateDescriptor(descriptor);
-            }}
-          >
-            <option value="lowlevel.mfcc.mean">Arrange by Timbre</option>
-            <option value="tonal.hpcp.mean">Arrange by Tonality</option>
-          </select>
-          <div className="slider-wrapper">
-            Number of results:
+      <form id="query-form" className="query-form">
+        <InputTextButton
+          onTextChange={(evt) => {
+            const query = evt.target.value;
+            this.props.updateQuery(query);
+          }}
+          tabIndex="1"
+          placeholder="query terms, e.g.: instrument note"
+          onButtonClick={(evt) => {
+            evt.preventDefault();
+            this.submitQuery();
+          }}
+          buttonIcon="fa fa-search fa-lg"
+        />
+        <SelectWithLabel
+          onChange={(evt) => {
+            const descriptor = evt.target.value;
+            this.props.updateDescriptor(descriptor);
+          }}
+          options={[{ option: 'lowlevel.mfcc.mean', name: 'Timbre' },
+            { option: 'tonal.hpcp.mean', name: 'Tonality' }]}
+          label="Arrange by"
+        />
+        <SliderRange
+          label="Number of results"
+          minValue="20"
+          maxValue="450"
+          defaultValue={DEFAULT_MAX_RESULTS}
+          onChange={(evt) => {
+            const maxResults = evt.target.value;
+            this.props.updateMaxResults(maxResults);
+          }}
+          currentValue={this.props.maxResults}
+        />
+        <SliderRange
+          label="Maximum duration"
+          minValue="0.5"
+          maxValue="30"
+          defaultValue={DEFAULT_MAX_DURATION}
+          step="0.5"
+          onChange={(evt) => {
+            const maxDuration = evt.target.value;
+            this.props.updateMaxDuration(maxDuration);
+          }}
+          currentValue={this.props.maxDuration}
+        />
+        <div className="toggle-wrapper">
+          <span>Play on hover:</span>
+          <div style={{ display: 'inline' }}>
             <input
-              id="max-results-slider"
-              type="range"
-              min="20" max="450" defaultValue={DEFAULT_MAX_RESULTS} step="1"
-              onChange={(evt) => {
-                const maxResults = evt.target.value;
-                this.props.updateMaxResults(maxResults);
-              }}
-            /><span>{this.props.maxResults}</span>
+              id="playOnHoverSwitch"
+              className={`toggle${(this.props.playOnHover) ? ' active' : ''}`}
+              type="checkbox"
+              checked={this.props.playOnHover}
+              onChange={this.props.togglePlayOnHover}
+            />
+            <label htmlFor="playOnHoverSwitch" />
           </div>
-          <div className="slider-wrapper">
-            Maximum duration (s):
-            <input
-              id="max-duration-slider"
-              type="range"
-              min="0.5" max="30" defaultValue={DEFAULT_MAX_DURATION} step="0.5"
-              onChange={(evt) => {
-                const maxDuration = evt.target.value;
-                this.props.updateMaxDuration(maxDuration);
-              }}
-            /><span>{this.props.maxDuration}</span>
-          </div>
-          <div className="toggle-wrapper">
-            <span>Play on hover:</span>
-            <div style={{ display: 'inline' }}>
-              <input
-                id="playOnHoverSwitch"
-                className={`toggle${(this.props.playOnHover) ? ' active' : ''}`}
-                type="checkbox"
-                checked={this.props.playOnHover}
-                onChange={this.props.togglePlayOnHover}
-              />
-              <label htmlFor="playOnHoverSwitch" />
-            </div>
-          </div>
-        </form>
-      </div>
+        </div>
+      </form>
     );
   }
 }

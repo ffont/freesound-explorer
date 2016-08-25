@@ -4,16 +4,19 @@
 .sidebar {
   position: absolute;
   top: 0;
-  left: $sidebarClosedOffset - $sidebarWidth;
+  transform: translate3d($sidebarClosedOffset - $sidebarWidth, 0, 0);
   width: $sidebarWidth;
-  transition: left 0.3s ease;
+  transition: transform 0.3s ease;
   height: 100%;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
   p.info-paragraph {
     margin-bottom: 8px;
   }
   &.active {
-    left: 0;
+    transform: translate3d(0,0,0);
+  }
+  h1 {
+    margin: 0.2em 0 0.67em;
   }
 }
 
@@ -22,6 +25,7 @@
   padding: $sidebarContentPadding;
   background-color: $sidebarColor;
   height: 100%;
+  font-size: 1.1em;
 }
 
 .sidebar-vertical-scroll {
@@ -42,6 +46,9 @@
   cursor: pointer;
   transition: background-color 0.3s ease-in-out,
     color 0.3s ease-in-out;
+  i {
+    color: white;
+  }
   &:hover, &.active {
     background-color: $sidebarIconHoverColor;
     i {
@@ -59,6 +66,8 @@
   background-color: $sidebarColor;
   ol {
     list-style-type: none;
+    margin: 0;
+    padding: 0;
   }
   li {
     @extend .sidebar-nav-button;

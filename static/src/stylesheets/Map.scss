@@ -33,6 +33,9 @@ svg.map {
   top: $titleNegativePadding;
   left: $titleNegativePadding;
   color: white;
+  div {
+    transform: translate(-50%, -50%);
+  }
   header > * {
     text-transform: capitalize;
     margin-bottom: 5px;
@@ -41,7 +44,8 @@ svg.map {
   }
   font-size: 16px;
   ol {
-    list-style: none
+    list-style: none;
+    padding: 0;
   }
   li {
     padding-left: 0;

@@ -21,7 +21,7 @@ class AudioTickListener extends React.Component {
   onAudioTick(bar, beat, tick, time) {
     // Compoenents extending AudioTickListener should override this function.
     // Otherwise the following console.log statement will be printed.
-    console.log("Tick event", this.constructor.name, bar, beat, tick, time);
+    console.log('Tick event', this.constructor.name, bar, beat, tick, time);
   }
 }
 

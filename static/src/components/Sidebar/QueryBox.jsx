@@ -6,12 +6,10 @@ import { updateDescriptor, updateMinDuration, updateMaxDuration,
   updateMaxResults, updateQuery }
   from '../../actions/search';
 import { setExampleQueryDone } from '../../actions/sidebar';
-import { togglePlayOnHover } from '../../actions/settings';
-import { DEFAULT_MAX_RESULTS, DEFAULT_MAX_DURATION, DEFAULT_QUERY } from '../../constants';
+import { DEFAULT_QUERY } from '../../constants';
 import InputTextButton from '../Input/InputTextButton';
 import SelectWithLabel from '../Input/SelectWithLabel';
 import SliderRange from '../Input/SliderRange';
-import CheckBox from '../Input/CheckBox';
 
 const propTypes = {
   maxResults: React.PropTypes.number,
@@ -19,8 +17,6 @@ const propTypes = {
   minDuration: React.PropTypes.number,
   descriptor: React.PropTypes.string,
   query: React.PropTypes.string,
-  playOnHover: React.PropTypes.bool,
-  togglePlayOnHover: React.PropTypes.func,
   getSounds: React.PropTypes.func,
   sounds: React.PropTypes.object,
   exampleQueryDone: React.PropTypes.bool,
@@ -118,12 +114,6 @@ class QueryBox extends React.Component {
           tabIndex="5"
           id="max-duration-slider"
         />
-        <CheckBox
-          checked={this.props.playOnHover}
-          onChange={this.props.togglePlayOnHover}
-          label="Play on hover"
-          tabIndex="6"
-        />
       </form>
     );
   }
@@ -132,14 +122,13 @@ class QueryBox extends React.Component {
 const mapStateToProps = (state) => {
   const sounds = state.sounds.byID;
   const { exampleQueryDone } = state.sidebar;
-  return Object.assign({}, { sounds, exampleQueryDone }, state.search, state.settings);
+  return Object.assign({}, { sounds, exampleQueryDone }, state.search);
 };
 
 QueryBox.propTypes = propTypes;
 export default connect(mapStateToProps, {
   getSounds,
   setExampleQueryDone,
-  togglePlayOnHover,
   updateDescriptor,
   updateMinDuration,
   updateMaxDuration,

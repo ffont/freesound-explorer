@@ -42,10 +42,12 @@
   width: 100%;
   height: $sidebarClosedOffset;
   text-align: center;
-  line-height: $sidebarClosedOffset;
+  line-height: $sidebarClosedOffset - $inputBorderPadding * 2;
   cursor: pointer;
+  box-sizing: border-box;
   transition: background-color 0.3s ease-in-out,
-    color 0.3s ease-in-out;
+    color 0.3s ease-in-out, border 0.3s ease-in-out;
+  border: $inputBorderPadding solid transparent;
   i {
     color: white;
   }
@@ -54,6 +56,10 @@
     i {
       color: $blackBackground;
     }
+  }
+  &:focus {
+    border: $inputBorderPadding solid $sidebarIconHoverColor;
+    outline: none;
   }
 }
 

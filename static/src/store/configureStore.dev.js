@@ -8,7 +8,7 @@ export default function configureStore(initialState) {
     fseReducer,
     initialState,
     compose(
-      applyMiddleware(thunk, createLogger()),
+      applyMiddleware(thunk/*, createLogger()*/),
       window.devToolsExtension && window.devToolsExtension()
     )
   );

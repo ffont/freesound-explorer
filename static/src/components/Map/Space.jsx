@@ -2,19 +2,24 @@ import React from 'react';
 import MapCircle from './MapCircle';
 
 const propTypes = {
-  isFetching: React.PropTypes.bool,
   sounds: React.PropTypes.array,
 };
 
-function Space(props) {
-  return (<g>
-    {props.sounds.map(soundID => (
-      <MapCircle
-        key={soundID}
-        soundID={soundID}
-      />
-  ))}
-  </g>);
+class Space extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return nextProps.sounds !== this.props.sounds;
+  }
+
+  render() {
+    return (<g>
+      {this.props.sounds.map(soundID => (
+        <MapCircle
+          key={soundID}
+          soundID={soundID}
+        />
+      ))}
+    </g>);
+  }
 }
 
 Space.propTypes = propTypes;

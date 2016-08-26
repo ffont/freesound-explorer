@@ -55,7 +55,7 @@ $contrast: 5% !default;
   margin: $thumb-height / 2 0;
   width: $track-width;
 
-  &:focus {
+  &:focus, &:hover {
     outline: none;
     + span {
       color: white;
@@ -78,13 +78,20 @@ $contrast: 5% !default;
     border-radius: $track-radius;
   }
 
-  &:focus::-webkit-slider-runnable-track {
-    background: white;
-  }
-
-  &:focus::-moz-range-track {
-    @include shadow($track-shadow-size, $track-shadow-blur, transparent);
-    background: white;
+  &:focus, &:hover {
+    &::-webkit-slider-runnable-track {
+      background: white;
+    }
+    &::-moz-range-track {
+      @include shadow($track-shadow-size, $track-shadow-blur, transparent);
+      background: white;
+    }
+    &::-webkit-slider-thumb {
+      background: $accentColor;
+    }
+    &::-moz-range-thumb {
+      background: $accentColor;
+    }
   }
 
   &::-webkit-slider-thumb {
@@ -95,12 +102,6 @@ $contrast: 5% !default;
 
   &::-moz-range-thumb {
     @include thumb();
-  }
-  &:focus::-webkit-slider-thumb {
-    background: $accentColor;
-  }
-  &:focus::-moz-range-thumb {
-    background: $accentColor;
   }
 
   &::-ms-track {

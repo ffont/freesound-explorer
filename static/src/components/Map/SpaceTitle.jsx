@@ -39,19 +39,27 @@ const computeStyle = (props) => {
   };
 };
 
-function SpaceTitle(props) {
-  return (<div className="space-title">
-    <div style={computeStyle(props)}>
-      <header><h1>{props.query}</h1></header>
-      <ol>
-        <li>{props.sounds.length} sounds</li>
-        <li>Arranged by {
-            (props.queryParams.descriptor) === 'lowlevel.mfcc.mean' ? 'Timbre' : 'Tonality'}
-        </li>
-        <li>Duration: [{props.queryParams.minDuration}, {props.queryParams.maxDuration}]s</li>
-      </ol>
-    </div>
-  </div>);
+class SpaceTitle extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return nextProps.mapPosition !== this.props.mapPosition;
+  }
+
+  render() {
+    return (
+      <div className="space-title">
+        <div style={computeStyle(this.props)}>
+          <header><h1>{this.props.query}</h1></header>
+          <ol>
+            <li>{this.props.sounds.length} sounds</li>
+            <li>Arranged by {
+              (this.props.queryParams.descriptor) === 'lowlevel.mfcc.mean' ? 'Timbre' : 'Tonality'}
+            </li>
+            <li>Duration: [{this.props.queryParams.minDuration},
+              {this.props.queryParams.maxDuration}]s</li>
+          </ol>
+        </div>
+      </div>);
+  }
 }
 
 SpaceTitle.propTypes = propTypes;

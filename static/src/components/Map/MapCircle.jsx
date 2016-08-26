@@ -24,6 +24,13 @@ class MapCircle extends React.PureComponent {
     this.onClick = this.onClick.bind(this);
   }
 
+  shouldComponentUpdate(nextProps) {
+    return (
+      (nextProps.sound !== this.props.sound) ||
+      (nextProps.isSelected !== this.props.isSelected)
+    );
+  }
+
   onMouseEnter() {
     if (this.props.playOnHover) {
       this.props.playAudio(this.props.sound);

@@ -63,7 +63,8 @@ class Map extends React.Component {
     const translateX = d3Event.transform.x;
     const translateY = d3Event.transform.y;
     const scale = d3Event.transform.k;
-    this.props.updateMapPosition({ translateX, translateY, scale });
+    const updatedFromD3 = true;
+    this.props.updateMapPosition({ translateX, translateY, scale, updatedFromD3 });
   }
 
   render() {

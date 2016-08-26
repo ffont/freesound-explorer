@@ -5,16 +5,26 @@ import { FETCH_SOUNDS_SUCCESS, UPDATE_SOUNDS_POSITION, UPDATE_MAP_POSITION,
   from '../actions/actionTypes';
 import { MAP_SCALE_FACTOR } from '../constants';
 
-const windowWidth = window.innerWidth;
-const windowHeight = window.innerHeight;
 
 export const computeSoundGlobalPosition = (tsnePosition, spacePosition, mapPosition) => {
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
   const { translateX, translateY, scale } = mapPosition;
   const cx = ((tsnePosition.x + (windowWidth / (MAP_SCALE_FACTOR * 2))) *
     MAP_SCALE_FACTOR * scale * spacePosition.x) + translateX;
   const cy = ((tsnePosition.y + (windowHeight / (MAP_SCALE_FACTOR * 2))) *
     MAP_SCALE_FACTOR * scale * spacePosition.y) + translateY;
   return { cx, cy };
+};
+
+export const computeTranslationForSpace = (spacePosition, scale = 1) => {
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+  const translateX = (windowWidth / 2) - ((windowWidth / (MAP_SCALE_FACTOR * 2)) *
+    MAP_SCALE_FACTOR * scale * spacePosition.x);
+  const translateY = (windowHeight / 2) - ((windowHeight / (MAP_SCALE_FACTOR * 2)) *
+    MAP_SCALE_FACTOR * scale * spacePosition.y);
+  return { translateX, translateY };
 };
 
 const byID = (state = {}, action) => {

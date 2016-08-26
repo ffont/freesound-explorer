@@ -1,7 +1,27 @@
 import { UPDATE_MAP_POSITION } from './actionTypes';
 import makeActionCreator from './makeActionCreator';
 
-export const updateMapPosition = makeActionCreator(UPDATE_MAP_POSITION, 'position');
+const lastMapCenter = {
+  translateX: 0,
+  translateY: 0,
+  scale: 1,
+};
+
+const updateMap = makeActionCreator(UPDATE_MAP_POSITION, 'position');
+
+export const updateMapPosition = ({ translateX, translateY, scale, updatedFromD3 }) => dispatch => {
+  const position = { scale };
+  if (!updatedFromD3) {
+    Object.assign(lastMapCenter, { translateX, translateY, scale });
+    Object.assign(position, { translateX, translateY });
+  } else {
+    Object.assign(position, {
+      translateX: (lastMapCenter.translateX * scale) + translateX,
+      translateY: (lastMapCenter.translateY * scale) + translateY,
+    });
+  }
+  dispatch(updateMap(position));
+};
 
 export const moveToDifferentSpace = (spaceID) => (dispatch, getStore) => {
   // TODO

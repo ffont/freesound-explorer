@@ -36,7 +36,6 @@ const computeStyle = (props) => {
     position: 'relative',
     top: cy - negativePadding,
     left: cx - negativePadding,
-    zIndex: -1,
   };
 };
 

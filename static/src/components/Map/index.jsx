@@ -14,11 +14,7 @@ import { MIN_ZOOM, MAX_ZOOM } from '../../constants';
 import '../../stylesheets/Map.scss';
 
 const propTypes = {
-  audioContext: React.PropTypes.object,
-  audioLoader: React.PropTypes.object,
-  selectedSound: React.PropTypes.number,
   selectSound: React.PropTypes.func,
-  playOnHover: React.PropTypes.bool,
   paths: React.PropTypes.array,
   spaces: React.PropTypes.array,
   map: React.PropTypes.shape({
@@ -26,10 +22,8 @@ const propTypes = {
     translateY: React.PropTypes.number,
     scale: React.PropTypes.number,
   }),
-  isUserLoggedIn: React.PropTypes.bool,
   setIsMidiLearningSoundId: React.PropTypes.func,
   isMidiLearningSoundId: React.PropTypes.number,
-  midiMappings: React.PropTypes.object,
   updateMapPosition: React.PropTypes.func,
 };
 
@@ -95,6 +89,7 @@ const mapStateToProps = (state) => {
 };
 
 Map.propTypes = propTypes;
+
 export default connect(mapStateToProps, {
   displaySystemMessage,
   updateMapPosition,

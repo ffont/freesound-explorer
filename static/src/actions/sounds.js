@@ -111,8 +111,14 @@ export const getSounds = (query, queryParams) => (dispatch, getStore) => {
   submitQuery(query, maxResults, maxDuration).then(
     allPagesResults => {
       const sounds = reshapeReceivedSounds(allPagesResults, queryID);
+      const soundsFound = Object.keys(sounds).length;
+      if (!soundsFound) {
+        dispatch(displaySystemMessage('No sounds found', MESSAGE_STATUS.ERROR));
+        dispatch(fetchFailure('no sounds', queryID));
+        return;
+      }
       dispatch(fetchSuccess(sounds, queryID));
-      dispatch(displaySystemMessage(`${Object.keys(sounds).length} sounds loaded, computing map`));
+      dispatch(displaySystemMessage(`${soundsFound} sounds loaded, computing map`));
       const tsne = getTrainedTsne(sounds, queryParams);
       computeTsneSolution(tsne, sounds, dispatch, queryID, getStore);
     },

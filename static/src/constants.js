@@ -35,7 +35,7 @@ export const DEFAULT_STROKE_OPACITY = 1;
 export const DEFAULT_PATH_STROKE_WIDTH = 2;
 export const DEFAULT_PATH_STROKE_OPACITY = 0.05;
 
-export const MAX_TSNE_ITERATIONS = 250;
+export const MAX_TSNE_ITERATIONS = 150;
 export const TSNE_CONFIG = {
   epsilon: 10,
   perplexity: 10,

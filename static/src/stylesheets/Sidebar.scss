@@ -76,6 +76,9 @@
     padding: 0;
   }
   li {
+    button {
+      margin: -$inputBorderPadding 0;
+    }
     @extend .sidebar-nav-button;
   }
   .toggle-visibility-button {

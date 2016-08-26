@@ -26,22 +26,23 @@ button {
 input.input-text-button {
   width: calc(100% - #{$sidebarClosedOffset});
   padding: 7px;
-  border-radius: 5px;
+  border-radius: $defaultBorderRadius;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   color: black;
   + button {
-    border-radius: 7px;
+    border-radius: $defaultBorderRadius;
     height: $sidebarClosedOffset;
     width: $sidebarClosedOffset;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     background-color: $sidebarIconHoverColor;
+    transition: background-color 0.3s ease-in-out;
     i {
       color: $blackBackground;
+      transition: color 0.3s ease-in-out;
     }
-    @extend .base-focus;
-    &:hover {
+    &:focus, &:hover {
       background-color: $accentColor;
       i { color: white; }
     }

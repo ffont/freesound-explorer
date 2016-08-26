@@ -3,6 +3,7 @@
 
 .slider-range {
   input[type=range] {
+    @include styledInputRange();
     background-color: transparent;
     margin: 0;
     height: $sidebarClosedOffset;
@@ -17,5 +18,7 @@
     transform: translate(-50%, -50%);
     top: $sidebarClosedOffset / 2;
     pointer-events: none;
+    color: $blackBackground;
+    transition: color 0.3s ease-in-out;
   }
 }

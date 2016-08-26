@@ -11,6 +11,7 @@ import { DEFAULT_MAX_RESULTS, DEFAULT_MAX_DURATION, DEFAULT_QUERY } from '../../
 import InputTextButton from '../Input/InputTextButton';
 import SelectWithLabel from '../Input/SelectWithLabel';
 import SliderRange from '../Input/SliderRange';
+import CheckBox from '../Input/CheckBox';
 
 const propTypes = {
   maxResults: React.PropTypes.number,
@@ -88,6 +89,7 @@ class QueryBox extends React.Component {
           options={[{ option: 'lowlevel.mfcc.mean', name: 'Timbre' },
             { option: 'tonal.hpcp.mean', name: 'Tonality' }]}
           label="Arrange by"
+          tabIndex="3"
         />
         <SliderRange
           label="Number of results"
@@ -99,6 +101,7 @@ class QueryBox extends React.Component {
             this.props.updateMaxResults(maxResults);
           }}
           currentValue={this.props.maxResults}
+          tabIndex="4"
         />
         <SliderRange
           label="Maximum duration"
@@ -111,20 +114,14 @@ class QueryBox extends React.Component {
             this.props.updateMaxDuration(maxDuration);
           }}
           currentValue={this.props.maxDuration}
+          tabIndex="5"
         />
-        <div className="toggle-wrapper">
-          <span>Play on hover:</span>
-          <div style={{ display: 'inline' }}>
-            <input
-              id="playOnHoverSwitch"
-              className={`toggle${(this.props.playOnHover) ? ' active' : ''}`}
-              type="checkbox"
-              checked={this.props.playOnHover}
-              onChange={this.props.togglePlayOnHover}
-            />
-            <label htmlFor="playOnHoverSwitch" />
-          </div>
-        </div>
+        <CheckBox
+          checked={this.props.playOnHover}
+          onChange={this.props.togglePlayOnHover}
+          label="Play on hover"
+          tabIndex="6"
+        />
       </form>
     );
   }

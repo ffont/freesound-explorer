@@ -9,7 +9,9 @@ const propTypes = {
   maxValue: React.PropTypes.string,
   label: React.PropTypes.string,
   onChange: React.PropTypes.func,
-  step: React.PropTypes.number,
+  step: React.PropTypes.string,
+  showDoubleInput: React.PropTypes.bool,
+  tabIndex: React.PropTypes.string,
 };
 
 const defaultProps = {
@@ -19,7 +21,8 @@ const defaultProps = {
   currentValue: 0,
   onChange: () => {},
   label: '',
-  step: 1,
+  step: '1',
+  showDoubleInput: true,
 };
 
 class SliderRange extends React.Component {
@@ -27,6 +30,7 @@ class SliderRange extends React.Component {
     // hack to ensure adjustPositionWithThumbWidth gets called correctly
     this.forceUpdate();
   }
+
   getThumbLabelStyle() {
     let position = this.computePosition();
     position = this.adjustPositionWithThumbWidth(position);
@@ -53,16 +57,17 @@ class SliderRange extends React.Component {
   render() {
     return (
       <div className="slider-range">
-        {this.props.label}
+        <label htmlFor="slider-range--input">{this.props.label}</label>
         <div className="slider-range-wrapper">
           <input
-            id="max-results-slider"
+            id="slider-range--input"
             type="range"
             step={this.props.step}
             min={this.props.minValue}
             max={this.props.maxValue} defaultValue={this.props.defaultValue}
             onChange={this.props.onChange}
             ref={(input) => { this.input = input; }}
+            tabIndex={this.props.tabIndex}
           />
           <span style={this.getThumbLabelStyle()}>{this.props.currentValue}</span>
         </div>

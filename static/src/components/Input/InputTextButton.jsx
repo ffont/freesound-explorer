@@ -24,10 +24,11 @@ function InputTextButton(props) {
         type="text"
         placeholder={props.placeholder}
         onChange={props.onTextChange}
-        tabIndex="1"
+        tabIndex={props.tabIndex}
       />
       <button
         onClick={props.onButtonClick}
+        tabIndex={parseInt(props.tabIndex, 10) + 1}
       >
         <i className={props.buttonIcon} aria-hidden="true" />
       </button>

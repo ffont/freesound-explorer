@@ -6,10 +6,10 @@
 
 @import "./variables.json";
 
-$track-color: white !default;
-$thumb-color: $accentColor !default;
+$track-color: transparentize(white, 0.8) !default;
+$thumb-color: $sidebarIconHoverColor !default;
 
-$thumb-radius: 4px !default;
+$thumb-radius: $defaultBorderRadius !default;
 $thumb-height: $sidebarClosedOffset !default;
 $thumb-width: $sidebarClosedOffset !default;
 $thumb-shadow-size: 0px !default;
@@ -26,7 +26,7 @@ $track-shadow-color: #222 !default;
 $track-border-width: 0px !default;
 $track-border-color: #000 !default;
 
-$track-radius: 5px !default;
+$track-radius: $defaultBorderRadius !default;
 $contrast: 5% !default;
 
 @mixin shadow($shadow-size, $shadow-blur, $shadow-color) {
@@ -37,7 +37,7 @@ $contrast: 5% !default;
   width: $track-width;
   height: $track-height;
   cursor: pointer;
-  transition: all .2s ease;
+  transition: all .3s ease;
 }
 
 @mixin thumb() {
@@ -50,13 +50,16 @@ $contrast: 5% !default;
   cursor: pointer;
 }
 
-[type=range] {
+@mixin styledInputRange() {
   -webkit-appearance: none;
   margin: $thumb-height / 2 0;
   width: $track-width;
 
   &:focus {
     outline: none;
+    + span {
+      color: white;
+    }
   }
 
   &::-webkit-slider-runnable-track {
@@ -67,16 +70,6 @@ $contrast: 5% !default;
     border-radius: $track-radius;
   }
 
-  &::-webkit-slider-thumb {
-    @include thumb();
-    -webkit-appearance: none;
-    margin-top: ((-$track-border-width * 2 + $track-height) / 2) - ($thumb-height / 2);
-  }
-
-  &:focus::-webkit-slider-runnable-track {
-    background: lighten($track-color, $contrast);
-  }
-
   &::-moz-range-track {
     @include track();
     @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
@@ -85,8 +78,29 @@ $contrast: 5% !default;
     border-radius: $track-radius;
   }
 
+  &:focus::-webkit-slider-runnable-track {
+    background: white;
+  }
+
+  &:focus::-moz-range-track {
+    @include shadow($track-shadow-size, $track-shadow-blur, transparent);
+    background: white;
+  }
+
+  &::-webkit-slider-thumb {
+    @include thumb();
+    -webkit-appearance: none;
+    margin-top: ((-$track-border-width * 2 + $track-height) / 2) - ($thumb-height / 2);
+  }
+
   &::-moz-range-thumb {
     @include thumb();
+  }
+  &:focus::-webkit-slider-thumb {
+    background: $accentColor;
+  }
+  &:focus::-moz-range-thumb {
+    background: $accentColor;
   }
 
   &::-ms-track {

@@ -6,6 +6,7 @@
     "large": "1200px"
   },
   "blackBackground": "#1b1b21",
+  "defaultBorderRadius": "5px",
   "inputBorderPadding": "3px",
   "menuBackground": "#000000",
   "menuOpacity": 0.85,

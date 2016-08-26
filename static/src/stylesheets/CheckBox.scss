@@ -1,0 +1,54 @@
+@import "./variables.json";
+
+.check-box {
+  label {
+    display: inline-block;
+    vertical-align: middle;
+    height: $sidebarClosedOffset;
+    cursor: pointer;
+    &:before {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+  }
+  input[type=checkbox] {
+    // don't use display:none in order for keyboard events to work
+    opacity: 0;
+  }
+  .box {
+    display: inline-block;
+    vertical-align: middle;
+    float: right;
+    width: 3 / 2 * $sidebarClosedOffset;
+    height: $sidebarClosedOffset;
+    position: relative;
+    border-radius: $defaultBorderRadius;
+    background-color: transparentize(white, 0.8);
+    cursor: pointer;
+    &:before {
+      content: 'off';
+      position: absolute;
+      text-transform: uppercase;
+      box-sizing: border-box;
+      line-height: $sidebarClosedOffset;
+      text-align: center;
+      width: $sidebarClosedOffset;
+      height: $sidebarClosedOffset;
+      transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, color 0.3s ease-in-out;
+      transform: translateX(0);
+      background: $sidebarIconHoverColor;
+      border-radius: $defaultBorderRadius;
+      color: $blackBackground;
+    }
+    &.active {
+      &:before {
+        transform: translateX(0.5 * $sidebarClosedOffset);
+        background: $accentColor;
+        content: 'on';
+        color: white;
+      }
+    }
+  }
+}

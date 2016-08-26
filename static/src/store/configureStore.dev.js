@@ -7,10 +7,7 @@ export default function configureStore(initialState) {
   const store = createStore(
     fseReducer,
     initialState,
-    compose(
-      applyMiddleware(thunk, createLogger()),
-      window.devToolsExtension && window.devToolsExtension()
-    )
+    applyMiddleware(thunk, createLogger())
   );
 
   if (module.hot) {

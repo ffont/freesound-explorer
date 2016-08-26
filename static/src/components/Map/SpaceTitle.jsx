@@ -41,7 +41,10 @@ const computeStyle = (props) => {
 
 class SpaceTitle extends React.Component {
   shouldComponentUpdate(nextProps) {
-    return nextProps.mapPosition !== this.props.mapPosition;
+    return (
+      (nextProps.mapPosition !== this.props.mapPosition) ||
+      (nextProps.sounds !== this.props.sounds)
+    );
   }
 
   render() {

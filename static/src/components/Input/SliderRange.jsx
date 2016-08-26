@@ -12,6 +12,7 @@ const propTypes = {
   step: React.PropTypes.string,
   showDoubleInput: React.PropTypes.bool,
   tabIndex: React.PropTypes.string,
+  id: React.PropTypes.string,
 };
 
 const defaultProps = {
@@ -23,6 +24,7 @@ const defaultProps = {
   label: '',
   step: '1',
   showDoubleInput: true,
+  id: 'slider-range-input',
 };
 
 class SliderRange extends React.Component {
@@ -57,10 +59,10 @@ class SliderRange extends React.Component {
   render() {
     return (
       <div className="slider-range">
-        <label htmlFor="slider-range--input">{this.props.label}</label>
+        <label htmlFor={this.props.id}>{this.props.label}</label>
         <div className="slider-range-wrapper">
           <input
-            id="slider-range--input"
+            id={this.props.id}
             type="range"
             step={this.props.step}
             min={this.props.minValue}

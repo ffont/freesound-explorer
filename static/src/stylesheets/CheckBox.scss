@@ -37,14 +37,14 @@
       width: $sidebarClosedOffset;
       height: $sidebarClosedOffset;
       transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, color 0.3s ease-in-out;
-      transform: translateX(0);
+      transform: translate3d(0, 0, 0);
       background: $sidebarIconHoverColor;
       border-radius: $defaultBorderRadius;
       color: $blackBackground;
     }
     &.active {
       &:before {
-        transform: translateX(0.5 * $sidebarClosedOffset);
+        transform: translate3d(0.5 * $sidebarClosedOffset, 0, 0);
         background: $accentColor;
         content: 'on';
         color: white;

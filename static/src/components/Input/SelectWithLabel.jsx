@@ -9,19 +9,21 @@ const propTypes = {
     name: React.PropTypes.string,
   })),
   tabIndex: React.PropTypes.string,
+  id: React.PropTypes.string,
 };
 const defaultProps = {
   onChange: () => {},
+  id: 'select-with-label',
 };
 
 function SelectWithLabel(props) {
   return (
     <div className="select-with-label">
-      <label htmlFor="select-with-label">{props.label}</label>
+      <label htmlFor={props.id}>{props.label}</label>
       <select
         className="map-descriptors-selector"
         onChange={props.onChange}
-        id="select-with-label"
+        id={props.id}
         tabIndex={props.tabIndex}
       >
         {props.options.map((option, index) => (

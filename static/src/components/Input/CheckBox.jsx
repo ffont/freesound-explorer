@@ -6,18 +6,20 @@ const propTypes = {
   onChange: React.PropTypes.func,
   label: React.PropTypes.string,
   tabIndex: React.PropTypes.string,
+  id: React.PropTypes.string,
 };
 
 const defaultProps = {
   onChange: () => {},
+  id: 'check-box',
 };
 
 function CheckBox(props) {
   return (
     <div className="check-box">
-      <label htmlFor="check-box">Play on hover</label>
+      <label htmlFor={props.id}>Play on hover</label>
       <input
-        id="check-box"
+        id={props.id}
         type="checkbox"
         checked={props.checked}
         onChange={props.onChange}

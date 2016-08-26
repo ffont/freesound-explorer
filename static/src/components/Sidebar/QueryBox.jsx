@@ -102,6 +102,7 @@ class QueryBox extends React.Component {
           }}
           currentValue={this.props.maxResults}
           tabIndex="4"
+          id="max-results-slider"
         />
         <SliderRange
           label="Maximum duration"
@@ -115,6 +116,7 @@ class QueryBox extends React.Component {
           }}
           currentValue={this.props.maxDuration}
           tabIndex="5"
+          id="max-duration-slider"
         />
         <CheckBox
           checked={this.props.playOnHover}

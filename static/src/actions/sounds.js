@@ -3,8 +3,7 @@ import { displaySystemMessage } from './messagesBox';
 import makeActionCreator from './makeActionCreator';
 import * as at from './actionTypes';
 import { submitQuery, reshapeReceivedSounds } from '../utils/fsQuery';
-import { MESSAGE_STATUS, TSNE_CONFIG, DEFAULT_DESCRIPTOR, MAX_TSNE_ITERATIONS,
-  STEPS_TO_MOVE_TO_SPACE }
+import { MESSAGE_STATUS, TSNE_CONFIG, DEFAULT_DESCRIPTOR, MAX_TSNE_ITERATIONS }
   from '../constants';
 import { updateMapPosition } from './map';
 import { readObjectByString } from '../utils/misc';
@@ -32,7 +31,6 @@ const getTrainedTsne = (sounds, queryParams) => {
 let clearTimeoutId;
 let stepIteration = 0;
 let progress = 0;
-let intermediateMapPositions = [];
 
 const getSoundSpacePosition = (sound, store) => {
   const { spaces } = store.spaces;
@@ -65,37 +63,24 @@ const computePointsPositionInSolution = (tsne, sounds, store) => {
   }, {});
 };
 
-const computeIntermediateMapPositionSteps = (translateX, translateY) =>
-  [...Array(STEPS_TO_MOVE_TO_SPACE).keys()].map(step => ({
-    translateX: (step + 1) * (translateX / STEPS_TO_MOVE_TO_SPACE),
-    translateY: (step + 1) * (translateY / STEPS_TO_MOVE_TO_SPACE),
-    scale: 1,  // keep scale at 1 to simplify code in actions/map.js
-  }));
-
 const computeIntermediateMapPositions = (store, queryID) => {
   const space = store.spaces.spaces.find(curSpace => curSpace.queryID === queryID);
   const { translateX, translateY } = computeTranslationForSpace(space.position);
-  if (translateX || translateY) {
-    // compute intermediate map positions only when translation required
-    return computeIntermediateMapPositionSteps(translateX, translateY);
-  }
-  return [];
+  return { translateX, translateY };
 };
 
 const computeTsneSolution = (tsne, sounds, dispatch, queryID, getStore) => {
   /** we retrieve the store at each step to take into account user zooming/moving
   while map being computed */
   const store = getStore();
-  if (!stepIteration) {
-    // if first iteration, compute how to move the map in order to center new space
-    intermediateMapPositions = computeIntermediateMapPositions(store, queryID);
-  }
+  const { scale } = store.map;
   if (stepIteration <= MAX_TSNE_ITERATIONS) {
     // compute step solution
     tsne.step();
-    if (stepIteration && intermediateMapPositions[stepIteration - 1]) {
-      // update map position starting from stepIteration = 1 (at 0 we don't have sounds in state)
-      dispatch(updateMapPosition(intermediateMapPositions[stepIteration - 1]));
+    if (stepIteration === 1) {
+      // update map position at stepIteration = 1 (at 0 we don't have sounds in state)
+      const { translateX, translateY } = computeIntermediateMapPositions(store, queryID);
+      dispatch(updateMapPosition({ translateX, translateY, scale }));
     }
     stepIteration++;
     const computedProgress = stepIteration / MAX_TSNE_ITERATIONS;
@@ -116,7 +101,6 @@ const computeTsneSolution = (tsne, sounds, dispatch, queryID, getStore) => {
     cancelAnimationFrame(clearTimeoutId);
     stepIteration = 0;
     progress = 0;
-    intermediateMapPositions = [];
     dispatch(displaySystemMessage('Map computed!', MESSAGE_STATUS.SUCCESS));
     dispatch(mapComputationComplete());
   }

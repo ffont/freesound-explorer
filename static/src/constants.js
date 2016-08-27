@@ -41,7 +41,7 @@ export const TSNE_CONFIG = {
   perplexity: 10,
   dim: 2,
 };
-export const STEPS_TO_MOVE_TO_SPACE = 5;
+export const STEPS_TO_MOVE_TO_SPACE = 1;
 
 export const DEFAULT_TEMPO = 120.0;
 export const LOOKAHEAD = 25; // How often we'll call the scheduler function (in milliseconds)

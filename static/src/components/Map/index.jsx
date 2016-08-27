@@ -1,6 +1,6 @@
 import React from 'react';
 import { select, event as d3Event } from 'd3-selection';
-import { zoom } from 'd3-zoom';
+import { zoom, zoomTransform } from 'd3-zoom';
 import { connect } from 'react-redux';
 import { displaySystemMessage } from '../../actions/messagesBox';
 import { updateMapPosition } from '../../actions/map';
@@ -35,13 +35,25 @@ class Map extends React.Component {
   }
 
   componentDidMount() {
-    const container = select(this.mapContainer);
-    const zoomBehaviour = zoom()
+    this.container = select(this.mapContainer);
+    this.zoomBehaviour = zoom()
       .scaleExtent([MIN_ZOOM, MAX_ZOOM])
       .on('zoom', this.zoomHandler);
-    zoomBehaviour(container);
+    this.container.call(this.zoomBehaviour);
     // disable double click zoom
-    container.on('dblclick.zoom', null);
+    this.container.on('dblclick.zoom', null);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { translateX, translateY, forceMapUpdate } = nextProps.map;
+    if (forceMapUpdate) {
+      const currentTranslateX = this.props.map.translateX;
+      const currentTranslateY = this.props.map.translateY;
+      const x = (translateX - currentTranslateX);
+      const y = (translateY - currentTranslateY);
+      this.container.transition().duration(300)
+        .call(this.zoomBehaviour.translateBy, x, y);
+    }
   }
 
   shouldComponentUpdate(nextProps) {

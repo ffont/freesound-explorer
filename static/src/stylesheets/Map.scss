@@ -30,13 +30,9 @@ svg.map {
   // out-of-screen parent div with abs positioning
   // needed to properly use z-index on actual space title (to hover on circles above it)
   position: absolute;
-  top: $titleNegativePadding;
-  left: $titleNegativePadding;
   pointer-events: none;
   text-shadow: 0 0 6px $blackBackground;
-  div {
-    transform: translate(-50%, -50%);
-  }
+  transform: translate(-50%, -50%);
   header > * {
     text-transform: capitalize;
     margin-bottom: 5px;

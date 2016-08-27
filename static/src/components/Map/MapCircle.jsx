@@ -16,6 +16,21 @@ const propTypes = {
   toggleHoveringSound: React.PropTypes.func,
 };
 
+const isSoundVisible = (props) => {
+  const position = props.sound.position;
+  if (!position) {
+    return false;
+  }
+  const isVerticallyOutOfScreen = (position.cy < -DEFAULT_RADIUS
+    || position.cy > window.innerHeight + DEFAULT_RADIUS);
+  const isHorizontallyOutOfScreen = (position.cx < -DEFAULT_RADIUS
+    || position.cx > window.innerWidth + DEFAULT_RADIUS);
+  return !(isVerticallyOutOfScreen || isHorizontallyOutOfScreen);
+};
+
+const isSoundStayingNotVisible = (currentProps, nextProps) =>
+  (!isSoundVisible(currentProps) && !isSoundVisible(nextProps));
+
 class MapCircle extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -26,8 +41,9 @@ class MapCircle extends React.PureComponent {
 
   shouldComponentUpdate(nextProps) {
     return (
-      (nextProps.sound !== this.props.sound) ||
-      (nextProps.isSelected !== this.props.isSelected)
+      ((nextProps.sound !== this.props.sound) ||
+      (nextProps.isSelected !== this.props.isSelected))
+      && !isSoundStayingNotVisible(this.props, nextProps)
     );
   }
 

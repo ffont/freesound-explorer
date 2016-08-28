@@ -9,6 +9,15 @@ const computeSpacePosition = (spaceIndex) => ({
   y: 1,
 });
 
+const computeSpacePositionInMap = (spacePosition, mapPosition) => {
+  const tsnePosition = { x: 0, y: 0 };
+  const { cx, cy } = computeSoundGlobalPosition(tsnePosition, spacePosition, mapPosition);
+  return {
+    x: cx,
+    y: cy,
+  };
+};
+
 const spaceInitialState = {
   sounds: [],
   query: undefined,
@@ -42,20 +51,21 @@ const singleSpace = (state = spaceInitialState, action, spacesInMap) => {
       });
     }
     case FETCH_SOUNDS_SUCCESS: {
-      const { queryID, sounds } = action;
+      const { queryID, sounds, mapPosition } = action;
       if (queryID !== state.queryID) {
         return state;
       }
+      const positionInMap = computeSpacePositionInMap(state.position, mapPosition);
       return Object.assign({}, state, {
         sounds: Object.keys(sounds),
+        positionInMap,
       });
     }
     case UPDATE_MAP_POSITION: {
-      const mapPosition = action.position;
-      const tsnePosition = { x: 0, y: 0 };
       const spacePosition = state.position;
-      const { cx, cy } = computeSoundGlobalPosition(tsnePosition, spacePosition, mapPosition);
-      return Object.assign({}, state, { positionInMap: { x: cx, y: cy } });
+      const mapPosition = action.position;
+      const positionInMap = computeSpacePositionInMap(spacePosition, mapPosition);
+      return Object.assign({}, state, { positionInMap });
     }
     default:
       return state;

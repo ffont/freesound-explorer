@@ -5,7 +5,7 @@ import * as at from './actionTypes';
 import { submitQuery, reshapeReceivedSounds } from '../utils/fsQuery';
 import { MESSAGE_STATUS, TSNE_CONFIG, DEFAULT_DESCRIPTOR, MAX_TSNE_ITERATIONS }
   from '../constants';
-import { updateMapPosition, setSpaceAsCenter } from './map';
+import { setSpaceAsCenter } from './map';
 import { readObjectByString } from '../utils/misc';
 import { computeSoundGlobalPosition } from '../reducers/sounds';
 import tsnejs from '../vendors/tsne';
@@ -13,7 +13,7 @@ import '../polyfills/requestAnimationFrame';
 
 // no need to exports all these actions as they will be used internally in getSounds
 const fetchRequest = makeActionCreator(at.FETCH_SOUNDS_REQUEST, 'queryID', 'query', 'queryParams');
-const fetchSuccess = makeActionCreator(at.FETCH_SOUNDS_SUCCESS, 'sounds', 'queryID');
+const fetchSuccess = makeActionCreator(at.FETCH_SOUNDS_SUCCESS, 'sounds', 'queryID', 'mapPosition');
 const fetchFailure = makeActionCreator(at.FETCH_SOUNDS_FAILURE, 'error', 'queryID');
 const updateSoundsPosition = makeActionCreator(at.UPDATE_SOUNDS_POSITION, 'sounds', 'queryID');
 const mapComputationComplete = makeActionCreator(at.MAP_COMPUTATION_COMPLETE);
@@ -78,10 +78,9 @@ const updateProgress = (sounds, dispatch) => {
 };
 
 const centerMapAtNewSpace = (store, queryID, dispatch) => {
-  if (stepIteration === 1) {
-    const { scale } = store.map;
+  if (!stepIteration) {
     const space = store.spaces.spaces.find(curSpace => curSpace.queryID === queryID);
-    dispatch(setSpaceAsCenter(space, scale));
+    dispatch(setSpaceAsCenter(space));
   }
 };
 
@@ -138,7 +137,8 @@ export const getSounds = (query, queryParams) => (dispatch, getStore) => {
         dispatch(fetchFailure('no sounds', queryID));
         return;
       }
-      dispatch(fetchSuccess(sounds, queryID));
+      const mapPosition = getStore().map;
+      dispatch(fetchSuccess(sounds, queryID, mapPosition));
       dispatch(displaySystemMessage(`${soundsFound} sounds loaded, computing map`));
       const tsne = getTrainedTsne(sounds, queryParams);
       computeTsneSolution(tsne, sounds, dispatch, queryID, getStore);

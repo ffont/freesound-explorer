@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { togglePlayOnHover } from '../../actions/settings';
+import baseTab from './BaseTab';
 import CheckBox from '../Input/CheckBox';
 import OptionsList, { makeOption } from '../Input/OptionsList';
 
@@ -18,7 +19,6 @@ const options = [
 function HomeTab(props) {
   return (
     <div>
-      <header><h1>Home</h1></header>
       <OptionsList options={options} />
       <CheckBox
         checked={props.playOnHover}
@@ -33,4 +33,4 @@ function HomeTab(props) {
 const mapStateToProps = (state) => state.settings;
 
 HomeTab.propTypes = propTypes;
-export default connect(mapStateToProps, { togglePlayOnHover })(HomeTab);
+export default connect(mapStateToProps, { togglePlayOnHover })(baseTab('Home', HomeTab));

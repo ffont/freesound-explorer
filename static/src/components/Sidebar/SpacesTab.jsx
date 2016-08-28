@@ -1,11 +1,10 @@
 import React from 'react';
+import baseTab from './BaseTab';
 
 function Spaces() {
   return (
-    <div>
-      <header><h1>Spaces</h1></header>
-    </div>
+    <div />
   );
 }
 
-export default Spaces;
+export default baseTab('Spaces', Spaces);

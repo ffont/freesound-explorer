@@ -1,15 +1,15 @@
 import React from 'react';
 import PathsList from './PathsList';
 import Metronome from '../Metronome';
+import baseTab from './BaseTab';
 
 function PathsTab() {
   return (
     <div>
-      <header><h1>Paths</h1></header>
       <Metronome />
       <PathsList />
     </div>
   );
 }
 
-export default PathsTab;
+export default baseTab('Paths', PathsTab);

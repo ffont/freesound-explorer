@@ -1,13 +1,13 @@
 import React from 'react';
 import QueryBox from './QueryBox';
+import baseTab from './BaseTab';
 
 function SearchTab(props) {
   return (
     <div>
-      <header><h1>Search</h1></header>
       <QueryBox {...props} />
     </div>
   );
 }
 
-export default SearchTab;
+export default baseTab('Search', SearchTab);

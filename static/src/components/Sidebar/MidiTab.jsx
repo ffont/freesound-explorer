@@ -1,11 +1,10 @@
 import React from 'react';
+import baseTab from './BaseTab';
 
 function MidiTab() {
   return (
-    <div>
-      <header><h1>MIDI Mappings</h1></header>
-    </div>
+    <div />
   );
 }
 
-export default MidiTab;
+export default baseTab('MIDI Mappings', MidiTab);

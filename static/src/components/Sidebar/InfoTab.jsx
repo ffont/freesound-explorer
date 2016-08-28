@@ -1,10 +1,10 @@
 import React from 'react';
 import '../../stylesheets/Sidebar.scss';
+import baseTab from './BaseTab';
 
 function InfoTab() {
   return (
     <div>
-      <header><h1>About...</h1></header>
       <section>
         <p className="info-paragraph">
           Freesound Explorer is a visual interface for exploring Freesound content
@@ -21,4 +21,4 @@ function InfoTab() {
   );
 }
 
-export default InfoTab;
+export default baseTab('About...', InfoTab);

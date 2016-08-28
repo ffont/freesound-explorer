@@ -24,7 +24,7 @@
   width: $sidebarWidth - $sidebarClosedOffset - 2 * $sidebarContentPadding;
   padding: $sidebarContentPadding;
   background-color: $sidebarColor;
-  height: 100%;
+  height: calc(100% + 2*#{$sidebarContentPadding});
   font-size: 1.1em;
 }
 

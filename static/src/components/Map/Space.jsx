@@ -3,6 +3,11 @@ import MapCircle from './MapCircle';
 
 const propTypes = {
   sounds: React.PropTypes.array,
+  isThumbnail: React.PropTypes.bool,
+};
+
+const defaultProps = {
+  isThumbnail: false,
 };
 
 class Space extends React.Component {
@@ -16,6 +21,7 @@ class Space extends React.Component {
         <MapCircle
           key={soundID}
           soundID={soundID}
+          isThumbnail={this.props.isThumbnail}
         />
       ))}
     </g>);
@@ -23,6 +29,7 @@ class Space extends React.Component {
 }
 
 Space.propTypes = propTypes;
+Space.defaultProps = defaultProps;
 export default Space;
 
 /**

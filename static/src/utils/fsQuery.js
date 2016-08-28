@@ -82,6 +82,7 @@ const reshapePageResults = (pageResults, queryID) => {
       Object.assign(curState, {
         [id]: {
           id,
+          queryID,
           previewUrl,
           analysis,
           url,

@@ -29,17 +29,25 @@ svg.map {
 .space-title {
   // out-of-screen parent div with abs positioning
   // needed to properly use z-index on actual space title (to hover on circles above it)
-  position: absolute;
   pointer-events: none;
   text-shadow: 0 0 6px $blackBackground;
-  transform: translate(-50%, -50%);
+  position: absolute;
+  &:not(.thumbnail) {
+    transform: translate(-50%, -50%);
+  }
   header > * {
     text-transform: capitalize;
     margin-bottom: 5px;
-    font-size: 30px;
+    font-size: 2em;
     font-weight: bold;
   }
-  font-size: 16px;
+  font-size: 1.1em;
+  &.thumbnail {
+    font-size: 1em;
+    header > * {
+      font-size: 1.5em;
+    }
+  }
   ol {
     list-style: none;
     padding: 0;

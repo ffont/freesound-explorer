@@ -1,0 +1,41 @@
+@import "./variables.json";
+
+ul.spaces-thumbnails-container {
+  list-style: none;
+  padding: 0;
+}
+
+.space-thumbnail {
+  position: relative;
+  height: $thumbnailHeight;
+  margin: 20px 0;
+  border: 3px solid $sidebarIconHoverColor;
+  border-radius: $defaultBorderRadius;
+  transition: border 0.3s ease-in-out;
+  cursor: pointer;
+  &:before {
+    content: '';
+    background: transparent;
+    transition: background 0.3s ease-in-out;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  &:hover, &.active {
+    border: 3px solid $accentColor;
+    &:before {
+      background: transparentize($accentColor, 0.6);
+      mix-blend-mode: screen;
+    }
+  }
+  svg {
+    height: 100%;
+    width: 100%;
+    pointer-events: none!important;
+    circle {
+      mix-blend-mode: screen;
+    }
+  }
+}

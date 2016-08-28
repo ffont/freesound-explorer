@@ -8,6 +8,7 @@ import { DEFAULT_RADIUS, DEFAULT_FILL_OPACITY, DEFAULT_STROKE_WIDTH, DEFAULT_STR
 
 const propTypes = {
   sound: React.PropTypes.object,
+  isThumbnail: React.PropTypes.bool,
   playOnHover: React.PropTypes.bool,
   isSelected: React.PropTypes.bool,
   playAudio: React.PropTypes.func,
@@ -75,12 +76,12 @@ class MapCircle extends React.PureComponent {
   }
 
   render() {
-    const { position, color, isHovered, isPlaying } = this.props.sound;
+    const { position, thumbnailPosition, color, isHovered, isPlaying } = this.props.sound;
     const { isSelected } = this.props;
     if (!position) {
       return null;
     }
-    const { cx, cy } = position;
+    const { cx, cy } = (this.props.isThumbnail) ? thumbnailPosition : position;
     const fillColor = (isHovered || isSelected || isPlaying) ? lighten(color, 1.5) : color;
     const className = (isPlaying) ? 'playing' : '';
     return (
@@ -103,7 +104,7 @@ class MapCircle extends React.PureComponent {
 }
 
 const makeMapStateToProps = (_, ownProps) => {
-  const { soundID } = ownProps;
+  const { soundID, isThumbnail } = ownProps;
   return (state) => {
     const sound = state.sounds.byID[soundID];
     const { selectedSound } = state.sounds;
@@ -111,6 +112,7 @@ const makeMapStateToProps = (_, ownProps) => {
     const isSelected = selectedSound === soundID;
     return {
       sound,
+      isThumbnail,
       playOnHover,
       isSelected,
     };

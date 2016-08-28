@@ -16,7 +16,7 @@ const fetchRequest = makeActionCreator(at.FETCH_SOUNDS_REQUEST, 'queryID', 'quer
 const fetchSuccess = makeActionCreator(at.FETCH_SOUNDS_SUCCESS, 'sounds', 'queryID', 'mapPosition');
 const fetchFailure = makeActionCreator(at.FETCH_SOUNDS_FAILURE, 'error', 'queryID');
 const updateSoundsPosition = makeActionCreator(at.UPDATE_SOUNDS_POSITION, 'sounds', 'queryID');
-const mapComputationComplete = makeActionCreator(at.MAP_COMPUTATION_COMPLETE);
+const mapComputationComplete = makeActionCreator(at.MAP_COMPUTATION_COMPLETE, 'queryID');
 
 const getTrainedTsne = (sounds, queryParams) => {
   const tsne = new tsnejs.Tsne(TSNE_CONFIG);
@@ -29,13 +29,12 @@ const getTrainedTsne = (sounds, queryParams) => {
 };
 
 let clearTimeoutId;
-let stepIteration = 0;
 let progress = 0;
 
 const getSoundSpacePosition = (sound, store) => {
   const { spaces } = store.spaces;
   // find the space to which sound belongs to
-  const space = spaces.find(curSpace => curSpace.sounds.includes(sound.id));
+  const space = spaces.find(curSpace => curSpace.queryID === sound.queryID);
   return space.position;
 };
 
@@ -63,9 +62,8 @@ const computePointsPositionInSolution = (tsne, sounds, store) => {
   }, {});
 };
 
-const updateProgress = (sounds, dispatch) => {
-  stepIteration++;
-  const computedProgress = stepIteration / MAX_TSNE_ITERATIONS;
+const updateProgress = (sounds, dispatch, stepIteration) => {
+  const computedProgress = (stepIteration + 1) / MAX_TSNE_ITERATIONS;
   const computedProgressPercentage = parseInt(100 * computedProgress, 10);
   if (progress !== computedProgressPercentage) {
     // update status message only with new percentage
@@ -78,18 +76,14 @@ const updateProgress = (sounds, dispatch) => {
 };
 
 const centerMapAtNewSpace = (store, queryID, dispatch) => {
-  if (!stepIteration) {
-    const space = store.spaces.spaces.find(curSpace => curSpace.queryID === queryID);
-    dispatch(setSpaceAsCenter(space));
-  }
+  const space = store.spaces.spaces.find(curSpace => curSpace.queryID === queryID);
+  dispatch(setSpaceAsCenter(space));
 };
 
-const handleFinalStep = (dispatch) => {
+const handleFinalStep = (dispatch, queryID) => {
   cancelAnimationFrame(clearTimeoutId);
-  stepIteration = 0;
-  progress = 0;
   dispatch(displaySystemMessage('Map computed!', MESSAGE_STATUS.SUCCESS));
-  dispatch(mapComputationComplete());
+  dispatch(mapComputationComplete(queryID));
 };
 
 const updateSounds = (tsne, sounds, store, dispatch, queryID) => {
@@ -98,20 +92,22 @@ const updateSounds = (tsne, sounds, store, dispatch, queryID) => {
   return soundsWithUpdatedPosition;
 };
 
-const computeTsneSolution = (tsne, sounds, dispatch, queryID, getStore) => {
+const computeTsneSolution = (tsne, sounds, dispatch, queryID, getStore, stepIteration = 0) => {
   /** we retrieve the store at each step to take into account user zooming/moving
   while map being computed */
   const store = getStore();
   if (stepIteration <= MAX_TSNE_ITERATIONS) {
     // compute step solution
     tsne.step();
-    centerMapAtNewSpace(store, queryID, dispatch);
-    updateProgress(sounds, dispatch);
+    if (!stepIteration) {
+      centerMapAtNewSpace(store, queryID, dispatch);
+    }
+    updateProgress(sounds, dispatch, stepIteration);
     const updatedSounds = updateSounds(tsne, sounds, store, dispatch, queryID);
     clearTimeoutId = requestAnimationFrame(() =>
-      computeTsneSolution(tsne, updatedSounds, dispatch, queryID, getStore));
+      computeTsneSolution(tsne, updatedSounds, dispatch, queryID, getStore, stepIteration + 1));
   } else {
-    handleFinalStep(dispatch);
+    handleFinalStep(dispatch, queryID);
   }
 };
 

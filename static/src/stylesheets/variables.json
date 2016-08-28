@@ -19,6 +19,7 @@
   "sidebarIconHoverColor": "rgb(179, 179, 187)",
   "soundInfoModalHeight": "300px",
   "soundInfoModalWidth": "400px",
+  "thumbnailHeight": "150px",
   "waveformHeight": "140px",
   "waveformWidth": "260px"
 }

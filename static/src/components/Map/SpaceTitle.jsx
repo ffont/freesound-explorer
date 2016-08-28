@@ -1,13 +1,7 @@
 import React from 'react';
-import { computeSoundGlobalPosition } from '../../reducers/sounds';
 
 const propTypes = {
-  mapPosition: React.PropTypes.shape({
-    translateX: React.PropTypes.number,
-    translateY: React.PropTypes.number,
-    scale: React.PropTypes.number,
-  }),
-  position: React.PropTypes.shape({
+  positionInMap: React.PropTypes.shape({
     x: React.PropTypes.number,
     y: React.PropTypes.number,
   }),
@@ -21,28 +15,20 @@ const propTypes = {
   sounds: React.PropTypes.array,
 };
 
-const computeStyle = (props) => {
-  const tsnePosition = { x: 0, y: 0 };
-  const spacePosition = props.position;
-  const { mapPosition } = props;
-  const { cx, cy } = computeSoundGlobalPosition(tsnePosition, spacePosition, mapPosition);
-  return {
-    top: cy,
-    left: cx,
-  };
-};
-
 class SpaceTitle extends React.Component {
   shouldComponentUpdate(nextProps) {
     return (
-      (nextProps.mapPosition !== this.props.mapPosition) ||
+      (nextProps.positionInMap !== this.props.positionInMap) ||
       (nextProps.sounds !== this.props.sounds)
     );
   }
 
   render() {
     return (
-      <div className="space-title" style={computeStyle(this.props)}>
+      <div
+        className="space-title"
+        style={{ top: this.props.positionInMap.y, left: this.props.positionInMap.x }}
+      >
         <header><h1>{this.props.query}</h1></header>
         <ol>
           <li>{this.props.sounds.length} sounds</li>

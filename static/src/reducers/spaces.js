@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE,
   UPDATE_MAP_POSITION }
   from '../actions/actionTypes';
+import { computeSoundGlobalPosition } from './sounds';
 
 const computeSpacePosition = (spaceIndex) => ({
   x: (spaceIndex * 4) + 1,
@@ -10,7 +11,6 @@ const computeSpacePosition = (spaceIndex) => ({
 
 const spaceInitialState = {
   sounds: [],
-  isFetching: true,
   query: undefined,
   queryParams: {
     maxResults: undefined,
@@ -19,8 +19,11 @@ const spaceInitialState = {
     descriptor: undefined,
   },
   queryID: undefined,
-  error: undefined,
   position: {
+    x: 0,
+    y: 0,
+  },
+  positionInMap: {
     x: 0,
     y: 0,
   },
@@ -44,9 +47,15 @@ const singleSpace = (state = spaceInitialState, action, spacesInMap) => {
         return state;
       }
       return Object.assign({}, state, {
-        isFetching: false,
         sounds: Object.keys(sounds),
       });
+    }
+    case UPDATE_MAP_POSITION: {
+      const mapPosition = action.position;
+      const tsnePosition = { x: 0, y: 0 };
+      const spacePosition = state.position;
+      const { cx, cy } = computeSoundGlobalPosition(tsnePosition, spacePosition, mapPosition);
+      return Object.assign({}, state, { positionInMap: { x: cx, y: cy } });
     }
     default:
       return state;
@@ -66,6 +75,9 @@ const spaces = (state = [], action) => {
     case FETCH_SOUNDS_FAILURE: {
       // remove space from state if query failed
       return state.filter(space => space.queryID !== action.queryID);
+    }
+    case UPDATE_MAP_POSITION: {
+      return state.map(space => singleSpace(space, action));
     }
     default:
       return state;

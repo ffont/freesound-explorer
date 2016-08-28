@@ -1,6 +1,6 @@
 import React from 'react';
 import { select, event as d3Event } from 'd3-selection';
-import { zoom, zoomTransform } from 'd3-zoom';
+import { zoom } from 'd3-zoom';
 import { connect } from 'react-redux';
 import { displaySystemMessage } from '../../actions/messagesBox';
 import { updateMapPosition } from '../../actions/map';
@@ -82,10 +82,10 @@ class Map extends React.Component {
     return (
       <div className="map-container" ref={(mapContainer) => { this.mapContainer = mapContainer; }}>
         {this.props.spaces.map(space =>
-          <SpaceTitle key={space.queryID} {...space} mapPosition={this.props.map} />)}
+          <SpaceTitle key={space.queryID} {...space} />)}
         <svg className="map" onClick={this.onClickCallback}>
           {this.props.spaces.map(space =>
-            <Space key={space.queryID} {...space} mapPosition={this.props.map} />)}
+            <Space key={space.queryID} sounds={space.sounds} />)}
         </svg>
         <SoundInfo />
       </div>

@@ -5,9 +5,9 @@ import * as at from './actionTypes';
 import { submitQuery, reshapeReceivedSounds } from '../utils/fsQuery';
 import { MESSAGE_STATUS, TSNE_CONFIG, DEFAULT_DESCRIPTOR, MAX_TSNE_ITERATIONS }
   from '../constants';
-import { updateMapPosition } from './map';
+import { updateMapPosition, setSpaceAsCenter } from './map';
 import { readObjectByString } from '../utils/misc';
-import { computeSoundGlobalPosition, computeTranslationForSpace } from '../reducers/sounds';
+import { computeSoundGlobalPosition } from '../reducers/sounds';
 import tsnejs from '../vendors/tsne';
 import '../polyfills/requestAnimationFrame';
 
@@ -63,46 +63,56 @@ const computePointsPositionInSolution = (tsne, sounds, store) => {
   }, {});
 };
 
-const computeIntermediateMapPositions = (store, queryID) => {
-  const space = store.spaces.spaces.find(curSpace => curSpace.queryID === queryID);
-  const { translateX, translateY } = computeTranslationForSpace(space.position);
-  return { translateX, translateY };
+const updateProgress = (sounds, dispatch) => {
+  stepIteration++;
+  const computedProgress = stepIteration / MAX_TSNE_ITERATIONS;
+  const computedProgressPercentage = parseInt(100 * computedProgress, 10);
+  if (progress !== computedProgressPercentage) {
+    // update status message only with new percentage
+    progress = computedProgressPercentage;
+    const soundsLength = Object.keys(sounds).length;
+    const statusMessage =
+      `${soundsLength} sounds loaded, computing map (${progress}%)`;
+    dispatch(displaySystemMessage(statusMessage));
+  }
+};
+
+const centerMapAtNewSpace = (store, queryID, dispatch) => {
+  if (stepIteration === 1) {
+    const { scale } = store.map;
+    const space = store.spaces.spaces.find(curSpace => curSpace.queryID === queryID);
+    dispatch(setSpaceAsCenter(space, scale));
+  }
+};
+
+const handleFinalStep = (dispatch) => {
+  cancelAnimationFrame(clearTimeoutId);
+  stepIteration = 0;
+  progress = 0;
+  dispatch(displaySystemMessage('Map computed!', MESSAGE_STATUS.SUCCESS));
+  dispatch(mapComputationComplete());
+};
+
+const updateSounds = (tsne, sounds, store, dispatch, queryID) => {
+  const soundsWithUpdatedPosition = computePointsPositionInSolution(tsne, sounds, store);
+  dispatch(updateSoundsPosition(soundsWithUpdatedPosition, queryID));
+  return soundsWithUpdatedPosition;
 };
 
 const computeTsneSolution = (tsne, sounds, dispatch, queryID, getStore) => {
   /** we retrieve the store at each step to take into account user zooming/moving
   while map being computed */
   const store = getStore();
-  const { scale } = store.map;
   if (stepIteration <= MAX_TSNE_ITERATIONS) {
     // compute step solution
     tsne.step();
-    if (stepIteration === 1) {
-      // update map position at stepIteration = 1 (at 0 we don't have sounds in state)
-      const { translateX, translateY } = computeIntermediateMapPositions(store, queryID);
-      dispatch(updateMapPosition({ translateX, translateY, scale }));
-    }
-    stepIteration++;
-    const computedProgress = stepIteration / MAX_TSNE_ITERATIONS;
-    const computedProgressPercentage = parseInt(100 * computedProgress, 10);
-    if (progress !== computedProgressPercentage) {
-      // update status message only with new percentage
-      progress = computedProgressPercentage;
-      const soundsLength = Object.keys(sounds).length;
-      const statusMessage =
-        `${soundsLength} sounds loaded, computing map (${progress}%)`;
-      dispatch(displaySystemMessage(statusMessage));
-    }
-    const soundsWithUpdatedPosition = computePointsPositionInSolution(tsne, sounds, store);
-    dispatch(updateSoundsPosition(soundsWithUpdatedPosition, queryID));
+    centerMapAtNewSpace(store, queryID, dispatch);
+    updateProgress(sounds, dispatch);
+    const updatedSounds = updateSounds(tsne, sounds, store, dispatch, queryID);
     clearTimeoutId = requestAnimationFrame(() =>
-      computeTsneSolution(tsne, soundsWithUpdatedPosition, dispatch, queryID, getStore));
+      computeTsneSolution(tsne, updatedSounds, dispatch, queryID, getStore));
   } else {
-    cancelAnimationFrame(clearTimeoutId);
-    stepIteration = 0;
-    progress = 0;
-    dispatch(displaySystemMessage('Map computed!', MESSAGE_STATUS.SUCCESS));
-    dispatch(mapComputationComplete());
+    handleFinalStep(dispatch);
   }
 };
 

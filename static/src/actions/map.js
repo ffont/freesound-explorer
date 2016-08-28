@@ -1,14 +1,24 @@
-import { UPDATE_MAP_POSITION } from './actionTypes';
+import { UPDATE_MAP_POSITION, SET_SPACE_AS_CENTER } from './actionTypes';
 import makeActionCreator from './makeActionCreator';
+import { MAP_SCALE_FACTOR } from '../constants';
 
 export const updateMapPosition = makeActionCreator(UPDATE_MAP_POSITION, 'position');
 
-export const moveToDifferentSpace = (spaceID) => (dispatch, getStore) => {
-  // TODO
-  // 1) compute the final { translateX, translateY, scale } values for focusing on new space
-  //    based on the spacePosition of any sound of that space (use getStore to retrieve it)
-  // 2) compute some intermediate steps of { translateX, translateY, scale }
-  // 3) use requestAnimationFrame to animate the transition through the steps computed in 2),
-  //    using `dispatch(updateMapPosition)` on each step
-  //    NB: write each step on an exported separate function, to call them from ./sounds too
+const computeTranslationForSpace = (spacePosition, scale = 1) => {
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+  const translateX = (windowWidth / 2) - ((windowWidth / (MAP_SCALE_FACTOR * 2)) *
+    MAP_SCALE_FACTOR * scale * spacePosition.x);
+  const translateY = (windowHeight / 2) - ((windowHeight / (MAP_SCALE_FACTOR * 2)) *
+    MAP_SCALE_FACTOR * scale * spacePosition.y);
+  return { translateX, translateY };
+};
+
+export const setSpaceAsCenter = (space, scale = 1) => {
+  const { translateX, translateY } = computeTranslationForSpace(space.position, scale);
+  return {
+    type: SET_SPACE_AS_CENTER,
+    translateX,
+    translateY,
+  };
 };

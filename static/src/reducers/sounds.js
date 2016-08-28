@@ -17,16 +17,6 @@ export const computeSoundGlobalPosition = (tsnePosition, spacePosition, mapPosit
   return { cx, cy };
 };
 
-export const computeTranslationForSpace = (spacePosition, scale = 1) => {
-  const windowWidth = window.innerWidth;
-  const windowHeight = window.innerHeight;
-  const translateX = (windowWidth / 2) - ((windowWidth / (MAP_SCALE_FACTOR * 2)) *
-    MAP_SCALE_FACTOR * scale * spacePosition.x);
-  const translateY = (windowHeight / 2) - ((windowHeight / (MAP_SCALE_FACTOR * 2)) *
-    MAP_SCALE_FACTOR * scale * spacePosition.y);
-  return { translateX, translateY };
-};
-
 const byID = (state = {}, action) => {
   switch (action.type) {
     case FETCH_SOUNDS_SUCCESS: {

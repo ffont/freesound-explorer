@@ -16,7 +16,10 @@ const propTypes = {
   isThumbnail: React.PropTypes.bool,
 };
 
-const getStyle = (props) => ({ top: props.currentPositionInMap.y, left: props.currentPositionInMap.x });
+const getStyle = (props) => ({
+  top: props.currentPositionInMap.y,
+  left: props.currentPositionInMap.x,
+});
 
 class SpaceTitle extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -27,6 +30,9 @@ class SpaceTitle extends React.Component {
   }
 
   render() {
+    if (!this.props.sounds.length) {
+      return null;
+    }
     return (
       <div
         className={`space-title${this.props.isThumbnail ? ' thumbnail' : ''}`}

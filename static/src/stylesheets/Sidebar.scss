@@ -37,8 +37,12 @@
   position: absolute;
   top: $sidebarTabTitlePadding;
   bottom: 0;
+  padding: 10px 0;
   overflow-y: scroll;
   overflow-x: hidden;
+  ul, ol {
+    margin-top: 0;
+  }
 }
 
 .sidebar-nav-button {

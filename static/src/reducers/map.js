@@ -1,4 +1,10 @@
 import { UPDATE_MAP_POSITION, SET_SPACE_AS_CENTER } from '../actions/actionTypes';
+import { sidebarWidth } from 'json!../stylesheets/variables.json';
+
+export const mapCenter = {
+  x: parseInt(sidebarWidth, 10) + ((window.innerWidth - parseInt(sidebarWidth, 10)) / 2),
+  y: (window.innerHeight / 2),
+};
 
 export const initialState = {
   translateX: 0,
@@ -17,8 +23,8 @@ const map = (state = initialState, action) => {
     case SET_SPACE_AS_CENTER: {
       const { spacePositionX, spacePositionY } = action;
       const { scale } = state;
-      const finalTranslateX = ((window.innerWidth / 2) - spacePositionX) / scale;
-      const finalTranslateY = ((window.innerHeight / 2) - spacePositionY) / scale;
+      const finalTranslateX = (mapCenter.x - spacePositionX) / scale;
+      const finalTranslateY = (mapCenter.y - spacePositionY) / scale;
       const forceMapUpdate = true;
       return Object.assign({}, state, {
         translateX: finalTranslateX,

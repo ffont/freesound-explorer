@@ -2,6 +2,7 @@ import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE,
   UPDATE_MAP_POSITION }
   from '../actions/actionTypes';
 import { computeSoundGlobalPosition } from './sounds';
+import { mapCenter } from './map';
 
 const computeSpacePosition = (spaceIndex) => ({
   x: (spaceIndex * 4) + 1,
@@ -98,10 +99,9 @@ const getSpaceDistanceToCenter = (space, center) =>
     Math.pow((space.currentPositionInMap.y - center.y), 2));
 
 const getClosestSpaceToCenter = (allSpaces) => {
-  const center = { x: window.innerWidth / 2, y: innerHeight / 2 };
   let minDistance = Infinity;
   return allSpaces.reduce((curState, curSpace) => {
-    const distanceToCenter = getSpaceDistanceToCenter(curSpace, center);
+    const distanceToCenter = getSpaceDistanceToCenter(curSpace, mapCenter);
     if (distanceToCenter < minDistance) {
       minDistance = distanceToCenter;
       return curSpace;

@@ -32,7 +32,7 @@ const spaceInitialState = {
     x: 0,
     y: 0,
   },
-  positionInMap: {
+  currentPositionInMap: {
     x: 0,
     y: 0,
   },
@@ -55,17 +55,17 @@ const singleSpace = (state = spaceInitialState, action, spacesInMap) => {
       if (queryID !== state.queryID) {
         return state;
       }
-      const positionInMap = computeSpacePositionInMap(state.position, mapPosition);
+      const currentPositionInMap = computeSpacePositionInMap(state.position, mapPosition);
       return Object.assign({}, state, {
         sounds: Object.keys(sounds),
-        positionInMap,
+        currentPositionInMap,
       });
     }
     case UPDATE_MAP_POSITION: {
       const spacePosition = state.position;
       const mapPosition = action.position;
-      const positionInMap = computeSpacePositionInMap(spacePosition, mapPosition);
-      return Object.assign({}, state, { positionInMap });
+      const currentPositionInMap = computeSpacePositionInMap(spacePosition, mapPosition);
+      return Object.assign({}, state, { currentPositionInMap });
     }
     default:
       return state;

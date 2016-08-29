@@ -47,12 +47,8 @@ class Map extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { translateX, translateY, forceMapUpdate } = nextProps.map;
     if (forceMapUpdate) {
-      const currentTranslateX = this.props.map.translateX;
-      const currentTranslateY = this.props.map.translateY;
-      const x = (translateX - currentTranslateX);
-      const y = (translateY - currentTranslateY);
       this.container.transition().duration(300)
-        .call(this.zoomBehaviour.translateBy, x, y);
+        .call(this.zoomBehaviour.translateBy, translateX, translateY);
     }
   }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const propTypes = {
-  positionInMap: React.PropTypes.shape({
+  currentPositionInMap: React.PropTypes.shape({
     x: React.PropTypes.number,
     y: React.PropTypes.number,
   }),
@@ -16,12 +16,12 @@ const propTypes = {
   isThumbnail: React.PropTypes.bool,
 };
 
-const getStyle = (props) => ({ top: props.positionInMap.y, left: props.positionInMap.x });
+const getStyle = (props) => ({ top: props.currentPositionInMap.y, left: props.currentPositionInMap.x });
 
 class SpaceTitle extends React.Component {
   shouldComponentUpdate(nextProps) {
     return (
-      (nextProps.positionInMap !== this.props.positionInMap) ||
+      (nextProps.currentPositionInMap !== this.props.currentPositionInMap) ||
       (nextProps.sounds !== this.props.sounds)
     );
   }

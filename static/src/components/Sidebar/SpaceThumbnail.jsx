@@ -4,12 +4,15 @@ import Space from '../Map/Space';
 
 const propTypes = {
   isSelected: React.PropTypes.bool,
-  onClick: React.PropTypes.bool,
+  onClick: React.PropTypes.func,
 };
 
 function SpaceThumbnail(props) {
   return (
-    <div className={`space-thumbnail${(props.isSelected) ? ' active' : ''}`}>
+    <div
+      className={`space-thumbnail${(props.isSelected) ? ' active' : ''}`}
+      onClick={props.onClick}
+    >
       <SpaceTitle {...props} isThumbnail />
       <svg><Space {...props} isThumbnail /></svg>
     </div>

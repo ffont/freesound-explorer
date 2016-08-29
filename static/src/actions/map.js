@@ -4,10 +4,10 @@ import makeActionCreator from './makeActionCreator';
 export const updateMapPosition = makeActionCreator(UPDATE_MAP_POSITION, 'position');
 
 export const setSpaceAsCenter = (space) => {
-  const spacePosition = space.positionInMap;
+  const spacePosition = space.currentPositionInMap;
   return {
     type: SET_SPACE_AS_CENTER,
-    translateX: (window.innerWidth / 2) - spacePosition.x,
-    translateY: (window.innerHeight / 2) - spacePosition.y,
+    spacePositionX: spacePosition.x,
+    spacePositionY: spacePosition.y,
   };
 };

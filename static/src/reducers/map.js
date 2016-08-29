@@ -15,9 +15,15 @@ const map = (state = initialState, action) => {
       return Object.assign({}, state, { translateX, translateY, scale, forceMapUpdate });
     }
     case SET_SPACE_AS_CENTER: {
-      const { translateX, translateY } = action;
+      const { spacePositionX, spacePositionY } = action;
+      const { scale } = state;
+      const finalTranslateX = ((window.innerWidth / 2) - spacePositionX) / scale;
+      const finalTranslateY = ((window.innerHeight / 2) - spacePositionY) / scale;
       const forceMapUpdate = true;
-      return Object.assign({}, state, { translateX, translateY, forceMapUpdate });
+      return Object.assign({}, state, {
+        translateX: finalTranslateX,
+        translateY: finalTranslateY,
+        forceMapUpdate });
     }
     default:
       return state;

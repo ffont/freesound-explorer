@@ -18,7 +18,7 @@ function Spaces(props) {
           <SpaceThumbnail
             {...space}
             isSelected={space.queryID === props.currentSpace}
-            onClick={setSpaceAsCenter}
+            onClick={() => props.setSpaceAsCenter(space)}
           />
         </li>))}
     </ul>

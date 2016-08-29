@@ -4,19 +4,15 @@ import { FETCH_SOUNDS_SUCCESS, UPDATE_SOUNDS_POSITION, UPDATE_MAP_POSITION,
   STOP_AUDIO_SRC, MAP_COMPUTATION_COMPLETE }
   from '../actions/actionTypes';
 import { MAP_SCALE_FACTOR } from '../constants';
-import { thumbnailSize } from '../utils/uiUtils';
 
-export const computeSoundGlobalPosition =
-  (tsnePosition, spacePosition, mapPosition, isThumbnail = false) => {
-    const windowWidth = (isThumbnail) ? thumbnailSize.width : window.innerWidth;
-    const windowHeight = (isThumbnail) ? thumbnailSize.height : window.innerHeight;
-    const { translateX, translateY, scale } = mapPosition;
-    const cx = ((tsnePosition.x + (windowWidth / (MAP_SCALE_FACTOR * 2))) *
-      MAP_SCALE_FACTOR * scale * spacePosition.x) + translateX;
-    const cy = ((tsnePosition.y + (windowHeight / (MAP_SCALE_FACTOR * 2))) *
-      MAP_SCALE_FACTOR * scale * spacePosition.y) + translateY;
-    return { cx, cy };
-  };
+export const computeSoundGlobalPosition = (tsnePosition, spacePosition, mapPosition) => {
+  const { translateX, translateY, scale } = mapPosition;
+  const cx = ((tsnePosition.x + (window.innerWidth / (MAP_SCALE_FACTOR * 2))) *
+    MAP_SCALE_FACTOR * scale * spacePosition.x) + translateX;
+  const cy = ((tsnePosition.y + (window.innerHeight / (MAP_SCALE_FACTOR * 2))) *
+    MAP_SCALE_FACTOR * scale * spacePosition.y) + translateY;
+  return { cx, cy };
+};
 
 const sound = (state, action) => {
   const soundID = state.id;
@@ -38,12 +34,11 @@ const sound = (state, action) => {
       if (action.queryID !== state.queryID) {
         return state;
       }
-      const mapPosition = { translateX: 0, translateY: 0, scale: 0.30 };
+      const mapPosition = { translateX: 0, translateY: 0, scale: 0.3 };
       const spacePosition = { x: 1, y: 1 };
       const { tsnePosition } = state;
-      const isThumbnail = true;
       const thumbnailPosition =
-        computeSoundGlobalPosition(tsnePosition, spacePosition, mapPosition, isThumbnail);
+        computeSoundGlobalPosition(tsnePosition, spacePosition, mapPosition);
       return Object.assign({}, state, { thumbnailPosition });
     }
     default:

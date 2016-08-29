@@ -94,16 +94,40 @@ const spaces = (state = [], action) => {
   }
 };
 
-const currentSpace = (state = '', action) => {
+const getSpaceDistanceToCenter = (space, center) =>
+  Math.sqrt(Math.pow((space.currentPositionInMap.x - center.x), 2) +
+    Math.pow((space.currentPositionInMap.y - center.y), 2));
+
+const getClosestSpaceToCenter = (allSpaces) => {
+  const center = { x: window.innerWidth / 2, y: innerHeight / 2 };
+  let minDistance = Infinity;
+  return allSpaces.reduce((curState, curSpace) => {
+    const distanceToCenter = getSpaceDistanceToCenter(curSpace, center);
+    if (distanceToCenter < minDistance) {
+      minDistance = distanceToCenter;
+      return curSpace;
+    }
+    return curState;
+  }, {});
+};
+
+const currentSpace = (state = '', action, allSpaces) => {
   switch (action.type) {
     case FETCH_SOUNDS_SUCCESS:
       return action.queryID;
-    case UPDATE_MAP_POSITION:
-      // TODO: update current space when user moves to another one
+    case UPDATE_MAP_POSITION: {
+      const closestSpace = getClosestSpaceToCenter(allSpaces);
+      if (closestSpace) {
+        return closestSpace.queryID;
+      }
       return state;
+    }
     default:
       return state;
   }
 };
 
-export default combineReducers({ spaces, currentSpace });
+export default (state = {}, action) => ({
+  spaces: spaces(state.spaces, action),
+  currentSpace: currentSpace(state.currentSpace, action, state.spaces),
+});

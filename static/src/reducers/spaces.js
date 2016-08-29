@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE,
   UPDATE_MAP_POSITION }
   from '../actions/actionTypes';

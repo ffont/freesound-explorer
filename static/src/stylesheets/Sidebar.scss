@@ -4,19 +4,19 @@
 .sidebar {
   position: absolute;
   top: 0;
+  bottom: 0;
   transform: translate3d($sidebarClosedOffset - $sidebarWidth, 0, 0);
   width: $sidebarWidth;
   transition: transform 0.3s ease;
-  height: 100%;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  p.info-paragraph {
-    margin-bottom: 8px;
-  }
   &.active {
     transform: translate3d(0,0,0);
   }
   h1 {
     margin: 0.2em 0 0.67em;
+  }
+  p.info-paragraph {
+    margin-bottom: 8px;
   }
 }
 
@@ -24,18 +24,21 @@
   width: $sidebarWidth - $sidebarClosedOffset - 2 * $sidebarContentPadding;
   padding: $sidebarContentPadding;
   background-color: $sidebarColor;
-  height: calc(100% + 2*#{$sidebarContentPadding});
+  height: 100%;
   font-size: 1.1em;
+  & > div {
+    position: relative;
+    height: calc(100% - 2 * #{$sidebarContentPadding} + #{$sidebarTabTitlePadding});
+  }
 }
 
 .sidebar-vertical-scroll {
   width: 100%;
-  height: 100%;
+  position: absolute;
+  top: $sidebarTabTitlePadding;
+  bottom: 0;
   overflow-y: scroll;
   overflow-x: hidden;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }
 
 .sidebar-nav-button {

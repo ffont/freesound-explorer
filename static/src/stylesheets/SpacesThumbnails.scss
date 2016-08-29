@@ -3,14 +3,15 @@
 ul.spaces-thumbnails-container {
   list-style: none;
   padding: 0;
+  margin: 10px 0;
 }
 
 .space-thumbnail {
   position: relative;
   height: $thumbnailHeight;
-  margin: 20px 0;
   border: 3px solid $sidebarIconHoverColor;
   border-radius: $defaultBorderRadius;
+  margin-bottom: 20px;
   transition: border 0.3s ease-in-out;
   cursor: pointer;
   &:before {

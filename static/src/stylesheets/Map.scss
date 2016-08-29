@@ -44,6 +44,9 @@ svg.map {
   font-size: 1.1em;
   &.thumbnail {
     font-size: 1em;
+    top: 15px;
+    left: 15px;
+    width: calc(100% - 15px);
     header > * {
       font-size: 1.5em;
     }

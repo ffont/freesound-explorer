@@ -76,6 +76,9 @@ class MapCircle extends React.PureComponent {
   }
 
   render() {
+    if (!isSoundVisible(this.props)) {
+      return null;
+    }
     const { position, thumbnailPosition, color, isHovered, isPlaying } = this.props.sound;
     const { isSelected } = this.props;
     if (!position) {

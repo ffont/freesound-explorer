@@ -53,9 +53,7 @@ function Sidebar(props) {
     <aside>
       <div className={sidebarClassName}>
         <div className="sidebar-content-wrapper">
-          <div className="sidebar-vertical-scroll">
-            {sideBarContent}
-          </div>
+          {sideBarContent}
         </div>
         <div className="sidebar-menu-wrapper">
           <nav>

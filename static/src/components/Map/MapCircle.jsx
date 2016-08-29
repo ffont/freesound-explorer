@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { playAudio, stopAudio } from '../../actions/audio';
 import { selectSound, toggleHoveringSound } from '../../actions/sounds';
 import { lighten } from '../../utils/colors';
+import { isSoundInsideScreen } from '../../utils/uiUtils';
 import { DEFAULT_RADIUS, DEFAULT_FILL_OPACITY, DEFAULT_STROKE_WIDTH, DEFAULT_STROKE_OPACITY }
   from '../../constants';
 
@@ -18,15 +19,8 @@ const propTypes = {
 };
 
 const isSoundVisible = (props) => {
-  const position = props.sound.position;
-  if (!position) {
-    return false;
-  }
-  const isVerticallyOutOfScreen = (position.cy < -DEFAULT_RADIUS
-    || position.cy > window.innerHeight + DEFAULT_RADIUS);
-  const isHorizontallyOutOfScreen = (position.cx < -DEFAULT_RADIUS
-    || position.cx > window.innerWidth + DEFAULT_RADIUS);
-  return !(isVerticallyOutOfScreen || isHorizontallyOutOfScreen);
+  const position = (props.isThumbnail) ? props.sound.thumbnailPosition : props.sound.position;
+  return isSoundInsideScreen(position, props.isThumbnail);
 };
 
 const isSoundStayingNotVisible = (currentProps, nextProps) =>
@@ -41,6 +35,9 @@ class MapCircle extends React.PureComponent {
   }
 
   shouldComponentUpdate(nextProps) {
+    if (this.props.isThumbnail) {
+      return this.shouldThumbnailUpdate(nextProps);
+    }
     return (
       ((nextProps.sound !== this.props.sound) ||
       (nextProps.isSelected !== this.props.isSelected))
@@ -75,16 +72,21 @@ class MapCircle extends React.PureComponent {
     }
   }
 
+  shouldThumbnailUpdate(nextProps) {
+    const currentPosition = this.props.sound.thumbnailPosition;
+    const nextPosition = nextProps.sound.thumbnailPosition;
+    // update only when receiving final points positions
+    return Boolean(!currentPosition && nextPosition);
+  }
+
   render() {
     if (!isSoundVisible(this.props)) {
       return null;
     }
-    const { position, thumbnailPosition, color, isHovered, isPlaying } = this.props.sound;
+    const { color, isHovered, isPlaying } = this.props.sound;
     const { isSelected } = this.props;
-    if (!position) {
-      return null;
-    }
-    const { cx, cy } = (this.props.isThumbnail) ? thumbnailPosition : position;
+    const { cx, cy } = (this.props.isThumbnail) ?
+      this.props.sound.thumbnailPosition : this.props.sound.position;
     const fillColor = (isHovered || isSelected || isPlaying) ? lighten(color, 1.5) : color;
     const className = (isPlaying) ? 'playing' : '';
     return (

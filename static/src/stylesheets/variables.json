@@ -1,11 +1,11 @@
 {
   "accentColor": "#3F677A",
+  "blackBackground": "#1b1b21",
   "breakpoints": {
     "small": "767px",
     "medium": "992px",
     "large": "1200px"
   },
-  "blackBackground": "#1b1b21",
   "defaultBorderRadius": "5px",
   "inputBorderPadding": "3px",
   "menuBackground": "#000000",
@@ -20,7 +20,7 @@
   "sidebarWidth": "400px",
   "soundInfoModalHeight": "300px",
   "soundInfoModalWidth": "400px",
-  "thumbnailHeight": "150px",
+  "thumbnailHeight": "170px",
   "waveformHeight": "140px",
   "waveformWidth": "260px"
 }

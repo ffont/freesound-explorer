@@ -1,17 +1,10 @@
 import { combineReducers } from 'redux';
-import { sidebarWidth, sidebarClosedOffset, sidebarContentPadding, thumbnailHeight }
-  from 'json!../stylesheets/variables.json';
 import { FETCH_SOUNDS_SUCCESS, UPDATE_SOUNDS_POSITION, UPDATE_MAP_POSITION,
   SELECT_SOUND_BY_ID, GET_SOUND_BUFFER, TOGGLE_HOVERING_SOUND, PLAY_AUDIO_SRC,
   STOP_AUDIO_SRC, MAP_COMPUTATION_COMPLETE }
   from '../actions/actionTypes';
 import { MAP_SCALE_FACTOR } from '../constants';
-
-const thumbnailSize = {
-  width: parseInt(sidebarWidth, 10) - parseInt(sidebarClosedOffset, 10) -
-    (2 * (parseInt(sidebarContentPadding, 10))),
-  height: parseInt(thumbnailHeight, 10),
-};
+import { thumbnailSize } from '../utils/uiUtils';
 
 export const computeSoundGlobalPosition =
   (tsnePosition, spacePosition, mapPosition, isThumbnail = false) => {

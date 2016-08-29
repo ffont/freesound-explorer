@@ -32,11 +32,23 @@ ul.spaces-thumbnails-container {
     }
   }
   svg {
-    height: 100%;
-    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     pointer-events: none!important;
     circle {
       mix-blend-mode: screen;
     }
+  }
+  .space-title.thumbnail {
+    position: relative;
+    font-size: 1em;
+    margin: 15px;
+    header > * {
+      font-size: 1.5em;
+    }
+    z-index: 2;
   }
 }

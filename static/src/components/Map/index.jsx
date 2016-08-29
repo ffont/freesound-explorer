@@ -40,8 +40,6 @@ class Map extends React.Component {
       .scaleExtent([MIN_ZOOM, MAX_ZOOM])
       .on('zoom', this.zoomHandler);
     this.container.call(this.zoomBehaviour);
-    // disable double click zoom
-    this.container.on('dblclick.zoom', null);
   }
 
   componentWillReceiveProps(nextProps) {

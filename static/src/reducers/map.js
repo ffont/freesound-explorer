@@ -1,10 +1,12 @@
 import { UPDATE_MAP_POSITION, SET_SPACE_AS_CENTER } from '../actions/actionTypes';
-import { sidebarWidth } from 'json!../stylesheets/variables.json';
+import { getMapCenter } from '../utils/uiUtils';
 
-export const mapCenter = {
-  x: parseInt(sidebarWidth, 10) + ((window.innerWidth - parseInt(sidebarWidth, 10)) / 2),
-  y: (window.innerHeight / 2),
-};
+/*
+  forceMapUpdate = true when a new map position is forced externally (such when the user
+  creates a new space, with consequential focus on it).
+  forceMapUpdate = false when the user moves the map around (i.e. when we have to
+  update the map position according to the actual interaction with it).
+ */
 
 export const initialState = {
   translateX: 0,
@@ -23,6 +25,7 @@ const map = (state = initialState, action) => {
     case SET_SPACE_AS_CENTER: {
       const { spacePositionX, spacePositionY } = action;
       const { scale } = state;
+      const mapCenter = getMapCenter();
       const finalTranslateX = (mapCenter.x - spacePositionX) / scale;
       const finalTranslateY = (mapCenter.y - spacePositionY) / scale;
       const forceMapUpdate = true;

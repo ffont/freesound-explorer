@@ -7,7 +7,7 @@ export const setSpaceAsCenter = (space) => {
   const spacePosition = space.positionInMap;
   return {
     type: SET_SPACE_AS_CENTER,
-    translateX: -spacePosition.x,
-    translateY: -spacePosition.y,
+    translateX: (window.innerWidth / 2) - spacePosition.x,
+    translateY: (window.innerHeight / 2) - spacePosition.y,
   };
 };

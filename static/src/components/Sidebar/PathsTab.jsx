@@ -1,5 +1,5 @@
 import React from 'react';
-import PathsList from './PathsList';
+import PathsList from '../Paths/PathsList';
 import Metronome from '../Metronome';
 import baseTab from './BaseTab';
 

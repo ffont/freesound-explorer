@@ -9,13 +9,16 @@ import { setPathSync, addPath, startStopPath,
   setPathCurrentlyPlaying, selectPath, deleteSoundFromPath,
   setPathWaitUntilFinished } from '../../actions/paths';
 import { displaySystemMessage } from '../../actions/messagesBox';
+import { selectSound } from '../../actions/sounds';
 
 const propTypes = {
   paths: React.PropTypes.array,
+  spaces: React.PropTypes.array,
+  currentSpace: React.PropTypes.string,
   selectedPath: React.PropTypes.string,
-  sounds: React.PropTypes.array,
+  sounds: React.PropTypes.object,
   startStopPlayingPath: React.PropTypes.func,
-  updateSelectedSound: React.PropTypes.func,
+  selectSound: React.PropTypes.func,
   addPath: React.PropTypes.func,
   displaySystemMessage: React.PropTypes.func,
   setPathSync: React.PropTypes.func,
@@ -57,14 +60,15 @@ class PathsList extends AudioTickListener {
   }
 
   createNewPath() {
-    if (this.props.sounds.length) {
+    if (this.props.currentSpace !== undefined) {
       const pathSounds = [];
       const nSounds = 2 + Math.floor(Math.random() * 3);
-      [...Array(nSounds).keys()].map(() => pathSounds.push(getRandomElement(this.props.sounds)));
+      const spaceSounds = this.props.spaces[0].sounds;
+      [...Array(nSounds).keys()].map(() => pathSounds.push(getRandomElement(spaceSounds)));
       this.props.addPath(pathSounds);
     } else {
-      this.props.displaySystemMessage('New paths can not be created until there are some sounds ' +
-        'in the map', MESSAGE_STATUS.ERROR);
+      this.props.displaySystemMessage('New paths can not be created if there is no selected ' +
+        'space', MESSAGE_STATUS.ERROR);
     }
   }
 
@@ -146,7 +150,7 @@ class PathsList extends AudioTickListener {
     }
   }
 
-  render() {
+  render() { // TODO: use shouldComponentUpdate to make sure we only update when needed
     return (
       <ul className="paths-list">
         {this.props.paths.map((path) =>
@@ -189,16 +193,21 @@ class PathsList extends AudioTickListener {
             }
             {(path.id === this.props.selectedPath) ?
               <ul className="sounds-list">
-                {path.sounds.map((sound, soundIndex) => (
-                  <li key={soundIndex}>
-                    <a
-                      className="cursor-pointer"
-                      onClick={() => this.props.updateSelectedSound(sound.id)}
-                    >{truncatedString(sound.name, 40)}</a>
-                    <a onClick={() => this.props.deleteSoundFromPath(soundIndex, path.id)} >
-                      &nbsp;<i className="fa fa-trash-o fa-lg" aria-hidden="true" />
-                    </a>
-                  </li>))}
+                {path.sounds.map((soundId, soundIndex) => {
+                  const sound = this.props.sounds[soundId];
+                  return (
+                    <li key={soundIndex}>
+                      <a
+                        className="cursor-pointer"
+                        onClick={() => this.props.selectSound(soundId)}
+                      >{truncatedString(sound.name, 40)}</a>
+                      <a onClick={() => this.props.deleteSoundFromPath(soundIndex, path.id)} >
+                        &nbsp;<i className="fa fa-trash-o fa-lg" aria-hidden="true" />
+                      </a>
+                    </li>
+                  );
+                })
+                }
               </ul> : ''}
           </li>
         )}
@@ -214,11 +223,13 @@ class PathsList extends AudioTickListener {
 
 const mapStateToProps = (state) => {
   const { paths, selectedPath } = state.paths;
-  return { paths, selectedPath };
+  const { spaces, currentSpace } = state.spaces;
+  const sounds = state.sounds.byID;
+  return { paths, selectedPath, spaces, currentSpace, sounds };
 };
 
 PathsList.propTypes = propTypes;
 export default connect(mapStateToProps, {
   addPath, displaySystemMessage, setPathSync, startStopPath, setPathCurrentlyPlaying,
-  selectPath, deleteSoundFromPath, setPathWaitUntilFinished,
+  selectPath, deleteSoundFromPath, setPathWaitUntilFinished, selectSound,
 }, undefined, { withRef: true })(PathsList);

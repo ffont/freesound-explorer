@@ -114,7 +114,7 @@ export default function paths(state = initialState, action) {
       const updatedPath = Object.assign({}, state.paths[pathIdx], {
         sounds: [
           ...state.paths[pathIdx].sounds,
-          action.sound,
+          action.soundId,
         ],
       });
       return Object.assign({}, state, {

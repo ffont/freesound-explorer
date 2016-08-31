@@ -20,7 +20,7 @@ export const deleteSoundFromPath = makeActionCreator(at.DELETE_SOUND_FROM_PATH,
   'pathSoundIdx', 'pathId');
 
 export const addSoundToPath = makeActionCreator(at.ADD_SOUND_TO_PATH,
-  'sound', 'pathId');
+  'soundId', 'pathId');
 
 export const clearAllPaths = makeActionCreator(at.CLEAR_ALL_PATHS);
 

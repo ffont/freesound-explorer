@@ -132,7 +132,7 @@ class SoundInfo extends React.Component {
       addToPathButton = (
         <button
           onClick={() => this.props.addSoundToPath(
-            this.props.sound, this.props.selectedPath)}
+            this.props.sound.id, this.props.selectedPath)}
         >Add to path</button>
       );
     }

@@ -4,10 +4,10 @@ import '../../stylesheets/Metronome.scss';
 import MetronomeSynth from './MetronomeSynth';
 import { LOOKAHEAD, SCHEDULEAHEADTIME, TICKRESOLUTION, DEFAULT_TEMPO } from '../../constants';
 import { updateMetronomeStatus, setTempo, startStopMetronome } from '../../actions/metronome';
+import { audioContext } from '../../actions/audio';
 
 
 const propTypes = {
-  audioContext: React.PropTypes.object,
   updateMetronomeStatus: React.PropTypes.func,
   setTempo: React.PropTypes.func,
   startStopMetronome: React.PropTypes.func,
@@ -37,7 +37,7 @@ class Metronome extends React.Component {
     const [bar, beat, tick] = [1, 0, 0];
     this.props.updateMetronomeStatus(bar, beat, tick);
     this.props.startStopMetronome(true);
-    this.nextTickTime = this.props.audioContext.currentTime;
+    this.nextTickTime = audioContext.currentTime;
     this.schedulerTimer = setTimeout(() => { this.audioScheduler(); }, LOOKAHEAD);
     this.updateStateInSyncTimer = setTimeout(() => { this.updateStateInSync(); }, LOOKAHEAD * 2);
   }
@@ -59,7 +59,7 @@ class Metronome extends React.Component {
   }
 
   audioScheduler() {
-    const currentTime = this.props.audioContext.currentTime;
+    const currentTime = audioContext.currentTime;
     while (this.nextTickTime < currentTime + SCHEDULEAHEADTIME) {
       // Avoid trying to play ticks that were missed by more than 50ms
       if (this.nextTickTime >= (currentTime - 0.05)) {
@@ -75,7 +75,7 @@ class Metronome extends React.Component {
         this.drawTicksInQueue.push({ bar, beat, tick, time });
       }
       // Advance to next tick according to tick resolution
-      this.nextTickTime += 4 / TICKRESOLUTION * (60.0 / this.props.tempo);
+      this.nextTickTime += (4 / TICKRESOLUTION) * (60.0 / this.props.tempo);
       this.currentTick += 1;
       if (this.currentTick === TICKRESOLUTION) {
         this.currentTick = 0;
@@ -87,7 +87,7 @@ class Metronome extends React.Component {
 
   updateStateInSync() {
     if (this.props.isPlaying) {
-      const currentTime = this.props.audioContext.currentTime;
+      const currentTime = audioContext.currentTime;
       let currentTickToDraw = this.lastTickDrawn;
       while (this.drawTicksInQueue.length && this.drawTicksInQueue[0].time < currentTime) {
         currentTickToDraw = Object.assign({}, this.drawTicksInQueue[0]);
@@ -125,7 +125,7 @@ class Metronome extends React.Component {
           <div className="metronome-transport">
             {this.props.bar} | {this.props.beat + 1} | {this.props.tick + 1}
           </div>
-          <MetronomeSynth audioContext={this.props.audioContext} />
+          <MetronomeSynth audioContext={audioContext} />
           <button onClick={() => this.startStopMetronome()} >
             {(this.props.isPlaying) ?
               <i className="fa fa-stop fa-lg" aria-hidden="true" /> :

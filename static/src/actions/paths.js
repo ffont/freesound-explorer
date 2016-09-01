@@ -16,6 +16,9 @@ export const setPathCurrentlyPlaying = makeActionCreator(at.SET_PATH_CURRENTLY_P
 export const selectPath = makeActionCreator(at.SELECT_PATH,
   'pathId');
 
+export const setPathActive = makeActionCreator(at.SET_PATH_ACTIVE,
+  'pathId', 'isActive');
+
 export const deleteSoundFromPath = makeActionCreator(at.DELETE_SOUND_FROM_PATH,
   'pathSoundIdx', 'pathId');
 

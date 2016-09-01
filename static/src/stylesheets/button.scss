@@ -2,7 +2,21 @@ button {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  color: white;
   &:focus {
     outline: none;
+  }
+  &.active {
+    background-color: rgba(58, 103, 94, 0.9);
+  }
+}
+
+.button-group {
+  display: inline-block;
+  vertical-align: bottom;
+  margin-left: 5px;
+  overflow: hidden;
+  button {
+    border-radius: 0px;
   }
 }

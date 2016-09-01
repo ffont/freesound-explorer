@@ -4,22 +4,24 @@
   margin-bottom: 15px;
 }
 
-.metronome-controls {
-  display:inline-block;
-  height: 30px;
-  line-height: 30px;
-}
-
-.metronome-transport {
-  margin-left: 4px;
-  display: inline-block;
-  min-width: 80px;
-  text-align: center;
-}
-
 .metronome-slider {
   display: inline-block;
-  height: 30px;
-  width: $sidebarWidth - $sidebarClosedOffset -220px;
-  vertical-align: bottom;
+  width: 200px;
+  height: 60px;
+  margin-right: 5px;
+  margin-top:0px;
+}
+
+.metronome-controls {
+  float: right;
+  text-align: center;
+  width: 90px;
+  height: 60px;
+  line-height: 60px;
+  margin-top:0px;
+
+  button {
+    width: 40px;
+  }
+
 }

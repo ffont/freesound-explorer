@@ -5,6 +5,7 @@ import MetronomeSynth from './MetronomeSynth';
 import { LOOKAHEAD, SCHEDULEAHEADTIME, TICKRESOLUTION, DEFAULT_TEMPO } from '../../constants';
 import { updateMetronomeStatus, setTempo, startStopMetronome } from '../../actions/metronome';
 import { audioContext } from '../../actions/audio';
+import SliderRange from '../Input/SliderRange';
 
 
 const propTypes = {
@@ -111,25 +112,29 @@ class Metronome extends React.Component {
     return (
       <div className="metronome">
         <div className="metronome-slider">
-          <div className="slider-wrapper">
-            <input
-              id="max-results-slider"
-              className="max-results-slider"
-              type="range" onChange={(evt) => this.setTempo(parseInt(evt.target.value, 10))}
-              min="40" max="300" defaultValue={DEFAULT_TEMPO} step="1"
-            />
-          </div>
+          <SliderRange
+            label=""
+            minValue="40"
+            maxValue="300"
+            defaultValue={DEFAULT_TEMPO}
+            onChange={(evt) => {
+              const newTempo = evt.target.value;
+              this.setTempo(parseInt(newTempo, 10));
+            }}
+            currentValue={this.props.tempo}
+            tabIndex="4"
+            id="max-results-slider"
+          />
         </div>
         <div className="metronome-controls">
-          {this.props.tempo}
-          <div className="metronome-transport">
+          {/* <div className="metronome-transport">
             {this.props.bar} | {this.props.beat + 1} | {this.props.tick + 1}
-          </div>
+          </div>*/}
           <MetronomeSynth audioContext={audioContext} />
           <button onClick={() => this.startStopMetronome()} >
             {(this.props.isPlaying) ?
-              <i className="fa fa-stop fa-lg" aria-hidden="true" /> :
-              <i className="fa fa-play fa-lg" aria-hidden="true" />}
+              <i className="fa fa-stop fa-2x" aria-hidden="true" /> :
+              <i className="fa fa-play fa-2x" aria-hidden="true" />}
           </button>
         </div>
       </div>

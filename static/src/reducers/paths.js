@@ -2,7 +2,8 @@ import { default as UUID } from 'node-uuid';
 import { indexElementWithId } from '../utils/arrayUtils';
 import { ADD_PATH, SET_PATH_SYNC, STARTSTOP_PATH,
   SET_PATH_CURRENTLY_PLAYING, SELECT_PATH, DELETE_SOUND_FROM_PATH,
-  ADD_SOUND_TO_PATH, CLEAR_ALL_PATHS, SET_PATH_WAIT_UNTIL_FINISHED } from '../actions/actionTypes';
+  ADD_SOUND_TO_PATH, CLEAR_ALL_PATHS, SET_PATH_WAIT_UNTIL_FINISHED,
+  SET_PATH_ACTIVE } from '../actions/actionTypes';
 
 const initialState = {
   paths: [],
@@ -24,6 +25,7 @@ export default function paths(state = initialState, action) {
           {
             id: pathId,
             name: pathName,
+            isActive: true,
             isPlaying: false,
             syncMode: 'beat',
             waitUntilFinished: true,
@@ -86,10 +88,22 @@ export default function paths(state = initialState, action) {
         ],
       });
     }
-    case SELECT_PATH: {
-      // If selected pathId is already selected, unselect it
+    case SET_PATH_ACTIVE: {
+      const pathIdx = indexElementWithId(state.paths, action.pathId);
+      const updatedPath = Object.assign({}, state.paths[pathIdx], {
+        isActive: action.isActive,
+      });
       return Object.assign({}, state, {
-        selectedPath: (action.pathId === state.selectedPath) ? undefined : action.pathId,
+        paths: [
+          ...state.paths.slice(0, pathIdx),
+          updatedPath,
+          ...state.paths.slice(pathIdx + 1),
+        ],
+      });
+    }
+    case SELECT_PATH: {
+      return Object.assign({}, state, {
+        selectedPath: action.pathId,
       });
     }
     case DELETE_SOUND_FROM_PATH: {

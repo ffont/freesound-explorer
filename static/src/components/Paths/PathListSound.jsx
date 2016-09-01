@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import '../../stylesheets/Paths.scss';
 import { truncatedString } from '../../utils/misc';
 import { deleteSoundFromPath } from '../../actions/paths';
 import { selectSound } from '../../actions/sounds';
@@ -20,7 +21,7 @@ class PathListSound extends React.Component {
         <a
           className="cursor-pointer"
           onClick={() => this.props.selectSound(this.props.soundId)}
-        >{truncatedString(this.props.sound.name, 10)}</a>
+        >{truncatedString(this.props.sound.name, 25)}</a>
         <a
           onClick={() => this.props.deleteSoundFromPath(this.props.soundPathIndex,
           this.props.pathId)}

@@ -42,8 +42,8 @@ class MetronomeSynth extends AudioTickListener {
     return (
       <button onClick={() => this.toggleMetronomeSound()} >
         {(this.state.playSound) ?
-          <i className="fa fa-volume-up fa-lg" aria-hidden="true" /> :
-          <i className="fa fa-volume-off fa-lg" aria-hidden="true" />}
+          <i className="fa fa-volume-up fa-2x" aria-hidden="true" /> :
+          <i className="fa fa-volume-off fa-2x" aria-hidden="true" />}
       </button>
     );
   }

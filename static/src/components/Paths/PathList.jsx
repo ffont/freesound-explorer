@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import '../../stylesheets/PathList.scss';
+import '../../stylesheets/Paths.scss';
 import { getRandomElement } from '../../utils/misc';
 import { MESSAGE_STATUS } from '../../constants';
 import { addPath } from '../../actions/paths';

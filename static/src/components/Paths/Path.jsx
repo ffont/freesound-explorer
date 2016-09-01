@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import '../../stylesheets/Paths.scss';
 import AudioTickListener from '../App/AudioTickListener';
 import { setPathSync, startStopPath, setPathCurrentlyPlaying, selectPath,
-  setPathWaitUntilFinished } from '../../actions/paths';
-import { playAudio, stopAudio } from '../../actions/audio';
+  setPathWaitUntilFinished, setPathActive } from '../../actions/paths';
+import { audioContext, playAudio, stopAudio } from '../../actions/audio';
 import PathListSound from './PathListSound';
-import { audioContext } from '../../actions/audio';
 
 const propTypes = {
   path: React.PropTypes.object,
@@ -16,6 +16,7 @@ const propTypes = {
   startStopPath: React.PropTypes.func,
   setPathCurrentlyPlaying: React.PropTypes.func,
   setPathWaitUntilFinished: React.PropTypes.func,
+  setPathActive: React.PropTypes.func,
   selectPath: React.PropTypes.func,
   deleteSoundFromPath: React.PropTypes.func,
   playAudio: React.PropTypes.func,
@@ -122,47 +123,58 @@ class Path extends AudioTickListener {
     }
   }
 
+  onPathClick() {
+    this.props.selectPath(this.props.path.id);
+    if (!this.props.selected) {
+      this.props.setPathActive(this.props.path.id, true);
+    } else {
+      this.props.setPathActive(this.props.path.id, !this.props.path.isActive);
+    }
+  }
+
   render() {
     const path = this.props.path;
     return (
-      <li>
-        <button onClick={() => this.startStopPlayingPath(path.id)} >
-          {(path.isPlaying) ?
-            <i className="fa fa-pause fa-lg" aria-hidden="true" /> :
-            <i className="fa fa-play fa-lg" aria-hidden="true" />}
-        </button>
-        <a className="cursor-pointer" onClick={() => this.props.selectPath(path.id)} >
-          {path.name} ({path.sounds.length} sounds)
-        </a>&nbsp;
-        <div className="button-group">
-          <button
-            className={(path.syncMode === 'no') ? 'active' : ''}
-            onClick={() => this.props.setPathSync(path.id, 'no')}
-          >x</button>
-          <button
-            className={(path.syncMode === 'beat') ? 'active' : ''}
-            onClick={() => this.props.setPathSync(path.id, 'beat')}
-          >1/4</button>
-          <button
-            className={(path.syncMode === '2xbeat') ? 'active' : ''}
-            onClick={() => this.props.setPathSync(path.id, '2xbeat')}
-          >1/2</button>
-          <button
-            className={(path.syncMode === 'bar') ? 'active' : ''}
-            onClick={() => this.props.setPathSync(path.id, 'bar')}
-          >1</button>
+      <li className={(this.props.selected) ? 'selected' : ''}>
+        <div className="path-controls">
+          <button onClick={() => this.startStopPlayingPath()} >
+            {(path.isPlaying) ?
+              <i className="fa fa-pause fa-lg" aria-hidden="true" /> :
+              <i className="fa fa-play fa-lg" aria-hidden="true" />}
+          </button>
+          <a className="cursor-pointer" onClick={() => this.onPathClick()} >
+            {path.name} ({path.sounds.length} sounds)
+          </a>&nbsp;
+          <div className="button-group">
+            <button
+              className={(path.syncMode === 'no') ? 'active' : ''}
+              onClick={() => this.props.setPathSync(path.id, 'no')}
+            >x</button>
+            <button
+              className={(path.syncMode === 'beat') ? 'active' : ''}
+              onClick={() => this.props.setPathSync(path.id, 'beat')}
+            >1/4</button>
+            <button
+              className={(path.syncMode === '2xbeat') ? 'active' : ''}
+              onClick={() => this.props.setPathSync(path.id, '2xbeat')}
+            >1/2</button>
+            <button
+              className={(path.syncMode === 'bar') ? 'active' : ''}
+              onClick={() => this.props.setPathSync(path.id, 'bar')}
+            >1</button>
+          </div>
+          <div className="button-group">
+            <button
+              className={(path.waitUntilFinished === false) ? 'active' : ''}
+              onClick={() => this.props.setPathWaitUntilFinished(path.id, !path.waitUntilFinished)}
+            >></button>
+          </div>
         </div>
-        <div className="button-group">
-          <button
-            className={(path.waitUntilFinished === false) ? 'active' : ''}
-            onClick={() => this.props.setPathWaitUntilFinished(path.id, !path.waitUntilFinished)}
-          >></button>
-        </div>
-        {((this.props.selected) && (path.sounds.length === 0)) ?
+        {((path.isActive) && (path.sounds.length === 0)) ?
           <ul className="sounds-list"><li>Select a sound and click 'Add to path'</li></ul>
             : false
         }
-        {(this.props.selected) ?
+        {(path.isActive) ?
           <ul className="sounds-list">
             {path.sounds.map((soundId, soundPathIndex) => {
               return (
@@ -192,4 +204,5 @@ export default connect(mapStateToProps, {
   setPathCurrentlyPlaying,
   selectPath,
   setPathWaitUntilFinished,
+  setPathActive,
 })(Path);

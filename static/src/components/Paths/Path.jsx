@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import '../../stylesheets/Paths.scss';
 import AudioTickListener from '../App/AudioTickListener';
 import { setPathSync, startStopPath, setPathCurrentlyPlaying, selectPath,
-  setPathWaitUntilFinished, setPathActive } from '../../actions/paths';
-import { audioContext, playAudio, stopAudio } from '../../actions/audio';
+  setPathWaitUntilFinished, setPathActive, playNextSoundFromPath } from '../../actions/paths';
 import PathListSound from './PathListSound';
+
 
 const propTypes = {
   path: React.PropTypes.object,
@@ -21,6 +21,7 @@ const propTypes = {
   deleteSoundFromPath: React.PropTypes.func,
   playAudio: React.PropTypes.func,
   stopAudio: React.PropTypes.func,
+  playNextSoundFromPath: React.PropTypes.func,
 };
 
 class Path extends AudioTickListener {
@@ -45,7 +46,7 @@ class Path extends AudioTickListener {
       }
     }
     if (shouldPlayNextSound) {
-      this.playNextSoundFromPath(shouldPlayNextSoundAtTime);
+      this.props.playNextSoundFromPath(newPath.id, shouldPlayNextSoundAtTime);
     }
   }
 
@@ -54,10 +55,10 @@ class Path extends AudioTickListener {
       // Check if sound will be finished at time
       if ((path.currentlyPlaying.willFinishAt === undefined)
         || (path.currentlyPlaying.willFinishAt <= time)) {
-        this.playNextSoundFromPath(time);
+        this.props.playNextSoundFromPath(path.id, time);
       }
     } else {
-      this.playNextSoundFromPath(time);
+      this.props.playNextSoundFromPath(path.id, time);
     }
   }
 
@@ -78,37 +79,6 @@ class Path extends AudioTickListener {
       if (path.syncMode === 'bar') {
         if (tick === 0) {
           this.triggerSoundHelper(path, time);
-        }
-      }
-    }
-  }
-
-  playNextSoundFromPath(time) {
-    const path = this.props.path;
-    if (path) {
-      if (path.isPlaying) {
-        let nextSoundToPlayIdx;
-        if ((path.currentlyPlaying.soundIdx === undefined) ||
-          (path.currentlyPlaying.soundIdx + 1 >= path.sounds.length)) {
-          nextSoundToPlayIdx = 0;
-        } else {
-          nextSoundToPlayIdx = path.currentlyPlaying.soundIdx + 1;
-        }
-        const nextSoundToPlay = path.sounds[nextSoundToPlayIdx]; // This is and ID!!
-        const nextSoundToPlayDuration = 1.0; // This should be soundObject.duration
-        const willFinishAt = (time === undefined) ?
-          audioContext.currentTime + nextSoundToPlayDuration :
-          time + nextSoundToPlayDuration;
-        this.props.setPathCurrentlyPlaying(path.id, nextSoundToPlayIdx, willFinishAt);
-        if (path.syncMode === 'no') {
-          this.props.playAudio(nextSoundToPlay, undefined, undefined, () => {
-            this.playNextSoundFromPath();
-          });
-        } else {
-          // If synched to metronome, sounds will be triggered by onAudioTick events
-          if (time !== undefined) {
-            this.props.playAudio(path.sounds[nextSoundToPlayIdx], { time });
-          }
         }
       }
     }
@@ -197,12 +167,11 @@ const mapStateToProps = (state) => ({});
 
 Path.propTypes = propTypes;
 export default connect(mapStateToProps, {
-  playAudio,
-  stopAudio,
   setPathSync,
   startStopPath,
   setPathCurrentlyPlaying,
   selectPath,
   setPathWaitUntilFinished,
   setPathActive,
+  playNextSoundFromPath,
 })(Path);

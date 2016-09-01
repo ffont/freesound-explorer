@@ -1,4 +1,6 @@
+import { audioContext, playAudio, stopAudio } from './audio';
 import makeActionCreator from './makeActionCreator';
+import { elementWithId } from '../utils/arrayUtils';
 import * as at from './actionTypes';
 
 export const addPath = makeActionCreator(at.ADD_PATH,
@@ -29,3 +31,35 @@ export const clearAllPaths = makeActionCreator(at.CLEAR_ALL_PATHS);
 
 export const setPathWaitUntilFinished = makeActionCreator(at.SET_PATH_WAIT_UNTIL_FINISHED,
   'pathId', 'waitUntilFinished');
+
+export const playNextSoundFromPath = (pathId, time) =>
+  (dispatch, getStore) => {
+    const store = getStore();
+    const path = elementWithId(store.paths.paths, pathId);
+    if (path) {
+      if (path.isPlaying) {
+        let nextSoundToPlayIdx;
+        if ((path.currentlyPlaying.soundIdx === undefined) ||
+          (path.currentlyPlaying.soundIdx + 1 >= path.sounds.length)) {
+          nextSoundToPlayIdx = 0;
+        } else {
+          nextSoundToPlayIdx = path.currentlyPlaying.soundIdx + 1;
+        }
+        const nextSoundToPlay = store.sounds.byID[path.sounds[nextSoundToPlayIdx]];
+        const nextSoundToPlayDuration = nextSoundToPlay.duration;
+        const willFinishAt = (time === undefined) ?
+          audioContext.currentTime + nextSoundToPlayDuration : time + nextSoundToPlayDuration;
+        dispatch(setPathCurrentlyPlaying(path.id, nextSoundToPlayIdx, willFinishAt));
+        if (path.syncMode === 'no') {
+          dispatch(playAudio(nextSoundToPlay, undefined, undefined, () => {
+            dispatch(playNextSoundFromPath(pathId));
+          }));
+        } else {
+          // If synched to metronome, sounds will be triggered by onAudioTick events
+          if (time !== undefined) {
+            dispatch(playAudio(path.sounds[nextSoundToPlayIdx], { time }));
+          }
+        }
+      }
+    }
+  }

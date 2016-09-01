@@ -56,4 +56,4 @@ const mapStateToProps = (state) => {
 PathList.propTypes = propTypes;
 export default connect(mapStateToProps, {
   addPath, displaySystemMessage,
-}, undefined, { withRef: true })(PathList);
+})(PathList);

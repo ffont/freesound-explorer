@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import AudioTickListener from '../App/AudioTickListener';
-import { setPathSync, startStopPath, setPathCurrentlyPlaying, selectPath, deleteSoundFromPath,
+import { setPathSync, startStopPath, setPathCurrentlyPlaying, selectPath,
   setPathWaitUntilFinished } from '../../actions/paths';
-import { selectSound } from '../../actions/sounds';
+import { playAudio, stopAudio } from '../../actions/audio';
 import PathListSound from './PathListSound';
+import { audioContext } from '../../actions/audio';
 
 const propTypes = {
   path: React.PropTypes.object,
@@ -17,6 +18,8 @@ const propTypes = {
   setPathWaitUntilFinished: React.PropTypes.func,
   selectPath: React.PropTypes.func,
   deleteSoundFromPath: React.PropTypes.func,
+  playAudio: React.PropTypes.func,
+  stopAudio: React.PropTypes.func,
 };
 
 class Path extends AudioTickListener {
@@ -90,20 +93,20 @@ class Path extends AudioTickListener {
         } else {
           nextSoundToPlayIdx = path.currentlyPlaying.soundIdx + 1;
         }
-        const nextSoundToPlay = path.sounds[nextSoundToPlayIdx];
+        const nextSoundToPlay = path.sounds[nextSoundToPlayIdx]; // This is and ID!!
+        const nextSoundToPlayDuration = 1.0; // This should be soundObject.duration
         const willFinishAt = (time === undefined) ?
-          this.props.audioContext.currentTime + nextSoundToPlay.duration :
-          time + nextSoundToPlay.duration;
+          audioContext.currentTime + nextSoundToPlayDuration :
+          time + nextSoundToPlayDuration;
         this.props.setPathCurrentlyPlaying(path.id, nextSoundToPlayIdx, willFinishAt);
         if (path.syncMode === 'no') {
-          this.props.playSoundByFreesoundId(nextSoundToPlay.id, () => {
+          this.props.playAudio(nextSoundToPlay, undefined, undefined, () => {
             this.playNextSoundFromPath();
           });
         } else {
           // If synched to metronome, sounds will be triggered by onAudioTick events
           if (time !== undefined) {
-            this.props.playSoundByFreesoundId(
-              path.sounds[nextSoundToPlayIdx].id, undefined, undefined, undefined, time);
+            this.props.playAudio(path.sounds[nextSoundToPlayIdx], { time });
           }
         }
       }
@@ -182,6 +185,11 @@ const mapStateToProps = (state) => ({});
 
 Path.propTypes = propTypes;
 export default connect(mapStateToProps, {
-  setPathSync, startStopPath, setPathCurrentlyPlaying,
-  selectPath, deleteSoundFromPath, setPathWaitUntilFinished, selectSound,
-}, undefined, { withRef: true })(Path);
+  playAudio,
+  stopAudio,
+  setPathSync,
+  startStopPath,
+  setPathCurrentlyPlaying,
+  selectPath,
+  setPathWaitUntilFinished,
+})(Path);

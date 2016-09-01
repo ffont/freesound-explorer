@@ -9,6 +9,7 @@ import { selectSound } from '../../actions/sounds';
 import Space from './Space';
 import SpaceTitle from './SpaceTitle';
 import SoundInfo from '../SoundInfo';
+import MapPath from './MapPath';
 import '../../polyfills/requestAnimationFrame';
 import { MIN_ZOOM, MAX_ZOOM } from '../../constants';
 import '../../stylesheets/Map.scss';
@@ -78,6 +79,8 @@ class Map extends React.Component {
         {this.props.spaces.map(space =>
           <SpaceTitle key={space.queryID} {...space} />)}
         <svg className="map" onClick={this.onClickCallback}>
+          {this.props.paths.map(path =>
+            <MapPath key={path.id} path={path} />)}
           {this.props.spaces.map(space =>
             <Space key={space.queryID} sounds={space.sounds} />)}
         </svg>

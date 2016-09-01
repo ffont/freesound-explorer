@@ -33,10 +33,16 @@ const loadAudio = (sound) => new Promise((resolve, reject) => {
   }
 });
 
-export const playAudio = (sound, playbackOptions = {}, customSourceNodeKey, onEnded) =>
+export const playAudio =
+  (soundRef, { playbackRate = 1, time = 0 } = {}, customSourceNodeKey, onEnded) =>
   (dispatch, getStore) => {
     const store = getStore();
-    const { playbackRate = 1 } = playbackOptions;
+    let sound;
+    if (typeof soundRef === 'object') {
+      sound = soundRef; // soundRef is a sound object
+    } else if (typeof soundRef === 'string') {
+      sound = store.sounds.byID[soundRef]; // soundRef is a sound id
+    }
     const { playingSourceNodes } = store.audio;
     loadAudio(sound).then(
       buffer => {
@@ -54,7 +60,7 @@ export const playAudio = (sound, playbackOptions = {}, customSourceNodeKey, onEn
         source.connect(sourceGainNode);
         // TODO: sourceGainNode should change with MIDI velocity
         sourceGainNode.connect(audioContext.gainNode);
-        source.start();
+        source.start(time);
         dispatch(playAudioSrc(sourceNodeKey, sound.id));
       }
     );

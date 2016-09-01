@@ -1,4 +1,5 @@
-import { UPDATE_MAP_POSITION, SET_SPACE_AS_CENTER } from './actionTypes';
+import { UPDATE_MAP_POSITION, SET_SPACE_AS_CENTER, REMOVE_SPACE,
+  REMOVE_SOUND } from './actionTypes';
 import makeActionCreator from './makeActionCreator';
 
 export const updateMapPosition = makeActionCreator(UPDATE_MAP_POSITION, 'position');
@@ -10,4 +11,13 @@ export const setSpaceAsCenter = (space) => {
     spacePositionX: spacePosition.x,
     spacePositionY: spacePosition.y,
   };
+};
+
+export const removeSound = makeActionCreator(REMOVE_SOUND, 'soundID');
+
+const removeSpaceAction = makeActionCreator(REMOVE_SPACE, 'queryID');
+
+export const removeSpace = (space) => (dispatch) => {
+  dispatch(removeSpaceAction(space.queryID));
+  space.sounds.forEach(soundID => dispatch(removeSound(soundID)));
 };

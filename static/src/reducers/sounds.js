@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { FETCH_SOUNDS_SUCCESS, UPDATE_SOUNDS_POSITION, UPDATE_MAP_POSITION,
   SELECT_SOUND_BY_ID, GET_SOUND_BUFFER, TOGGLE_HOVERING_SOUND, PLAY_AUDIO_SRC,
-  STOP_AUDIO_SRC, MAP_COMPUTATION_COMPLETE }
+  STOP_AUDIO_SRC, MAP_COMPUTATION_COMPLETE, REMOVE_SOUND }
   from '../actions/actionTypes';
 import { MAP_SCALE_FACTOR } from '../constants';
 
@@ -79,6 +79,14 @@ const byID = (state = {}, action) => {
       }) };
       return Object.assign({}, state, updatedSound);
     }
+    case REMOVE_SOUND: {
+      return Object.keys(state).reduce((curState, curSoundID) => {
+        if (curSoundID !== action.soundID) {
+          return Object.assign(curState, { [curSoundID]: state[curSoundID] });
+        }
+        return curState;
+      }, {});
+    }
     default:
       return state;
   }
@@ -88,6 +96,8 @@ const selectedSound = (state = 0, action) => {
   switch (action.type) {
     case SELECT_SOUND_BY_ID:
       return action.soundID || 0;
+    case REMOVE_SOUND:
+      return (state !== action.soundID) ? state : 0;
     default:
       return state;
   }

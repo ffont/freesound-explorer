@@ -1,5 +1,5 @@
 import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE,
-  UPDATE_MAP_POSITION }
+  UPDATE_MAP_POSITION, REMOVE_SPACE }
   from '../actions/actionTypes';
 import { computeSoundGlobalPosition } from './sounds';
 import { getMapCenter } from '../utils/uiUtils';
@@ -82,12 +82,12 @@ const spaces = (state = [], action) => {
     case FETCH_SOUNDS_SUCCESS: {
       return state.map(space => singleSpace(space, action));
     }
-    case FETCH_SOUNDS_FAILURE: {
-      // remove space from state if query failed
-      return state.filter(space => space.queryID !== action.queryID);
-    }
     case UPDATE_MAP_POSITION: {
       return state.map(space => singleSpace(space, action));
+    }
+    case FETCH_SOUNDS_FAILURE:
+    case REMOVE_SPACE: {
+      return state.filter(space => space.queryID !== action.queryID);
     }
     default:
       return state;

@@ -5,6 +5,7 @@ import Space from '../Map/Space';
 const propTypes = {
   isSelected: React.PropTypes.bool,
   onClick: React.PropTypes.func,
+  onRemoveClick: React.PropTypes.func,
 };
 
 function SpaceThumbnail(props) {
@@ -15,6 +16,7 @@ function SpaceThumbnail(props) {
     >
       <SpaceTitle {...props} isThumbnail />
       <svg><Space {...props} isThumbnail /></svg>
+      <i className="fa fa-lg fa-times-circle-o" onClick={props.onRemoveClick} aria-hidden />
     </div>
   );
 }

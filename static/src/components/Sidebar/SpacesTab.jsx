@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setSpaceAsCenter } from '../../actions/map';
+import { setSpaceAsCenter, removeSpace } from '../../actions/map';
 import baseTab from './BaseTab';
 import SpaceThumbnail from './SpaceThumbnail';
 import '../../stylesheets/SpacesThumbnails.scss';
@@ -8,6 +8,8 @@ import '../../stylesheets/SpacesThumbnails.scss';
 const propTypes = {
   spaces: React.PropTypes.array,
   currentSpace: React.PropTypes.string,
+  setSpaceAsCenter: React.PropTypes.func,
+  removeSpace: React.PropTypes.func,
 };
 
 function Spaces(props) {
@@ -19,6 +21,7 @@ function Spaces(props) {
             {...space}
             isSelected={space.queryID === props.currentSpace}
             onClick={() => props.setSpaceAsCenter(space)}
+            onRemoveClick={() => props.removeSpace(space)}
           />
         </li>))}
     </ul>
@@ -27,4 +30,7 @@ function Spaces(props) {
 
 Spaces.propTypes = propTypes;
 const mapStateToProps = (state) => state.spaces;
-export default connect(mapStateToProps, { setSpaceAsCenter })(baseTab('Spaces', Spaces));
+export default connect(mapStateToProps, {
+  setSpaceAsCenter,
+  removeSpace,
+})(baseTab('Spaces', Spaces));

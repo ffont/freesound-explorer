@@ -4,7 +4,7 @@ import { zoom } from 'd3-zoom';
 import { connect } from 'react-redux';
 import { displaySystemMessage } from '../../actions/messagesBox';
 import { updateMapPosition } from '../../actions/map';
-import { setIsMidiLearningSoundId } from '../../actions/midi';
+import { setIsMidiLearningSoundID } from '../../actions/midi';
 import { selectSound } from '../../actions/sounds';
 import Space from './Space';
 import SpaceTitle from './SpaceTitle';
@@ -23,8 +23,8 @@ const propTypes = {
     translateY: React.PropTypes.number,
     scale: React.PropTypes.number,
   }),
-  setIsMidiLearningSoundId: React.PropTypes.func,
-  isMidiLearningSoundId: React.PropTypes.number,
+  setIsMidiLearningSoundID: React.PropTypes.func,
+  isMidiLearningsoundID: React.PropTypes.number,
   updateMapPosition: React.PropTypes.func,
 };
 
@@ -62,7 +62,7 @@ class Map extends React.Component {
       // deselect all sounds when not clicking on a circle
       this.props.selectSound();
       // turn off current midi learn
-      this.props.setIsMidiLearningSoundId(-1);
+      this.props.setIsMidiLearningSoundID(-1);
     }
   }
 
@@ -102,6 +102,6 @@ Map.propTypes = propTypes;
 export default connect(mapStateToProps, {
   displaySystemMessage,
   updateMapPosition,
-  setIsMidiLearningSoundId,
+  setIsMidiLearningSoundID,
   selectSound,
 })(Map);

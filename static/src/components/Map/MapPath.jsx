@@ -18,7 +18,7 @@ class MapPath extends React.Component {
       return null;
     }
     return (<g>
-      {[...Array(this.props.path.sounds.length - 1).keys()].map((soundId, index) => {
+      {[...Array(this.props.path.sounds.length - 1).keys()].map((soundID, index) => {
         const soundFrom = this.props.sounds[this.props.path.sounds[index]];
         const soundTo = this.props.sounds[this.props.path.sounds[index + 1]];
         return (

@@ -1,161 +1,108 @@
-import { default as UUID } from 'node-uuid';
-import { indexElementWithId } from '../utils/arrayUtils';
+import { combineReducers } from 'redux';
 import { ADD_PATH, SET_PATH_SYNC, STARTSTOP_PATH,
   SET_PATH_CURRENTLY_PLAYING, SELECT_PATH, DELETE_SOUND_FROM_PATH,
   ADD_SOUND_TO_PATH, CLEAR_ALL_PATHS, SET_PATH_WAIT_UNTIL_FINISHED,
   SET_PATH_ACTIVE } from '../actions/actionTypes';
 
-const initialState = {
-  paths: [],
-  selectedPath: undefined,
-};
-
-export default function paths(state = initialState, action) {
+const path = (state = {}, action) => {
+  if (state.id !== action.pathID) {
+    return state;
+  }
+  // if you get here, you are the lucky path the action is referring to ;)
   switch (action.type) {
-    case ADD_PATH: {
-      const pathId = UUID.v4();
-      let pathName = String.fromCharCode(65 + (state.paths.length % 26));
-      if (Math.floor(state.paths.length / 26) > 0) {
-        pathName += 1 + Math.floor(state.paths.length / 26);
-      }
-      return Object.assign({}, state, {
-        selectedPath: pathId,
-        paths: [
-          ...state.paths,
-          {
-            id: pathId,
-            name: pathName,
-            isActive: true,
-            isPlaying: false,
-            syncMode: 'beat',
-            waitUntilFinished: true,
-            currentlyPlaying: {
-              soundIdx: undefined,
-              willFinishAt: undefined,
-            },
-            sounds: action.sounds,
-          },
-        ],
-      });
-    }
     case SET_PATH_SYNC: {
-      const pathIdx = indexElementWithId(state.paths, action.pathId);
-      const updatedPath = Object.assign({}, state.paths[pathIdx], {
-        syncMode: action.syncMode,
-      });
-      return Object.assign({}, state, {
-        paths: [
-          ...state.paths.slice(0, pathIdx),
-          updatedPath,
-          ...state.paths.slice(pathIdx + 1),
-        ],
-      });
+      return Object.assign({}, state, { syncMode: action.syncMode });
     }
     case STARTSTOP_PATH: {
-      const pathIdx = indexElementWithId(state.paths, action.pathId);
-      let newCurrentlyPlaying = state.paths[pathIdx].currentlyPlaying;
-      if (!action.isPlaying) {
-        newCurrentlyPlaying = {
-          soundIdx: undefined,
-          willFinishAt: undefined,
-        };
-      }
-      const updatedPath = Object.assign({}, state.paths[pathIdx], {
-        isPlaying: action.isPlaying,
-        currentlyPlaying: newCurrentlyPlaying,
-      });
-      return Object.assign({}, state, {
-        paths: [
-          ...state.paths.slice(0, pathIdx),
-          updatedPath,
-          ...state.paths.slice(pathIdx + 1),
-        ],
-      });
+      const currentlyPlaying = (action.isPlaying) ? state.currentlyPlaying : {
+        soundIDx: undefined,
+        willFinishAt: undefined,
+      };
+      return Object.assign({}, state, { isPlaying: action.isPlaying, currentlyPlaying });
     }
     case SET_PATH_CURRENTLY_PLAYING: {
-      const pathIdx = indexElementWithId(state.paths, action.pathId);
-      const updatedPath = Object.assign({}, state.paths[pathIdx], {
+      return Object.assign({}, state, {
         currentlyPlaying: {
-          soundIdx: action.soundIdx,
+          // TODO: we shouldn't use soundIDx, only soundID
+          soundIDx: action.soundIDx,
           willFinishAt: action.willFinishAt,
         },
       });
-      return Object.assign({}, state, {
-        paths: [
-          ...state.paths.slice(0, pathIdx),
-          updatedPath,
-          ...state.paths.slice(pathIdx + 1),
-        ],
-      });
     }
     case SET_PATH_ACTIVE: {
-      const pathIdx = indexElementWithId(state.paths, action.pathId);
-      const updatedPath = Object.assign({}, state.paths[pathIdx], {
-        isActive: action.isActive,
-      });
-      return Object.assign({}, state, {
-        paths: [
-          ...state.paths.slice(0, pathIdx),
-          updatedPath,
-          ...state.paths.slice(pathIdx + 1),
-        ],
-      });
-    }
-    case SELECT_PATH: {
-      return Object.assign({}, state, {
-        selectedPath: action.pathId,
-      });
+      return Object.assign({}, state, { isActive: action.isActive });
     }
     case DELETE_SOUND_FROM_PATH: {
-      const pathIdx = indexElementWithId(state.paths, action.pathId);
-      const updatedPath = Object.assign({}, state.paths[pathIdx], {
-        sounds: [
-          ...state.paths[pathIdx].sounds.slice(0, action.pathSoundIdx),
-          ...state.paths[pathIdx].sounds.slice(action.pathSoundIdx + 1),
-        ],
-      });
       return Object.assign({}, state, {
-        paths: [
-          ...state.paths.slice(0, pathIdx),
-          updatedPath,
-          ...state.paths.slice(pathIdx + 1),
-        ],
+        sounds: state.sounds.filter(id => id !== action.soundID),
       });
     }
     case ADD_SOUND_TO_PATH: {
-      const pathIdx = (action.pathId) ?
-        indexElementWithId(state.paths, action.pathId) : state.selectedPath;
-      const updatedPath = Object.assign({}, state.paths[pathIdx], {
-        sounds: [
-          ...state.paths[pathIdx].sounds,
-          action.soundId,
-        ],
-      });
-      return Object.assign({}, state, {
-        paths: [
-          ...state.paths.slice(0, pathIdx),
-          updatedPath,
-          ...state.paths.slice(pathIdx + 1),
-        ],
-      });
-    }
-    case CLEAR_ALL_PATHS: {
-      return initialState;
+      return Object.assign({}, state, { sounds: [...state.sounds, action.soundID] });
     }
     case SET_PATH_WAIT_UNTIL_FINISHED: {
-      const pathIdx = indexElementWithId(state.paths, action.pathId);
-      const updatedPath = Object.assign({}, state.paths[pathIdx], {
-        waitUntilFinished: action.waitUntilFinished,
-      });
-      return Object.assign({}, state, {
-        paths: [
-          ...state.paths.slice(0, pathIdx),
-          updatedPath,
-          ...state.paths.slice(pathIdx + 1),
-        ],
-      });
+      return Object.assign({}, state, { waitUntilFinished: action.waitUntilFinished });
     }
     default:
       return state;
   }
-}
+};
+
+const paths = (state = [], action) => {
+  switch (action.type) {
+    case ADD_PATH: {
+      const { pathID, sounds } = action;
+      let pathName = String.fromCharCode(65 + (state.length % 26));
+      if (Math.floor(state.length / 26) > 0) {
+        pathName += 1 + Math.floor(state.length / 26);
+      }
+      return [...state,
+        {
+          id: pathID,
+          name: pathName,
+          isActive: true,
+          isPlaying: false,
+          syncMode: 'beat',
+          waitUntilFinished: true,
+          currentlyPlaying: {
+            soundIDx: undefined,
+            willFinishAt: undefined,
+          },
+          sounds,
+        },
+      ];
+    }
+    case SET_PATH_SYNC:
+    case STARTSTOP_PATH:
+    case SET_PATH_CURRENTLY_PLAYING:
+    case SET_PATH_ACTIVE:
+    case DELETE_SOUND_FROM_PATH:
+    case ADD_SOUND_TO_PATH:
+    case SET_PATH_WAIT_UNTIL_FINISHED: {
+      return state.map(curPath => path(curPath, action));
+    }
+    case CLEAR_ALL_PATHS: {
+      return [];
+    }
+    default:
+      return state;
+  }
+};
+
+const selectedPath = (state = null, action) => {
+  switch (action.type) {
+    case ADD_PATH: {
+      return action.pathID;
+    }
+    case SELECT_PATH: {
+      return action.pathID;
+    }
+    case CLEAR_ALL_PATHS: {
+      return null;
+    }
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({ paths, selectedPath });

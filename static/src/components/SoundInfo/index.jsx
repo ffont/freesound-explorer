@@ -6,15 +6,15 @@ import Waveform from './Waveform';
 import { MESSAGE_STATUS } from '../../constants';
 import { addSoundToPath } from '../../actions/paths';
 import { displaySystemMessage } from '../../actions/messagesBox';
-import { setIsMidiLearningSoundId } from '../../actions/midi';
+import { setIsMidiLearningSoundID } from '../../actions/midi';
 import sassVariables from 'json!../../stylesheets/variables.json';
 
 const propTypes = {
   sound: React.PropTypes.object,
   isUserLoggedIn: React.PropTypes.bool,
   displaySystemMessage: React.PropTypes.func,
-  setIsMidiLearningSoundId: React.PropTypes.func,
-  isMidiLearningSoundId: React.PropTypes.number,
+  setIsMidiLearningSoundID: React.PropTypes.func,
+  isMidiLearningsoundID: React.PropTypes.number,
   midiMappings: React.PropTypes.object,
   selectedPath: React.PropTypes.string,
   addSoundToPath: React.PropTypes.func,
@@ -120,10 +120,10 @@ class SoundInfo extends React.Component {
     }
     const midiLearnButton = (
       <button
-        className={(this.props.isMidiLearningSoundId === this.lastSound.id) ? 'learning' : ''}
-        onClick={() => this.props.setIsMidiLearningSoundId(this.lastSound.id)}
+        className={(this.props.isMidiLearningsoundID === this.lastSound.id) ? 'learning' : ''}
+        onClick={() => this.props.setIsMidiLearningSoundID(this.lastSound.id)}
       >
-        MIDI: {(this.props.isMidiLearningSoundId === this.lastSound.id) ? 'learning' :
+        MIDI: {(this.props.isMidiLearningsoundID === this.lastSound.id) ? 'learning' :
           this.getCurrentlyAssignedMidiNoteLabel()}
       </button>
     );
@@ -175,5 +175,5 @@ SoundInfo.propTypes = propTypes;
 export default connect(mapStateToProps, {
   displaySystemMessage,
   addSoundToPath,
-  setIsMidiLearningSoundId,
+  setIsMidiLearningSoundID,
 })(SoundInfo);

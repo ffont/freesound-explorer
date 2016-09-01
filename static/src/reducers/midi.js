@@ -1,18 +1,18 @@
 import { ADD_MIDI_MAPPING, SET_MIDI_LEARN_SOUND_ID } from '../actions/actionTypes';
 
 export const initialState = {
-  isMidiLearningSoundId: -1,
+  isMidiLearningsoundID: -1,
   midiMappings: { notes: {} },
 };
 
 const midi = (state = initialState, action) => {
   switch (action.type) {
     case ADD_MIDI_MAPPING: {
-      const { note, soundId } = action;
+      const { note, soundID } = action;
       let newNotes = {};
-      if (soundId !== -1) {
+      if (soundID !== -1) {
         // Add new note mapping
-        newNotes = Object.assign({}, state.midiMappings.notes, { [note]: soundId });
+        newNotes = Object.assign({}, state.midiMappings.notes, { [note]: soundID });
       } else {
         // Remove existing note mapping
         newNotes = Object.assign({}, state.midiMappings.notes, {});  // Copy existing notes
@@ -25,7 +25,7 @@ const midi = (state = initialState, action) => {
     }
     case SET_MIDI_LEARN_SOUND_ID: {
       return Object.assign({}, state, {
-        isMidiLearningSoundId: action.soundId,
+        isMidiLearningsoundID: action.soundID,
       });
     }
     default:

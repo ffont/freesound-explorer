@@ -57,7 +57,7 @@ export default Space;
        audioLoader={this.props.audioLoader}
        playOnHover={this.props.playOnHover}
        projectPoint={this.projectPoint}
-       setIsMidiLearningSoundId={this.props.setIsMidiLearningSoundId}
+       setIsMidiLearningSoundID={this.props.setIsMidiLearningSoundID}
      />
    );
  })}

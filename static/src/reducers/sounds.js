@@ -54,8 +54,8 @@ const byID = (state = {}, action) => {
     case UPDATE_SOUNDS_POSITION:
     case MAP_COMPUTATION_COMPLETE:
     case UPDATE_MAP_POSITION: {
-      const updatedSounds = Object.keys(state).reduce((curState, curSoundID) =>
-        Object.assign({}, curState, { [curSoundID]: sound(state[curSoundID], action) }), {});
+      const updatedSounds = Object.keys(state).reduce((curState, cursoundID) =>
+        Object.assign({}, curState, { [cursoundID]: sound(state[cursoundID], action) }), {});
       return Object.assign({}, state, updatedSounds);
     }
     case GET_SOUND_BUFFER: {

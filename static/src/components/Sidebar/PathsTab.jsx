@@ -1,5 +1,5 @@
 import React from 'react';
-import PathsList from '../Paths/PathsList';
+import PathList from '../Paths/PathList';
 import Metronome from '../Metronome';
 import baseTab from './BaseTab';
 
@@ -7,7 +7,7 @@ function PathsTab() {
   return (
     <div>
       <Metronome />
-      <PathsList />
+      <PathList />
     </div>
   );
 }

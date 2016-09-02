@@ -69,4 +69,44 @@ export const playNextSoundFromPath = (pathID, time) =>
         }
       }
     }
-  }
+  };
+
+export const triggerSoundHelper = (pathID, time) =>
+  (dispatch, getStore) => {
+    const store = getStore();
+    const path = elementWithId(store.paths.paths, pathID);
+    if (path.waitUntilFinished) {
+      // Check if sound will be finished at time
+      if ((path.currentlyPlaying.willFinishAt === undefined)
+        || (path.currentlyPlaying.willFinishAt <= time)) {
+        dispatch(playNextSoundFromPath(path.id, time));
+      }
+    } else {
+      dispatch(playNextSoundFromPath(path.id, time));
+    }
+  };
+
+export const onAudioTickPath = (pathID, bar, beat, tick, time) =>
+  (dispatch, getStore) => {
+    const store = getStore();
+    const path = elementWithId(store.paths.paths, pathID);
+    if (path) {
+      if (path.isPlaying) {
+        if (path.syncMode === 'beat') {
+          if (tick % 4 === 0) {
+            dispatch(triggerSoundHelper(pathID, time));
+          }
+        }
+        if (path.syncMode === '2xbeat') {
+          if (tick % 8 === 0) {
+            dispatch(triggerSoundHelper(pathID, time));
+          }
+        }
+        if (path.syncMode === 'bar') {
+          if (tick === 0) {
+            dispatch(triggerSoundHelper(pathID, time));
+          }
+        }
+      }
+    }
+  };

@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import '../../stylesheets/Paths.scss';
 import AudioTickListener from '../App/AudioTickListener';
 import { setPathSync, startStopPath, setPathCurrentlyPlaying, selectPath,
-  setPathWaitUntilFinished, setPathActive, playNextSoundFromPath } from '../../actions/paths';
+  setPathWaitUntilFinished, setPathActive,
+  playNextSoundFromPath, onAudioTickPath } from '../../actions/paths';
 import PathListSound from './PathListSound';
 
 
@@ -22,66 +23,26 @@ const propTypes = {
   playAudio: React.PropTypes.func,
   stopAudio: React.PropTypes.func,
   playNextSoundFromPath: React.PropTypes.func,
+  onAudioTickPath: React.PropTypes.func,
 };
 
 class Path extends AudioTickListener {
 
-  componentDidUpdate(prevProps) {
-    // Look for state changes we are interested in monitoring and trigger corresponding methods
-    // if needed (i.e. to triger component methods after redux actions have been completed).
-    const newPath = this.props.path;
-    const prevPath = prevProps.path;
-    let shouldPlayNextSound = false;
-    let shouldPlayNextSoundAtTime = 0;
-    if ((newPath.isPlaying) && (!prevPath.isPlaying) && (newPath.syncMode === 'no')) {
-      // A path changed form isPlaying = false to isPlaying = true and syncMode is 'no'
-      shouldPlayNextSound = true;
-    }
-    if ((newPath.syncMode === 'no') && (prevPath.syncMode !== 'no')) {
-      // A path changed from syncMode != 'no' to syncMode = 'no'
-      if (newPath.isPlaying) {
-        shouldPlayNextSoundAtTime = (newPath.currentlyPlaying.willFinishAt === undefined) ?
-          0 : newPath.currentlyPlaying.willFinishAt;
-        shouldPlayNextSound = true;
+  setPathSyncHelper(newSyncMode) {
+    const prevSyncMode = this.props.path.syncMode;
+    this.props.setPathSync(this.props.path.id, newSyncMode);
+    if ((prevSyncMode !== 'no') && (newSyncMode === 'no')) {
+      // Path changed from syncMode != 'no' to syncMode = 'no'
+      if (this.props.path.isPlaying) {
+        const time = (this.props.path.currentlyPlaying.willFinishAt === undefined) ?
+          0 : this.props.path.currentlyPlaying.willFinishAt;
+        this.props.playNextSoundFromPath(this.props.path.id, time);
       }
-    }
-    if (shouldPlayNextSound) {
-      this.props.playNextSoundFromPath(newPath.id, shouldPlayNextSoundAtTime);
-    }
-  }
-
-  triggerSoundHelper(path, time) {
-    if (path.waitUntilFinished) {
-      // Check if sound will be finished at time
-      if ((path.currentlyPlaying.willFinishAt === undefined)
-        || (path.currentlyPlaying.willFinishAt <= time)) {
-        this.props.playNextSoundFromPath(path.id, time);
-      }
-    } else {
-      this.props.playNextSoundFromPath(path.id, time);
     }
   }
 
   onAudioTick(bar, beat, tick, time) {
-    // Iterate over all paths and check if some should trigger next sound
-    const path = this.props.path;
-    if (path.isPlaying) {
-      if (path.syncMode === 'beat') {
-        if (tick % 4 === 0) {
-          this.triggerSoundHelper(path, time);
-        }
-      }
-      if (path.syncMode === '2xbeat') {
-        if (tick % 8 === 0) {
-          this.triggerSoundHelper(path, time);
-        }
-      }
-      if (path.syncMode === 'bar') {
-        if (tick === 0) {
-          this.triggerSoundHelper(path, time);
-        }
-      }
-    }
+    this.props.onAudioTickPath(this.props.path.id, bar, beat, tick, time);
   }
 
   startStopPlayingPath() {
@@ -90,6 +51,10 @@ class Path extends AudioTickListener {
       this.props.startStopPath(path.id, false);
     } else if (path.sounds.length) {
       this.props.startStopPath(path.id, true);
+      if (path.syncMode === 'no') {
+        // If path passed from stop to play and syncMode is no, trigger play next sound
+        this.props.playNextSoundFromPath(path.id, 0);
+      }
     }
   }
 
@@ -118,19 +83,19 @@ class Path extends AudioTickListener {
           <div className="button-group">
             <button
               className={(path.syncMode === 'no') ? 'active' : ''}
-              onClick={() => this.props.setPathSync(path.id, 'no')}
+              onClick={() => this.setPathSyncHelper('no')}
             >x</button>
             <button
               className={(path.syncMode === 'beat') ? 'active' : ''}
-              onClick={() => this.props.setPathSync(path.id, 'beat')}
+              onClick={() => this.setPathSyncHelper('beat')}
             >1/4</button>
             <button
               className={(path.syncMode === '2xbeat') ? 'active' : ''}
-              onClick={() => this.props.setPathSync(path.id, '2xbeat')}
+              onClick={() => this.setPathSyncHelper('2xbeat')}
             >1/2</button>
             <button
               className={(path.syncMode === 'bar') ? 'active' : ''}
-              onClick={() => this.props.setPathSync(path.id, 'bar')}
+              onClick={() => this.setPathSyncHelper('bar')}
             >1</button>
           </div>
           <div className="button-group">
@@ -170,4 +135,5 @@ export default connect(mapStateToProps, {
   setPathWaitUntilFinished,
   setPathActive,
   playNextSoundFromPath,
+  onAudioTickPath,
 })(Path);

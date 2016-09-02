@@ -110,13 +110,13 @@ class Metronome extends React.Component {
 
   render() {
     return (
-      <div className="metronome">
+      <div className="metronome-wrapper">
         <div className="metronome-slider">
           <SliderRange
             label=""
             minValue="40"
             maxValue="300"
-            defaultValue={DEFAULT_TEMPO}
+            defaultValue={this.props.tempo}
             onChange={(evt) => {
               const newTempo = evt.target.value;
               this.setTempo(parseInt(newTempo, 10));

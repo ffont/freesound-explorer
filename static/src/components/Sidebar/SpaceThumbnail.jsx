@@ -16,7 +16,14 @@ function SpaceThumbnail(props) {
     >
       <SpaceTitle {...props} isThumbnail />
       <svg><Space {...props} isThumbnail /></svg>
-      <i className="fa fa-lg fa-times-circle-o" onClick={props.onRemoveClick} aria-hidden />
+      <i
+        className="fa fa-lg fa-times-circle-o"
+        aria-hidden
+        onClick={(evt) => {
+          evt.stopPropagation();
+          props.onRemoveClick();
+        }}
+      />
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { ADD_PATH, SET_PATH_SYNC, STARTSTOP_PATH,
   SET_PATH_CURRENTLY_PLAYING, SELECT_PATH, DELETE_SOUND_FROM_PATH,
   ADD_SOUND_TO_PATH, CLEAR_ALL_PATHS, SET_PATH_WAIT_UNTIL_FINISHED,
-  SET_PATH_ACTIVE } from '../actions/actionTypes';
+  SET_PATH_ACTIVE, REMOVE_SOUND } from '../actions/actionTypes';
 
 const path = (state = {}, action) => {
   if (state.id !== action.pathID) {
@@ -80,6 +80,12 @@ const paths = (state = [], action) => {
     case ADD_SOUND_TO_PATH:
     case SET_PATH_WAIT_UNTIL_FINISHED: {
       return state.map(curPath => path(curPath, action));
+    }
+    case REMOVE_SOUND: {
+      return state.map(curPath =>
+        path(curPath, {
+          type: DELETE_SOUND_FROM_PATH, soundID: action.soundID, pathID: curPath.id })
+      );
     }
     case CLEAR_ALL_PATHS: {
       return [];

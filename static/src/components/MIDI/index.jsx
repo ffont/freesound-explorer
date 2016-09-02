@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { displaySystemMessage } from '../../actions/messagesBox';
+import { playAudio, stopAudio } from '../../actions/audio';
 import { setIsMidiLearningSoundID, addMidiMapping } from '../../actions/midi';
 
 const propTypes = {
@@ -8,7 +9,9 @@ const propTypes = {
   setIsMidiLearningSoundID: React.PropTypes.func,
   addMidiMapping: React.PropTypes.func,
   midiMappings: React.PropTypes.object,
-  isMidiLearningsoundID: React.PropTypes.number,
+  isMidiLearningsoundID: React.PropTypes.string,
+  playAudio: React.PropTypes.func,
+  stopAudio: React.PropTypes.func,
 };
 
 class MIDI extends React.Component {
@@ -38,9 +41,9 @@ class MIDI extends React.Component {
     const velocity = message.data[2];
     switch (type) {
       case 144: { // noteOn message
-        if (this.props.isMidiLearningsoundID > -1) {
+        if (this.props.isMidiLearningsoundID) {
           this.props.addMidiMapping(note, this.props.isMidiLearningsoundID);
-          this.props.setIsMidiLearningSoundID(-1);
+          this.props.setIsMidiLearningSoundID(undefined);
         } else if (Object.keys(this.props.midiMappings.notes).length > 0) {
           // Only handle message if mappings exist
           this.handleNoteOn(note, velocity);
@@ -65,12 +68,11 @@ class MIDI extends React.Component {
       (Math.abs(curr - note) < Math.abs(prev - note) ? curr : prev));
     const soundID = this.props.midiMappings.notes[closestNote];
     const semitonesDelta = note - closestNote;
-    const playBackRate = Math.pow(2, (semitonesDelta / 12));
+    const playbackRate = Math.pow(2, (semitonesDelta / 12));
     const sourceNodeKey = `node_${note}`;
     if (soundID) {
       if (velocity > 0) {  // Some midi sources implement noteoff with velocity = 0
-        // this.playSoundByFreesoundID(soundID, undefined, playBackRate, sourceNodeKey);
-        // TODO: call play sound method (once new audio handling is implemented)
+        this.props.playAudio(soundID, { playbackRate }, sourceNodeKey);
       } else {
         this.handleNoteOff(note);
       }
@@ -82,8 +84,7 @@ class MIDI extends React.Component {
       (Math.abs(curr - note) < Math.abs(prev - note) ? curr : prev));
     const soundID = this.props.midiMappings.notes[closestNote];
     const sourceNodeKey = `node_${note}`;
-    // this.stopSoundByFreesoundID(soundID, sourceNodeKey);
-    // TODO: call stop sound method (once new audio handling is implemented)
+    this.props.stopAudio(soundID, sourceNodeKey);
   }
 
   render() {
@@ -98,4 +99,6 @@ export default connect(mapStateToProps, {
   displaySystemMessage,
   setIsMidiLearningSoundID,
   addMidiMapping,
+  playAudio,
+  stopAudio,
 })(MIDI);

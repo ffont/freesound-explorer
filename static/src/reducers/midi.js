@@ -1,7 +1,7 @@
 import { ADD_MIDI_MAPPING, SET_MIDI_LEARN_SOUND_ID } from '../actions/actionTypes';
 
 export const initialState = {
-  isMidiLearningsoundID: -1,
+  isMidiLearningsoundID: undefined,
   midiMappings: { notes: {} },
 };
 

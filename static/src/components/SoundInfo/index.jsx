@@ -14,7 +14,7 @@ const propTypes = {
   isUserLoggedIn: React.PropTypes.bool,
   displaySystemMessage: React.PropTypes.func,
   setIsMidiLearningSoundID: React.PropTypes.func,
-  isMidiLearningsoundID: React.PropTypes.number,
+  isMidiLearningsoundID: React.PropTypes.string,
   midiMappings: React.PropTypes.object,
   selectedPath: React.PropTypes.string,
   addSoundToPath: React.PropTypes.func,
@@ -166,9 +166,9 @@ class SoundInfo extends React.Component {
 const mapStateToProps = (state) => {
   const { selectedSound } = state.sounds;
   const sound = state.sounds.byID[selectedSound];
-  const { midiMappings } = state.midi;
+  const { midiMappings, isMidiLearningsoundID } = state.midi;
   const { selectedPath } = state.paths;
-  return { selectedPath, sound, midiMappings };
+  return { selectedPath, sound, midiMappings, isMidiLearningsoundID };
 };
 
 SoundInfo.propTypes = propTypes;

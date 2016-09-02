@@ -24,7 +24,7 @@ const propTypes = {
     scale: React.PropTypes.number,
   }),
   setIsMidiLearningSoundID: React.PropTypes.func,
-  isMidiLearningsoundID: React.PropTypes.number,
+  isMidiLearningsoundID: React.PropTypes.string,
   updateMapPosition: React.PropTypes.func,
 };
 
@@ -62,7 +62,7 @@ class Map extends React.Component {
       // deselect all sounds when not clicking on a circle
       this.props.selectSound();
       // turn off current midi learn
-      this.props.setIsMidiLearningSoundID(-1);
+      this.props.setIsMidiLearningSoundID(undefined);
     }
   }
 

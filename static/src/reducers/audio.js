@@ -3,9 +3,9 @@ import { ADD_AUDIO_SRC, STOP_AUDIO_SRC } from '../actions/actionTypes';
 const sourceNodes = (state = {}, action) => {
   switch (action.type) {
     case ADD_AUDIO_SRC: {
-      const { sourceKey, source, gain } = action;
+      const { sourceKey, source, gain, soundID } = action;
       return Object.assign({}, state, {
-        [sourceKey]: { source, gain },
+        [sourceKey]: { source, gain, soundID },
       });
     }
     case STOP_AUDIO_SRC: {

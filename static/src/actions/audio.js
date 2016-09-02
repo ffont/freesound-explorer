@@ -16,7 +16,7 @@ const initAudioContext = () => {
 
 export const { audioContext, loader } = initAudioContext();
 
-const addAudioSource = makeActionCreator(ADD_AUDIO_SRC, 'sourceKey', 'source', 'gain');
+const addAudioSource = makeActionCreator(ADD_AUDIO_SRC, 'sourceKey', 'source', 'gain', 'soundID');
 export const playAudioSrc = makeActionCreator(PLAY_AUDIO_SRC, 'sourceKey', 'soundID');
 export const stopAudioSrc = makeActionCreator(STOP_AUDIO_SRC, 'sourceKey', 'soundID');
 
@@ -48,7 +48,7 @@ export const playAudio =
         const sourceGainNode = audioContext.createGain();
         const sourceNodeKey = customSourceNodeKey || Object.keys(playingSourceNodes).length;
         dispatch(getSoundBuffer(sound.id, buffer));
-        dispatch(addAudioSource(sourceNodeKey, source, sourceGainNode));
+        dispatch(addAudioSource(sourceNodeKey, source, sourceGainNode, sound.id));
         source.onended = () => {
           dispatch(stopAudioSrc(sourceNodeKey, sound.id, onEnded));
           if (onEnded) onEnded();
@@ -75,21 +75,21 @@ export const stopAudio =
       sound = store.sounds.byID[soundRef]; // soundRef is a sound id
     }
     if (sourceNodeKey) {
-      if (Object.keys(sound.playingSourceNodes).includes(sourceNodeKey)) {
-        sound.playingGainNodes[sourceNodeKey].gain.exponentialRampToValueAtTime(
-          0.01, audioContext.currentTime + fadeOutTime);
-        sound.playingSourceNodes[sourceNodeKey].stop(
-          audioContext.currentTime + fadeOutTime);  // this will trigger onended callback
-        dispatch(stopAudioSrc(sourceNodeKey, sound.id));
+      if (Object.keys(store.audio.playingSourceNodes).includes(sourceNodeKey)) {
+        const { source, gain } = store.audio.playingSourceNodes[sourceNodeKey];
+        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + fadeOutTime);
+        source.stop(audioContext.currentTime + fadeOutTime);  // this will trigger onended event
+        dispatch(stopAudioSrc(sourceNodeKey, sound.id)); // TODO: Should wait for fadeout time?
       }
     } else {
-      // If no specific key provided, stop all source nodes
-      Object.keys(sound.playingSourceNodes).forEach((key) => {
-        sound.playingGainNodes[key].gain.exponentialRampToValueAtTime(
-          0.01, audioContext.currentTime + fadeOutTime);
-        sound.playingSourceNodes[key].stop(
-          audioContext.currentTime + fadeOutTime);  // this will trigger onended callback
-        dispatch(stopAudioSrc(key, sound.id));
+      // If no specific key provided, stop all source nodes for the corresponding sound
+      Object.keys(store.audio.playingSourceNodes).forEach((key) => {
+        const { source, gain, soundID } = store.audio.playingSourceNodes[key];
+        if (soundID === sound.id) {
+          gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + fadeOutTime);
+          source.stop(audioContext.currentTime + fadeOutTime);  // this will trigger onended event
+          dispatch(stopAudioSrc(key, sound.id)); // TODO: Should wait for fadeout time?
+        }
       });
     }
   };

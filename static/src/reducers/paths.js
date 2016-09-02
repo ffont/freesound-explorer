@@ -5,7 +5,7 @@ import { ADD_PATH, SET_PATH_SYNC, STARTSTOP_PATH,
   SET_PATH_ACTIVE, REMOVE_SOUND } from '../actions/actionTypes';
 
 const path = (state = {}, action) => {
-  if (state.id !== action.pathID) {
+  if (action.pathID && state.id !== action.pathID) {
     return state;
   }
   // if you get here, you are the lucky path the action is referring to ;)
@@ -32,6 +32,7 @@ const path = (state = {}, action) => {
     case SET_PATH_ACTIVE: {
       return Object.assign({}, state, { isActive: action.isActive });
     }
+    case REMOVE_SOUND:
     case DELETE_SOUND_FROM_PATH: {
       return Object.assign({}, state, {
         sounds: state.sounds.filter(id => id !== action.soundID),
@@ -76,16 +77,11 @@ const paths = (state = [], action) => {
     case STARTSTOP_PATH:
     case SET_PATH_CURRENTLY_PLAYING:
     case SET_PATH_ACTIVE:
+    case REMOVE_SOUND:
     case DELETE_SOUND_FROM_PATH:
     case ADD_SOUND_TO_PATH:
     case SET_PATH_WAIT_UNTIL_FINISHED: {
       return state.map(curPath => path(curPath, action));
-    }
-    case REMOVE_SOUND: {
-      return state.map(curPath =>
-        path(curPath, {
-          type: DELETE_SOUND_FROM_PATH, soundID: action.soundID, pathID: curPath.id })
-      );
     }
     case CLEAR_ALL_PATHS: {
       return [];

@@ -21,6 +21,9 @@ class MapPath extends React.Component {
       {[...Array(this.props.path.sounds.length - 1).keys()].map((soundID, index) => {
         const soundFrom = this.props.sounds[this.props.path.sounds[index]];
         const soundTo = this.props.sounds[this.props.path.sounds[index + 1]];
+        if ((soundFrom === undefined) || (soundTo === undefined)) {
+          return null;
+        }
         return (
           <line
             key={index}

@@ -5,6 +5,7 @@ import { getRandomElement } from '../../utils/misc';
 import { MESSAGE_STATUS } from '../../constants';
 import { addPath } from '../../actions/paths';
 import { displaySystemMessage } from '../../actions/messagesBox';
+import { elementWithId } from '../../utils/arrayUtils';
 import Path from './Path';
 
 const propTypes = {
@@ -19,10 +20,11 @@ const propTypes = {
 class PathList extends React.Component {
 
   createNewPath() {
-    if (this.props.currentSpace !== undefined) {
+    if (this.props.currentSpace) {
       const pathSounds = [];
-      const nSounds = 2 + Math.floor(Math.random() * 3);
-      const spaceSounds = this.props.spaces[0].sounds;
+      const nSounds = 3 + Math.floor(Math.random() * 3);
+      const space = elementWithId(this.props.spaces, this.props.currentSpace, 'queryID');
+      const spaceSounds = space.sounds;
       [...Array(nSounds).keys()].map(() => pathSounds.push(getRandomElement(spaceSounds)));
       this.props.addPath(pathSounds);
     } else {

@@ -73,9 +73,7 @@ class Path extends AudioTickListener {
       <li className={(this.props.selected) ? 'selected' : ''}>
         <div className="path-controls">
           <button onClick={() => this.startStopPlayingPath()} >
-            {(path.isPlaying) ?
-              <i className="fa fa-pause fa-lg" aria-hidden="true" /> :
-              <i className="fa fa-play fa-lg" aria-hidden="true" />}
+            <i className={`fa fa-${(path.isPlaying) ? 'pause' : 'play'} fa-lg`} aria-hidden />
           </button>
           <a className="cursor-pointer" onClick={() => this.onPathClick()} >
             {path.name} ({path.sounds.length} sounds)

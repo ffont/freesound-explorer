@@ -9,6 +9,7 @@
   width: $sidebarWidth;
   transition: transform 0.3s ease;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  background-color: $sidebarColor;
   &.active {
     transform: translate3d(0,0,0);
   }
@@ -21,10 +22,10 @@
 }
 
 .sidebar-content-wrapper {
-  width: $sidebarWidth - $sidebarClosedOffset - 2 * $sidebarContentPadding;
+  width: $sidebarWidth - $sidebarClosedOffset;
   padding: $sidebarContentPadding;
-  background-color: $sidebarColor;
-  height: 100%;
+  box-sizing: border-box;
+  height: calc(100% - #{$metronomeHeight});
   font-size: 1.1em;
   & > div {
     position: relative;
@@ -76,7 +77,6 @@
   right: 0;
   height: 100%;
   width: $sidebarClosedOffset;
-  background-color: $sidebarColor;
   ol {
     list-style-type: none;
     margin: 0;

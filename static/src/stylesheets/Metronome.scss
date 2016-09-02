@@ -1,13 +1,15 @@
 @import "./variables.json";
 
-.metronome {
-  margin-bottom: 15px;
+.metronome-wrapper {
+  width: $sidebarWidth - $sidebarClosedOffset;
+  padding: 0 $sidebarContentPadding;
+  box-sizing: border-box;
 }
 
 .metronome-slider {
   display: inline-block;
   width: 200px;
-  height: 60px;
+  height: $metronomeHeight;
   margin-right: 5px;
   margin-top:0px;
 }
@@ -16,8 +18,8 @@
   float: right;
   text-align: center;
   width: 90px;
-  height: 60px;
-  line-height: 60px;
+  height: $metronomeHeight;
+  line-height: $metronomeHeight;
   margin-top:0px;
 
   button {

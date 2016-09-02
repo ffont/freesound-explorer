@@ -11,6 +11,7 @@
   "menuBackground": "#000000",
   "menuOpacity": 0.85,
   "messagesBoxHeight": "40px",
+  "metronomeHeight": "60px",
   "redRegular": "#97171e",
   "sidebarClosedOffset": "40px",
   "sidebarColor": "rgba(14, 14, 16, 0.9)",

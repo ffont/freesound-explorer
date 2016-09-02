@@ -1,3 +1,5 @@
+@import "./variables.json";
+
 button {
   background-color: transparent;
   border: none;
@@ -7,7 +9,7 @@ button {
     outline: none;
   }
   &.active {
-    background-color: rgba(58, 103, 94, 0.9);
+    background-color: $accentColor;
   }
 }
 
@@ -17,6 +19,7 @@ button {
   margin-left: 5px;
   overflow: hidden;
   button {
-    border-radius: 0px;
+    border-radius: $defaultBorderRadius;
+    min-width: 30px;
   }
 }

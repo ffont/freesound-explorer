@@ -1,4 +1,4 @@
-export const DEFAULT_QUERY = 'instrument note';
+export const DEFAULT_QUERY = 'instruments';
 export const DEFAULT_MAX_RESULTS = 60;
 export const DEFAULT_MIN_DURATION = 0;
 export const DEFAULT_MAX_DURATION = 5;

@@ -1,7 +1,6 @@
 // audio
 export const ADD_AUDIO_SRC = 'ADD_AUDIO_SRC';
 export const STOP_AUDIO_SRC = 'STOP_AUDIO_SRC';
-export const STOP_ALL_AUDIO = 'STOP_ALL_AUDIO';
 export const PLAY_AUDIO_SRC = 'PLAY_AUDIO_SRC';
 
 // login

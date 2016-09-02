@@ -1,6 +1,5 @@
 import makeActionCreator from './makeActionCreator';
-import { ADD_AUDIO_SRC, STOP_AUDIO_SRC,
-  STOP_ALL_AUDIO, PLAY_AUDIO_SRC }
+import { ADD_AUDIO_SRC, STOP_AUDIO_SRC, PLAY_AUDIO_SRC }
   from './actionTypes';
 import { getSoundBuffer } from './sounds';
 import audioLoader from '../utils/audioLoader';
@@ -20,7 +19,6 @@ export const { audioContext, loader } = initAudioContext();
 const addAudioSource = makeActionCreator(ADD_AUDIO_SRC, 'sourceKey', 'source', 'gain');
 export const playAudioSrc = makeActionCreator(PLAY_AUDIO_SRC, 'sourceKey', 'soundID');
 export const stopAudioSrc = makeActionCreator(STOP_AUDIO_SRC, 'sourceKey', 'soundID');
-export const stopAllAudio = makeActionCreator(STOP_ALL_AUDIO);
 
 const loadAudio = (sound) => new Promise((resolve, reject) => {
   if (sound.buffer) {
@@ -66,5 +64,32 @@ export const playAudio =
     );
   };
 
-export const stopAudio = (sound) => (dispatch, getStore) => {
-};
+export const stopAudio =
+  (soundRef, sourceNodeKey = undefined, fadeOutTime = 0.05) =>
+  (dispatch, getStore) => {
+    const store = getStore();
+    let sound;
+    if (typeof soundRef === 'object') {
+      sound = soundRef; // soundRef is a sound object
+    } else if (typeof soundRef === 'string') {
+      sound = store.sounds.byID[soundRef]; // soundRef is a sound id
+    }
+    if (sourceNodeKey) {
+      if (Object.keys(sound.playingSourceNodes).includes(sourceNodeKey)) {
+        sound.playingGainNodes[sourceNodeKey].gain.exponentialRampToValueAtTime(
+          0.01, audioContext.currentTime + fadeOutTime);
+        sound.playingSourceNodes[sourceNodeKey].stop(
+          audioContext.currentTime + fadeOutTime);  // this will trigger onended callback
+        dispatch(stopAudioSrc(sourceNodeKey, sound.id));
+      }
+    } else {
+      // If no specific key provided, stop all source nodes
+      Object.keys(sound.playingSourceNodes).forEach((key) => {
+        sound.playingGainNodes[key].gain.exponentialRampToValueAtTime(
+          0.01, audioContext.currentTime + fadeOutTime);
+        sound.playingSourceNodes[key].stop(
+          audioContext.currentTime + fadeOutTime);  // this will trigger onended callback
+        dispatch(stopAudioSrc(key, sound.id));
+      });
+    }
+  };

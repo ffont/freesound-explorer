@@ -70,7 +70,7 @@ class QueryBox extends React.Component {
             this.props.updateQuery(query);
           }}
           tabIndex="1"
-          placeholder="query terms, e.g.: instrument note"
+          placeholder="query terms, e.g.: instruments"
           onButtonClick={(evt) => {
             evt.preventDefault();
             this.submitQuery();

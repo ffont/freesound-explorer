@@ -16,7 +16,7 @@ const propTypes = {
 class PathListSound extends React.Component {
   render() {
     return (
-      <li>
+      <li className={(this.props.sound.isPlaying) ? 'playing' : ''}>
         <a
           className="cursor-pointer"
           onClick={() => this.props.selectSound(this.props.soundID)}

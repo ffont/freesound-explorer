@@ -46,4 +46,7 @@
     background: rgba(70, 70, 70, 0.2);
   }
   li:hover { background: $sidebarIconHoverColor }
+  li.playing {
+    background: $sidebarIconHoverColor;
+  }
 }

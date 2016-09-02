@@ -28,11 +28,15 @@ export const setPathActive = makeActionCreator(at.SET_PATH_ACTIVE,
 export const deleteSoundFromPath = makeActionCreator(at.DELETE_SOUND_FROM_PATH,
   'soundID', 'pathID');
 
+/* TODO: action with default pathID does not work, had to revert to version below
 export const addSoundToPath = (soundID, pathID) => (dispatch, getStore) => ({
   type: at.ADD_SOUND_TO_PATH,
   soundID,
   pathID: pathID || getStore().paths.selectedPath,
-});
+});*/
+
+export const addSoundToPath = makeActionCreator(at.ADD_SOUND_TO_PATH,
+  'soundID', 'pathID');
 
 export const clearAllPaths = makeActionCreator(at.CLEAR_ALL_PATHS);
 

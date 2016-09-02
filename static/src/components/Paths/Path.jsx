@@ -111,9 +111,9 @@ class Path extends AudioTickListener {
         }
         {(path.isActive) ?
           <ul className="sounds-list">
-            {path.sounds.map((soundID) => (
+            {path.sounds.map((soundID, soundIdx) => (
               <PathListSound
-                key={soundID}
+                key={soundIdx}
                 soundID={soundID}
                 pathID={path.id}
               />

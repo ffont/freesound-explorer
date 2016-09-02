@@ -17,9 +17,9 @@ class Space extends React.Component {
 
   render() {
     return (<g>
-      {this.props.sounds.map(soundID => (
+      {this.props.sounds.map((soundID, soundIdx) => (
         <MapCircle
-          key={soundID}
+          key={soundIdx}
           soundID={soundID}
           isThumbnail={this.props.isThumbnail}
         />

@@ -8,7 +8,6 @@ svg.map {
   width: 100%;
   circle {
     mix-blend-mode: screen;
-    opacity: 70%;
     &.playing {
       animation: wobble 0.5s linear infinite alternate;
     }

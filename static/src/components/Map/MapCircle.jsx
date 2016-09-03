@@ -53,9 +53,6 @@ class MapCircle extends React.PureComponent {
   }
 
   onMouseLeave() {
-    if (this.props.playOnHover && this.props.sound.isPlaying) {
-      this.props.stopAudio(this.props.sound);
-    }
     this.props.toggleHoveringSound(this.props.sound.id);
   }
 

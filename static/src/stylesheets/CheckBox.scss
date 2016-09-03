@@ -7,7 +7,6 @@ $box-border-size: 3px;
     display: inline-block;
     vertical-align: middle;
     height: $sidebarClosedOffset;
-    cursor: pointer;
     &:before {
       content: '';
       display: inline-block;

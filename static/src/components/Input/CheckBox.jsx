@@ -16,7 +16,7 @@ const defaultProps = {
 
 function CheckBox(props) {
   return (
-    <div className="check-box">
+    <div className="check-box" onClick={props.onChange}>
       <label htmlFor={props.id}>Play on hover</label>
       <input
         id={props.id}

@@ -1,9 +1,10 @@
 import React from 'react';
 import baseTab from './BaseTab';
+import MidiMappingsList from '../MIDI/MidiMappginsList';
 
 function MidiTab() {
   return (
-    <div />
+    <MidiMappingsList />
   );
 }
 

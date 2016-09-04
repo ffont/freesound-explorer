@@ -2,12 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { displaySystemMessage } from '../../actions/messagesBox';
 import { playAudio, stopAudio } from '../../actions/audio';
-import { setIsMidiLearningSoundID, addMidiMapping } from '../../actions/midi';
+import { setIsMidiLearningSoundID, addMidiNoteMapping } from '../../actions/midi';
 
 const propTypes = {
   displaySystemMessage: React.PropTypes.func,
   setIsMidiLearningSoundID: React.PropTypes.func,
-  addMidiMapping: React.PropTypes.func,
+  addMidiNoteMapping: React.PropTypes.func,
   midiMappings: React.PropTypes.object,
   isMidiLearningsoundID: React.PropTypes.string,
   playAudio: React.PropTypes.func,
@@ -42,7 +42,7 @@ class MIDI extends React.Component {
     switch (type) {
       case 144: { // noteOn message
         if (this.props.isMidiLearningsoundID) {
-          this.props.addMidiMapping(note, this.props.isMidiLearningsoundID);
+          this.props.addMidiNoteMapping(note, this.props.isMidiLearningsoundID);
           this.props.setIsMidiLearningSoundID(undefined);
         } else if (Object.keys(this.props.midiMappings.notes).length > 0) {
           // Only handle message if mappings exist
@@ -98,7 +98,7 @@ MIDI.propTypes = propTypes;
 export default connect(mapStateToProps, {
   displaySystemMessage,
   setIsMidiLearningSoundID,
-  addMidiMapping,
+  addMidiNoteMapping,
   playAudio,
   stopAudio,
 })(MIDI);

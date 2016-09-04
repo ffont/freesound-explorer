@@ -1,4 +1,5 @@
-import { ADD_MIDI_MAPPING, SET_MIDI_LEARN_SOUND_ID } from '../actions/actionTypes';
+import { ADD_MIDI_NOTE_MAPPING, REMOVE_MIDI_NOTE_MAPPING,
+  SET_MIDI_LEARN_SOUND_ID } from '../actions/actionTypes';
 import sessions from './sessions';
 
 export const initialState = {
@@ -8,7 +9,7 @@ export const initialState = {
 
 const midi = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_MIDI_MAPPING: {
+    case ADD_MIDI_NOTE_MAPPING: {
       const { note, soundID } = action;
       let newNotes = {};
       if (soundID !== -1) {
@@ -20,6 +21,14 @@ const midi = (state = initialState, action) => {
         if (Object.hasOwnProperty.call(newNotes, note)) {
           delete newNotes[note];
         }
+      }
+      const newMappings = Object.assign({}, state.midiMappings, { notes: newNotes });
+      return Object.assign({}, state, { midiMappings: newMappings });
+    }
+    case REMOVE_MIDI_NOTE_MAPPING: {
+      const newNotes = Object.assign({}, state.midiMappings.notes, {});  // Copy existing notes
+      if (Object.hasOwnProperty.call(newNotes, action.note)) {
+        delete newNotes[action.note];
       }
       const newMappings = Object.assign({}, state.midiMappings, { notes: newNotes });
       return Object.assign({}, state, { midiMappings: newMappings });

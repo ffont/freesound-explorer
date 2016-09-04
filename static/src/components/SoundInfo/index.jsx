@@ -7,6 +7,7 @@ import { MESSAGE_STATUS } from '../../constants';
 import { addSoundToPath } from '../../actions/paths';
 import { displaySystemMessage } from '../../actions/messagesBox';
 import { setIsMidiLearningSoundID } from '../../actions/midi';
+import { midiNoteNumberToMidiNoteLabel } from '../../utils/midiUtils';
 import sassVariables from 'json!../../stylesheets/variables.json';
 
 const propTypes = {
@@ -33,18 +34,13 @@ class SoundInfo extends React.Component {
   }
 
   getCurrentlyAssignedMidiNoteLabel() {
-    // let correspondingKey = '-';
-    let octave = '';
     let noteLabel = '';
     Object.keys(this.props.midiMappings.notes).forEach((key) => {
       if (this.props.midiMappings.notes[key] === this.lastSound.id) {
-        octave = parseInt(Math.floor(key / 12) - 1, 10);
-        noteLabel = 'C C#D D#E F F#G G#A A#B '.substring((key % 12) * 2, ((key % 12) * 2) + 2);
-        if (noteLabel[1] === ' ') { noteLabel = noteLabel[0]; }
-        // correspondingKey = parseInt(key, 10);
+        noteLabel = midiNoteNumberToMidiNoteLabel(key);
       }
     });
-    return `${noteLabel}${octave}`; // (${correspondingKey})`;
+    return noteLabel;
   }
 
   getClassName() {

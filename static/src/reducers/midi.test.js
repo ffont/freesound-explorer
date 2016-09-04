@@ -2,7 +2,7 @@ import expect from 'expect';
 import deepFreeze from 'deep-freeze';
 import '../polyfills/Object.assign';
 import { default as reducer, initialState } from './midi';
-import { addMidiMapping, setIsMidiLearningSoundID } from '../actions/midi';
+import { addMidiNoteMapping, setIsMidiLearningSoundID } from '../actions/midi';
 
 describe('midi reducer', () => {
   it('should return initialState', () => {
@@ -17,7 +17,7 @@ describe('midi reducer', () => {
       expect(reducer(stateBefore, setIsMidiLearningSoundID(soundID))).toEqual(stateAfter);
     });
   });
-  describe('addMidiMapping', () => {
+  describe('addMidiNoteMapping', () => {
     const stateBefore = initialState;
     const note = 64;
     const soundID = 1234;
@@ -25,10 +25,10 @@ describe('midi reducer', () => {
       midiMappings: { notes: { [note]: soundID } },
     });
     it('correctly adds new mapping', () => {
-      expect(reducer(stateBefore, addMidiMapping(note, soundID))).toEqual(stateAfter);
+      expect(reducer(stateBefore, addMidiNoteMapping(note, soundID))).toEqual(stateAfter);
     });
     it('correctly removes existing note mapping', () => {
-      expect(reducer(stateAfter, addMidiMapping(note, -1))).toEqual(initialState);
+      expect(reducer(stateAfter, addMidiNoteMapping(note, -1))).toEqual(initialState);
     });
   });
 });

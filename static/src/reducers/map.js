@@ -1,11 +1,12 @@
 import { UPDATE_MAP_POSITION, SET_SPACE_AS_CENTER } from '../actions/actionTypes';
 import { getMapCenter } from '../utils/uiUtils';
+import sessions from './sessions';
 
 /*
   forceMapUpdate = true when a new map position is forced externally (such when the user
-  creates a new space, with consequential focus on it).
-  forceMapUpdate = false when the user moves the map around (i.e. when we have to
-  update the map position according to the actual interaction with it).
+    creates a new space, with consequential focus on it).
+  forceMapUpdate = false when the map position updates for an interaction with the
+    map itself.
  */
 
 export const initialState = {
@@ -39,4 +40,4 @@ const map = (state = initialState, action) => {
   }
 };
 
-export default map;
+export default sessions(map);

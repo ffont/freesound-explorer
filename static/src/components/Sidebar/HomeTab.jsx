@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { togglePlayOnHover } from '../../actions/settings';
+import { newSession, saveSession, loadSession } from '../../actions/sessions';
 import baseTab from './BaseTab';
 import CheckBox from '../Input/CheckBox';
 import OptionsList, { makeOption } from '../Input/OptionsList';
@@ -10,16 +11,16 @@ const propTypes = {
   togglePlayOnHover: React.PropTypes.func,
 };
 
-const options = [
-  makeOption('file-o', 'new session', () => console.log('hey')),
-  makeOption('save', 'save session'),
-  makeOption('upload', 'restore session'),
+const getOptions = (props) => [
+  makeOption('file-o', 'new session', () => props.newSession()),
+  makeOption('save', 'save session', () => props.saveSession()),
+  makeOption('upload', 'restore session', () => props.loadSession()),
 ];
 
 function HomeTab(props) {
   return (
     <div>
-      <OptionsList options={options} />
+      <OptionsList options={getOptions(props)} />
       <CheckBox
         checked={props.playOnHover}
         onChange={props.togglePlayOnHover}
@@ -33,4 +34,9 @@ function HomeTab(props) {
 const mapStateToProps = (state) => state.settings;
 
 HomeTab.propTypes = propTypes;
-export default connect(mapStateToProps, { togglePlayOnHover })(baseTab('Home', HomeTab));
+export default connect(mapStateToProps, {
+  togglePlayOnHover,
+  newSession,
+  saveSession,
+  loadSession,
+})(baseTab('Home', HomeTab));

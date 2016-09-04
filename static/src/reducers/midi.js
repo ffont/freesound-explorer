@@ -1,4 +1,5 @@
 import { ADD_MIDI_MAPPING, SET_MIDI_LEARN_SOUND_ID } from '../actions/actionTypes';
+import sessions from './sessions';
 
 export const initialState = {
   isMidiLearningsoundID: undefined,
@@ -33,4 +34,4 @@ const midi = (state = initialState, action) => {
   }
 };
 
-export default midi;
+export default sessions(midi);

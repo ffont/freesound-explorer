@@ -3,6 +3,7 @@ import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE,
   from '../actions/actionTypes';
 import { computeSoundGlobalPosition } from './sounds';
 import { getMapCenter } from '../utils/uiUtils';
+import sessions from './sessions';
 
 const computeSpacePosition = (spaceIndex) => ({
   x: (spaceIndex * 4) + 1,
@@ -72,16 +73,14 @@ const singleSpace = (state = spaceInitialState, action, spacesInMap) => {
   }
 };
 
-const spaces = (state = [], action) => {
+const spacesReducer = (state = [], action) => {
   switch (action.type) {
     case FETCH_SOUNDS_REQUEST: {
       const spacesInMap = state.length;
       const space = singleSpace(spaceInitialState, action, spacesInMap);
       return [...state, space];
     }
-    case FETCH_SOUNDS_SUCCESS: {
-      return state.map(space => singleSpace(space, action));
-    }
+    case FETCH_SOUNDS_SUCCESS:
     case UPDATE_MAP_POSITION: {
       return state.map(space => singleSpace(space, action));
     }
@@ -127,7 +126,8 @@ const currentSpace = (state = '', action, allSpaces) => {
   }
 };
 
-export default (state = {}, action) => ({
-  spaces: spaces(state.spaces, action),
+const spaces = (state = {}, action) => ({
+  spaces: spacesReducer(state.spaces, action),
   currentSpace: currentSpace(state.currentSpace, action, state.spaces),
 });
+export default sessions(spaces);

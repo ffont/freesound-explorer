@@ -1,5 +1,6 @@
 import { UPDATE_METRONOME_STATUS, SET_TEMPO, STARTSTOP_METRONOME } from '../actions/actionTypes';
 import { DEFAULT_TEMPO } from '../constants';
+import sessions from './sessions';
 
 const initialState = {
   bar: 1,
@@ -9,7 +10,7 @@ const initialState = {
   isPlaying: false,
 };
 
-export default function metronome(state = initialState, action) {
+function metronome(state = initialState, action) {
   switch (action.type) {
     case UPDATE_METRONOME_STATUS: {
       return Object.assign({}, state, {
@@ -32,3 +33,5 @@ export default function metronome(state = initialState, action) {
       return state;
   }
 }
+
+export default sessions(metronome);

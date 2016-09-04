@@ -1,9 +1,9 @@
-import { combineReducers } from 'redux';
 import { FETCH_SOUNDS_SUCCESS, UPDATE_SOUNDS_POSITION, UPDATE_MAP_POSITION,
   SELECT_SOUND_BY_ID, GET_SOUND_BUFFER, TOGGLE_HOVERING_SOUND, PLAY_AUDIO_SRC,
   STOP_AUDIO_SRC, MAP_COMPUTATION_COMPLETE, REMOVE_SOUND }
   from '../actions/actionTypes';
 import { MAP_SCALE_FACTOR } from '../constants';
+import sessions from './sessions';
 
 export const computeSoundGlobalPosition = (tsnePosition, spacePosition, mapPosition) => {
   const { translateX, translateY, scale } = mapPosition;
@@ -103,4 +103,9 @@ const selectedSound = (state = 0, action) => {
   }
 };
 
-export default combineReducers({ byID, selectedSound });
+// don't use combineReducers as we want the reducer name to be 'sounds' (see sessions reducer)
+const sounds = (state = {}, action) => ({
+  byID: byID(state.byID, action),
+  selectedSound: selectedSound(state.selectedSound, action),
+});
+export default sessions(sounds);

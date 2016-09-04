@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux';
 import { ADD_PATH, SET_PATH_SYNC, STARTSTOP_PATH,
   SET_PATH_CURRENTLY_PLAYING, SELECT_PATH, DELETE_SOUND_FROM_PATH,
   ADD_SOUND_TO_PATH, CLEAR_ALL_PATHS, SET_PATH_WAIT_UNTIL_FINISHED,
   SET_PATH_ACTIVE, REMOVE_SOUND } from '../actions/actionTypes';
+import sessions from './sessions';
 
 const path = (state = {}, action) => {
   if (action.pathID && state.id !== action.pathID) {
@@ -49,7 +49,7 @@ const path = (state = {}, action) => {
   }
 };
 
-const paths = (state = [], action) => {
+const pathsReducer = (state = [], action) => {
   switch (action.type) {
     case ADD_PATH: {
       const { pathID, sounds } = action;
@@ -107,4 +107,10 @@ const selectedPath = (state = null, action) => {
   }
 };
 
-export default combineReducers({ paths, selectedPath });
+// don't use combineReducers, we want reducer name to stay 'paths' (see sessions reducer)
+const paths = (state = {}, action) => ({
+  paths: pathsReducer(state.paths, action),
+  selectedPath: selectedPath(state.selectedPath, action),
+});
+
+export default sessions(paths);

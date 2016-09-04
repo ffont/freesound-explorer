@@ -1,5 +1,9 @@
 import { REQUEST_POOL_SIZE } from '../constants';
 
+const removeBufferFromSound = (sound) => Object.assign({}, sound, { buffer: undefined });
+export const removeSoundBuffers = (sounds) => Object.keys(sounds).reduce((curState, curSoundID) =>
+  Object.assign(curState, { [curSoundID]: removeBufferFromSound(sounds[curSoundID]) }), {});
+
 const requestPool = (() => {
   const pool = [];
   for (let i = 0; i < REQUEST_POOL_SIZE; i++) {

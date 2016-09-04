@@ -5,6 +5,7 @@ import login from './login';
 import map from './map';
 import messagesBox from './messagesBox';
 import metronome from './metronome';
+import modal from './modal';
 import paths from './paths';
 import search from './search';
 import settings from './settings';
@@ -15,11 +16,12 @@ import spaces from './spaces';
 
 const rootReducer = combineReducers({
   audio,
-  midi,
   login,
   map,
   messagesBox,
   metronome,
+  midi,
+  modal,
   paths,
   search,
   settings,

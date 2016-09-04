@@ -26,6 +26,10 @@ export const STARTSTOP_METRONOME = 'STARTSTOP_METRONOME';
 export const SET_MIDI_LEARN_SOUND_ID = 'SET_MIDI_LEARN_SOUND_ID';
 export const ADD_MIDI_MAPPING = 'ADD_MIDI_MAPPING';
 
+// modal
+export const TOGGLE_MODAL = 'TOGGLE_MODAL';
+export const SET_MODAL_PAGE = 'SET_MODAL_PAGE';
+
 // paths
 export const ADD_PATH = 'ADD_PATH';
 export const SET_PATH_SYNC = 'SET_PATH_SYNC';
@@ -44,6 +48,11 @@ export const UPDATE_MAX_DURATION = 'UPDATE_MAX_DURATION';
 export const UPDATE_MIN_DURATION = 'UPDATE_MIN_DURATION';
 export const UPDATE_DESCRIPTOR = 'UPDATE_DESCRIPTOR';
 export const UPDATE_QUERY = 'UPDATE_QUERY';
+
+// sessions
+export const NEW_SESSION = 'NEW_SESSION';
+export const SAVE_SESSION = 'SAVE_SESSION';
+export const LOAD_SESSION = 'LOAD_SESSION';
 
 // settings
 export const TOGGLE_PLAY_ON_HOVER = 'TOGGLE_PLAY_ON_HOVER';

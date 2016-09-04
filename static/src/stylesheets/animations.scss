@@ -1,0 +1,10 @@
+@keyframes wobble {
+  from {
+    transform: rotate(-90deg) scale(1);
+    transform-origin: center;
+  }
+  to {
+    transform: rotate(-90deg) scale(1.5);
+    transform-origin: center;
+  }
+}

@@ -85,22 +85,41 @@ class MapCircle extends React.PureComponent {
     const { cx, cy } = (this.props.isThumbnail) ?
       this.props.sound.thumbnailPosition : this.props.sound.position;
     const fillColor = (isHovered || isSelected || isPlaying) ? lighten(color, 1.5) : color;
-    const className = (isPlaying) ? 'playing' : '';
+    const className = `main-circle${(isPlaying) ? ' playing' : ''}`;
+    const fillCircleClassName = `play-fill-circle${(isPlaying) ? ' playing' : ''}`;
+    const radius = DEFAULT_RADIUS / 2;
+    const fillWidthProportion = 2;
+    const circleLength = 2 * Math.PI * (radius / fillWidthProportion);
+    const completed = 0; // TODO: connect it with actual playbackPosition
+    const completionOffset = (1 - (completed)) * circleLength;
     return (
-      <circle
-        cx={cx}
-        cy={cy}
-        r={DEFAULT_RADIUS / 2}
-        fill={fillColor}
-        className={className}
-        fillOpacity={DEFAULT_FILL_OPACITY}
-        stroke={fillColor}
-        strokeWidth={DEFAULT_STROKE_WIDTH}
-        strokeOpacity={DEFAULT_STROKE_OPACITY}
-        onMouseEnter={this.onMouseEnter}
-        onMouseLeave={this.onMouseLeave}
-        onClick={this.onClick}
-      />
+      <g>
+        <circle
+          cx={cx}
+          cy={cy}
+          r={radius}
+          fill={fillColor}
+          className={className}
+          fillOpacity={DEFAULT_FILL_OPACITY}
+          stroke={fillColor}
+          strokeWidth={DEFAULT_STROKE_WIDTH}
+          strokeOpacity={DEFAULT_STROKE_OPACITY}
+          onMouseEnter={this.onMouseEnter}
+          onMouseLeave={this.onMouseLeave}
+          onClick={this.onClick}
+        />
+        <circle
+          cx={cx}
+          cy={cy}
+          r={radius / fillWidthProportion}
+          className={fillCircleClassName}
+          strokeDasharray={circleLength}
+          strokeDashoffset={completionOffset}
+          stroke={color}
+          strokeWidth={(DEFAULT_STROKE_WIDTH * 2) * fillWidthProportion}
+          strokeOpacity={DEFAULT_STROKE_OPACITY}
+        />
+      </g>
     );
   }
 }

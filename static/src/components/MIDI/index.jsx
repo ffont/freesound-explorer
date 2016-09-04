@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { displaySystemMessage } from '../../actions/messagesBox';
 import { playAudio, stopAudio } from '../../actions/audio';
-import { setIsMidiLearningSoundID, addMidiNoteMapping } from '../../actions/midi';
+import { setIsMidiLearningSoundID, addMidiNoteMapping,
+  setLatestReceivedMidiMessage } from '../../actions/midi';
 
 const propTypes = {
   displaySystemMessage: React.PropTypes.func,
@@ -12,6 +13,7 @@ const propTypes = {
   isMidiLearningsoundID: React.PropTypes.string,
   playAudio: React.PropTypes.func,
   stopAudio: React.PropTypes.func,
+  setLatestReceivedMidiMessage: React.PropTypes.func,
 };
 
 class MIDI extends React.Component {
@@ -39,6 +41,7 @@ class MIDI extends React.Component {
     const type = message.data[0] & 0xf0;
     const note = message.data[1];
     const velocity = message.data[2];
+    this.props.setLatestReceivedMidiMessage({ type, note, velocity });
     switch (type) {
       case 144: { // noteOn message
         if (this.props.isMidiLearningsoundID) {
@@ -101,4 +104,5 @@ export default connect(mapStateToProps, {
   addMidiNoteMapping,
   playAudio,
   stopAudio,
+  setLatestReceivedMidiMessage,
 })(MIDI);

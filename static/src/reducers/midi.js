@@ -1,10 +1,12 @@
 import { ADD_MIDI_NOTE_MAPPING, REMOVE_MIDI_NOTE_MAPPING,
-  SET_MIDI_LEARN_SOUND_ID } from '../actions/actionTypes';
+  SET_MIDI_LEARN_SOUND_ID, SET_LATEST_RECEIVED_MIDI_MESSAGE } from '../actions/actionTypes';
+import { N_MIDI_MESSAGES_TO_KEEP } from '../constants';
 import sessions from './sessions';
 
 export const initialState = {
   isMidiLearningsoundID: undefined,
   midiMappings: { notes: {} },
+  latestReceivedMessages: [],
 };
 
 const midi = (state = initialState, action) => {
@@ -36,6 +38,13 @@ const midi = (state = initialState, action) => {
     case SET_MIDI_LEARN_SOUND_ID: {
       return Object.assign({}, state, {
         isMidiLearningsoundID: action.soundID,
+      });
+    }
+    case SET_LATEST_RECEIVED_MIDI_MESSAGE: {
+      const newLatestReceivedMessages = state.latestReceivedMessages.slice();
+      newLatestReceivedMessages.unshift(action.message); // Add to beginning
+      return Object.assign({}, state, {
+        latestReceivedMessages: newLatestReceivedMessages.slice(0, N_MIDI_MESSAGES_TO_KEEP),
       });
     }
     default:

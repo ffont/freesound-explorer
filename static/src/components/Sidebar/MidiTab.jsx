@@ -12,4 +12,4 @@ function MidiTab() {
   );
 }
 
-export default baseTab('MIDI Mappings', MidiTab);
+export default baseTab('MIDI Input', MidiTab);

@@ -31,6 +31,9 @@ $modal-transition-duration: 0.3s;
   }
   width: $sound-info-modal-width;
   background-color: rgba(12,12,18,.85);
+  button {
+    border-radius: $defaultBorderRadius;
+  }
 }
 
 .sound-info-modal-title {

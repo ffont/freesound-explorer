@@ -10,15 +10,18 @@ const propTypes = {
 class MidiMappingsList extends React.Component {
   render() {
     return (
-      <ul className="midi-list">
-        {Object.keys(this.props.midiMappings.notes).map((key, index) =>
-          <MidiMapping
-            key={index}
-            midiNote={key}
-            soundID={this.props.midiMappings.notes[key]}
-          />
-        )}
-      </ul>
+      <div className="midi-list">
+        <div className="title-text">Assigned MIDI notes:</div>
+        <ul>
+          {Object.keys(this.props.midiMappings.notes).map((key, index) =>
+            <MidiMapping
+              key={index}
+              midiNote={key}
+              soundID={this.props.midiMappings.notes[key]}
+            />
+          )}
+        </ul>
+      </div>
     );
   }
 }

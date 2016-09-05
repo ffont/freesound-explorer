@@ -3,10 +3,51 @@
 .midi-indicator {
   .selectors {
     .select-with-label {
-      width: 250px;
+      width: 270px;
       display: inline-block;
-      margin-bottom: 5px;
-      margin-right: 5px;
+      margin-bottom: 0px;
+      margin-right: 10px;
     }
+    margin-bottom: 20px;
+  }
+  .last-message {
+    margin-top: 18px;
+    margin-bottom: 20px;
+  }
+}
+
+.midi-list {
+  margin-top: 32px;
+  margin-bottom: 20px;
+  user-select: none;
+  ul {
+    list-style-type: none;
+    margin-top: 10px;
+  }
+  li {
+    border-radius: $defaultBorderRadius;
+    display: block;
+    margin-left: -40px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+    overflow: hidden;
+    padding-left: 10px;
+    height: $sidebarClosedOffset;
+    line-height: $sidebarClosedOffset;
+    background: rgba(70, 70, 70, 0.2);
+  }
+  li:hover { background: $sidebarIconHoverColor }
+  .mapping-info {
+    display: inline-block;
+    width: calc(100% - 35px);
+    overflow: hidden;
+  }
+  .remove-mapping {
+    display: inline-block;
+    float: right;
+    width: 28px;
+  }
+  .title-text {
+    margin-bottom: 10px;
   }
 }

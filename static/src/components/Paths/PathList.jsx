@@ -41,7 +41,7 @@ class PathList extends React.Component {
         )}
         <li>
           <button onClick={() => this.createNewPath()} >
-            <i className="fa fa-plus fa-lg" aria-hidden="true" />
+            <i className="fa fa-plus fa-lg" aria-hidden="true" />  &nbsp;&nbsp;New path
           </button>
         </li>
       </ul>

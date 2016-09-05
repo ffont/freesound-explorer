@@ -63,7 +63,6 @@ class MidiInIndicator extends React.Component {
     }
     return (
       <div className="midi-indicator">
-        { (message) ? midiMessageTypeLabel(message.type) : '' } { messageInfo }
         <div className="selectors">
           <SelectWithLabel
             onChange={(evt) => {
@@ -109,6 +108,9 @@ class MidiInIndicator extends React.Component {
               this.props.setUpMIDIDevices();
             }}
           />
+        </div>
+        <div className="last-message">
+          Latest message: { (message) ? midiMessageTypeLabel(message.type) : '' } { messageInfo }
         </div>
       </div>
     );

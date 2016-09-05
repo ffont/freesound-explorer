@@ -8,3 +8,17 @@ export const midiNoteNumberToMidiNoteLabel = (noteNumber) => {
   if (noteLabel[1] === ' ') { noteLabel = noteLabel[0]; }
   return `${noteLabel}${octave}`;
 };
+
+export const midiMessageTypeLabel = (type) => {
+  // let correspondingKey = '-';
+  switch (type) {
+    case 144: { // noteOn message
+      return 'Note On';
+    }
+    case 128: { // noteOff message
+      return 'Note Off';
+    }
+    default:
+      return 'Unknown';
+  }
+};

@@ -1,5 +1,6 @@
-import { ADD_MIDI_NOTE_MAPPING, REMOVE_MIDI_NOTE_MAPPING,
-  SET_MIDI_LEARN_SOUND_ID, SET_LATEST_RECEIVED_MIDI_MESSAGE } from '../actions/actionTypes';
+import { ADD_MIDI_NOTE_MAPPING, REMOVE_MIDI_NOTE_MAPPING, SET_MIDI_LEARN_SOUND_ID,
+  SET_LATEST_RECEIVED_MIDI_MESSAGE, SET_MIDI_SUPPORTED, SET_MIDI_INPUT_CHANNEL,
+  SET_MIDI_INPUT_DEVICE, SET_MIDI_AVAILABLE_DEVICES } from '../actions/actionTypes';
 import { N_MIDI_MESSAGES_TO_KEEP } from '../constants';
 import sessions from './sessions';
 
@@ -7,6 +8,10 @@ export const initialState = {
   isMidiLearningsoundID: undefined,
   midiMappings: { notes: {} },
   latestReceivedMessages: [],
+  inputDevice: undefined, // undefined = all input devices
+  inputChannel: undefined, // undefined = all channels
+  isMidiSupported: false,
+  availableMIDIDevices: [],
 };
 
 const midi = (state = initialState, action) => {
@@ -45,6 +50,26 @@ const midi = (state = initialState, action) => {
       newLatestReceivedMessages.unshift(action.message); // Add to beginning
       return Object.assign({}, state, {
         latestReceivedMessages: newLatestReceivedMessages.slice(0, N_MIDI_MESSAGES_TO_KEEP),
+      });
+    }
+    case SET_MIDI_SUPPORTED: {
+      return Object.assign({}, state, {
+        isMidiSupported: action.midiSupported,
+      });
+    }
+    case SET_MIDI_INPUT_CHANNEL: {
+      return Object.assign({}, state, {
+        inputChannel: action.channelNumber,
+      });
+    }
+    case SET_MIDI_INPUT_DEVICE: {
+      return Object.assign({}, state, {
+        inputDevice: action.deviceName,
+      });
+    }
+    case SET_MIDI_AVAILABLE_DEVICES: {
+      return Object.assign({}, state, {
+        availableMIDIDevices: action.devicesList,
       });
     }
     default:

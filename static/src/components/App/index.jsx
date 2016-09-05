@@ -4,7 +4,6 @@ import configureStore from '../../store';
 import Map from '../Map';
 import Login from '../Login';
 import Logo from '../Logo';
-import MIDI from '../MIDI';
 import Modal from '../Modal';
 import Sidebar from '../Sidebar';
 import MessagesBox from '../MessagesBox';
@@ -16,7 +15,6 @@ function App() {
   return (
     <Provider store={store}>
       <div className="app-container">
-        <MIDI />
         <Login />
         <Map />
         <Sidebar />

@@ -27,7 +27,6 @@ function CheckBox(props) {
       />
       <span
         className={`box${(props.checked) ? ' active' : ''}`}
-        onClick={props.onChange}
       />
     </div>
   );

@@ -1,0 +1,12 @@
+@import "./variables.json";
+
+.midi-indicator {
+  .selectors {
+    .select-with-label {
+      width: 250px;
+      display: inline-block;
+      margin-bottom: 5px;
+      margin-right: 5px;
+    }
+  }
+}

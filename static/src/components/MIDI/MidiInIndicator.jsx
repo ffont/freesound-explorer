@@ -23,7 +23,7 @@ class MidiInIndicator extends React.Component {
     this.lastMessageIdOld = false;
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.setUpMIDIDevices();
   }
 
@@ -62,44 +62,54 @@ class MidiInIndicator extends React.Component {
       }
     }
     return (
-      <div>
+      <div className="midi-indicator">
         { (message) ? midiMessageTypeLabel(message.type) : '' } { messageInfo }
-        <SelectWithLabel
-          onChange={(evt) => {
-            let channelNumber;
-            if (evt.target.value !== 'All') {
-              channelNumber = parseInt(evt.target.value, 10);
-            }
-            this.props.setMidiInputChannel(channelNumber);
-          }}
-          options={[{ option: undefined, name: 'All' },
-            { option: '1', name: '1' }, { option: '2', name: '2' },
-            { option: '3', name: '3' }, { option: '4', name: '4' },
-            { option: '5', name: '5' }, { option: '6', name: '6' },
-            { option: '7', name: '7' }, { option: '8', name: '8' },
-            { option: '9', name: '9' }, { option: '10', name: '10' },
-            { option: '11', name: '11' }, { option: '12', name: '12' },
-            { option: '13', name: '13' }, { option: '14', name: '14' },
-            { option: '15', name: '15' }, { option: '16', name: '16' }]}
-          label="Input channel"
-          defaultValue={this.props.inputChannel}
-        />
-        <SelectWithLabel
-          onChange={(evt) => {
-            let deviceName;
-            if (evt.target.value !== 'All') {
-              deviceName = evt.target.value;
-            }
-            this.props.setMidiInputDevice(deviceName);
-          }}
-          options={
-            [{ option: undefined, name: 'All' },
-            ...this.props.availableMIDIDevices.map((device) => (
-            { option: device.value.name, name: device.value.name }
-          ))]}
-          label="Input device"
-          defaultValue={this.props.inputDevice}
-        />
+        <div className="selectors">
+          <SelectWithLabel
+            onChange={(evt) => {
+              let channelNumber;
+              if (evt.target.value !== 'All') {
+                channelNumber = parseInt(evt.target.value, 10);
+              }
+              this.props.setMidiInputChannel(channelNumber);
+            }}
+            options={[{ option: undefined, name: 'All' },
+              { option: '1', name: '1' }, { option: '2', name: '2' },
+              { option: '3', name: '3' }, { option: '4', name: '4' },
+              { option: '5', name: '5' }, { option: '6', name: '6' },
+              { option: '7', name: '7' }, { option: '8', name: '8' },
+              { option: '9', name: '9' }, { option: '10', name: '10' },
+              { option: '11', name: '11' }, { option: '12', name: '12' },
+              { option: '13', name: '13' }, { option: '14', name: '14' },
+              { option: '15', name: '15' }, { option: '16', name: '16' }]}
+            label="Input channel"
+            defaultValue={this.props.inputChannel}
+          />
+          <SelectWithLabel
+            onChange={(evt) => {
+              let deviceName;
+              if (evt.target.value !== 'All') {
+                deviceName = evt.target.value;
+              }
+              this.props.setMidiInputDevice(deviceName);
+            }}
+            options={
+              [{ option: undefined, name: 'All' },
+              ...this.props.availableMIDIDevices.map((device) => (
+              { option: device.value.name, name: device.value.name }
+            ))]}
+            label="Input device"
+            defaultValue={this.props.inputDevice}
+          />
+          <i
+            className="fa fa-lg fa-refresh"
+            aria-hidden
+            onClick={(evt) => {
+              evt.stopPropagation();
+              this.props.setUpMIDIDevices();
+            }}
+          />
+        </div>
       </div>
     );
   }

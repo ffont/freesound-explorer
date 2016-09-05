@@ -93,8 +93,12 @@ export const setUpMIDIDevices = () => (dispatch, getStore) => {
     window.navigator.requestMIDIAccess().then(
       (midiAccess) => {
         dispatch(setMidiSupported(true));
-        const inputs = midiAccess.inputs.values();
+        // Disconnect existing devices
+        store.midi.availableMIDIDevices.forEach((device) => {
+          device.value.onmidimessage = null;
+        });
         // Iterate over all existing MIDI devices and connect them to onMIDIMessage
+        const inputs = midiAccess.inputs.values();
         const devicesList = [];
         for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
           devicesList.push(input);

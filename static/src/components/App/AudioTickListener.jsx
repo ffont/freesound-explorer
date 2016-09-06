@@ -1,6 +1,10 @@
 import React from 'react';
 
 class AudioTickListener extends React.Component {
+  constructor() {
+    super();
+    this.tickEventCallback = this.tickEventCallback.bind(this);
+  }
   /*
   Components extending AudioTickListener will receive tick events.
   On each tick the function 'onAudioTick' will be called with information about current
@@ -11,17 +15,21 @@ class AudioTickListener extends React.Component {
   Metronome component.
   */
   componentDidMount() {
-    window.addEventListener('tick', (e) => {
-      this.onAudioTick(e.detail.bar, e.detail.beat, e.detail.tick, e.detail.time);
-    }, false);
+    window.addEventListener('tick', this.tickEventCallback, false);
   }
+
   componentWillUnmount() {
-    window.removeEventListener('tick', () => {});
+    window.removeEventListener('tick', this.tickEventCallback);
   }
+
   onAudioTick(bar, beat, tick, time) {
     // Compoenents extending AudioTickListener should override this function.
     // Otherwise the following console.log statement will be printed.
     console.log('Tick event', this.constructor.name, bar, beat, tick, time);
+  }
+
+  tickEventCallback(evt) {
+    this.onAudioTick(evt.detail.bar, evt.detail.beat, evt.detail.tick, evt.detail.time);
   }
 }
 

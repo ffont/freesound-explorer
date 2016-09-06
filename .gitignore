@@ -7,3 +7,5 @@ settings.py
 npm-debug.log
 .tags
 .idea
+static/css/
+static/fonts/

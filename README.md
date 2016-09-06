@@ -24,6 +24,11 @@ If you want to generate the production build, run:
 npm run build
 ```
 
+To run the tests, run:
+```
+npm test
+```
+
 ## Back-end
 To run the flask server (for enabling Freesound user auth), you will need to create a new virtualenv and install all the dependencies:
 ```

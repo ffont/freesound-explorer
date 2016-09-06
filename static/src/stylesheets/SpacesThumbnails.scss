@@ -1,0 +1,59 @@
+@import "./variables.json";
+
+ul.spaces-thumbnails-container {
+  list-style: none;
+  padding: 0;
+}
+
+.space-thumbnail {
+  position: relative;
+  height: $thumbnailHeight;
+  border: 3px solid $sidebarIconHoverColor;
+  border-radius: $defaultBorderRadius;
+  margin-bottom: 20px;
+  transition: border 0.3s ease-in-out;
+  cursor: pointer;
+  &:before {
+    content: '';
+    background: transparent;
+    transition: background 0.3s ease-in-out;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  &:hover, &.active {
+    border: 3px solid $accentColor;
+    &:before {
+      background: transparentize($accentColor, 0.6);
+      mix-blend-mode: screen;
+    }
+  }
+  svg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    pointer-events: none;
+    circle {
+      mix-blend-mode: screen;
+    }
+  }
+  .space-title.thumbnail {
+    position: relative;
+    font-size: 1em;
+    margin: 15px;
+    header > * {
+      font-size: 1.5em;
+    }
+    z-index: 2;
+  }
+  i.fa-times-circle-o {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
+}

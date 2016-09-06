@@ -1,7 +1,11 @@
 {
   "extends": "eslint-config-airbnb",
+  "rules": {
+    "import/prefer-default-export": 0,
+    },
   "env": {
-    "jasmine": true
+    "mocha": true,
+    "browser": true
   },
   "plugins": [
     "react"

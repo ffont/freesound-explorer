@@ -1,31 +1,17 @@
 @import "./variables.json";
 
-* {
-	margin:0;
-	padding:0;
-	font-family: Helvetica;
-	font-size: 14px;
-	font-weight: 300;
-	color: white;
-}
-
-html, body, #app {
+html, body, #app, .app-container {
 	height: 100%;
 }
 
 body {
 	background: $blackBackground;
 	overflow: hidden;
+	font-family: Lato, Helvetica, Segoe UI, Arial, sans-serif;
+	font-size: 14px;
+	color: white;
 }
 
-.app-container {
-	height: 100%;
-}
-
-input:focus {
-	outline: 0;
-}
-
-select:focus {
-	outline: 0;
+i {
+	color: white;
 }

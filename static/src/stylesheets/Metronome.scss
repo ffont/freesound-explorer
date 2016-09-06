@@ -1,0 +1,29 @@
+@import "./variables.json";
+
+.metronome-wrapper {
+  width: $sidebarWidth - $sidebarClosedOffset;
+  padding: 0 $sidebarContentPadding;
+  box-sizing: border-box;
+}
+
+.metronome-slider {
+  display: inline-block;
+  width: 200px;
+  height: $metronomeHeight;
+  margin-right: 5px;
+  margin-top:0px;
+}
+
+.metronome-controls {
+  float: right;
+  text-align: center;
+  width: 90px;
+  height: $metronomeHeight;
+  line-height: $metronomeHeight;
+  margin-top:0px;
+
+  button {
+    width: 40px;
+  }
+
+}

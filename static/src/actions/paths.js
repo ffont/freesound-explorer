@@ -97,6 +97,11 @@ export const onAudioTickPath = (pathID, bar, beat, tick, time) =>
     }
   };
 
+const linkPathToMetronome = (pathID, tickEvt, dispatch) => {
+  const { bar, beat, tick, time } = tickEvt.detail;
+  dispatch(onAudioTickPath(pathID, bar, beat, tick, time));
+};
+
 export const addPath = (sounds) => (dispatch) => {
   const pathID = UUID.v4();
   dispatch({
@@ -105,8 +110,11 @@ export const addPath = (sounds) => (dispatch) => {
     pathID,
   });
   // link new path to metronome ticks
-  window.addEventListener('tick', (evt) => {
-    const { bar, beat, tick, time } = evt.detail;
-    dispatch(onAudioTickPath(pathID, bar, beat, tick, time));
-  }, false);
+  window.addEventListener('tick', (evt) => linkPathToMetronome(pathID, evt, dispatch), false);
+};
+
+export const removePath = (pathID) => (dispatch) => {
+  // remove listener for tick events
+  window.removeEventListener('tick', (evt) => linkPathToMetronome(pathID, evt, dispatch), false);
+  dispatch({ type: at.REMOVE_PATH, pathID });
 };

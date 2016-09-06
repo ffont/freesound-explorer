@@ -6,7 +6,7 @@ import { updateDescriptor, updateMinDuration, updateMaxDuration,
   updateMaxResults, updateQuery }
   from '../../actions/search';
 import { setExampleQueryDone } from '../../actions/sidebar';
-import { DEFAULT_QUERY, DEFAULT_DESCRIPTOR } from '../../constants';
+import { DEFAULT_QUERY, DEFAULT_DESCRIPTOR, PERFORM_QUERY_AT_MOUNT } from '../../constants';
 import InputTextButton from '../Input/InputTextButton';
 import SelectWithLabel from '../Input/SelectWithLabel';
 import SliderRange from '../Input/SliderRange';
@@ -36,9 +36,11 @@ class QueryBox extends React.Component {
   }
 
   componentDidMount() {
-    // query at mount to have the user play with something with no additional interaction
-    if (!this.props.exampleQueryDone) {
-      this.tryQueryAtMount();
+    if (PERFORM_QUERY_AT_MOUNT) {
+      // query at mount to have the user play with something with no additional interaction
+      if (!this.props.exampleQueryDone) {
+        this.tryQueryAtMount();
+      }
     }
   }
 

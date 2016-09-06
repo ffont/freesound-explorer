@@ -3,6 +3,7 @@ export const DEFAULT_MAX_RESULTS = 60;
 export const DEFAULT_MIN_DURATION = 0;
 export const DEFAULT_MAX_DURATION = 5;
 export const DEFAULT_DESCRIPTOR = 'lowlevel.mfcc.mean';
+export const PERFORM_QUERY_AT_MOUNT = false;
 
 export const DEFAULT_MESSAGE_DURATION = 4000;
 export const MESSAGE_STATUS = {

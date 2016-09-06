@@ -41,7 +41,7 @@ class PathList extends React.Component {
         )}
         <li>
           <button onClick={() => this.createNewPath()} >
-            <i className="fa fa-plus fa-lg" aria-hidden="true" />  &nbsp;&nbsp;New path
+            <i className="fa fa-plus fa-lg" aria-hidden />New path
           </button>
         </li>
       </ul>
@@ -57,5 +57,6 @@ const mapStateToProps = (state) => {
 
 PathList.propTypes = propTypes;
 export default connect(mapStateToProps, {
-  addPath, displaySystemMessage,
+  addPath,
+  displaySystemMessage,
 })(PathList);

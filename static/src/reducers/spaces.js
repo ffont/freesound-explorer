@@ -3,12 +3,13 @@ import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE,
   from '../actions/actionTypes';
 import { computeSoundGlobalPosition } from './sounds';
 import { getMapCenter } from '../utils/uiUtils';
+import { generateListOfSpacesOriginPositions } from '../utils/misc';
 import sessions from './sessions';
 
-const computeSpacePosition = (spaceIndex) => ({
-  x: (spaceIndex * 4) + 1,
-  y: 1,
-});
+const computeSpacePosition = (spaceIndex) => {
+  const { x, y } = generateListOfSpacesOriginPositions(spaceIndex)[spaceIndex];
+  return { x: (4 * x) + 1, y: (4 * y) + 1 };
+};
 
 const computeSpacePositionInMap = (spacePosition, mapPosition) => {
   const tsnePosition = { x: 0, y: 0 };

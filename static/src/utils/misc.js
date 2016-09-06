@@ -55,3 +55,35 @@ export const truncatedString = (string, length = 40, extraChars = '...') => {
   }
   return newString;
 };
+
+export const generateListOfSpacesOriginPositions = (n) => {
+  /*
+  This function is used to compute the position that a new space will take in the map.
+  Assuming a grid and given an origin (0,0) it iterates over all 'empty' positions in the grid
+  to find the closest one and add this to a list.
+  The function returns a list of n grid positions sorted by proximity to the origin.
+  */
+  let minDistance = 9999999999;
+  let minI;
+  let minJ;
+  const usedPositions = [];
+  const outPositions = [];
+  [...Array(n + 1).keys()].forEach(() => {
+    [...Array(n + 1).keys()].forEach((j) => {
+      [...Array(n + 1).keys()].forEach((i) => {
+        if (!usedPositions.includes(`${i}_${j}`)) {
+          const dist = Math.sqrt((i * i) + (j * j));
+          if (dist < minDistance) {
+            minDistance = dist;
+            minI = i;
+            minJ = j;
+          }
+        }
+      });
+    });
+    outPositions.push({ x: minI, y: minJ });
+    usedPositions.push(`${minI}_${minJ}`);
+    minDistance = 9999999999;
+  });
+  return outPositions;
+};

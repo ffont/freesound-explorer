@@ -24,6 +24,12 @@ const propTypes = {
   playNextSoundFromPath: React.PropTypes.func,
 };
 
+const beatButtons = [
+  { name: 'no', icon: 'x' },
+  { name: 'beat', icon: '1/4' },
+  { name: '2xbeat', icon: '1/2' },
+  { name: 'bar', icon: '1' },
+];
 
 class Path extends React.Component {
   onPathClick() {
@@ -73,22 +79,15 @@ class Path extends React.Component {
             {path.name} ({path.sounds.length} sounds)
           </a>&nbsp;
           <div className="button-group">
-            <button
-              className={(path.syncMode === 'no') ? 'active' : ''}
-              onClick={() => this.setPathSyncHelper('no')}
-            >x</button>
-            <button
-              className={(path.syncMode === 'beat') ? 'active' : ''}
-              onClick={() => this.setPathSyncHelper('beat')}
-            >1/4</button>
-            <button
-              className={(path.syncMode === '2xbeat') ? 'active' : ''}
-              onClick={() => this.setPathSyncHelper('2xbeat')}
-            >1/2</button>
-            <button
-              className={(path.syncMode === 'bar') ? 'active' : ''}
-              onClick={() => this.setPathSyncHelper('bar')}
-            >1</button>
+            {beatButtons.map((button) => (
+              <button
+                key={button.name}
+                onClick={() => this.setPathSyncHelper(button.name)}
+                className={(path.syncMode === button.name) ? 'active' : ''}
+              >
+                {button.icon}
+              </button>
+            ))}
           </div>
           <div className="button-group">
             <button

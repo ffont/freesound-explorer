@@ -1,0 +1,140 @@
+// Styling Cross-Browser Compatible Range Inputs with Sass
+// Github: https://github.com/darlanrod/input-range-sass
+// Author: Darlan Rod https://github.com/darlanrod
+// Version 1.1.1
+// MIT License
+
+@import "./variables.json";
+
+$track-color: transparentize(white, 0.8) !default;
+$thumb-color: $sidebarIconHoverColor !default;
+
+$thumb-radius: $defaultBorderRadius !default;
+$thumb-height: $sidebarClosedOffset !default;
+$thumb-width: $sidebarClosedOffset !default;
+$thumb-shadow-size: 0px !default;
+$thumb-shadow-blur: 0px !default;
+$thumb-shadow-color: #111 !default;
+$thumb-border-width: 0px !default;
+$thumb-border-color: #fff !default;
+
+$track-width: 100% !default;
+$track-height: 10px !default;
+$track-shadow-size: 2px !default;
+$track-shadow-blur: 2px !default;
+$track-shadow-color: #222 !default;
+$track-border-width: 0px !default;
+$track-border-color: #000 !default;
+
+$track-radius: $defaultBorderRadius !default;
+$contrast: 5% !default;
+
+@mixin shadow($shadow-size, $shadow-blur, $shadow-color) {
+  box-shadow: $shadow-size $shadow-size $shadow-blur $shadow-color, 0 0 $shadow-size lighten($shadow-color, 5%);
+}
+
+@mixin track() {
+  width: $track-width;
+  height: $track-height;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+@mixin thumb() {
+  @include shadow($thumb-shadow-size, $thumb-shadow-blur, $thumb-shadow-color);
+  border: $thumb-border-width solid $thumb-border-color;
+  height: $thumb-height;
+  width: $thumb-width;
+  border-radius: $thumb-radius;
+  background: $thumb-color;
+  cursor: pointer;
+}
+
+@mixin styledInputRange() {
+  -webkit-appearance: none;
+  margin: $thumb-height / 2 0;
+  width: $track-width;
+
+  &:focus, &:hover {
+    outline: none;
+    + span {
+      color: white;
+    }
+  }
+
+  &::-webkit-slider-runnable-track {
+    @include track();
+    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+    background: $track-color;
+    border: $track-border-width solid $track-border-color;
+    border-radius: $track-radius;
+  }
+
+  &::-moz-range-track {
+    @include track();
+    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+    background: $track-color;
+    border: $track-border-width solid $track-border-color;
+    border-radius: $track-radius;
+  }
+
+  &:focus, &:hover {
+    &::-webkit-slider-runnable-track {
+      background: white;
+    }
+    &::-moz-range-track {
+      @include shadow($track-shadow-size, $track-shadow-blur, transparent);
+      background: white;
+    }
+    &::-webkit-slider-thumb {
+      background: $accentColor;
+    }
+    &::-moz-range-thumb {
+      background: $accentColor;
+    }
+  }
+
+  &::-webkit-slider-thumb {
+    @include thumb();
+    -webkit-appearance: none;
+    margin-top: ((-$track-border-width * 2 + $track-height) / 2) - ($thumb-height / 2);
+  }
+
+  &::-moz-range-thumb {
+    @include thumb();
+  }
+
+  &::-ms-track {
+    @include track();
+    background: transparent;
+    border-color: transparent;
+    border-width: $thumb-width 0;
+    color: transparent;
+  }
+
+  &::-ms-fill-lower {
+    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+    background: darken($track-color, $contrast);
+    border: $track-border-width solid $track-border-color;
+    border-radius: $track-radius * 2;
+  }
+
+  &::-ms-fill-upper {
+    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+    background: $track-color;
+    border: $track-border-width solid $track-border-color;
+    border-radius: $track-radius * 2;
+  }
+
+  &::-ms-thumb {
+    @include thumb();
+  }
+
+  &:focus::-ms-fill-lower {
+    background: $track-color;
+  }
+
+  &:focus::-ms-fill-upper {
+    background: lighten($track-color, $contrast);
+  }
+}

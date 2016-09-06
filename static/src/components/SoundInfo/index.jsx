@@ -1,19 +1,27 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import freesound from '../../vendors/freesound';
 import '../../stylesheets/SoundInfo.scss';
 import Waveform from './Waveform';
 import { MESSAGE_STATUS } from '../../constants';
+import { addSoundToPath } from '../../actions/paths';
+import { displaySystemMessage } from '../../actions/messagesBox';
+import { setIsMidiLearningSoundID } from '../../actions/midi';
+import { midiNoteNumberToMidiNoteLabel } from '../../utils/midiUtils';
 import sassVariables from 'json!../../stylesheets/variables.json';
 
 const propTypes = {
-  position: React.PropTypes.object,
   sound: React.PropTypes.object,
   isUserLoggedIn: React.PropTypes.bool,
-  updateSystemStatusMessage: React.PropTypes.func,
-  setIsMidiLearningSoundId: React.PropTypes.func,
-  isMidiLearningSoundId: React.PropTypes.number,
+  displaySystemMessage: React.PropTypes.func,
+  setIsMidiLearningSoundID: React.PropTypes.func,
+  isMidiLearningsoundID: React.PropTypes.string,
   midiMappings: React.PropTypes.object,
+  selectedPath: React.PropTypes.string,
+  addSoundToPath: React.PropTypes.func,
 };
+
+// TODO: SoundInfo component must read isUserLoggedIn from state.login (redux)
 
 const DEFAULT_CLASSNAME = 'sound-info-modal';
 
@@ -26,42 +34,37 @@ class SoundInfo extends React.Component {
   }
 
   getCurrentlyAssignedMidiNoteLabel() {
-    // let correspondingKey = '-';
-    let octave = '';
     let noteLabel = '';
     Object.keys(this.props.midiMappings.notes).forEach((key) => {
       if (this.props.midiMappings.notes[key] === this.lastSound.id) {
-        octave = parseInt(Math.floor(key / 12) - 1, 10);
-        noteLabel = 'C C#D D#E F F#G G#A A#B '.substring((key % 12) * 2, ((key % 12) * 2) + 2);
-        if (noteLabel[1] === ' ') { noteLabel = noteLabel[0]; }
-        // correspondingKey = parseInt(key, 10);
+        noteLabel = midiNoteNumberToMidiNoteLabel(key);
       }
     });
-    return `${noteLabel}${octave}`; // (${correspondingKey})`;
+    return noteLabel;
   }
 
   getClassName() {
-    if (!this.props.position) {
+    if (!this.props.sound) {
       // hide modal: reset classname to default (not visible)
       return DEFAULT_CLASSNAME;
     }
     let className = `${DEFAULT_CLASSNAME} active`;
-    if (this.props.position.y < parseInt(sassVariables.soundInfoModalHeight, 10)) {
+    if (this.props.sound.position.cy < parseInt(sassVariables.soundInfoModalHeight, 10)) {
       className += '-down';
     }
     return className;
   }
 
   getContainerStyle() {
-    if (!!this.props.position) {
-      this.lastTopPosition = this.props.position.y;
-      this.lastLeftPosition = this.props.position.x;
+    if (this.props.sound) {
+      this.lastTopPosition = this.props.sound.position.cy;
+      this.lastLeftPosition = this.props.sound.position.cx;
     }
     return { top: this.lastTopPosition, left: this.lastLeftPosition };
   }
 
   updateSoundContent() {
-    if (!!this.props.sound) {
+    if (this.props.sound) {
       this.lastSound = this.props.sound;
       this.bookmarkSound = this.bookmarkSound.bind(this);
       this.downloadSound = this.downloadSound.bind(this);
@@ -76,13 +79,13 @@ class SoundInfo extends React.Component {
       'Freesound Explorer' // Category
     ).then(() => {
       this.lastSound.isBookmarked = true;
-      this.props.updateSystemStatusMessage('Sound bookmarked!', MESSAGE_STATUS.SUCCESS);
+      this.props.displaySystemMessage('Sound bookmarked!', MESSAGE_STATUS.SUCCESS);
     },
-    () => this.props.updateSystemStatusMessage('Error bookmarking sound', MESSAGE_STATUS.ERROR));
+    () => this.props.displaySystemMessage('Error bookmarking sound', MESSAGE_STATUS.ERROR));
   }
 
   downloadSound() {
-    this.props.updateSystemStatusMessage('Downloading sounds is not implemented yet',
+    this.props.displaySystemMessage('Downloading sounds is not implemented yet',
       MESSAGE_STATUS.INFO);
   }
 
@@ -113,15 +116,25 @@ class SoundInfo extends React.Component {
     }
     const midiLearnButton = (
       <button
-        className={(this.props.isMidiLearningSoundId === this.lastSound.id) ? 'learning' : ''}
-        onClick={() => this.props.setIsMidiLearningSoundId(this.lastSound.id)}
+        className={(this.props.isMidiLearningsoundID === this.lastSound.id) ? 'learning' : ''}
+        onClick={() => this.props.setIsMidiLearningSoundID(this.lastSound.id)}
       >
-        MIDI: {(this.props.isMidiLearningSoundId === this.lastSound.id) ? 'learning' :
+        MIDI: {(this.props.isMidiLearningsoundID === this.lastSound.id) ? 'learning' :
           this.getCurrentlyAssignedMidiNoteLabel()}
       </button>
     );
+    let addToPathButton = null;
+    if (this.props.selectedPath !== null) {
+      addToPathButton = (
+        <button
+          onClick={() => this.props.addSoundToPath(
+            this.props.sound.id, this.props.selectedPath)}
+        >Add to path</button>
+      );
+    }
     const userButtons = (
       <div className="sound-info-buttons-container">
+        {addToPathButton}
         {midiLearnButton}
         {bookmarkSoundIcon}
         {dowloadSoundIcon}
@@ -146,5 +159,17 @@ class SoundInfo extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  const { selectedSound } = state.sounds;
+  const sound = state.sounds.byID[selectedSound];
+  const { midiMappings, isMidiLearningsoundID } = state.midi;
+  const { selectedPath } = state.paths;
+  return { selectedPath, sound, midiMappings, isMidiLearningsoundID };
+};
+
 SoundInfo.propTypes = propTypes;
-export default SoundInfo;
+export default connect(mapStateToProps, {
+  displaySystemMessage,
+  addSoundToPath,
+  setIsMidiLearningSoundID,
+})(SoundInfo);

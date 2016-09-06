@@ -1,14 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import '../../stylesheets/MessagesBox.scss';
 import { DEFAULT_MESSAGE_DURATION, MESSAGE_STATUS } from '../../constants';
+import { moveSidebarArrow } from '../../actions/sidebar';
+import { messagesBoxHeight } from 'json!../../stylesheets/variables.json';
 
 const DEFAULT_CLASSNAME = 'message-box';
 
 const propTypes = {
-  statusMessage: React.PropTypes.shape({
-    message: React.PropTypes.string,
-    status: React.PropTypes.string,
-  }),
+  message: React.PropTypes.string,
+  status: React.PropTypes.string,
+  messageCount: React.PropTypes.number,
+  moveSidebarArrow: React.PropTypes.func,
 };
 
 class MessagesBox extends React.Component {
@@ -20,7 +23,7 @@ class MessagesBox extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     // update component only when receiving a new message
-    if (this.props.statusMessage.message !== nextProps.statusMessage.message) {
+    if (this.props.messageCount !== nextProps.messageCount) {
       clearTimeout(this.visibilityTimeout);
       this.handleTimedVisibility();
       return true;
@@ -29,6 +32,8 @@ class MessagesBox extends React.Component {
   }
 
   handleTimedVisibility() {
+    // move close-sidebar icon to avoid covering it with the message
+    this.props.moveSidebarArrow(messagesBoxHeight);
     this.className = `${DEFAULT_CLASSNAME} active`;
     this.visibilityTimeout = setTimeout(() => {
       this.hideMessage();
@@ -36,12 +41,14 @@ class MessagesBox extends React.Component {
   }
 
   hideMessage() {
+    // reset close-sidebar icon position
+    this.props.moveSidebarArrow(0);
     this.className = DEFAULT_CLASSNAME;
     this.forceUpdate();
   }
 
   render() {
-    const { message, status } = this.props.statusMessage;
+    const { message, status } = this.props;
     const className = `${this.className} ${status}`;
     let statusIcon;
     switch (status) {
@@ -65,7 +72,7 @@ class MessagesBox extends React.Component {
     return (
       <div className={className}>
         <div className="message-content">
-          <i className={`fa fa-${statusIcon}`} aria-hidden></i>
+          <i className={`fa fa-${statusIcon}`} aria-hidden />
           <span style={{ marginLeft: 20 }}>{message}</span>
         </div>
       </div>
@@ -73,5 +80,8 @@ class MessagesBox extends React.Component {
   }
 }
 
+
+const mapStateToProps = (state) => state.messagesBox;
+
 MessagesBox.propTypes = propTypes;
-export default MessagesBox;
+export default connect(mapStateToProps, { moveSidebarArrow })(MessagesBox);

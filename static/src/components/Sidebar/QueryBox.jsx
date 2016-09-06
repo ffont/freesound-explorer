@@ -1,77 +1,140 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import '../../stylesheets/QueryBox.scss';
-import '../../stylesheets/toggle.scss';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { DEFAULT_MAX_RESULTS } from '../../constants';
+import { getSounds } from '../../actions/sounds';
+import { updateDescriptor, updateMinDuration, updateMaxDuration,
+  updateMaxResults, updateQuery }
+  from '../../actions/search';
+import { setExampleQueryDone } from '../../actions/sidebar';
+import { DEFAULT_QUERY, DEFAULT_DESCRIPTOR, PERFORM_QUERY_AT_MOUNT } from '../../constants';
+import InputTextButton from '../Input/InputTextButton';
+import SelectWithLabel from '../Input/SelectWithLabel';
+import SliderRange from '../Input/SliderRange';
 
 const propTypes = {
-  onSetMapDescriptor: React.PropTypes.func,
-  onSetMaxResults: React.PropTypes.func,
-  onQuerySubmit: React.PropTypes.func,
   maxResults: React.PropTypes.number,
-  playOnHover: React.PropTypes.bool,
-  tooglePlayOnHover: React.PropTypes.func,
+  maxDuration: React.PropTypes.number,
+  minDuration: React.PropTypes.number,
+  query: React.PropTypes.string,
+  descriptor: React.PropTypes.string,
+  getSounds: React.PropTypes.func,
+  sounds: React.PropTypes.object,
+  exampleQueryDone: React.PropTypes.bool,
+  updateDescriptor: React.PropTypes.func,
+  updateMinDuration: React.PropTypes.func,
+  updateMaxDuration: React.PropTypes.func,
+  updateMaxResults: React.PropTypes.func,
+  updateQuery: React.PropTypes.func,
+  setExampleQueryDone: React.PropTypes.func,
 };
 
 class QueryBox extends React.Component {
   constructor(props) {
     super(props);
-    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    this.submitQuery = this.submitQuery.bind(this);
+    this.tryQueryAtMount = this.tryQueryAtMount.bind(this);
   }
+
+  componentDidMount() {
+    if (PERFORM_QUERY_AT_MOUNT) {
+      // query at mount to have the user play with something with no additional interaction
+      if (!this.props.exampleQueryDone) {
+        this.tryQueryAtMount();
+      }
+    }
+  }
+
+  tryQueryAtMount() {
+    if (sessionStorage.getItem('app_token')) {
+      this.submitQuery();
+      this.props.setExampleQueryDone();
+    } else {
+      setTimeout(this.tryQueryAtMount, 500);
+    }
+  }
+
+  submitQuery() {
+    let { query } = this.props;
+    const { descriptor, maxResults, minDuration, maxDuration } = this.props;
+    const queryParams = { descriptor, maxResults, minDuration, maxDuration };
+    if (!query.length) {
+      query = DEFAULT_QUERY;
+    }
+    this.props.getSounds(query, queryParams);
+  }
+
   render() {
     return (
-      <div id="query-box" className="query-box">
-        <form id="query-form" className="query-form">
-          <input
-            id="query-terms-input"
-            className="query-terms-input"
-            type="text"
-            placeholder="query terms, e.g.: instrument note"
-            ref="query"
-          />
-          <button
-            id="search-button"
-            className="search-button"
-            onClick={(evt) => {
-              evt.preventDefault();
-              this.props.onQuerySubmit(this.refs.query.value);
-            }}
-          >
-            <i className="fa fa-arrow-circle-right fa-lg" aria-hidden="true" />
-          </button>
-          <select
-            id="map-descriptors-selector"
-            className="map-descriptors-selector"
-            onChange={this.props.onSetMapDescriptor}
-          >
-            <option value="lowlevel.mfcc.mean">Arrange by Timbre</option>
-            <option value="tonal.hpcp.mean">Arrange by Tonality</option>
-          </select>
-          <input
-            id="max-results-slider"
-            className="max-results-slider"
-            type="range" onChange={this.props.onSetMaxResults}
-            min="20" max="450" defaultValue={DEFAULT_MAX_RESULTS} step="1"
-          /><span>{this.props.maxResults}</span>
-          <div className="toggle-wrapper">
-            <span>Play on hover:</span>
-            <div style={{ display: 'inline' }}>
-              <input
-                id="playOnHoverSwitch"
-                className={`toggle${(this.props.playOnHover) ? ' active' : ''}`}
-                type="checkbox"
-                checked={this.props.playOnHover}
-                onChange={this.props.tooglePlayOnHover}
-              />
-              <label htmlFor="playOnHoverSwitch"></label>
-            </div>
-          </div>
-        </form>
-      </div>
+      <form id="query-form" className="query-form">
+        <InputTextButton
+          onTextChange={(evt) => {
+            const query = evt.target.value;
+            this.props.updateQuery(query);
+          }}
+          tabIndex="1"
+          placeholder="query terms, e.g.: instruments"
+          onButtonClick={(evt) => {
+            evt.preventDefault();
+            this.submitQuery();
+          }}
+          buttonIcon="fa fa-search fa-lg"
+        />
+        <SelectWithLabel
+          onChange={(evt) => {
+            const descriptor = evt.target.value;
+            this.props.updateDescriptor(descriptor);
+          }}
+          options={[{ value: 'lowlevel.mfcc.mean', name: 'Timbre' },
+            { value: 'tonal.hpcp.mean', name: 'Tonality' }]}
+          label="Arrange by"
+          tabIndex="3"
+          defaultValue={this.props.descriptor}
+        />
+        <SliderRange
+          label="Number of results"
+          minValue="20"
+          maxValue="450"
+          defaultValue={this.props.maxResults}
+          onChange={(evt) => {
+            const maxResults = evt.target.value;
+            this.props.updateMaxResults(maxResults);
+          }}
+          currentValue={this.props.maxResults}
+          tabIndex="4"
+          id="max-results-slider"
+        />
+        <SliderRange
+          label="Maximum duration"
+          minValue="0.5"
+          maxValue="30"
+          defaultValue={this.props.maxDuration}
+          step="0.5"
+          onChange={(evt) => {
+            const maxDuration = evt.target.value;
+            this.props.updateMaxDuration(maxDuration);
+          }}
+          currentValue={this.props.maxDuration}
+          tabIndex="5"
+          id="max-duration-slider"
+        />
+      </form>
     );
   }
 }
 
+const mapStateToProps = (state) => {
+  const sounds = state.sounds.byID;
+  const { exampleQueryDone } = state.sidebar;
+  return Object.assign({}, { sounds, exampleQueryDone }, state.search);
+};
 
 QueryBox.propTypes = propTypes;
-export default QueryBox;
+export default connect(mapStateToProps, {
+  getSounds,
+  setExampleQueryDone,
+  updateDescriptor,
+  updateMinDuration,
+  updateMaxDuration,
+  updateMaxResults,
+  updateQuery,
+})(QueryBox);

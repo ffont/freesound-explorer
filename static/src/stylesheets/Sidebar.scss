@@ -1,72 +1,97 @@
 @import "./variables.json";
+@import "./button";
 
 .sidebar {
   position: absolute;
-  top: 0px;
-  left: $sidebarClosedOffset - $sidebarWidth;
+  top: 0;
+  bottom: 0;
+  transform: translate3d($sidebarClosedOffset - $sidebarWidth, 0, 0);
   width: $sidebarWidth;
-  transition: left 0.3s ease;
-  height: 100%;
+  transition: transform 0.3s ease;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  p {
+  background-color: $sidebarColor;
+  &.active {
+    transform: translate3d(0,0,0);
+  }
+  h1 {
+    margin: 0.2em 0 0.67em;
+  }
+  p.info-paragraph {
     margin-bottom: 8px;
   }
 }
 
-.sidebar.active {
-  left: 0px;
+.sidebar-content-wrapper {
+  width: $sidebarWidth - $sidebarClosedOffset;
+  padding: $sidebarContentPadding;
+  box-sizing: border-box;
+  height: calc(100% - #{$metronomeHeight});
+  font-size: 1.1em;
+  & > div {
+    position: relative;
+    height: calc(100% - 2 * #{$sidebarContentPadding} + #{$sidebarTabTitlePadding});
+  }
 }
 
-.sidebar-content-wrapper {
-  width: $sidebarWidth - $sidebarClosedOffset -40px;
-  padding: 20px;
-  background-color: rgba(0, 0, 0, 0.4);
-  height: 100%;
-  overflow: scroll;
+.sidebar-vertical-scroll {
+  width: 100%;
+  position: absolute;
+  top: $sidebarTabTitlePadding;
+  bottom: 0;
+  padding: 10px 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  ul, ol {
+    margin-top: 0;
+  }
+}
+
+.sidebar-nav-button {
+  width: 100%;
+  height: $sidebarClosedOffset;
+  text-align: center;
+  line-height: $sidebarClosedOffset - $inputBorderPadding * 2;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease-in-out,
+    color 0.3s ease-in-out, border 0.3s ease-in-out;
+  border: $inputBorderPadding solid transparent;
+  i {
+    color: white;
+  }
+  &:hover, &.active {
+    background-color: $sidebarIconHoverColor;
+    i {
+      color: $blackBackground;
+    }
+  }
+  &:focus {
+    border: $inputBorderPadding solid $sidebarIconHoverColor;
+    outline: none;
+  }
 }
 
 .sidebar-menu-wrapper {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 0;
+  right: 0;
   height: 100%;
   width: $sidebarClosedOffset;
-  background-color: rgba(0, 0, 0, 0.5);
-  ul {
+  ol {
     list-style-type: none;
+    margin: 0;
+    padding: 0;
   }
   li {
-    display: block;
-    width: 100%;
-    height: $sidebarClosedOffset;
-    text-align: center;
-    line-height: $sidebarClosedOffset;
-    cursor: pointer;
+    button {
+      margin: -$inputBorderPadding 0;
+    }
+    @extend .sidebar-nav-button;
   }
-  li:hover {
-    background-color: $hoverBackground;
+  .toggle-visibility-button {
+    position:absolute;
+    left: 0;
+    @extend .sidebar-nav-button;
+    transition: bottom 0.3s ease-in-out;
   }
-  li.active {
-    background-color: rgba(100, 100, 100, 0.5);
-  }
-}
-
-.sidebar-menu-wrapper .toggle-visibility-button {
-  position:absolute;
-  bottom: 0px;
-  left: 0px;
-  display:block;
-  width: 100%;
-  height: $sidebarClosedOffset;
-  line-height: $sidebarClosedOffset;
-  text-align: center;
-  cursor: pointer;
-}
-
-.sidebar .mode-active {
-  display: block;
-}
-
-.sidebar .mode-inactive {
-  display: none;
 }

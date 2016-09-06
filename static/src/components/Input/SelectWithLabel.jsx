@@ -9,7 +9,7 @@ const propTypes = {
     name: React.PropTypes.string,
   })),
   tabIndex: React.PropTypes.string,
-  defaultOptionValue: React.PropTypes.string,
+  defaultValue: React.PropTypes.string,
   id: React.PropTypes.string,
 };
 const defaultProps = {
@@ -26,7 +26,7 @@ function SelectWithLabel(props) {
         onChange={props.onChange}
         id={props.id}
         tabIndex={props.tabIndex}
-        defaultValue={props.defaultOptionValue}
+        defaultValue={props.defaultValue}
       >
         {props.options.map((option, index) => (
           <option value={option.value} key={index}>{option.name}</option>

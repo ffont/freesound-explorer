@@ -6,7 +6,7 @@ import { updateDescriptor, updateMinDuration, updateMaxDuration,
   updateMaxResults, updateQuery }
   from '../../actions/search';
 import { setExampleQueryDone } from '../../actions/sidebar';
-import { DEFAULT_QUERY } from '../../constants';
+import { DEFAULT_QUERY, DEFAULT_DESCRIPTOR } from '../../constants';
 import InputTextButton from '../Input/InputTextButton';
 import SelectWithLabel from '../Input/SelectWithLabel';
 import SliderRange from '../Input/SliderRange';
@@ -15,8 +15,8 @@ const propTypes = {
   maxResults: React.PropTypes.number,
   maxDuration: React.PropTypes.number,
   minDuration: React.PropTypes.number,
-  descriptor: React.PropTypes.string,
   query: React.PropTypes.string,
+  descriptor: React.PropTypes.string,
   getSounds: React.PropTypes.func,
   sounds: React.PropTypes.object,
   exampleQueryDone: React.PropTypes.bool,
@@ -82,10 +82,11 @@ class QueryBox extends React.Component {
             const descriptor = evt.target.value;
             this.props.updateDescriptor(descriptor);
           }}
-          options={[{ option: 'lowlevel.mfcc.mean', name: 'Timbre' },
-            { option: 'tonal.hpcp.mean', name: 'Tonality' }]}
+          options={[{ value: 'lowlevel.mfcc.mean', name: 'Timbre' },
+            { value: 'tonal.hpcp.mean', name: 'Tonality' }]}
           label="Arrange by"
           tabIndex="3"
+          defaultValue={this.props.descriptor}
         />
         <SliderRange
           label="Number of results"

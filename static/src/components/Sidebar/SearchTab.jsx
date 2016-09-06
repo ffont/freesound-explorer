@@ -2,10 +2,10 @@ import React from 'react';
 import QueryBox from './QueryBox';
 import baseTab from './BaseTab';
 
-function SearchTab(props) {
+function SearchTab() {
   return (
     <div>
-      <QueryBox {...props} />
+      <QueryBox />
     </div>
   );
 }

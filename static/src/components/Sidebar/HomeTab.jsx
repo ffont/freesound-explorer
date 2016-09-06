@@ -1,20 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { togglePlayOnHover } from '../../actions/settings';
+import { displaySystemMessage } from '../../actions/messagesBox';
 import { newSession, saveSession, loadSession } from '../../actions/sessions';
 import baseTab from './BaseTab';
 import CheckBox from '../Input/CheckBox';
 import OptionsList, { makeOption } from '../Input/OptionsList';
+import { MESSAGE_STATUS } from '../../constants';
 
 const propTypes = {
   playOnHover: React.PropTypes.bool,
   togglePlayOnHover: React.PropTypes.func,
 };
 
+const displayErrorMessage = (displayMessage) =>
+  displayMessage('Feature not implemented yet :( (coming soon)', MESSAGE_STATUS.ERROR);
+
 const getOptions = (props) => [
-  makeOption('file-o', 'new session', () => props.newSession()),
-  makeOption('save', 'save session', () => props.saveSession()),
-  makeOption('upload', 'restore session', () => props.loadSession()),
+  makeOption('file-o', 'new session', () => displayErrorMessage(props.displaySystemMessage)),
+  makeOption('save', 'save session', () => displayErrorMessage(props.displaySystemMessage)),
+  makeOption('upload', 'restore session', () => displayErrorMessage(props.displaySystemMessage)),
 ];
 
 function HomeTab(props) {
@@ -39,4 +44,5 @@ export default connect(mapStateToProps, {
   newSession,
   saveSession,
   loadSession,
+  displaySystemMessage,
 })(baseTab('Home', HomeTab));

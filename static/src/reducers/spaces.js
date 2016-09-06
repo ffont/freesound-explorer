@@ -19,6 +19,25 @@ const computeSpacePositionInMap = (spacePosition, mapPosition) => {
   };
 };
 
+const computeSpaceIndex = (spaces) => {
+  // We find the smallest non-negative integer which is not already
+  // taken as an index of any of existing spaces
+  const usedSpaceIndexes = [];
+  spaces.forEach((space) => {
+    usedSpaceIndexes.push(space.spaceIndex);
+  });
+  let spaceIndex = 0;
+  let found = false;
+  while (!found) {
+    if (!usedSpaceIndexes.includes(spaceIndex)) {
+      found = true;
+    } else {
+      spaceIndex += 1;
+    }
+  }
+  return spaceIndex;
+};
+
 const spaceInitialState = {
   sounds: [],
   query: undefined,
@@ -39,16 +58,17 @@ const spaceInitialState = {
   },
 };
 
-const singleSpace = (state = spaceInitialState, action, spacesInMap) => {
+const singleSpace = (state = spaceInitialState, action, spaceIndex) => {
   switch (action.type) {
     case FETCH_SOUNDS_REQUEST: {
-      const spacePosition = computeSpacePosition(spacesInMap);
+      const spacePosition = computeSpacePosition(spaceIndex);
       const { query, queryParams, queryID } = action;
       return Object.assign({}, state, {
         query,
         queryParams,
         queryID,
         position: spacePosition,
+        spaceIndex,
       });
     }
     case FETCH_SOUNDS_SUCCESS: {
@@ -76,8 +96,8 @@ const singleSpace = (state = spaceInitialState, action, spacesInMap) => {
 const spacesReducer = (state = [], action) => {
   switch (action.type) {
     case FETCH_SOUNDS_REQUEST: {
-      const spacesInMap = state.length;
-      const space = singleSpace(spaceInitialState, action, spacesInMap);
+      const spaceIndex = computeSpaceIndex(state);
+      const space = singleSpace(spaceInitialState, action, spaceIndex);
       return [...state, space];
     }
     case FETCH_SOUNDS_SUCCESS:

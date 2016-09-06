@@ -4,12 +4,6 @@ import makeActionCreator from './makeActionCreator';
 import { elementWithId } from '../utils/arrayUtils';
 import * as at from './actionTypes';
 
-export const addPath = (sounds) => ({
-  type: at.ADD_PATH,
-  sounds,
-  pathID: UUID.v4(),
-});
-
 export const setPathSync = makeActionCreator(at.SET_PATH_SYNC,
   'pathID', 'syncMode');
 
@@ -86,27 +80,33 @@ export const triggerSoundHelper = (pathID, time) =>
     }
   };
 
+const shouldTriggerSoundHelper = (path, tick) => (
+  (path.syncMode === 'beat' && tick % 4 === 0) ||
+  (path.syncMode === '2xbeat' && tick % 8 === 0) ||
+  (path.syncMode === 'bar' && tick === 0)
+);
+
 export const onAudioTickPath = (pathID, bar, beat, tick, time) =>
   (dispatch, getStore) => {
     const store = getStore();
     const path = elementWithId(store.paths.paths, pathID);
-    if (path) {
-      if (path.isPlaying) {
-        if (path.syncMode === 'beat') {
-          if (tick % 4 === 0) {
-            dispatch(triggerSoundHelper(pathID, time));
-          }
-        }
-        if (path.syncMode === '2xbeat') {
-          if (tick % 8 === 0) {
-            dispatch(triggerSoundHelper(pathID, time));
-          }
-        }
-        if (path.syncMode === 'bar') {
-          if (tick === 0) {
-            dispatch(triggerSoundHelper(pathID, time));
-          }
-        }
+    if (path && path.isPlaying) {
+      if (shouldTriggerSoundHelper(path, tick)) {
+        dispatch(triggerSoundHelper(pathID, time));
       }
     }
   };
+
+export const addPath = (sounds) => (dispatch) => {
+  const pathID = UUID.v4();
+  dispatch({
+    type: at.ADD_PATH,
+    sounds,
+    pathID,
+  });
+  // link new path to metronome ticks
+  window.addEventListener('tick', (evt) => {
+    const { bar, beat, tick, time } = evt.detail;
+    dispatch(onAudioTickPath(pathID, bar, beat, tick, time));
+  }, false);
+};

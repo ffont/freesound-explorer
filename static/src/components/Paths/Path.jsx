@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../../stylesheets/Paths.scss';
-import AudioTickListener from '../App/AudioTickListener';
 import { setPathSync, startStopPath, setPathCurrentlyPlaying, selectPath,
   setPathWaitUntilFinished, setPathActive,
-  playNextSoundFromPath, onAudioTickPath } from '../../actions/paths';
+  playNextSoundFromPath } from '../../actions/paths';
 import PathListSound from './PathListSound';
 
 
@@ -23,10 +22,18 @@ const propTypes = {
   playAudio: React.PropTypes.func,
   stopAudio: React.PropTypes.func,
   playNextSoundFromPath: React.PropTypes.func,
-  onAudioTickPath: React.PropTypes.func,
 };
 
-class Path extends AudioTickListener {
+
+class Path extends React.Component {
+  onPathClick() {
+    this.props.selectPath(this.props.path.id);
+    if (!this.props.selected) {
+      this.props.setPathActive(this.props.path.id, true);
+    } else {
+      this.props.setPathActive(this.props.path.id, !this.props.path.isActive);
+    }
+  }
 
   setPathSyncHelper(newSyncMode) {
     const prevSyncMode = this.props.path.syncMode;
@@ -41,10 +48,6 @@ class Path extends AudioTickListener {
     }
   }
 
-  onAudioTick(bar, beat, tick, time) {
-    this.props.onAudioTickPath(this.props.path.id, bar, beat, tick, time);
-  }
-
   startStopPlayingPath() {
     const path = this.props.path;
     if (path.isPlaying) {
@@ -55,15 +58,6 @@ class Path extends AudioTickListener {
         // If path passed from stop to play and syncMode is no, trigger play next sound
         this.props.playNextSoundFromPath(path.id, 0);
       }
-    }
-  }
-
-  onPathClick() {
-    this.props.selectPath(this.props.path.id);
-    if (!this.props.selected) {
-      this.props.setPathActive(this.props.path.id, true);
-    } else {
-      this.props.setPathActive(this.props.path.id, !this.props.path.isActive);
     }
   }
 
@@ -122,7 +116,7 @@ class Path extends AudioTickListener {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = () => ({});
 
 Path.propTypes = propTypes;
 export default connect(mapStateToProps, {
@@ -133,5 +127,4 @@ export default connect(mapStateToProps, {
   setPathWaitUntilFinished,
   setPathActive,
   playNextSoundFromPath,
-  onAudioTickPath,
 })(Path);

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import '../../stylesheets/Paths.scss';
 import { setPathSync, startStopPath, setPathCurrentlyPlaying, selectPath,
   setPathWaitUntilFinished, setPathActive,
-  playNextSoundFromPath } from '../../actions/paths';
+  playNextSoundFromPath, addRandomSoundToPath } from '../../actions/paths';
 import PathListSound from './PathListSound';
 
 
@@ -22,6 +22,7 @@ const propTypes = {
   playAudio: React.PropTypes.func,
   stopAudio: React.PropTypes.func,
   playNextSoundFromPath: React.PropTypes.func,
+  addRandomSoundToPath: React.PropTypes.func,
 };
 
 const beatButtons = [
@@ -96,10 +97,6 @@ class Path extends React.Component {
             >></button>
           </div>
         </div>
-        {((path.isActive) && (path.sounds.length === 0)) ?
-          <ul className="sounds-list"><li>Select a sound and click 'Add to path'</li></ul>
-            : false
-        }
         {(path.isActive) ?
           <ul className="sounds-list">
             {path.sounds.map((soundID, soundIdx) => (
@@ -110,6 +107,14 @@ class Path extends React.Component {
               />
           ))}
           </ul> : ''}
+          {(path.isActive) ?
+            <div className="add-sounds-tip">Select a sound or <b>
+              <a
+                style={{ cursor: 'pointer' }}
+                onClick={() => this.props.addRandomSoundToPath(path.id)}
+              >add a random sound</a></b></div>
+              : false
+          }
       </li>
     );
   }
@@ -126,4 +131,5 @@ export default connect(mapStateToProps, {
   setPathWaitUntilFinished,
   setPathActive,
   playNextSoundFromPath,
+  addRandomSoundToPath,
 })(Path);

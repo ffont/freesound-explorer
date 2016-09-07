@@ -17,6 +17,9 @@
       background-color: rgba(70, 70, 70, 0.4);
     }
   }
+  li.add-new-path {
+    margin-top: 15px;
+  }
   .fa-plus {
     margin-right: 10px;
   }
@@ -26,6 +29,12 @@
   min-height: $sidebarClosedOffset;
   line-height: $sidebarClosedOffset;
   display: block;
+}
+
+.add-sounds-tip {
+  padding: 10px;
+  padding-top: 0px;
+  text-align: right;
 }
 
 .cursor-pointer {

@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../../stylesheets/Paths.scss';
-import AudioTickListener from '../App/AudioTickListener';
 import { setPathSync, startStopPath, setPathCurrentlyPlaying, selectPath,
   setPathWaitUntilFinished, setPathActive,
-  playNextSoundFromPath, onAudioTickPath } from '../../actions/paths';
+  playNextSoundFromPath } from '../../actions/paths';
 import PathListSound from './PathListSound';
 
 
@@ -23,10 +22,24 @@ const propTypes = {
   playAudio: React.PropTypes.func,
   stopAudio: React.PropTypes.func,
   playNextSoundFromPath: React.PropTypes.func,
-  onAudioTickPath: React.PropTypes.func,
 };
 
-class Path extends AudioTickListener {
+const beatButtons = [
+  { name: 'no', icon: 'x' },
+  { name: 'beat', icon: '1/4' },
+  { name: '2xbeat', icon: '1/2' },
+  { name: 'bar', icon: '1' },
+];
+
+class Path extends React.Component {
+  onPathClick() {
+    this.props.selectPath(this.props.path.id);
+    if (!this.props.selected) {
+      this.props.setPathActive(this.props.path.id, true);
+    } else {
+      this.props.setPathActive(this.props.path.id, !this.props.path.isActive);
+    }
+  }
 
   setPathSyncHelper(newSyncMode) {
     const prevSyncMode = this.props.path.syncMode;
@@ -39,10 +52,6 @@ class Path extends AudioTickListener {
         this.props.playNextSoundFromPath(this.props.path.id, time);
       }
     }
-  }
-
-  onAudioTick(bar, beat, tick, time) {
-    this.props.onAudioTickPath(this.props.path.id, bar, beat, tick, time);
   }
 
   startStopPlayingPath() {
@@ -58,15 +67,6 @@ class Path extends AudioTickListener {
     }
   }
 
-  onPathClick() {
-    this.props.selectPath(this.props.path.id);
-    if (!this.props.selected) {
-      this.props.setPathActive(this.props.path.id, true);
-    } else {
-      this.props.setPathActive(this.props.path.id, !this.props.path.isActive);
-    }
-  }
-
   render() {
     const path = this.props.path;
     return (
@@ -79,22 +79,15 @@ class Path extends AudioTickListener {
             {path.name} ({path.sounds.length} sounds)
           </a>&nbsp;
           <div className="button-group">
-            <button
-              className={(path.syncMode === 'no') ? 'active' : ''}
-              onClick={() => this.setPathSyncHelper('no')}
-            >x</button>
-            <button
-              className={(path.syncMode === 'beat') ? 'active' : ''}
-              onClick={() => this.setPathSyncHelper('beat')}
-            >1/4</button>
-            <button
-              className={(path.syncMode === '2xbeat') ? 'active' : ''}
-              onClick={() => this.setPathSyncHelper('2xbeat')}
-            >1/2</button>
-            <button
-              className={(path.syncMode === 'bar') ? 'active' : ''}
-              onClick={() => this.setPathSyncHelper('bar')}
-            >1</button>
+            {beatButtons.map((button) => (
+              <button
+                key={button.name}
+                onClick={() => this.setPathSyncHelper(button.name)}
+                className={(path.syncMode === button.name) ? 'active' : ''}
+              >
+                {button.icon}
+              </button>
+            ))}
           </div>
           <div className="button-group">
             <button
@@ -122,7 +115,7 @@ class Path extends AudioTickListener {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = () => ({});
 
 Path.propTypes = propTypes;
 export default connect(mapStateToProps, {
@@ -133,5 +126,4 @@ export default connect(mapStateToProps, {
   setPathWaitUntilFinished,
   setPathActive,
   playNextSoundFromPath,
-  onAudioTickPath,
 })(Path);

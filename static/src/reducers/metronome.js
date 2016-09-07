@@ -1,4 +1,5 @@
-import { UPDATE_METRONOME_STATUS, SET_TEMPO, STARTSTOP_METRONOME } from '../actions/actionTypes';
+import { UPDATE_METRONOME_STATUS, SET_TEMPO, STARTSTOP_METRONOME,
+  SET_PLAY_SOUND, SET_STARTED_METRONOME_AT_MOUNT } from '../actions/actionTypes';
 import { DEFAULT_TEMPO } from '../constants';
 import sessions from './sessions';
 
@@ -8,6 +9,8 @@ const initialState = {
   tick: 0,
   tempo: DEFAULT_TEMPO,
   isPlaying: false,
+  playSound: false,
+  startedMetronomeAtMount: false,
 };
 
 function metronome(state = initialState, action) {
@@ -24,9 +27,19 @@ function metronome(state = initialState, action) {
         tempo: action.tempo,
       });
     }
+    case SET_PLAY_SOUND: {
+      return Object.assign({}, state, {
+        playSound: action.playSound,
+      });
+    }
     case STARTSTOP_METRONOME: {
       return Object.assign({}, state, {
         isPlaying: action.isPlaying,
+      });
+    }
+    case SET_STARTED_METRONOME_AT_MOUNT: {
+      return Object.assign({}, state, {
+        startedMetronomeAtMount: action.startedMetronomeAtMount,
       });
     }
     default:

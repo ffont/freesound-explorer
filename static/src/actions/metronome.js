@@ -15,6 +15,9 @@ export const startStopMetronome = makeActionCreator(at.STARTSTOP_METRONOME,
 export const setPlaySound = makeActionCreator(at.SET_PLAY_SOUND,
   'playSound');
 
+export const setStartedMetronomeAtMount = makeActionCreator(at.SET_STARTED_METRONOME_AT_MOUNT,
+  'startedMetronomeAtMount');
+
 let schedulerTimer;
 let updateStateInSyncTimer;
 let lastTickDrawn = -1;

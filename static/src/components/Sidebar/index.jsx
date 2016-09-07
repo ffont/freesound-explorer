@@ -7,7 +7,6 @@ import PathsTab from './PathsTab';
 import SpacesTab from './SpacesTab';
 import MidiTab from './MidiTab';
 import InfoTab from './InfoTab';
-import Metronome from '../Metronome';
 import { SIDEBAR_TABS } from '../../constants';
 import '../../stylesheets/Sidebar.scss';
 
@@ -56,7 +55,6 @@ function Sidebar(props) {
         <div className="sidebar-content-wrapper">
           {sideBarContent}
         </div>
-        <Metronome />
         <div className="sidebar-menu-wrapper">
           <nav>
             <ol>

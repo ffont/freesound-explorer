@@ -6,6 +6,7 @@ import { newSession, saveSession, loadSession } from '../../actions/sessions';
 import baseTab from './BaseTab';
 import CheckBox from '../Input/CheckBox';
 import OptionsList, { makeOption } from '../Input/OptionsList';
+import Metronome from '../Metronome';
 import { MESSAGE_STATUS } from '../../constants';
 
 const propTypes = {
@@ -32,6 +33,7 @@ function HomeTab(props) {
         label="Play on hover"
         tabIndex="6"
       />
+      <Metronome />
     </div>
   );
 }

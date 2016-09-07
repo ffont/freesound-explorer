@@ -1,9 +1,7 @@
 @import "./variables.json";
 
 .metronome-wrapper {
-  width: $sidebarWidth - $sidebarClosedOffset;
-  padding: 0 $sidebarContentPadding;
-  box-sizing: border-box;
+  margin-top: 20px;
 }
 
 .metronome-slider {

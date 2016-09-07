@@ -12,6 +12,9 @@ export const setTempo = makeActionCreator(at.SET_TEMPO,
 export const startStopMetronome = makeActionCreator(at.STARTSTOP_METRONOME,
   'isPlaying');
 
+export const setPlaySound = makeActionCreator(at.SET_PLAY_SOUND,
+  'playSound');
+
 let schedulerTimer;
 let updateStateInSyncTimer;
 let lastTickDrawn = -1;
@@ -19,6 +22,18 @@ let drawTicksInQueue = [];
 let currentTick = 0;
 let currentBar = 1;
 let nextTickTime;
+
+function playMetronomeSound(tick, time) {
+  // Play metronome sound (only quarter notes)
+  if (tick % (TICKRESOLUTION / 4) === 0) {
+    const frequency = (tick % TICKRESOLUTION === 0) ? 880.0 : 440.0;
+    const osc = audioContext.createOscillator();
+    osc.connect(audioContext.destination);
+    osc.frequency.value = frequency;
+    osc.start(time);
+    osc.stop(time + 0.05);
+  }
+}
 
 export const audioScheduler = () => (dispatch, getStore) => {
   const store = getStore();
@@ -33,6 +48,10 @@ export const audioScheduler = () => (dispatch, getStore) => {
       const time = nextTickTime;
       const event = new CustomEvent('tick', { detail: { bar, beat, tick, time } });
       window.dispatchEvent(event);
+
+      if (store.metronome.playSound) {
+        playMetronomeSound(tick, time);
+      }
 
       // Add tick info to queue for updating display
       drawTicksInQueue.push({ bar, beat, tick, time });

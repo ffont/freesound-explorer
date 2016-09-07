@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../../stylesheets/Metronome.scss';
-import MetronomeSynth from './MetronomeSynth';
-import { setTempo, stopMetronome, startMetronome } from '../../actions/metronome';
-import { audioContext } from '../../actions/audio';
+import { setTempo, stopMetronome, startMetronome, setPlaySound } from '../../actions/metronome';
 import SliderRange from '../Input/SliderRange';
 
 
@@ -11,8 +9,10 @@ const propTypes = {
   setTempo: React.PropTypes.func,
   tempo: React.PropTypes.number,
   isPlaying: React.PropTypes.bool,
+  playSound: React.PropTypes.bool,
   stopMetronome: React.PropTypes.func,
   startMetronome: React.PropTypes.func,
+  setPlaySound: React.PropTypes.func,
 };
 
 class Metronome extends React.Component {
@@ -44,7 +44,11 @@ class Metronome extends React.Component {
           />
         </div>
         <div className="metronome-controls">
-          <MetronomeSynth audioContext={audioContext} />
+          <button onClick={() => this.props.setPlaySound(!this.props.playSound)} >
+            {(this.props.playSound) ?
+              <i className="fa fa-volume-up fa-2x" aria-hidden="true" /> :
+              <i className="fa fa-volume-off fa-2x" aria-hidden="true" />}
+          </button>
           <button onClick={() => this.startStopMetronome()} >
             {(this.props.isPlaying) ?
               <i className="fa fa-stop fa-2x" aria-hidden="true" /> :
@@ -57,8 +61,8 @@ class Metronome extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { tempo, isPlaying } = state.metronome;
-  return { tempo, isPlaying };
+  const { tempo, isPlaying, playSound } = state.metronome;
+  return { tempo, isPlaying, playSound };
 };
 
 Metronome.propTypes = propTypes;
@@ -66,4 +70,5 @@ export default connect(mapStateToProps, {
   setTempo,
   stopMetronome,
   startMetronome,
+  setPlaySound,
 })(Metronome);

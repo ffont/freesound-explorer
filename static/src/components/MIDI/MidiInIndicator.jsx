@@ -23,10 +23,6 @@ class MidiInIndicator extends React.Component {
     this.lastMessageIdOld = false;
   }
 
-  componentDidMount() {
-    this.props.setUpMIDIDevices();
-  }
-
   shouldComponentUpdate() {
     this.lastMessageIdOld = false;
     clearTimeout(this.visibilityTimeout);

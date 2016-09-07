@@ -9,6 +9,7 @@ import MidiTab from './MidiTab';
 import InfoTab from './InfoTab';
 import { SIDEBAR_TABS, START_METRONOME_AT_MOUNT } from '../../constants';
 import { startMetronome, setStartedMetronomeAtMount } from '../../actions/metronome';
+import { setUpMIDIDevices } from '../../actions/midi';
 import '../../stylesheets/Sidebar.scss';
 
 const propTypes = {
@@ -19,6 +20,7 @@ const propTypes = {
   setSidebarTab: React.PropTypes.func,
   startMetronome: React.PropTypes.func,
   setStartedMetronomeAtMount: React.PropTypes.func,
+  setUpMIDIDevices: React.PropTypes.func,
 };
 
 const icons = {
@@ -55,6 +57,7 @@ class Sidebar extends React.Component {
       this.props.setStartedMetronomeAtMount(true);
       this.props.startMetronome();
     }
+    this.props.setUpMIDIDevices(); // Prepare midi stuff
   }
   render() {
     const sidebarClassName = `sidebar${(this.props.isVisible) ? ' active' : ''}`;
@@ -106,4 +109,5 @@ export default connect(mapStateToProps, {
   setSidebarTab,
   startMetronome,
   setStartedMetronomeAtMount,
+  setUpMIDIDevices,
 })(Sidebar);

@@ -1,11 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../../stylesheets/Metronome.scss';
-import { setTempo, stopMetronome, startMetronome, setPlaySound,
-  setStartedMetronomeAtMount } from '../../actions/metronome';
+import { setTempo, stopMetronome, startMetronome, setPlaySound } from '../../actions/metronome';
 import SliderRange from '../Input/SliderRange';
-import { START_METRONOME_AT_MOUNT } from '../../constants';
-
 
 const propTypes = {
   setTempo: React.PropTypes.func,
@@ -15,18 +12,9 @@ const propTypes = {
   stopMetronome: React.PropTypes.func,
   startMetronome: React.PropTypes.func,
   setPlaySound: React.PropTypes.func,
-  setStartedMetronomeAtMount: React.PropTypes.func,
-  startedMetronomeAtMount: React.PropTypes.bool,
 };
 
 class Metronome extends React.Component {
-
-  componentDidMount() {
-    if ((START_METRONOME_AT_MOUNT) && (!this.props.startedMetronomeAtMount)) {
-      this.props.setStartedMetronomeAtMount(true);
-      this.props.startMetronome();
-    }
-  }
 
   startStopMetronome() {
     if (this.props.isPlaying) {
@@ -73,8 +61,8 @@ class Metronome extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { tempo, isPlaying, playSound, startedMetronomeAtMount } = state.metronome;
-  return { tempo, isPlaying, playSound, startedMetronomeAtMount };
+  const { tempo, isPlaying, playSound } = state.metronome;
+  return { tempo, isPlaying, playSound };
 };
 
 Metronome.propTypes = propTypes;
@@ -83,5 +71,4 @@ export default connect(mapStateToProps, {
   stopMetronome,
   startMetronome,
   setPlaySound,
-  setStartedMetronomeAtMount,
 })(Metronome);

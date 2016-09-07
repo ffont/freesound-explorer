@@ -5,6 +5,8 @@ export const DEFAULT_MAX_DURATION = 5;
 export const DEFAULT_DESCRIPTOR = 'lowlevel.mfcc.mean';
 export const PERFORM_QUERY_AT_MOUNT = false;
 
+export const USE_LOCAL_FONTAWESOME = false;
+
 export const DEFAULT_MESSAGE_DURATION = 4000;
 export const MESSAGE_STATUS = {
   INFO: 'info',

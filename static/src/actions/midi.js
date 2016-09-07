@@ -47,10 +47,10 @@ export const handleNoteOn = (note, velocity) => (dispatch, getStore) => {
 };
 
 const messageOnExpectedChannel = (receivedChannel, selectedChannel) =>
-  (selectedChannel && (selectedChannel === receivedChannel));
+  (selectedChannel && (selectedChannel !== receivedChannel));
 
 const messageOnExpectedDevice = (receivedDevice, selectedDevice) =>
-  (selectedDevice && (selectedDevice === receivedDevice));
+  (selectedDevice && (selectedDevice !== receivedDevice));
 
 export const onMIDIMessage = (message) => (dispatch, getStore) => {
   const store = getStore();
@@ -60,8 +60,8 @@ export const onMIDIMessage = (message) => (dispatch, getStore) => {
   const velocity = message.data[2];
   const inputDevice = message.target.name;
 
-  if (!messageOnExpectedChannel(channel, store.midi.inputChannel) ||
-    !messageOnExpectedDevice(inputDevice, store.midi.inputDevice)) {
+  if (messageOnExpectedChannel(channel, store.midi.inputChannel) ||
+    messageOnExpectedDevice(inputDevice, store.midi.inputDevice)) {
     return;
   }
 

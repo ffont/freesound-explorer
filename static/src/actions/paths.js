@@ -35,7 +35,7 @@ export const addRandomSoundToPath = (pathID) => (dispatch, getStore) => {
   const spaceSounds = space.sounds;
   dispatch({
     type: at.ADD_SOUND_TO_PATH,
-    soundID: spaceSounds[0],
+    soundID: getRandomElement(spaceSounds),
     pathID: pathID || getStore().paths.selectedPath,
   });
 };

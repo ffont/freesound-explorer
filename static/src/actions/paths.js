@@ -2,6 +2,7 @@ import { default as UUID } from 'node-uuid';
 import { audioContext, playAudio, stopAudio } from './audio';
 import makeActionCreator from './makeActionCreator';
 import { elementWithId } from '../utils/arrayUtils';
+import { getRandomElement } from '../utils/misc';
 import * as at from './actionTypes';
 
 export const setPathSync = makeActionCreator(at.SET_PATH_SYNC,
@@ -27,6 +28,17 @@ export const addSoundToPath = (soundID, pathID) => (dispatch, getStore) => dispa
   soundID,
   pathID: pathID || getStore().paths.selectedPath,
 });
+
+export const addRandomSoundToPath = (pathID) => (dispatch, getStore) => {
+  const store = getStore();
+  const space = elementWithId(store.spaces.spaces, store.spaces.currentSpace, 'queryID');
+  const spaceSounds = space.sounds;
+  dispatch({
+    type: at.ADD_SOUND_TO_PATH,
+    soundID: spaceSounds[0],
+    pathID: pathID || getStore().paths.selectedPath,
+  });
+};
 
 export const clearAllPaths = makeActionCreator(at.CLEAR_ALL_PATHS);
 

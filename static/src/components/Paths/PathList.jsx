@@ -22,7 +22,8 @@ class PathList extends React.Component {
   createNewPath() {
     if (this.props.currentSpace) {
       const pathSounds = [];
-      const nSounds = 3 + Math.floor(Math.random() * 3);
+      // const nSounds = 3 + Math.floor(Math.random() * 3);
+      const nSounds = 0; // TODO: rethink whether we provide sounds by default
       const space = elementWithId(this.props.spaces, this.props.currentSpace, 'queryID');
       const spaceSounds = space.sounds;
       [...Array(nSounds).keys()].map(() => pathSounds.push(getRandomElement(spaceSounds)));
@@ -39,7 +40,7 @@ class PathList extends React.Component {
         {this.props.paths.map((path) =>
           <Path key={path.id} path={path} selected={path.id === this.props.selectedPath} />
         )}
-        <li>
+        <li className="add-new-path">
           <button onClick={() => this.createNewPath()} >
             <i className="fa fa-plus fa-lg" aria-hidden />New path
           </button>

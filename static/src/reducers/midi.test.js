@@ -2,19 +2,19 @@ import expect from 'expect';
 import deepFreeze from 'deep-freeze';
 import '../polyfills/Object.assign';
 import { default as reducer, initialState } from './midi';
-import { addMidiNoteMapping, setIsMidiLearningSoundID } from '../actions/midi';
+import { addMidiNoteMapping, setSoundCurrentlyLearnt } from '../actions/midi';
 
 describe('midi reducer', () => {
   it('should return initialState', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
   deepFreeze(initialState);
-  describe('setIsMidiLearningSoundID', () => {
+  describe('setSoundCurrentlyLearnt', () => {
     const stateBefore = initialState;
     const soundID = 10;
-    const stateAfter = Object.assign({}, stateBefore, { isMidiLearningsoundID: soundID });
+    const stateAfter = Object.assign({}, stateBefore, { soundCurrentlyLearnt: soundID });
     it('correctly updates state', () => {
-      expect(reducer(stateBefore, setIsMidiLearningSoundID(soundID))).toEqual(stateAfter);
+      expect(reducer(stateBefore, setSoundCurrentlyLearnt(soundID))).toEqual(stateAfter);
     });
   });
   describe('addMidiNoteMapping', () => {

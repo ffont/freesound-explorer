@@ -1,13 +1,14 @@
 import makeActionCreator from './makeActionCreator';
 import { ADD_MIDI_NOTE_MAPPING, REMOVE_MIDI_NOTE_MAPPING, SET_MIDI_LEARN_SOUND_ID,
   SET_LATEST_RECEIVED_MIDI_MESSAGE, SET_MIDI_SUPPORTED, SET_MIDI_INPUT_CHANNEL,
-  SET_MIDI_INPUT_DEVICE, SET_MIDI_AVAILABLE_DEVICES } from './actionTypes';
+  SET_MIDI_INPUT_DEVICE, SET_MIDI_AVAILABLE_DEVICES, DISCONNECT_DEVICES } from './actionTypes';
 import { displaySystemMessage } from './messagesBox';
 import { midiMessageTypeLabel } from '../utils/midiUtils';
 import { playAudio, stopAudio } from './audio';
+import { MESSAGE_STATUS } from '../constants';
 
 
-export const setIsMidiLearningSoundID = makeActionCreator(SET_MIDI_LEARN_SOUND_ID, 'soundID');
+export const setSoundCurrentlyLearnt = makeActionCreator(SET_MIDI_LEARN_SOUND_ID, 'soundID');
 export const addMidiNoteMapping = makeActionCreator(ADD_MIDI_NOTE_MAPPING, 'note', 'soundID');
 export const removeMidiNoteMapping = makeActionCreator(REMOVE_MIDI_NOTE_MAPPING, 'note');
 export const setLatestReceivedMidiMessage = makeActionCreator(
@@ -16,12 +17,13 @@ export const setMidiSupported = makeActionCreator(SET_MIDI_SUPPORTED, 'midiSuppo
 export const setMidiInputChannel = makeActionCreator(SET_MIDI_INPUT_CHANNEL, 'channelNumber');
 export const setMidiInputDevice = makeActionCreator(SET_MIDI_INPUT_DEVICE, 'deviceName');
 export const setMidiAvailableDevices = makeActionCreator(SET_MIDI_AVAILABLE_DEVICES, 'devicesList');
+export const disconnectExistingDevices = makeActionCreator(DISCONNECT_DEVICES);
 
 export const handleNoteOff = (note) => (dispatch, getStore) => {
   const store = getStore();
-  const closestNote = Object.keys(store.midi.midiMappings.notes).reduce((prev, curr) =>
+  const closestNote = Object.keys(store.midi.notesMapped).reduce((prev, curr) =>
     (Math.abs(curr - note) < Math.abs(prev - note) ? curr : prev));
-  const soundID = store.midi.midiMappings.notes[closestNote];
+  const soundID = store.midi.notesMapped[closestNote];
   const sourceNodeKey = `node_${note}`;
   dispatch(stopAudio(soundID, sourceNodeKey));
 };
@@ -29,9 +31,9 @@ export const handleNoteOff = (note) => (dispatch, getStore) => {
 export const handleNoteOn = (note, velocity) => (dispatch, getStore) => {
   const store = getStore();
   // Find closest note with assigned sound and play with adjusted playback rate
-  const closestNote = Object.keys(store.midi.midiMappings.notes).reduce((prev, curr) =>
+  const closestNote = Object.keys(store.midi.notesMapped).reduce((prev, curr) =>
     (Math.abs(curr - note) < Math.abs(prev - note) ? curr : prev));
-  const soundID = store.midi.midiMappings.notes[closestNote];
+  const soundID = store.midi.notesMapped[closestNote];
   const semitonesDelta = note - closestNote;
   const playbackRate = Math.pow(2, (semitonesDelta / 12));
   const sourceNodeKey = `node_${note}`;
@@ -44,6 +46,12 @@ export const handleNoteOn = (note, velocity) => (dispatch, getStore) => {
   }
 };
 
+const messageOnExpectedChannel = (receivedChannel, selectedChannel) =>
+  (selectedChannel && (selectedChannel === receivedChannel));
+
+const messageOnExpectedDevice = (receivedDevice, selectedDevice) =>
+  (selectedDevice && (selectedDevice === receivedDevice));
+
 export const onMIDIMessage = (message) => (dispatch, getStore) => {
   const store = getStore();
   const type = message.data[0] & 0xf0;
@@ -52,30 +60,25 @@ export const onMIDIMessage = (message) => (dispatch, getStore) => {
   const velocity = message.data[2];
   const inputDevice = message.target.name;
 
-  // Filter by midi channel if midi input channel is not undefined
-  if ((store.midi.inputChannel !== undefined) && (channel !== store.midi.inputChannel)) {
-    return 0;
-  }
-
-  // Filter by input device if input device is not undefined
-  if ((store.midi.inputDevice !== undefined) && (inputDevice !== store.midi.inputDevice)) {
-    return 0;
+  if (!messageOnExpectedChannel(channel, store.midi.inputChannel) ||
+    !messageOnExpectedDevice(inputDevice, store.midi.inputDevice)) {
+    return;
   }
 
   dispatch(setLatestReceivedMidiMessage({ type, note, velocity, channel }));
   switch (midiMessageTypeLabel(type)) {
     case 'Note On': { // noteOn message
-      if (store.midi.isMidiLearningsoundID) {
-        dispatch(addMidiNoteMapping(note, store.midi.isMidiLearningsoundID));
-        dispatch(setIsMidiLearningSoundID(undefined));
-      } else if (Object.keys(store.midi.midiMappings.notes).length > 0) {
+      if (store.midi.soundCurrentlyLearnt) {
+        dispatch(addMidiNoteMapping(note));
+        dispatch(setSoundCurrentlyLearnt());
+      } else if (Object.keys(store.midi.notesMapped).length > 0) {
         // Only handle message if mappings exist
         dispatch(handleNoteOn(note, velocity));
       }
       break;
     }
     case 'Note Off': { // noteOff message
-      if (Object.keys(store.midi.midiMappings.notes).length > 0) {
+      if (Object.keys(store.midi.notesMapped).length > 0) {
         // Only handle message if mappings exist
         dispatch(handleNoteOff(note));
       }
@@ -84,19 +87,14 @@ export const onMIDIMessage = (message) => (dispatch, getStore) => {
     default:
       break;
   }
-  return 0;
 };
 
-export const setUpMIDIDevices = () => (dispatch, getStore) => {
-  const store = getStore();
+export const setUpMIDIDevices = () => (dispatch) => {
   if (window.navigator.requestMIDIAccess) {
     window.navigator.requestMIDIAccess().then(
       (midiAccess) => {
         dispatch(setMidiSupported(true));
-        // Disconnect existing devices
-        store.midi.availableMIDIDevices.forEach((device) => {
-          device.value.onmidimessage = null;
-        });
+        dispatch(disconnectExistingDevices());
         // Iterate over all existing MIDI devices and connect them to onMIDIMessage
         const inputs = midiAccess.inputs.values();
         const devicesList = [];
@@ -107,10 +105,10 @@ export const setUpMIDIDevices = () => (dispatch, getStore) => {
         dispatch(setMidiAvailableDevices(devicesList));
       }, () => {
       dispatch(setMidiSupported(false));
-      dispatch(displaySystemMessage('No MIDI support...', 'error'));
+      dispatch(displaySystemMessage('No MIDI support...', MESSAGE_STATUS.ERROR));
     });
   } else {
     dispatch(setMidiSupported(false));
-    dispatch(displaySystemMessage('No MIDI support in your browser...', 'error'));
+    dispatch(displaySystemMessage('No MIDI support in your browser...', MESSAGE_STATUS.ERROR));
   }
 };

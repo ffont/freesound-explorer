@@ -4,7 +4,7 @@ import '../../stylesheets/Midi.scss';
 import MidiMapping from './MidiMapping';
 
 const propTypes = {
-  midiMappings: React.PropTypes.object,
+  notesMapped: React.PropTypes.object,
 };
 
 class MidiMappingsList extends React.Component {
@@ -13,11 +13,11 @@ class MidiMappingsList extends React.Component {
       <div className="midi-list">
         <div className="title-text">Assigned MIDI notes:</div>
         <ul>
-          {Object.keys(this.props.midiMappings.notes).map((key, index) =>
+          {Object.keys(this.props.notesMapped).map((key, index) =>
             <MidiMapping
               key={index}
               midiNote={key}
-              soundID={this.props.midiMappings.notes[key]}
+              soundID={this.props.notesMapped[key]}
             />
           )}
         </ul>
@@ -27,10 +27,9 @@ class MidiMappingsList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { midiMappings } = state.midi;
-  return { midiMappings };
+  const { notesMapped } = state.midi;
+  return { notesMapped };
 };
 
 MidiMappingsList.propTypes = propTypes;
-export default connect(mapStateToProps, {
-})(MidiMappingsList);
+export default connect(mapStateToProps, {})(MidiMappingsList);

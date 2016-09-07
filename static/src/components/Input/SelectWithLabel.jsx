@@ -9,7 +9,9 @@ const propTypes = {
     name: React.PropTypes.string,
   })),
   tabIndex: React.PropTypes.string,
-  defaultValue: React.PropTypes.string,
+  defaultValue: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.number]),
   id: React.PropTypes.string,
 };
 const defaultProps = {

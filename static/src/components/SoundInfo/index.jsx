@@ -6,7 +6,7 @@ import Waveform from './Waveform';
 import { MESSAGE_STATUS } from '../../constants';
 import { addSoundToPath } from '../../actions/paths';
 import { displaySystemMessage } from '../../actions/messagesBox';
-import { setIsMidiLearningSoundID } from '../../actions/midi';
+import { setSoundCurrentlyLearnt } from '../../actions/midi';
 import { midiNoteNumberToMidiNoteLabel } from '../../utils/midiUtils';
 import sassVariables from 'json!../../stylesheets/variables.json';
 
@@ -14,8 +14,8 @@ const propTypes = {
   sound: React.PropTypes.object,
   isUserLoggedIn: React.PropTypes.bool,
   displaySystemMessage: React.PropTypes.func,
-  setIsMidiLearningSoundID: React.PropTypes.func,
-  isMidiLearningsoundID: React.PropTypes.string,
+  setSoundCurrentlyLearnt: React.PropTypes.func,
+  soundCurrentlyLearnt: React.PropTypes.string,
   midiMappings: React.PropTypes.object,
   selectedPath: React.PropTypes.string,
   addSoundToPath: React.PropTypes.func,
@@ -35,8 +35,8 @@ class SoundInfo extends React.Component {
 
   getCurrentlyAssignedMidiNoteLabel() {
     let noteLabel = '';
-    Object.keys(this.props.midiMappings.notes).forEach((key) => {
-      if (this.props.midiMappings.notes[key] === this.lastSound.id) {
+    Object.keys(this.props.notesMapped).forEach((key) => {
+      if (this.props.notesMapped[key] === this.lastSound.id) {
         noteLabel = midiNoteNumberToMidiNoteLabel(key);
       }
     });
@@ -116,10 +116,10 @@ class SoundInfo extends React.Component {
     }
     const midiLearnButton = (
       <button
-        className={(this.props.isMidiLearningsoundID === this.lastSound.id) ? 'learning' : ''}
-        onClick={() => this.props.setIsMidiLearningSoundID(this.lastSound.id)}
+        className={(this.props.soundCurrentlyLearnt === this.lastSound.id) ? 'learning' : ''}
+        onClick={() => this.props.setSoundCurrentlyLearnt(this.lastSound.id)}
       >
-        MIDI: {(this.props.isMidiLearningsoundID === this.lastSound.id) ? 'learning' :
+        MIDI: {(this.props.soundCurrentlyLearnt === this.lastSound.id) ? 'learning' :
           this.getCurrentlyAssignedMidiNoteLabel()}
       </button>
     );
@@ -162,14 +162,14 @@ class SoundInfo extends React.Component {
 const mapStateToProps = (state) => {
   const { selectedSound } = state.sounds;
   const sound = state.sounds.byID[selectedSound];
-  const { midiMappings, isMidiLearningsoundID } = state.midi;
+  const { midiMappings, soundCurrentlyLearnt } = state.midi;
   const { selectedPath } = state.paths;
-  return { selectedPath, sound, midiMappings, isMidiLearningsoundID };
+  return { selectedPath, sound, midiMappings, soundCurrentlyLearnt };
 };
 
 SoundInfo.propTypes = propTypes;
 export default connect(mapStateToProps, {
   displaySystemMessage,
   addSoundToPath,
-  setIsMidiLearningSoundID,
+  setSoundCurrentlyLearnt,
 })(SoundInfo);

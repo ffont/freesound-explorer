@@ -7,7 +7,9 @@ import PathsTab from './PathsTab';
 import SpacesTab from './SpacesTab';
 import MidiTab from './MidiTab';
 import InfoTab from './InfoTab';
-import { SIDEBAR_TABS } from '../../constants';
+import { SIDEBAR_TABS, START_METRONOME_AT_MOUNT } from '../../constants';
+import { startMetronome, setStartedMetronomeAtMount } from '../../actions/metronome';
+import { setUpMIDIDevices } from '../../actions/midi';
 import '../../stylesheets/Sidebar.scss';
 
 const propTypes = {
@@ -16,6 +18,9 @@ const propTypes = {
   bottomArrowPosition: React.PropTypes.number,
   toggleSidebarVisibility: React.PropTypes.func,
   setSidebarTab: React.PropTypes.func,
+  startMetronome: React.PropTypes.func,
+  setStartedMetronomeAtMount: React.PropTypes.func,
+  setUpMIDIDevices: React.PropTypes.func,
 };
 
 const icons = {
@@ -46,45 +51,54 @@ const getSidebarContent = (activeTab) => {
   }
 };
 
-function Sidebar(props) {
-  const sidebarClassName = `sidebar${(props.isVisible) ? ' active' : ''}`;
-  const sideBarContent = getSidebarContent(props.activeTab);
-  return (
-    <aside>
-      <div className={sidebarClassName}>
-        <div className="sidebar-content-wrapper">
-          {sideBarContent}
-        </div>
-        <div className="sidebar-menu-wrapper">
-          <nav>
-            <ol>
-            {Object.keys(SIDEBAR_TABS).map(tab => (
-              <li
-                className={(props.activeTab === SIDEBAR_TABS[tab]) ? 'active' : ''}
-                onClick={() => props.setSidebarTab(SIDEBAR_TABS[tab])}
-                key={tab}
-              >
-                <button>
-                  <i className={`fa ${icons[SIDEBAR_TABS[tab]]} fa-lg`} aria-hidden="true" />
-                </button>
-              </li>
-            ))}
-            </ol>
-          </nav>
-          <div
-            className="toggle-visibility-button"
-            onClick={() => props.toggleSidebarVisibility(!props.isVisible)}
-            style={{ bottom: props.bottomArrowPosition }}
-          >
-            {(props.isVisible) ?
-              <i className="fa fa-arrow-left" aria-hidden="true" /> :
-              <i className="fa fa-arrow-right" aria-hidden="true" />
-            }
+class Sidebar extends React.Component {
+  componentDidMount() {
+    if ((START_METRONOME_AT_MOUNT) && (!this.props.startedMetronomeAtMount)) {
+      this.props.setStartedMetronomeAtMount(true);
+      this.props.startMetronome();
+    }
+    this.props.setUpMIDIDevices(); // Prepare midi stuff
+  }
+  render() {
+    const sidebarClassName = `sidebar${(this.props.isVisible) ? ' active' : ''}`;
+    const sideBarContent = getSidebarContent(this.props.activeTab);
+    return (
+      <aside>
+        <div className={sidebarClassName}>
+          <div className="sidebar-content-wrapper">
+            {sideBarContent}
+          </div>
+          <div className="sidebar-menu-wrapper">
+            <nav>
+              <ol>
+              {Object.keys(SIDEBAR_TABS).map(tab => (
+                <li
+                  className={(this.props.activeTab === SIDEBAR_TABS[tab]) ? 'active' : ''}
+                  onClick={() => this.props.setSidebarTab(SIDEBAR_TABS[tab])}
+                  key={tab}
+                >
+                  <button>
+                    <i className={`fa ${icons[SIDEBAR_TABS[tab]]} fa-lg`} aria-hidden="true" />
+                  </button>
+                </li>
+              ))}
+              </ol>
+            </nav>
+            <div
+              className="toggle-visibility-button"
+              onClick={() => this.props.toggleSidebarVisibility(!this.props.isVisible)}
+              style={{ bottom: this.props.bottomArrowPosition }}
+            >
+              {(this.props.isVisible) ?
+                <i className="fa fa-arrow-left" aria-hidden="true" /> :
+                <i className="fa fa-arrow-right" aria-hidden="true" />
+              }
+            </div>
           </div>
         </div>
-      </div>
-    </aside>
-  );
+      </aside>
+    );
+  }
 }
 
 const mapStateToProps = (state) => state.sidebar;
@@ -93,4 +107,7 @@ Sidebar.propTypes = propTypes;
 export default connect(mapStateToProps, {
   toggleSidebarVisibility,
   setSidebarTab,
+  startMetronome,
+  setStartedMetronomeAtMount,
+  setUpMIDIDevices,
 })(Sidebar);

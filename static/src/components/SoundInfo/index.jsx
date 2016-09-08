@@ -16,7 +16,7 @@ const propTypes = {
   displaySystemMessage: React.PropTypes.func,
   setSoundCurrentlyLearnt: React.PropTypes.func,
   soundCurrentlyLearnt: React.PropTypes.string,
-  midiMappings: React.PropTypes.object,
+  notesMapped: React.PropTypes.object,
   selectedPath: React.PropTypes.string,
   addSoundToPath: React.PropTypes.func,
 };
@@ -162,9 +162,9 @@ class SoundInfo extends React.Component {
 const mapStateToProps = (state) => {
   const { selectedSound } = state.sounds;
   const sound = state.sounds.byID[selectedSound];
-  const { midiMappings, soundCurrentlyLearnt } = state.midi;
+  const { notesMapped, soundCurrentlyLearnt } = state.midi;
   const { selectedPath } = state.paths;
-  return { selectedPath, sound, midiMappings, soundCurrentlyLearnt };
+  return { selectedPath, sound, notesMapped, soundCurrentlyLearnt };
 };
 
 SoundInfo.propTypes = propTypes;

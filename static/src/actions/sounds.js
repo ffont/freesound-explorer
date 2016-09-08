@@ -6,7 +6,7 @@ import { submitQuery, reshapeReceivedSounds } from '../utils/fsQuery';
 import { MESSAGE_STATUS, TSNE_CONFIG, DEFAULT_DESCRIPTOR, MAX_TSNE_ITERATIONS }
   from '../constants';
 import { setSpaceAsCenter } from './map';
-import { readObjectByString } from '../utils/misc';
+import { readObjectPropertyByPropertyAbsName } from '../utils/objectUtils';
 import { computeSoundGlobalPosition } from '../reducers/sounds';
 import tsnejs from '../vendors/tsne';
 import '../polyfills/requestAnimationFrame';
@@ -23,7 +23,7 @@ const getTrainedTsne = (sounds, queryParams) => {
   const descriptor = queryParams.descriptor || DEFAULT_DESCRIPTOR;
   const descriptorKey = `analysis.${descriptor}`;
   const trainingData = Object.keys(sounds).map(
-    soundID => readObjectByString(sounds[soundID], descriptorKey));
+    soundID => readObjectPropertyByPropertyAbsName(sounds[soundID], descriptorKey));
   tsne.initDataRaw(trainingData);
   return tsne;
 };

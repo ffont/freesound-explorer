@@ -9,3 +9,9 @@ export const elementWithId = (array, targetId, idAttr = 'id') =>
 
 export const indexElementWithId = (array, targetId, idAttr = 'id') =>
   array.findIndex(x => x[idAttr] === targetId);
+
+export const getRandomElement = (array) => {
+  const max = array.length;
+  const index = Math.floor(Math.random() * max);
+  return array[index];
+};

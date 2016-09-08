@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../../stylesheets/Paths.scss';
-import { getRandomElement } from '../../utils/misc';
+import { getRandomElement, elementWithId } from '../../utils/arrayUtils';
 import { MESSAGE_STATUS } from '../../constants';
 import { addPath } from '../../actions/paths';
 import { displaySystemMessage } from '../../actions/messagesBox';
-import { elementWithId } from '../../utils/arrayUtils';
 import Path from './Path';
 
 const propTypes = {

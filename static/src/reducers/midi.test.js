@@ -22,13 +22,10 @@ describe('midi reducer', () => {
     const note = 64;
     const soundID = 1234;
     const stateAfter = Object.assign({}, stateBefore, {
-      midiMappings: { notes: { [note]: soundID } },
+      notesMapped: { [note]: soundID },
     });
     it('correctly adds new mapping', () => {
       expect(reducer(stateBefore, addMidiNoteMapping(note, soundID))).toEqual(stateAfter);
-    });
-    it('correctly removes existing note mapping', () => {
-      expect(reducer(stateAfter, addMidiNoteMapping(note, -1))).toEqual(initialState);
     });
   });
 });

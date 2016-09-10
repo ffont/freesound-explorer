@@ -25,18 +25,11 @@ export const getRandomElement = (array) => {
  */
 export const range = (param1, param2, param3) => {
   const isValid = (param) => Number.isInteger(param);
-  if (isValid(param1) && isValid(param2) && isValid(param3)) {
-    if (param3 === 0) {
-      throw Error('Third parameter can\'t be 0');
-    }
-    const arrayLength = Math.max(Math.ceil((param2 - param1) / param3), 0);
-    return [...Array(arrayLength).keys()].map(val =>
-      param1 + (val * param3));
-  }
   if (isValid(param1) && isValid(param2)) {
-    const arrayLength = Math.max(param2 - param1, 0);
+    const step = (isValid(param3) && param3 !== 0) ? param3 : 1;
+    const arrayLength = Math.max(Math.ceil((param2 - param1) / step), 0);
     return [...Array(arrayLength).keys()].map(val =>
-      val + param1);
+      param1 + (val * step));
   }
   if (isValid(param1)) {
     const arrayLength = Math.max(param1, 0);

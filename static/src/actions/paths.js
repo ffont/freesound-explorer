@@ -12,7 +12,7 @@ export const startStopPath = makeActionCreator(at.STARTSTOP_PATH,
   'pathID', 'isPlaying');
 
 export const setPathCurrentlyPlaying = makeActionCreator(at.SET_PATH_CURRENTLY_PLAYING,
-  'pathID', 'soundIDx', 'willFinishAt');
+  'pathID', 'soundIdx', 'willFinishAt');
 
 export const selectPath = makeActionCreator(at.SELECT_PATH,
   'pathID');
@@ -52,11 +52,11 @@ export const playNextSoundFromPath = (pathID, time) =>
     if (path) {
       if (path.isPlaying) {
         let nextSoundToPlayIdx;
-        if ((path.currentlyPlaying.soundIDx === undefined) ||
-          (path.currentlyPlaying.soundIDx + 1 >= path.sounds.length)) {
+        if ((path.currentlyPlaying.soundIdx === undefined) ||
+          (path.currentlyPlaying.soundIdx + 1 >= path.sounds.length)) {
           nextSoundToPlayIdx = 0;
         } else {
-          nextSoundToPlayIdx = path.currentlyPlaying.soundIDx + 1;
+          nextSoundToPlayIdx = path.currentlyPlaying.soundIdx + 1;
         }
         const nextSoundToPlay = store.sounds.byID[path.sounds[nextSoundToPlayIdx]];
         const nextSoundToPlayDuration = nextSoundToPlay.duration;

@@ -15,7 +15,7 @@ const path = (state = {}, action) => {
     }
     case STARTSTOP_PATH: {
       const currentlyPlaying = (action.isPlaying) ? state.currentlyPlaying : {
-        soundIDx: undefined,
+        soundIdx: undefined,
         willFinishAt: undefined,
       };
       return Object.assign({}, state, { isPlaying: action.isPlaying, currentlyPlaying });
@@ -23,8 +23,8 @@ const path = (state = {}, action) => {
     case SET_PATH_CURRENTLY_PLAYING: {
       return Object.assign({}, state, {
         currentlyPlaying: {
-          // TODO: we shouldn't use soundIDx, only soundID
-          soundIDx: action.soundIDx,
+          // TODO: we shouldn't use soundIdx, only soundID
+          soundIdx: action.soundIdx,
           willFinishAt: action.willFinishAt,
         },
       });
@@ -66,7 +66,7 @@ const pathsReducer = (state = [], action) => {
           syncMode: 'beat',
           waitUntilFinished: true,
           currentlyPlaying: {
-            soundIDx: undefined,
+            soundIdx: undefined,
             willFinishAt: undefined,
           },
           sounds,

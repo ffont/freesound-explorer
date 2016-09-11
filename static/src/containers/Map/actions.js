@@ -1,6 +1,8 @@
-import { UPDATE_MAP_POSITION, SET_SPACE_AS_CENTER, REMOVE_SPACE,
-  REMOVE_SOUND } from './actionTypes';
 import makeActionCreator from './makeActionCreator';
+
+export const UPDATE_MAP_POSITION = 'UPDATE_MAP_POSITION';
+export const SET_SPACE_AS_CENTER = 'SET_SPACE_AS_CENTER';
+export const REMOVE_SPACE = 'REMOVE_SPACE';
 
 export const updateMapPosition = makeActionCreator(UPDATE_MAP_POSITION, 'position');
 

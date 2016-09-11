@@ -3,28 +3,39 @@ import { audioContext, playAudio, stopAudio } from './audio';
 import makeActionCreator from './makeActionCreator';
 import { elementWithId } from '../utils/arrayUtils';
 import { getRandomElement } from '../utils/misc';
-import * as at from './actionTypes';
 
-export const setPathSync = makeActionCreator(at.SET_PATH_SYNC,
+export const ADD_PATH = 'ADD_PATH';
+export const REMOVE_PATH = 'REMOVE_PATH';
+export const SET_PATH_SYNC = 'SET_PATH_SYNC';
+export const STARTSTOP_PATH = 'STARTSTOP_PATH';
+export const SET_PATH_CURRENTLY_PLAYING = 'SET_PATH_CURRENTLY_PLAYING';
+export const SELECT_PATH = 'SELECT_PATH';
+export const ADD_SOUND_TO_PATH = 'ADD_SOUND_TO_PATH';
+export const DELETE_SOUND_FROM_PATH = 'DELETE_SOUND_FROM_PATH';
+export const CLEAR_ALL_PATHS = 'CLEAR_ALL_PATHS';
+export const SET_PATH_WAIT_UNTIL_FINISHED = 'SET_PATH_WAIT_UNTIL_FINISHED';
+export const SET_PATH_ACTIVE = 'SET_PATH_ACTIVE';
+
+export const setPathSync = makeActionCreator(SET_PATH_SYNC,
   'pathID', 'syncMode');
 
-export const startStopPath = makeActionCreator(at.STARTSTOP_PATH,
+export const startStopPath = makeActionCreator(STARTSTOP_PATH,
   'pathID', 'isPlaying');
 
-export const setPathCurrentlyPlaying = makeActionCreator(at.SET_PATH_CURRENTLY_PLAYING,
+export const setPathCurrentlyPlaying = makeActionCreator(SET_PATH_CURRENTLY_PLAYING,
   'pathID', 'soundIdx', 'willFinishAt');
 
-export const selectPath = makeActionCreator(at.SELECT_PATH,
+export const selectPath = makeActionCreator(SELECT_PATH,
   'pathID');
 
-export const setPathActive = makeActionCreator(at.SET_PATH_ACTIVE,
+export const setPathActive = makeActionCreator(SET_PATH_ACTIVE,
   'pathID', 'isActive');
 
-export const deleteSoundFromPath = makeActionCreator(at.DELETE_SOUND_FROM_PATH,
+export const deleteSoundFromPath = makeActionCreator(DELETE_SOUND_FROM_PATH,
   'soundID', 'pathID');
 
 export const addSoundToPath = (soundID, pathID) => (dispatch, getStore) => dispatch({
-  type: at.ADD_SOUND_TO_PATH,
+  type: ADD_SOUND_TO_PATH,
   soundID,
   pathID: pathID || getStore().paths.selectedPath,
 });
@@ -34,15 +45,15 @@ export const addRandomSoundToPath = (pathID) => (dispatch, getStore) => {
   const space = elementWithId(store.spaces.spaces, store.spaces.currentSpace, 'queryID');
   const spaceSounds = space.sounds;
   dispatch({
-    type: at.ADD_SOUND_TO_PATH,
+    type: ADD_SOUND_TO_PATH,
     soundID: getRandomElement(spaceSounds),
     pathID: pathID || getStore().paths.selectedPath,
   });
 };
 
-export const clearAllPaths = makeActionCreator(at.CLEAR_ALL_PATHS);
+export const clearAllPaths = makeActionCreator(CLEAR_ALL_PATHS);
 
-export const setPathWaitUntilFinished = makeActionCreator(at.SET_PATH_WAIT_UNTIL_FINISHED,
+export const setPathWaitUntilFinished = makeActionCreator(SET_PATH_WAIT_UNTIL_FINISHED,
   'pathID', 'waitUntilFinished');
 
 export const playNextSoundFromPath = (pathID, time) =>
@@ -117,7 +128,7 @@ const linkPathToMetronome = (pathID, tickEvt, dispatch) => {
 export const addPath = (sounds) => (dispatch) => {
   const pathID = UUID.v4();
   dispatch({
-    type: at.ADD_PATH,
+    type: ADD_PATH,
     sounds,
     pathID,
   });
@@ -128,5 +139,5 @@ export const addPath = (sounds) => (dispatch) => {
 export const removePath = (pathID) => (dispatch) => {
   // remove listener for tick events
   window.removeEventListener('tick', (evt) => linkPathToMetronome(pathID, evt, dispatch), false);
-  dispatch({ type: at.REMOVE_PATH, pathID });
+  dispatch({ type: REMOVE_PATH, pathID });
 };

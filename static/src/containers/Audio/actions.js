@@ -1,9 +1,11 @@
 import makeActionCreator from './makeActionCreator';
-import { ADD_AUDIO_SRC, STOP_AUDIO_SRC, PLAY_AUDIO_SRC }
-  from './actionTypes';
 import { getSoundBuffer } from './sounds';
 import audioLoader from '../utils/audioLoader';
 import '../polyfills/AudioContext';
+
+export const ADD_AUDIO_SRC = 'ADD_AUDIO_SRC';
+export const STOP_AUDIO_SRC = 'STOP_AUDIO_SRC';
+export const PLAY_AUDIO_SRC = 'PLAY_AUDIO_SRC';
 
 const initAudioContext = () => {
   const audioContext = new window.AudioContext();

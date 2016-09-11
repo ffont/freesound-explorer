@@ -1,21 +1,26 @@
 import makeActionCreator from './makeActionCreator';
 import { audioContext } from './audio';
 import { LOOKAHEAD, SCHEDULEAHEADTIME, TICKRESOLUTION } from '../constants';
-import * as at from './actionTypes';
 
-export const updateMetronomeStatus = makeActionCreator(at.UPDATE_METRONOME_STATUS,
+export const UPDATE_METRONOME_STATUS = 'UPDATE_METRONOME_STATUS';
+export const SET_TEMPO = 'SET_TEMPO';
+export const STARTSTOP_METRONOME = 'STARTSTOP_METRONOME';
+export const SET_PLAY_SOUND = 'SET_PLAY_SOUND';
+export const SET_STARTED_METRONOME_AT_MOUNT = 'SET_STARTED_METRONOME_AT_MOUNT';
+
+export const updateMetronomeStatus = makeActionCreator(UPDATE_METRONOME_STATUS,
   'bar', 'beat', 'tick');
 
-export const setTempo = makeActionCreator(at.SET_TEMPO,
+export const setTempo = makeActionCreator(SET_TEMPO,
   'tempo');
 
-export const startStopMetronome = makeActionCreator(at.STARTSTOP_METRONOME,
+export const startStopMetronome = makeActionCreator(STARTSTOP_METRONOME,
   'isPlaying');
 
-export const setPlaySound = makeActionCreator(at.SET_PLAY_SOUND,
+export const setPlaySound = makeActionCreator(SET_PLAY_SOUND,
   'playSound');
 
-export const setStartedMetronomeAtMount = makeActionCreator(at.SET_STARTED_METRONOME_AT_MOUNT,
+export const setStartedMetronomeAtMount = makeActionCreator(SET_STARTED_METRONOME_AT_MOUNT,
   'startedMetronomeAtMount');
 
 let schedulerTimer;

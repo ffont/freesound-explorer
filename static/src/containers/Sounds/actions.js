@@ -1,7 +1,6 @@
 import { default as UUID } from 'node-uuid';
 import { displaySystemMessage } from './messagesBox';
 import makeActionCreator from './makeActionCreator';
-import * as at from './actionTypes';
 import { submitQuery, reshapeReceivedSounds } from '../utils/fsQuery';
 import { MESSAGE_STATUS, TSNE_CONFIG, DEFAULT_DESCRIPTOR, MAX_TSNE_ITERATIONS }
   from '../constants';
@@ -11,12 +10,22 @@ import { computeSoundGlobalPosition } from '../reducers/sounds';
 import tsnejs from '../vendors/tsne';
 import '../polyfills/requestAnimationFrame';
 
+export const FETCH_SOUNDS_REQUEST = 'FETCH_SOUNDS_REQUEST';
+export const FETCH_SOUNDS_SUCCESS = 'FETCH_SOUNDS_SUCCESS';
+export const FETCH_SOUNDS_FAILURE = 'FETCH_SOUNDS_FAILURE';
+export const UPDATE_SOUNDS_POSITION = 'UPDATE_SOUNDS_POSITION';
+export const MAP_COMPUTATION_COMPLETE = 'MAP_COMPUTATION_COMPLETE';
+export const SELECT_SOUND_BY_ID = 'SELECT_SOUND_BY_ID';
+export const GET_SOUND_BUFFER = 'GET_SOUND_BUFFER';
+export const TOGGLE_HOVERING_SOUND = 'TOGGLE_HOVERING_SOUND';
+export const REMOVE_SOUND = 'REMOVE_SOUND';
+
 // no need to exports all these actions as they will be used internally in getSounds
-const fetchRequest = makeActionCreator(at.FETCH_SOUNDS_REQUEST, 'queryID', 'query', 'queryParams');
-const fetchSuccess = makeActionCreator(at.FETCH_SOUNDS_SUCCESS, 'sounds', 'queryID', 'mapPosition');
-const fetchFailure = makeActionCreator(at.FETCH_SOUNDS_FAILURE, 'error', 'queryID');
-const updateSoundsPosition = makeActionCreator(at.UPDATE_SOUNDS_POSITION, 'sounds', 'queryID');
-const mapComputationComplete = makeActionCreator(at.MAP_COMPUTATION_COMPLETE, 'queryID');
+const fetchRequest = makeActionCreator(FETCH_SOUNDS_REQUEST, 'queryID', 'query', 'queryParams');
+const fetchSuccess = makeActionCreator(FETCH_SOUNDS_SUCCESS, 'sounds', 'queryID', 'mapPosition');
+const fetchFailure = makeActionCreator(FETCH_SOUNDS_FAILURE, 'error', 'queryID');
+const updateSoundsPosition = makeActionCreator(UPDATE_SOUNDS_POSITION, 'sounds', 'queryID');
+const mapComputationComplete = makeActionCreator(MAP_COMPUTATION_COMPLETE, 'queryID');
 
 const getTrainedTsne = (sounds, queryParams) => {
   const tsne = new tsnejs.Tsne(TSNE_CONFIG);
@@ -146,6 +155,6 @@ export const getSounds = (query, queryParams) => (dispatch, getStore) => {
   );
 };
 
-export const selectSound = makeActionCreator(at.SELECT_SOUND_BY_ID, 'soundID');
-export const getSoundBuffer = makeActionCreator(at.GET_SOUND_BUFFER, 'soundID', 'buffer');
-export const toggleHoveringSound = makeActionCreator(at.TOGGLE_HOVERING_SOUND, 'soundID');
+export const selectSound = makeActionCreator(SELECT_SOUND_BY_ID, 'soundID');
+export const getSoundBuffer = makeActionCreator(GET_SOUND_BUFFER, 'soundID', 'buffer');
+export const toggleHoveringSound = makeActionCreator(TOGGLE_HOVERING_SOUND, 'soundID');

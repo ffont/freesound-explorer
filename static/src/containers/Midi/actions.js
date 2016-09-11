@@ -1,11 +1,18 @@
 import makeActionCreator from './makeActionCreator';
-import { ADD_MIDI_NOTE_MAPPING, REMOVE_MIDI_NOTE_MAPPING, SET_MIDI_LEARN_SOUND_ID,
-  SET_LATEST_RECEIVED_MIDI_MESSAGE, SET_MIDI_SUPPORTED, SET_MIDI_INPUT_CHANNEL,
-  SET_MIDI_INPUT_DEVICE, SET_MIDI_AVAILABLE_DEVICES, DISCONNECT_DEVICES } from './actionTypes';
 import { displaySystemMessage } from './messagesBox';
 import { midiMessageTypeLabel } from '../utils/midiUtils';
 import { playAudio, stopAudio } from './audio';
 import { MESSAGE_STATUS } from '../constants';
+
+export const SET_MIDI_LEARN_SOUND_ID = 'SET_MIDI_LEARN_SOUND_ID';
+export const ADD_MIDI_NOTE_MAPPING = 'ADD_MIDI_NOTE_MAPPING';
+export const REMOVE_MIDI_NOTE_MAPPING = 'REMOVE_MIDI_NOTE_MAPPING';
+export const SET_LATEST_RECEIVED_MIDI_MESSAGE = 'SET_LATEST_RECEIVED_MIDI_MESSAGE';
+export const SET_MIDI_SUPPORTED = 'SET_MIDI_SUPPORTED';
+export const SET_MIDI_INPUT_CHANNEL = 'SET_MIDI_INPUT_CHANNEL';
+export const SET_MIDI_INPUT_DEVICE = 'SET_MIDI_INPUT_DEVICE';
+export const SET_MIDI_AVAILABLE_DEVICES = 'SET_MIDI_AVAILABLE_DEVICES';
+export const DISCONNECT_DEVICES = 'DISCONNECT_DEVICES';
 
 
 export const setSoundCurrentlyLearnt = makeActionCreator(SET_MIDI_LEARN_SOUND_ID, 'soundID');

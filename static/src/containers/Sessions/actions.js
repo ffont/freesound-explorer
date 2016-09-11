@@ -1,7 +1,10 @@
-import { NEW_SESSION, LOAD_SESSION } from './actionTypes';
 import makeActionCreator from './makeActionCreator';
 import { reducersToExport } from '../reducers/sessions';
 import { removeSoundBuffers } from '../utils/audioLoader';
+
+export const NEW_SESSION = 'NEW_SESSION';
+export const SAVE_SESSION = 'SAVE_SESSION';
+export const LOAD_SESSION = 'LOAD_SESSION';
 
 export const newSession = makeActionCreator(NEW_SESSION);
 
@@ -25,5 +28,5 @@ export const saveSession = () => (dispatch, getStore) => {
 };
 
 export const loadSession = () => {
-  
+
 };

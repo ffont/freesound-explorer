@@ -24,9 +24,12 @@ const propTypes = {
 
 // TODO: SoundInfo component must read isUserLoggedIn from state.login (redux)
 
-const SoundInfoContainer = (props) => (
-  <SoundInfo {...props} />
-);
+const SoundInfoContainer = (props) => {
+  if (props.sound) {
+    return <SoundInfo {...props} />;
+  }
+  return null;
+};
 
 const mapStateToProps = (state) => {
   const { notesMapped, soundCurrentlyLearnt } = state.midi;

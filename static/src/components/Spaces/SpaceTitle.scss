@@ -1,26 +1,4 @@
 @import "../../stylesheets/variables.json";
-@import "../../stylesheets/animations";
-
-.map-container, svg.map {
-  height: 100%;
-}
-
-svg.map {
-  width: 100%;
-}
-
-.main-circle {
-  mix-blend-mode: screen;
-  &.playing {
-    animation: wobble 0.5s linear infinite alternate;
-  }
-}
-.play-fill-circle {
-  fill: none;
-  &.playing {
-    animation: wobble 0.5s linear infinite alternate;
-  }
-}
 
 .space-title {
   // out-of-screen parent div with abs positioning

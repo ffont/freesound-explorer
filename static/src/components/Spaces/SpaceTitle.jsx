@@ -1,4 +1,5 @@
 import React from 'react';
+import './SpaceTitle.scss';
 
 const propTypes = {
   currentPositionInMap: React.PropTypes.shape({

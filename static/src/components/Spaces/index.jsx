@@ -1,5 +1,5 @@
 import React from 'react';
-import MapCircle from './MapCircle';
+import MapCircleContainer from '../../containers/Sounds/MapCircleContainer';
 
 const propTypes = {
   sounds: React.PropTypes.array,
@@ -18,7 +18,7 @@ class Space extends React.Component {
   render() {
     return (<g>
       {this.props.sounds.map((soundID, soundIdx) => (
-        <MapCircle
+        <MapCircleContainer
           key={soundIdx}
           soundID={soundID}
           isThumbnail={this.props.isThumbnail}

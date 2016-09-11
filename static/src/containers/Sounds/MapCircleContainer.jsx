@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { playAudio, stopAudio } from '../../actions/audio';
-import { selectSound, toggleHoveringSound } from '../../actions/sounds';
+import { playAudio, stopAudio } from '../Audio/actions';
+import { selectSound, toggleHoveringSound } from './actions';
+import MapCircle from '../../components/Sounds/MapCircle';
 import { lighten } from '../../utils/colors';
 import { isSoundInsideScreen } from '../../utils/uiUtils';
 import { DEFAULT_RADIUS, DEFAULT_FILL_OPACITY, DEFAULT_STROKE_WIDTH, DEFAULT_STROKE_OPACITY }
@@ -26,7 +27,7 @@ const isSoundVisible = (props) => {
 const isSoundStayingNotVisible = (currentProps, nextProps) =>
   (!isSoundVisible(currentProps) && !isSoundVisible(nextProps));
 
-class MapCircle extends React.PureComponent {
+class MapCircleContainer extends React.PureComponent {
   constructor(props) {
     super(props);
     this.onMouseEnter = this.onMouseEnter.bind(this);
@@ -80,46 +81,15 @@ class MapCircle extends React.PureComponent {
     if (!isSoundVisible(this.props)) {
       return null;
     }
-    const { color, isHovered, isPlaying } = this.props.sound;
-    const { isSelected } = this.props;
-    const { cx, cy } = (this.props.isThumbnail) ?
-      this.props.sound.thumbnailPosition : this.props.sound.position;
-    const fillColor = (isHovered || isSelected || isPlaying) ? lighten(color, 1.5) : color;
-    const className = `main-circle${(isPlaying) ? ' playing' : ''}`;
-    const fillCircleClassName = `play-fill-circle${(isPlaying) ? ' playing' : ''}`;
-    const radius = DEFAULT_RADIUS / 2;
-    const fillWidthProportion = 2;
-    const circleLength = 2 * Math.PI * (radius / fillWidthProportion);
-    const completed = 0; // TODO: connect it with actual playbackPosition
-    const completionOffset = (1 - (completed)) * circleLength;
     return (
-      <g>
-        <circle
-          cx={cx}
-          cy={cy}
-          r={radius}
-          fill={fillColor}
-          className={className}
-          fillOpacity={DEFAULT_FILL_OPACITY}
-          stroke={fillColor}
-          strokeWidth={DEFAULT_STROKE_WIDTH}
-          strokeOpacity={DEFAULT_STROKE_OPACITY}
-          onMouseEnter={this.onMouseEnter}
-          onMouseLeave={this.onMouseLeave}
-          onClick={this.onClick}
-        />
-        <circle
-          cx={cx}
-          cy={cy}
-          r={radius / fillWidthProportion}
-          className={fillCircleClassName}
-          strokeDasharray={circleLength}
-          strokeDashoffset={completionOffset}
-          stroke={color}
-          strokeWidth={(DEFAULT_STROKE_WIDTH * 2) * fillWidthProportion}
-          strokeOpacity={DEFAULT_STROKE_OPACITY}
-        />
-      </g>
+      <MapCircle
+        sound={this.props.sound}
+        isSelected={this.props.isSelected}
+        isThumbnail={this.props.isThumbnail}
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseLeave}
+        onClick={this.onClick}
+      />
     );
   }
 }
@@ -140,10 +110,10 @@ const makeMapStateToProps = (_, ownProps) => {
   };
 };
 
-MapCircle.propTypes = propTypes;
+MapCircleContainer.propTypes = propTypes;
 export default connect(makeMapStateToProps, {
   playAudio,
   stopAudio,
   selectSound,
   toggleHoveringSound,
-})(MapCircle);
+})(MapCircleContainer);

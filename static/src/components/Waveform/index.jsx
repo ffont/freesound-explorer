@@ -1,7 +1,7 @@
 import React from 'react';
 import { select } from 'd3-selection';
 import { scaleLinear, scaleBand } from 'd3-scale';
-import '../../stylesheets/Waveform.scss';
+import './Waveform.scss';
 import sassVariables from 'json!../../stylesheets/variables.json';
 import { downsampleSignal } from '../../utils/misc';
 import { lighten } from '../../utils/colors';

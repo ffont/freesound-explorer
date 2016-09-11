@@ -2,17 +2,16 @@ import React from 'react';
 import { select, event as d3Event } from 'd3-selection';
 import { zoom } from 'd3-zoom';
 import { connect } from 'react-redux';
-import { displaySystemMessage } from '../../actions/messagesBox';
-import { updateMapPosition } from '../../actions/map';
-import { setSoundCurrentlyLearnt } from '../../actions/midi';
-import { selectSound } from '../../actions/sounds';
-import Space from './Space';
-import SpaceTitle from './SpaceTitle';
-import SoundInfo from '../SoundInfo';
-import MapPath from './MapPath';
+import { displaySystemMessage } from '../MessagesBox/actions';
+import { updateMapPosition } from './actions';
+import { setSoundCurrentlyLearnt } from '../Midi/actions';
+import { selectSound } from '../Sounds/actions';
+import Space from '../../components/Spaces';
+import SpaceTitle from '../../components/Spaces/SpaceTitle';
+import SoundInfoContainer from '../SoundInfo/SoundInfoContainer';
+import MapPath from '../Paths/MapPath';
 import '../../polyfills/requestAnimationFrame';
 import { MIN_ZOOM, MAX_ZOOM } from '../../constants';
-import '../../stylesheets/Map.scss';
 
 const propTypes = {
   selectSound: React.PropTypes.func,
@@ -24,11 +23,10 @@ const propTypes = {
     scale: React.PropTypes.number,
   }),
   setSoundCurrentlyLearnt: React.PropTypes.func,
-  soundCurrentlyLearnt: React.PropTypes.string,
   updateMapPosition: React.PropTypes.func,
 };
 
-class Map extends React.Component {
+class MapContainer extends React.Component {
   constructor(props) {
     super(props);
     this.zoomHandler = this.zoomHandler.bind(this);
@@ -84,7 +82,7 @@ class Map extends React.Component {
           {this.props.spaces.map(space =>
             <Space key={space.queryID} sounds={space.sounds} />)}
         </svg>
-        <SoundInfo />
+        <SoundInfoContainer />
       </div>
     );
   }
@@ -97,11 +95,11 @@ const mapStateToProps = (state) => {
   return { paths, spaces, map };
 };
 
-Map.propTypes = propTypes;
+MapContainer.propTypes = propTypes;
 
 export default connect(mapStateToProps, {
   displaySystemMessage,
   updateMapPosition,
   setSoundCurrentlyLearnt,
   selectSound,
-})(Map);
+})(MapContainer);

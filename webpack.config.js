@@ -4,16 +4,6 @@ const autoprefixer = require('autoprefixer');
 const precss = require('precss');
 const jsonImporter = require('node-sass-json-importer');
 
-function getJsxLoaders() {
-  var loaders;
-  if (process.env.NODE_ENV !== 'production') {
-    loaders = ['react-hot', 'babel'];
-  } else {
-    loaders = ['babel'];
-  }
-  return loaders;
-}
-
 function getEntrySources(sources) {
   if (process.env.NODE_ENV === 'flask') {
     sources.push('webpack-dev-server/client?http://localhost:8080');
@@ -52,7 +42,7 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        loaders: getJsxLoaders(),
+        loaders: ['babel'],
         include: path.join(__dirname, 'static/src'),
       },
       {
@@ -64,6 +54,7 @@ module.exports = {
           'sass',
         ],
         include: [
+          path.resolve(__dirname, 'static/src/components'),
           path.resolve(__dirname, 'static/src/stylesheets'),
         ],
       },

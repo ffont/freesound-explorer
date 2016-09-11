@@ -2,6 +2,8 @@ import 'babel-polyfill';
 import 'normalize.css';
 import React from 'react';
 import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import configureStore from './store';
 import App from './components/App';
 import { USE_LOCAL_FONTAWESOME } from './constants';
 
@@ -21,4 +23,9 @@ if (ReactPerf) {
   window.ReactPerf = ReactPerf;
 }
 
-render(<App />, document.getElementById('app'));
+const store = configureStore();
+
+render(
+  (<Provider store={store}>
+    <App />
+  </Provider>), document.getElementById('app'));

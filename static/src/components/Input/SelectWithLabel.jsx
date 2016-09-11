@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../stylesheets/SelectWithLabel.scss';
+import './SelectWithLabel.scss';
 
 const propTypes = {
   onChange: React.PropTypes.func,

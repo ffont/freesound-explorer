@@ -1,6 +1,6 @@
 import React from 'react';
 import { sidebarClosedOffset } from 'json!../../stylesheets/variables.json';
-import '../../stylesheets/SliderRange.scss';
+import './SliderRange.scss';
 
 const propTypes = {
   defaultValue: React.PropTypes.number,

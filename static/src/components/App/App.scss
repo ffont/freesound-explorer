@@ -1,6 +1,6 @@
-@import "./variables.json";
+@import "../../stylesheets/variables.json";
 
-html, body, #app, .app-container {
+html, body, #app, #app > div {
 	height: 100%;
 }
 

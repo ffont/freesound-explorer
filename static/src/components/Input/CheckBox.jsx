@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../stylesheets/CheckBox.scss';
+import './CheckBox.scss';
 
 const propTypes = {
   checked: React.PropTypes.bool,

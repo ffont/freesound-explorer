@@ -1,10 +1,10 @@
 import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE,
   UPDATE_MAP_POSITION, REMOVE_SPACE }
   from './actions';
-import { computeSoundGlobalPosition } from './sounds';
-import { getMapCenter } from '../utils/uiUtils';
-import { generateListOfSpacesOriginPositions } from '../utils/misc';
-import sessions from './sessions';
+import { computeSoundGlobalPosition } from '../Sounds/reducer';
+import { getMapCenter } from '../../utils/uiUtils';
+import { generateListOfSpacesOriginPositions } from '../../utils/misc';
+import sessions from '../Sessions/reducer';
 
 const computeSpacePosition = (spaceIndex) => {
   const { x, y } = generateListOfSpacesOriginPositions(spaceIndex)[spaceIndex];

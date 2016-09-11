@@ -1,4 +1,3 @@
-import '../polyfills/Array.includes';
 import { arrayMean } from './arrayUtils';
 
 export const loadJSON = (url) => new Promise((resolve, reject) => {

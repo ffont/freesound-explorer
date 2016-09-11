@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../stylesheets/OptionsList.scss';
+import './OptionsList.scss';
 
 export const makeOption = (icon, name, action) => ({ icon, name, action });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../stylesheets/InputText.scss';
+import './InputText.scss';
 
 const propTypes = {
   onTextChange: React.PropTypes.func,

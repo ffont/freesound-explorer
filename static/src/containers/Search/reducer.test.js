@@ -1,9 +1,8 @@
 import expect from 'expect';
 import deepFreeze from 'deep-freeze';
-import '../polyfills/Object.assign';
-import { default as reducer, initialState } from './search';
+import { default as reducer, initialState } from './reducer';
 import { updateDescriptor, updateQuery, updateMaxDuration,
-  updateMinDuration, updateMaxResults } from '../actions/search';
+  updateMinDuration, updateMaxResults } from './actions';
 
 describe('search reducer', () => {
   it('should return initialState', () => {

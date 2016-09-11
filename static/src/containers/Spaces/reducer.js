@@ -1,6 +1,6 @@
 import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE,
   UPDATE_MAP_POSITION, REMOVE_SPACE }
-  from '../actions/actionTypes';
+  from './actions';
 import { computeSoundGlobalPosition } from './sounds';
 import { getMapCenter } from '../utils/uiUtils';
 import { generateListOfSpacesOriginPositions } from '../utils/misc';

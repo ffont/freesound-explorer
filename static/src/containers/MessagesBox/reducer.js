@@ -1,5 +1,5 @@
-import { DISPLAY_MESSAGE } from '../actions/actionTypes';
-import { MESSAGE_STATUS } from '../constants';
+import { DISPLAY_MESSAGE } from './actions';
+import { MESSAGE_STATUS } from '../../constants';
 
 export const initialState = {
   message: '',

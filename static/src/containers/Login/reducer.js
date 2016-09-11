@@ -1,6 +1,6 @@
 import { UPDATE_LOGIN_MODAL_VISIBILITY, UPDATE_USER_LOGGED_STATUS,
   UPDATE_BACK_END_AUTH_SUPPORT, UPDATE_LOGGED_USERNAME }
-  from '../actions/actionTypes';
+  from './actions';
 
 export const initialState = {
   isModalVisible: false,

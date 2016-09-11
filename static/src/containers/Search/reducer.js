@@ -1,10 +1,10 @@
 import { DEFAULT_MAX_DURATION, DEFAULT_DESCRIPTOR, DEFAULT_MAX_RESULTS,
   DEFAULT_MIN_DURATION }
-  from '../constants';
+  from '../../constants';
 import { UPDATE_DESCRIPTOR, UPDATE_MAX_RESULTS, UPDATE_MIN_DURATION,
   UPDATE_MAX_DURATION, UPDATE_QUERY, FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_FAILURE,
   MAP_COMPUTATION_COMPLETE }
-  from '../actions/actionTypes';
+  from './actions';
 
 export const initialState = {
   query: '',

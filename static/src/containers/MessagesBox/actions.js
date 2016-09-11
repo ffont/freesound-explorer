@@ -1,4 +1,4 @@
-import makeActionCreator from './makeActionCreator';
+import makeActionCreator from '../../utils/makeActionCreator';
 
 export const DISPLAY_MESSAGE = 'DISPLAY_MESSAGE';
 

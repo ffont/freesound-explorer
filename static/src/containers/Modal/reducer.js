@@ -1,4 +1,4 @@
-import { TOGGLE_MODAL, SET_MODAL_PAGE } from '../actions/actionTypes';
+import { TOGGLE_MODAL, SET_MODAL_PAGE } from './actions';
 
 const initialState = {
   isVisible: false,

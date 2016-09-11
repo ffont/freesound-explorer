@@ -1,6 +1,6 @@
-import { UPDATE_MAP_POSITION, SET_SPACE_AS_CENTER } from '../actions/actionTypes';
-import { getMapCenter } from '../utils/uiUtils';
-import sessions from './sessions';
+import { UPDATE_MAP_POSITION, SET_SPACE_AS_CENTER } from './actions';
+import { getMapCenter } from '../../utils/uiUtils';
+import sessions from '../Sessions/reducer';
 
 /*
   forceMapUpdate = true when a new map position is forced externally (such when the user

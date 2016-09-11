@@ -1,14 +1,14 @@
 import { default as UUID } from 'node-uuid';
-import { displaySystemMessage } from './messagesBox';
-import makeActionCreator from './makeActionCreator';
-import { submitQuery, reshapeReceivedSounds } from '../utils/fsQuery';
+import { displaySystemMessage } from '../MessagesBox/actions';
+import makeActionCreator from '../../utils/makeActionCreator';
+import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
 import { MESSAGE_STATUS, TSNE_CONFIG, DEFAULT_DESCRIPTOR, MAX_TSNE_ITERATIONS }
-  from '../constants';
-import { setSpaceAsCenter } from './map';
-import { readObjectPropertyByPropertyAbsName } from '../utils/objectUtils';
-import { computeSoundGlobalPosition } from '../reducers/sounds';
-import tsnejs from '../vendors/tsne';
-import '../polyfills/requestAnimationFrame';
+  from '../../constants';
+import { setSpaceAsCenter } from '../Spaces/actions';
+import { readObjectPropertyByPropertyAbsName } from '../../utils/objectUtils';
+import { computeSoundGlobalPosition } from './reducer';
+import tsnejs from '../../vendors/tsne';
+import '../../polyfills/requestAnimationFrame';
 
 export const FETCH_SOUNDS_REQUEST = 'FETCH_SOUNDS_REQUEST';
 export const FETCH_SOUNDS_SUCCESS = 'FETCH_SOUNDS_SUCCESS';
@@ -158,3 +158,4 @@ export const getSounds = (query, queryParams) => (dispatch, getStore) => {
 export const selectSound = makeActionCreator(SELECT_SOUND_BY_ID, 'soundID');
 export const getSoundBuffer = makeActionCreator(GET_SOUND_BUFFER, 'soundID', 'buffer');
 export const toggleHoveringSound = makeActionCreator(TOGGLE_HOVERING_SOUND, 'soundID');
+export const removeSound = makeActionCreator(REMOVE_SOUND, 'soundID');

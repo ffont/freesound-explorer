@@ -1,8 +1,8 @@
 import { ADD_PATH, SET_PATH_SYNC, STARTSTOP_PATH,
   SET_PATH_CURRENTLY_PLAYING, SELECT_PATH, DELETE_SOUND_FROM_PATH,
   ADD_SOUND_TO_PATH, CLEAR_ALL_PATHS, SET_PATH_WAIT_UNTIL_FINISHED,
-  SET_PATH_ACTIVE, REMOVE_SOUND } from '../actions/actionTypes';
-import sessions from './sessions';
+  SET_PATH_ACTIVE, REMOVE_SOUND } from './actions';
+import sessions from '../Sessions/reducer';
 
 const path = (state = {}, action) => {
   if (action.pathID && state.id !== action.pathID) {

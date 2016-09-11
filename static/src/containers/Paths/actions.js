@@ -1,8 +1,8 @@
 import { default as UUID } from 'node-uuid';
-import { audioContext, playAudio, stopAudio } from './audio';
-import makeActionCreator from './makeActionCreator';
-import { elementWithId } from '../utils/arrayUtils';
-import { getRandomElement } from '../utils/misc';
+import { audioContext, playAudio, stopAudio } from '../Audio/actions';
+import makeActionCreator from '../../utils/makeActionCreator';
+import { elementWithId } from '../../utils/arrayUtils';
+import { getRandomElement } from '../../utils/misc';
 
 export const ADD_PATH = 'ADD_PATH';
 export const REMOVE_PATH = 'REMOVE_PATH';

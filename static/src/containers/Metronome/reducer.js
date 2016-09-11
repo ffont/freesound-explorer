@@ -1,7 +1,7 @@
 import { UPDATE_METRONOME_STATUS, SET_TEMPO, STARTSTOP_METRONOME,
-  SET_PLAY_SOUND, SET_STARTED_METRONOME_AT_MOUNT } from '../actions/actionTypes';
-import { DEFAULT_TEMPO } from '../constants';
-import sessions from './sessions';
+  SET_PLAY_SOUND, SET_STARTED_METRONOME_AT_MOUNT } from './actions';
+import { DEFAULT_TEMPO } from '../../constants';
+import sessions from '../Sessions/reducer';
 
 const initialState = {
   bar: 1,

@@ -1,6 +1,6 @@
-import makeActionCreator from './makeActionCreator';
-import { reducersToExport } from '../reducers/sessions';
-import { removeSoundBuffers } from '../utils/audioLoader';
+import makeActionCreator from '../../utils/makeActionCreator';
+import { reducersToExport } from './reducer';
+import { removeSoundBuffers } from '../../utils/audioLoader';
 
 export const NEW_SESSION = 'NEW_SESSION';
 export const SAVE_SESSION = 'SAVE_SESSION';

@@ -1,4 +1,4 @@
-import makeActionCreator from './makeActionCreator';
+import makeActionCreator from '../../utils/makeActionCreator';
 
 export const TOGGLE_MODAL = 'TOGGLE_MODAL';
 export const SET_MODAL_PAGE = 'SET_MODAL_PAGE';

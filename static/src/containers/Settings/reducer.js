@@ -1,4 +1,4 @@
-import { TOGGLE_PLAY_ON_HOVER } from '../actions/actionTypes';
+import { TOGGLE_PLAY_ON_HOVER } from './actions';
 
 const initialState = {
   playOnHover: false,

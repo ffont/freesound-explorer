@@ -1,9 +1,9 @@
 import { ADD_MIDI_NOTE_MAPPING, REMOVE_MIDI_NOTE_MAPPING, SET_MIDI_LEARN_SOUND_ID,
   SET_LATEST_RECEIVED_MIDI_MESSAGE, SET_MIDI_SUPPORTED, SET_MIDI_INPUT_CHANNEL,
   SET_MIDI_INPUT_DEVICE, SET_MIDI_AVAILABLE_DEVICES, DISCONNECT_DEVICES }
-  from '../actions/actionTypes';
-import { N_MIDI_MESSAGES_TO_KEEP } from '../constants';
-import sessions from './sessions';
+  from './actions';
+import { N_MIDI_MESSAGES_TO_KEEP } from '../../constants';
+import sessions from '../Sessions/reducer';
 
 export const initialState = {
   soundCurrentlyLearnt: '',

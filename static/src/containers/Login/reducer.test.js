@@ -1,10 +1,9 @@
 import expect from 'expect';
 import deepFreeze from 'deep-freeze';
-import '../polyfills/Object.assign';
 import { updateLoginModalVisibilility, updateUserLoggedStatus,
   updateBackEndAuthSupport, updateLoggedUsername }
-  from '../actions/login';
-import { default as reducer, initialState } from './login';
+  from './actions';
+import { default as reducer, initialState } from './reducer';
 
 describe('login reducer', () => {
   it('creates the right initial state', () => {

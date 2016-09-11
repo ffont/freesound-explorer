@@ -1,8 +1,7 @@
 import expect from 'expect';
 import deepFreeze from 'deep-freeze';
-import '../polyfills/Object.assign';
-import { default as reducer, initialState } from './map';
-import { updateMapPosition } from '../actions/map';
+import { default as reducer, initialState } from './reducer';
+import { updateMapPosition } from './actions';
 
 describe('map reducer', () => {
   it('should return initialState', () => {

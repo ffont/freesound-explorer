@@ -1,8 +1,7 @@
 import expect from 'expect';
 import deepFreeze from 'deep-freeze';
-import '../polyfills/Object.assign';
-import { default as reducer, initialState } from './midi';
-import { addMidiNoteMapping, setSoundCurrentlyLearnt } from '../actions/midi';
+import { default as reducer, initialState } from './reducer';
+import { addMidiNoteMapping, setSoundCurrentlyLearnt } from './actions';
 
 describe('midi reducer', () => {
   it('should return initialState', () => {

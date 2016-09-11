@@ -1,6 +1,6 @@
-import makeActionCreator from './makeActionCreator';
-import { audioContext } from './audio';
-import { LOOKAHEAD, SCHEDULEAHEADTIME, TICKRESOLUTION } from '../constants';
+import makeActionCreator from '../../utils/makeActionCreator';
+import { audioContext } from '../Audio/actions';
+import { LOOKAHEAD, SCHEDULEAHEADTIME, TICKRESOLUTION } from '../../constants';
 
 export const UPDATE_METRONOME_STATUS = 'UPDATE_METRONOME_STATUS';
 export const SET_TEMPO = 'SET_TEMPO';

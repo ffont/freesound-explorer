@@ -1,8 +1,7 @@
 import { TOGGLE_SIDEBAR_VISIBILITY, SET_SIDEBAR_TAB, EXAMPLE_QUERY_DONE,
   MOVE_SIDEBAR_ARROW }
-  from '../actions/actionTypes';
-import { DEFAULT_SIDEBAR_TAB, SIDEBAR_TABS } from '../constants';
-import '../polyfills/Array.includes';
+  from './actions';
+import { DEFAULT_SIDEBAR_TAB, SIDEBAR_TABS } from '../../constants';
 
 const initialState = {
   isVisible: true,

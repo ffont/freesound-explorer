@@ -1,9 +1,8 @@
 import expect from 'expect';
 import deepFreeze from 'deep-freeze';
-import '../polyfills/Object.assign';
-import { displaySystemMessage } from '../actions/messagesBox';
-import { default as reducer, initialState } from './messagesBox';
-import { MESSAGE_STATUS } from '../constants';
+import { displaySystemMessage } from './actions';
+import { default as reducer, initialState } from './reducer';
+import { MESSAGE_STATUS } from '../../constants';
 
 describe('messsagesBox reducer', () => {
   it('should return initialState', () => {

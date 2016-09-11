@@ -1,4 +1,4 @@
-import { NEW_SESSION, LOAD_SESSION } from '../actions/actionTypes';
+import { NEW_SESSION, LOAD_SESSION } from './actions';
 
 export const reducersToExport = [];
 

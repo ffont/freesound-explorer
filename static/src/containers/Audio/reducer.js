@@ -1,4 +1,4 @@
-import { ADD_AUDIO_SRC, STOP_AUDIO_SRC } from '../actions/actionTypes';
+import { ADD_AUDIO_SRC, STOP_AUDIO_SRC } from './actions';
 
 const sourceNodes = (state = {}, action) => {
   switch (action.type) {

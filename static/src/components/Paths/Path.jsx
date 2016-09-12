@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import '../../stylesheets/Paths.scss';
+import './Paths.scss';
 import { setPathSync, startStopPath, setPathCurrentlyPlaying, selectPath,
   setPathWaitUntilFinished, setPathActive,
   playNextSoundFromPath, addRandomSoundToPath } from '../../actions/paths';

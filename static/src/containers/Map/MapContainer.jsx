@@ -6,7 +6,7 @@ import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateMapPosition } from './actions';
 import { setSoundCurrentlyLearnt } from '../Midi/actions';
 import { selectSound } from '../Sounds/actions';
-import Space from '../../components/Spaces';
+import Space from '../Spaces/SpaceContainer';
 import SpaceTitle from '../../components/Spaces/SpaceTitle';
 import SoundInfoContainer from '../SoundInfo/SoundInfoContainer';
 import MapPath from '../Paths/MapPath';
@@ -75,12 +75,19 @@ class MapContainer extends React.Component {
     return (
       <div className="map-container" ref={(mapContainer) => { this.mapContainer = mapContainer; }}>
         {this.props.spaces.map(space =>
-          <SpaceTitle key={space.queryID} {...space} />)}
+          <SpaceTitle
+            key={space.queryID}
+            query={space.query}
+            queryParams={space.queryParams}
+          />)}
         <svg className="map" onClick={this.onClickCallback}>
           {this.props.paths.map(path =>
             <MapPath key={path.id} path={path} />)}
           {this.props.spaces.map(space =>
-            <Space key={space.queryID} sounds={space.sounds} />)}
+            <Space
+              key={space.queryID}
+              sounds={space.sounds}
+            />)}
         </svg>
         <SoundInfoContainer />
       </div>

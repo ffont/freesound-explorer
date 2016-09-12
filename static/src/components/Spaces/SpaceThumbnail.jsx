@@ -1,8 +1,11 @@
 import React from 'react';
-import SpaceTitle from '../Map/SpaceTitle';
-import Space from '../Map/Space';
+import SpaceTitle from './SpaceTitle';
+import Space from '../../containers/Spaces/SpaceContainer';
 
 const propTypes = {
+  queryID: React.PropTypes.string,
+  query: React.PropTypes.string,
+  queryParams: React.PropTypes.object,
   isSelected: React.PropTypes.bool,
   onClick: React.PropTypes.func,
   onRemoveClick: React.PropTypes.func,
@@ -14,8 +17,12 @@ function SpaceThumbnail(props) {
       className={`space-thumbnail${(props.isSelected) ? ' active' : ''}`}
       onClick={props.onClick}
     >
-      <SpaceTitle {...props} isThumbnail />
-      <svg><Space {...props} isThumbnail /></svg>
+      <SpaceTitle
+        query={props.query}
+        queryParams={props.queryParams}
+        isThumbnail
+      />
+      <svg><Space queryID={props.queryID} isThumbnail /></svg>
       <i
         className="fa fa-lg fa-times-circle-o"
         aria-hidden

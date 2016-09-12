@@ -18,7 +18,9 @@ function Spaces(props) {
       {props.spaces.map(space => (
         <li key={space.queryID}>
           <SpaceThumbnail
-            {...space}
+            queryID={space.queryID}
+            query={space.query}
+            queryParams={space.queryParams}
             isSelected={space.queryID === props.currentSpace}
             onClick={() => props.setSpaceAsCenter(space)}
             onRemoveClick={() => props.removeSpace(space)}

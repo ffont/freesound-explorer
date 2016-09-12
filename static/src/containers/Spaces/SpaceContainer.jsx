@@ -1,5 +1,6 @@
 import React from 'react';
-import MapCircleContainer from '../../containers/Sounds/MapCircleContainer';
+import { connect } from 'react-redux';
+import MapCircleContainer from '../Sounds/MapCircleContainer';
 
 const propTypes = {
   sounds: React.PropTypes.array,
@@ -28,6 +29,15 @@ class Space extends React.Component {
   }
 }
 
+const makeMapStateToProps = (_, ownProps) => {
+  const { queryID, isThumbnail } = ownProps;
+  return (state) => {
+    const space = state.spaces.spaces.find(curSpace =>
+      curSpace.queryID === queryID);
+    return Object.assign({ queryID, isThumbnail }, space);
+  };
+};
+
 Space.propTypes = propTypes;
 Space.defaultProps = defaultProps;
-export default Space;
+export default connect(makeMapStateToProps, {})(Space);

@@ -6,8 +6,5 @@
   "env": {
     "mocha": true,
     "browser": true
-  },
-  "plugins": [
-    "react"
-  ],
+  }
 }

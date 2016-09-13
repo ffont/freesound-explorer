@@ -13,7 +13,7 @@ const propTypes = {
 
 function SpaceThumbnail(props) {
   return (
-    <div
+    <li
       className={`space-thumbnail${(props.isSelected) ? ' active' : ''}`}
       onClick={props.onClick}
     >
@@ -31,7 +31,7 @@ function SpaceThumbnail(props) {
           props.onRemoveClick();
         }}
       />
-    </div>
+    </li>
   );
 }
 

@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { midiMessageTypeLabel, midiNoteNumberToMidiNoteLabel } from '../../utils/midiUtils';
-import SelectWithLabel from '../Input/SelectWithLabel';
+import SelectWithLabel from '../../components/Input/SelectWithLabel';
 import { MIDI_MESSAGE_INDICATOR_DURATION } from '../../constants';
-import '../../stylesheets/Midi.scss';
-import { setMidiInputChannel, setMidiInputDevice, setUpMIDIDevices } from '../../actions/midi';
+import { setMidiInputChannel, setMidiInputDevice, setUpMIDIDevices } from './actions';
 
 const propTypes = {
   latestReceivedMessages: React.PropTypes.array,

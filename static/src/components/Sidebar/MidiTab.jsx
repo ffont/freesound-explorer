@@ -1,7 +1,8 @@
 import React from 'react';
 import baseTab from './BaseTab';
-import MidiMappingsList from '../MIDI/MidiMappingsList';
-import MidiInIndicator from '../MIDI/MidiInIndicator';
+import MidiMappingsList from '../../containers/Midi/MidiMappingsList';
+import MidiInIndicator from '../../containers/Midi/MidiInIndicator';
+import './MidiTab.scss';
 
 function MidiTab() {
   return (

@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import '../../stylesheets/Paths.scss';
 import { truncatedString } from '../../utils/misc';
-import { deleteSoundFromPath } from '../../actions/paths';
-import { selectSound } from '../../actions/sounds';
+import { deleteSoundFromPath } from './actions';
+import { selectSound } from '../Sounds/actions';
 
 const propTypes = {
   soundID: React.PropTypes.string,

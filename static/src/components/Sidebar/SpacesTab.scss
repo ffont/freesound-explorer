@@ -1,6 +1,6 @@
 @import "../../stylesheets/variables.json";
 
-ul.spaces-thumbnails-container {
+.spaces-thumbnails-container > ul {
   list-style: none;
   padding: 0;
 }

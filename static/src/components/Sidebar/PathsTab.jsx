@@ -1,6 +1,7 @@
 import React from 'react';
-import PathList from '../Paths/PathList';
+import PathList from '../../containers/Paths/PathList';
 import baseTab from './BaseTab';
+import './PathsTab.scss';
 
 function PathsTab() {
   return (

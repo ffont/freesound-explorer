@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { midiNoteNumberToMidiNoteLabel } from '../../utils/midiUtils';
-import { removeMidiNoteMapping } from '../../actions/midi';
+import { removeMidiNoteMapping } from './actions';
 import { truncatedString } from '../../utils/misc';
-import { selectSound } from '../../actions/sounds';
+import { selectSound } from '../Sounds/actions';
 
 const propTypes = {
   midiNote: React.PropTypes.string,

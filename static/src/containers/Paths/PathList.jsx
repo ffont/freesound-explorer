@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import '../../stylesheets/Paths.scss';
 import { getRandomElement, elementWithId } from '../../utils/arrayUtils';
 import { MESSAGE_STATUS } from '../../constants';
-import { addPath } from '../../actions/paths';
-import { displaySystemMessage } from '../../actions/messagesBox';
-import Path from './Path';
+import { addPath } from './actions';
+import { displaySystemMessage } from '../MessagesBox/actions';
+import PathManager from './PathManager';
 
 const propTypes = {
   paths: React.PropTypes.array,
@@ -36,8 +35,8 @@ class PathList extends React.Component {
   render() {
     return (
       <ul className="paths-list">
-        {this.props.paths.map((path) =>
-          <Path key={path.id} path={path} selected={path.id === this.props.selectedPath} />
+        {this.props.paths.map(path =>
+          <PathManager key={path.id} path={path} selected={path.id === this.props.selectedPath} />
         )}
         <li className="add-new-path">
           <button onClick={() => this.createNewPath()} >

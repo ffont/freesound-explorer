@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'redux';
+import { connect } from 'react-redux';
 import { togglePlayOnHover } from './actions';
 import CheckBox from '../../components/Input/CheckBox';
 

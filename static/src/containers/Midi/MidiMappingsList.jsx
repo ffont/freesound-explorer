@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import '../../stylesheets/Midi.scss';
 import MidiMapping from './MidiMapping';
 
 const propTypes = {

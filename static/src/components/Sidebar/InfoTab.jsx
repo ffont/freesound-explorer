@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../stylesheets/Sidebar.scss';
+import './Sidebar.scss';
 import baseTab from './BaseTab';
 
 function InfoTab() {

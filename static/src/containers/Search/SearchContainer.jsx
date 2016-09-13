@@ -1,15 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import '../../stylesheets/QueryBox.scss';
-import { getSounds } from '../../actions/sounds';
 import { updateDescriptor, updateMinDuration, updateMaxDuration,
   updateMaxResults, updateQuery }
-  from '../../actions/search';
-import { setExampleQueryDone } from '../../actions/sidebar';
-import { DEFAULT_QUERY, DEFAULT_DESCRIPTOR, PERFORM_QUERY_AT_MOUNT } from '../../constants';
-import InputTextButton from '../Input/InputTextButton';
-import SelectWithLabel from '../Input/SelectWithLabel';
-import SliderRange from '../Input/SliderRange';
+  from './actions';
+import { getSounds } from '../Sounds/actions';
+import { setExampleQueryDone } from '../Sidebar/actions';
+import { DEFAULT_QUERY, PERFORM_QUERY_AT_MOUNT } from '../../constants';
+import InputTextButton from '../../components/Input/InputTextButton';
+import SelectWithLabel from '../../components/Input/SelectWithLabel';
+import SliderRange from '../../components/Input/SliderRange';
 
 const propTypes = {
   maxResults: React.PropTypes.number,
@@ -18,7 +17,6 @@ const propTypes = {
   query: React.PropTypes.string,
   descriptor: React.PropTypes.string,
   getSounds: React.PropTypes.func,
-  sounds: React.PropTypes.object,
   exampleQueryDone: React.PropTypes.bool,
   updateDescriptor: React.PropTypes.func,
   updateMinDuration: React.PropTypes.func,
@@ -71,7 +69,7 @@ class QueryBox extends React.Component {
             const query = evt.target.value;
             this.props.updateQuery(query);
           }}
-          tabIndex="1"
+          tabIndex="0"
           placeholder="query terms, e.g.: instruments"
           onButtonClick={(evt) => {
             evt.preventDefault();
@@ -87,7 +85,7 @@ class QueryBox extends React.Component {
           options={[{ value: 'lowlevel.mfcc.mean', name: 'Timbre' },
             { value: 'tonal.hpcp.mean', name: 'Tonality' }]}
           label="Arrange by"
-          tabIndex="3"
+          tabIndex="0"
           defaultValue={this.props.descriptor}
         />
         <SliderRange
@@ -100,7 +98,7 @@ class QueryBox extends React.Component {
             this.props.updateMaxResults(maxResults);
           }}
           currentValue={this.props.maxResults}
-          tabIndex="4"
+          tabIndex="0"
           id="max-results-slider"
         />
         <SliderRange
@@ -114,7 +112,7 @@ class QueryBox extends React.Component {
             this.props.updateMaxDuration(maxDuration);
           }}
           currentValue={this.props.maxDuration}
-          tabIndex="5"
+          tabIndex="0"
           id="max-duration-slider"
         />
       </form>
@@ -123,9 +121,8 @@ class QueryBox extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const sounds = state.sounds.byID;
   const { exampleQueryDone } = state.sidebar;
-  return Object.assign({}, { sounds, exampleQueryDone }, state.search);
+  return Object.assign({}, { exampleQueryDone }, state.search);
 };
 
 QueryBox.propTypes = propTypes;

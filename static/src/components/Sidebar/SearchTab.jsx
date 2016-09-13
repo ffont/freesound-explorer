@@ -1,11 +1,12 @@
 import React from 'react';
-import QueryBox from './QueryBox';
+import SearchContainer from '../../containers/Search/SearchContainer';
 import baseTab from './BaseTab';
+import './SearchTab.scss';
 
 function SearchTab() {
   return (
     <div>
-      <QueryBox />
+      <SearchContainer />
     </div>
   );
 }

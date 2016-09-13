@@ -6,7 +6,6 @@ export const UPDATE_METRONOME_STATUS = 'UPDATE_METRONOME_STATUS';
 export const SET_TEMPO = 'SET_TEMPO';
 export const STARTSTOP_METRONOME = 'STARTSTOP_METRONOME';
 export const SET_PLAY_SOUND = 'SET_PLAY_SOUND';
-export const SET_STARTED_METRONOME_AT_MOUNT = 'SET_STARTED_METRONOME_AT_MOUNT';
 
 export const updateMetronomeStatus = makeActionCreator(UPDATE_METRONOME_STATUS,
   'bar', 'beat', 'tick');
@@ -18,10 +17,7 @@ export const startStopMetronome = makeActionCreator(STARTSTOP_METRONOME,
   'isPlaying');
 
 export const setPlaySound = makeActionCreator(SET_PLAY_SOUND,
-  'playSound');
-
-export const setStartedMetronomeAtMount = makeActionCreator(SET_STARTED_METRONOME_AT_MOUNT,
-  'startedMetronomeAtMount');
+  'shouldPlaySound');
 
 let schedulerTimer;
 let updateStateInSyncTimer;
@@ -57,7 +53,7 @@ export const audioScheduler = () => (dispatch, getStore) => {
       const event = new CustomEvent('tick', { detail: { bar, beat, tick, time } });
       window.dispatchEvent(event);
 
-      if (store.metronome.playSound) {
+      if (store.metronome.shouldPlaySound) {
         playMetronomeSound(tick, time);
       }
 

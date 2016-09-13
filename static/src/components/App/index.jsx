@@ -1,7 +1,7 @@
 import React from 'react';
 import LoginContainer from '../../containers/Login/LoginContainer';
 import MapContainer from '../../containers/Map/MapContainer';
-// import Sidebar from '../Sidebar';
+import SidebarContainer from '../../containers/Sidebar/SidebarContainer';
 // import MessagesBox from '../MessagesBox';
 // import Logo from '../Logo';
 // import Modal from '../Modal';
@@ -12,8 +12,8 @@ function App() {
     <div>
       <LoginContainer />
       <MapContainer />
-      {/** <Sidebar />
-      <MessagesBox />
+      <SidebarContainer />
+      {/** <MessagesBox />
       <Logo />
       <Modal /> */}
     </div>

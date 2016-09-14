@@ -9,7 +9,10 @@ const propTypes = {
   isSelected: React.PropTypes.bool,
   onClick: React.PropTypes.func,
   sounds: React.PropTypes.array,
-  currentPositionInMap: React.PropTypes.object,
+  currentPositionInMap: React.PropTypes.shape({
+    x: React.PropTypes.number,
+    y: React.PropTypes.number,
+  }),
   onRemoveClick: React.PropTypes.func,
 };
 

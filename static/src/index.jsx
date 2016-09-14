@@ -26,10 +26,7 @@ if (ReactPerf) {
 
 const store = configureStore();
 
-const freesoundExplorerApp = (process.env.NODE_ENV !== 'production') ?
-  <AppContainer><App store={store} /></AppContainer> : <App store={store} />;
-
-render(freesoundExplorerApp, document.getElementById('app'));
+render((<AppContainer><App store={store} /></AppContainer>), document.getElementById('app'));
 
 if (module.hot) {
   module.hot.accept('./components/App', () => {

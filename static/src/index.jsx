@@ -4,6 +4,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store';
+import { AppContainer } from 'react-hot-loader';
 import App from './components/App';
 import { USE_LOCAL_FONTAWESOME } from './constants';
 
@@ -25,7 +26,18 @@ if (ReactPerf) {
 
 const store = configureStore();
 
-render(
-  (<Provider store={store}>
-    <App />
-  </Provider>), document.getElementById('app'));
+const freesoundExplorerApp = (process.env.NODE_ENV !== 'production') ?
+  <AppContainer><App store={store} /></AppContainer> : <App store={store} />;
+
+render(freesoundExplorerApp, document.getElementById('app'));
+
+if (module.hot) {
+  module.hot.accept('./components/App', () => {
+    render(
+      <AppContainer>
+        <App store={store} />
+      </AppContainer>,
+      document.getElementById('root')
+    );
+  });
+}

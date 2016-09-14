@@ -8,6 +8,7 @@ function getEntrySources(sources) {
   if (process.env.NODE_ENV === 'flask') {
     sources.push('webpack-dev-server/client?http://localhost:8080');
   } else if (process.env.NODE_ENV !== 'production') {
+    sources.unshift('react-hot-loader/patch');
     sources.push('webpack-hot-middleware/client');
   }
   return sources;

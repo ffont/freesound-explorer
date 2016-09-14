@@ -8,6 +8,8 @@ const propTypes = {
   queryParams: React.PropTypes.object,
   isSelected: React.PropTypes.bool,
   onClick: React.PropTypes.func,
+  sounds: React.PropTypes.array,
+  currentPositionInMap: React.PropTypes.object,
   onRemoveClick: React.PropTypes.func,
 };
 
@@ -20,6 +22,8 @@ function SpaceThumbnail(props) {
       <SpaceTitle
         query={props.query}
         queryParams={props.queryParams}
+        sounds={props.sounds}
+        currentPositionInMap={props.currentPositionInMap}
         isThumbnail
       />
       <svg><Space queryID={props.queryID} isThumbnail /></svg>

@@ -18,6 +18,8 @@ const Spaces = props => (
       queryID={space.queryID}
       query={space.query}
       queryParams={space.queryParams}
+      sounds={space.sounds}
+      currentPositionInMap={space.currentPositionInMap}
       isSelected={space.queryID === props.currentSpace}
       onClick={() => props.setSpaceAsCenter(space)}
       onRemoveClick={() => props.removeSpace(space)}

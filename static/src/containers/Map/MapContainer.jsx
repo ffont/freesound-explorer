@@ -6,6 +6,7 @@ import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateMapPosition } from './actions';
 import { setSoundCurrentlyLearnt } from '../Midi/actions';
 import { selectSound } from '../Sounds/actions';
+import { hideModal } from '../SoundInfo/actions';
 import Space from '../Spaces/SpaceContainer';
 import SpaceTitle from '../../components/Spaces/SpaceTitle';
 import SoundInfoContainer from '../SoundInfo/SoundInfoContainer';
@@ -24,6 +25,7 @@ const propTypes = {
   }),
   setSoundCurrentlyLearnt: React.PropTypes.func,
   updateMapPosition: React.PropTypes.func,
+  hideModal: React.PropTypes.func,
 };
 
 class MapContainer extends React.Component {
@@ -61,6 +63,7 @@ class MapContainer extends React.Component {
       this.props.selectSound();
       // turn off current midi learn
       this.props.setSoundCurrentlyLearnt();
+      this.props.hideModal();
     }
   }
 
@@ -111,4 +114,5 @@ export default connect(mapStateToProps, {
   updateMapPosition,
   setSoundCurrentlyLearnt,
   selectSound,
+  hideModal,
 })(MapContainer);

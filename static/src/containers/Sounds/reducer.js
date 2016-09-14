@@ -5,6 +5,7 @@ import { FETCH_SOUNDS_SUCCESS, UPDATE_SOUNDS_POSITION, SELECT_SOUND_BY_ID,
 import { UPDATE_MAP_POSITION } from '../Map/actions';
 import { MAP_SCALE_FACTOR } from '../../constants';
 import sessions from '../Sessions/reducer';
+import soundInfo from '../SoundInfo/reducer';
 
 export const computeSoundGlobalPosition = (tsnePosition, spacePosition, mapPosition) => {
   const { translateX, translateY, scale } = mapPosition;
@@ -108,5 +109,6 @@ const selectedSound = (state = 0, action) => {
 const sounds = (state = {}, action) => ({
   byID: byID(state.byID, action),
   selectedSound: selectedSound(state.selectedSound, action),
+  soundInfoModal: soundInfo(state.soundInfoModal, action, state.byID),
 });
 export default sessions(sounds);

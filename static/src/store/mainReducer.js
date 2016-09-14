@@ -10,7 +10,6 @@ import paths from '../containers/Paths/reducer';
 import search from '../containers/Search/reducer';
 import settings from '../containers/Settings/reducer';
 import sidebar from '../containers/Sidebar/reducer';
-import soundInfoModal from '../containers/SoundInfo/reducer';
 import sounds from '../containers/Sounds/reducer';
 import spaces from '../containers/Spaces/reducer';
 
@@ -27,7 +26,6 @@ const rootReducer = combineReducers({
   search,
   settings,
   sidebar,
-  soundInfoModal,
   sounds,
   spaces,
 });

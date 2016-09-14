@@ -1,6 +1,6 @@
-import { OPEN_MODAL_FOR_SOUND, HIDE_MODAL }
-from './actions';
+import { OPEN_MODAL_FOR_SOUND, HIDE_MODAL } from './actions';
 import { UPDATE_SOUNDS_POSITION } from '../Sounds/actions';
+import { UPDATE_MAP_POSITION } from '../Map/actions';
 import { soundInfoModalHeight } from 'json!../../stylesheets/variables.json';
 
 const modalHeight = parseInt(soundInfoModalHeight, 10);
@@ -28,7 +28,7 @@ const getDirectionForPosition = (position) => {
   return 'up';
 };
 
-const positionRedux = (state = initialPositionState, action, curSoundID) => {
+const positionRedux = (state = initialPositionState, action, curSoundID, allSounds) => {
   switch (action.type) {
     case OPEN_MODAL_FOR_SOUND: {
       const { sound } = action;
@@ -41,6 +41,15 @@ const positionRedux = (state = initialPositionState, action, curSoundID) => {
         return state;
       }
       const newSoundPosition = action.sounds[curSoundID].position;
+      const position = { top: newSoundPosition.cy, left: newSoundPosition.cx };
+      const direction = getDirectionForPosition(position);
+      return { position, direction };
+    }
+    case UPDATE_MAP_POSITION: {
+      if (!allSounds[curSoundID]) {
+        return state;
+      }
+      const newSoundPosition = allSounds[curSoundID].position;
       const position = { top: newSoundPosition.cy, left: newSoundPosition.cx };
       const direction = getDirectionForPosition(position);
       return { position, direction };
@@ -60,9 +69,12 @@ const soundIDRedux = (state = '', action) => {
   }
 };
 
-export default (state = {}, action) => {
+export default (state = {}, action, allSounds) => {
   const isVisible = isVisibleRedux(state.isVisible, action);
   const soundID = soundIDRedux(state.soundID, action);
-  const { position, direction } = positionRedux(state.position, action, soundID);
+  const { position, direction } = positionRedux({
+    position: state.position,
+    direction: state.direction,
+  }, action, soundID, allSounds);
   return { isVisible, soundID, position, direction };
 };

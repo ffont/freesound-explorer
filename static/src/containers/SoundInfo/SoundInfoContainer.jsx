@@ -22,8 +22,6 @@ const propTypes = {
   bookmarkSound: React.PropTypes.func,
 };
 
-// TODO: SoundInfo component must read isUserLoggedIn from state.login (redux)
-
 const SoundInfoContainer = (props) => {
   if (props.sound) {
     return <SoundInfo {...props} />;
@@ -34,8 +32,8 @@ const SoundInfoContainer = (props) => {
 const mapStateToProps = (state) => {
   const { notesMapped, soundCurrentlyLearnt } = state.midi;
   const { selectedPath } = state.paths;
-  const sound = state.sounds.byID && state.sounds.byID[state.soundInfoModal.soundID];
-  return Object.assign({}, state.soundInfoModal,
+  const sound = state.sounds.byID && state.sounds.byID[state.sounds.soundInfoModal.soundID];
+  return Object.assign({}, state.sounds.soundInfoModal,
     { sound, selectedPath, notesMapped, soundCurrentlyLearnt });
 };
 

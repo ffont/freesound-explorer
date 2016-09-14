@@ -18,8 +18,6 @@ const propTypes = {
   bookmarkSound: React.PropTypes.func,
 };
 
-// TODO: SoundInfo component must read isUserLoggedIn from state.login (redux)
-
 const DEFAULT_CLASSNAME = 'sound-info-modal';
 
 class SoundInfo extends React.Component {
@@ -35,10 +33,11 @@ class SoundInfo extends React.Component {
   }
 
   getPosition() {
-    return {
-      top: this.props.position.cy,
-      left: this.props.position.cx,
+    const style = {
+      top: this.props.position.top,
+      left: this.props.position.left,
     };
+    return style;
   }
 
   getCurrentlyAssignedMidiNoteLabel() {
@@ -111,17 +110,15 @@ class SoundInfo extends React.Component {
     const userButtons = this.getUserButtons();
     return (
       <div className={this.getClassName()} style={this.getPosition()}>
-        <div>
-          <a href={this.props.sound.url}>
-            <div className="sound-info-modal-title">
-              <div>{this.props.sound.name}</div>
-              <div>by {this.props.sound.username}</div>
-            </div>
-          </a>
-          <div className="sound-info-modal-content">
-            <Waveform sound={this.props.sound} />
-            {userButtons}
+        <a href={this.props.sound.url}>
+          <div className="sound-info-modal-title">
+            <div>{this.props.sound.name}</div>
+            <div>by {this.props.sound.username}</div>
           </div>
+        </a>
+        <div className="sound-info-modal-content">
+          <Waveform sound={this.props.sound} />
+          {userButtons}
         </div>
       </div>
     );

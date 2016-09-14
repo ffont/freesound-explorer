@@ -79,6 +79,8 @@ class MapContainer extends React.Component {
             key={space.queryID}
             query={space.query}
             queryParams={space.queryParams}
+            sounds={space.sounds}
+            currentPositionInMap={space.currentPositionInMap}
           />)}
         <svg className="map" onClick={this.onClickCallback}>
           {this.props.paths.map(path =>

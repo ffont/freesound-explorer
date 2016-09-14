@@ -1,6 +1,7 @@
-import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE,
-  UPDATE_MAP_POSITION, REMOVE_SPACE }
+import { UPDATE_MAP_POSITION, REMOVE_SPACE }
   from './actions';
+import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE }
+  from '../Sounds/actions';
 import { computeSoundGlobalPosition } from '../Sounds/reducer';
 import { getMapCenter } from '../../utils/uiUtils';
 import { generateListOfSpacesOriginPositions } from '../../utils/misc';

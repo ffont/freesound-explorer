@@ -1,5 +1,5 @@
-import { UPDATE_MAP_POSITION, REMOVE_SPACE }
-  from './actions';
+import { REMOVE_SPACE } from './actions';
+import { UPDATE_MAP_POSITION } from '../Map/actions';
 import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE }
   from '../Sounds/actions';
 import { computeSoundGlobalPosition } from '../Sounds/reducer';

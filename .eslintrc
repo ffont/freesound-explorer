@@ -6,5 +6,10 @@
   "env": {
     "mocha": true,
     "browser": true
+  },
+  "settings": {
+    "import/resolver": {
+      "babel-module": {}
+    }
   }
 }

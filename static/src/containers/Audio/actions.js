@@ -18,11 +18,13 @@ const initAudioContext = () => {
 
 export const { audioContext, loader } = initAudioContext();
 
-const addAudioSource = makeActionCreator(ADD_AUDIO_SRC, 'sourceKey', 'source', 'gain', 'soundID');
+// export for testing, not meant to be called externally
+export const addAudioSource = makeActionCreator(ADD_AUDIO_SRC, 'sourceKey', 'source', 'gain', 'soundID');
+// TODO: do we actually need 'soundID'? Reducer doesn't use it
 export const playAudioSrc = makeActionCreator(PLAY_AUDIO_SRC, 'sourceKey', 'soundID');
 export const stopAudioSrc = makeActionCreator(STOP_AUDIO_SRC, 'sourceKey', 'soundID');
 
-const loadAudio = (sound) => new Promise((resolve, reject) => {
+const loadAudio = sound => new Promise((resolve, reject) => {
   if (sound.buffer) {
     resolve(sound.buffer);
   } else {
@@ -45,7 +47,7 @@ export const playAudio =
     }
     const { playingSourceNodes } = store.audio;
     loadAudio(sound).then(
-      buffer => {
+      (buffer) => {
         const source = audioContext.createBufferSource();
         const sourceGainNode = audioContext.createGain();
         const sourceNodeKey = customSourceNodeKey || Object.keys(playingSourceNodes).length;

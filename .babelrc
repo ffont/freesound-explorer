@@ -1,4 +1,9 @@
 {
   "presets": ["es2015", "react"],
-  "plugins": ["react-hot-loader/babel"]
+  "plugins": [
+    "react-hot-loader/babel",
+    ["module-resolver", {
+      "root": ["./src"]
+    }]
+  ]
 }

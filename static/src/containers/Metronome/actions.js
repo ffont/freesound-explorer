@@ -4,17 +4,18 @@ import { LOOKAHEAD, SCHEDULEAHEADTIME, TICKRESOLUTION } from '../../constants';
 
 export const UPDATE_METRONOME_STATUS = 'UPDATE_METRONOME_STATUS';
 export const SET_TEMPO = 'SET_TEMPO';
-export const STARTSTOP_METRONOME = 'STARTSTOP_METRONOME';
+export const START_METRONOME = 'START_METRONOME';
+export const STOP_METRONOME = 'STOP_METRONOME';
 export const SET_PLAY_SOUND = 'SET_PLAY_SOUND';
+
+export const startMetronomeAction = makeActionCreator(START_METRONOME);
+export const stopMetronomeAction = makeActionCreator(STOP_METRONOME);
 
 export const updateMetronomeStatus = makeActionCreator(UPDATE_METRONOME_STATUS,
   'bar', 'beat', 'tick');
 
 export const setTempo = makeActionCreator(SET_TEMPO,
   'tempo');
-
-export const startStopMetronome = makeActionCreator(STARTSTOP_METRONOME,
-  'isPlaying');
 
 export const setPlaySound = makeActionCreator(SET_PLAY_SOUND,
   'shouldPlaySound');
@@ -68,7 +69,7 @@ export const audioScheduler = () => (dispatch, getStore) => {
       currentBar += 1;
     }
   }
-  schedulerTimer = setTimeout(() => { dispatch(audioScheduler()); }, LOOKAHEAD);
+  schedulerTimer = setTimeout(() => dispatch(audioScheduler()), LOOKAHEAD);
 };
 
 export const updateStateInSync = () => (dispatch, getStore) => {
@@ -90,7 +91,7 @@ export const updateStateInSync = () => (dispatch, getStore) => {
       lastTickDrawn = currentTickToDraw;
     }
     // Call this function at every requestAnimationFrame
-    updateStateInSyncTimer = setTimeout(() => { dispatch(updateStateInSync()); }, LOOKAHEAD * 2);
+    updateStateInSyncTimer = setTimeout(() => dispatch(updateStateInSync()), LOOKAHEAD * 2);
   }
 };
 
@@ -101,16 +102,16 @@ export const startMetronome = () => (dispatch) => {
   currentBar = 1;
   const [bar, beat, tick] = [1, 0, 0];
   dispatch(updateMetronomeStatus(bar, beat, tick));
-  dispatch(startStopMetronome(true));
+  dispatch(startMetronomeAction());
   nextTickTime = audioContext.currentTime;
-  schedulerTimer = setTimeout(() => { dispatch(audioScheduler()); }, LOOKAHEAD);
-  updateStateInSyncTimer = setTimeout(() => { dispatch(updateStateInSync()); }, LOOKAHEAD * 2);
+  schedulerTimer = setTimeout(() => dispatch(audioScheduler()), LOOKAHEAD);
+  updateStateInSyncTimer = setTimeout(() => dispatch(updateStateInSync()), LOOKAHEAD * 2);
 };
 
 export const stopMetronome = () => (dispatch) => {
   clearTimeout(schedulerTimer);
   clearTimeout(updateStateInSyncTimer);
-  dispatch(startStopMetronome(false));
+  dispatch(stopMetronomeAction());
   const [bar, beat, tick] = [1, 0, 0];
   dispatch(updateMetronomeStatus(bar, beat, tick));
 };

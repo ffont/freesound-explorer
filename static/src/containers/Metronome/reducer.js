@@ -1,9 +1,9 @@
-import { UPDATE_METRONOME_STATUS, SET_TEMPO, STARTSTOP_METRONOME,
-  SET_PLAY_SOUND } from './actions';
+import { UPDATE_METRONOME_STATUS, SET_TEMPO, START_METRONOME,
+  STOP_METRONOME, SET_PLAY_SOUND } from './actions';
 import { DEFAULT_TEMPO } from '../../constants';
 import sessions from '../Sessions/reducer';
 
-const initialState = {
+export const initialState = {
   bar: 1,
   beat: 0,
   tick: 0,
@@ -31,10 +31,11 @@ function metronome(state = initialState, action) {
         shouldPlaySound: action.shouldPlaySound,
       });
     }
-    case STARTSTOP_METRONOME: {
-      return Object.assign({}, state, {
-        isPlaying: action.isPlaying,
-      });
+    case START_METRONOME: {
+      return Object.assign({}, state, { isPlaying: true });
+    }
+    case STOP_METRONOME: {
+      return Object.assign({}, state, { isPlaying: false });
     }
     default:
       return state;

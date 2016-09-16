@@ -15,7 +15,7 @@ export const setSpaceAsCenter = (space) => {
 
 const removeSpaceAction = makeActionCreator(REMOVE_SPACE, 'queryID');
 
-export const removeSpace = (space) => (dispatch) => {
+export const removeSpace = space => (dispatch) => {
   dispatch(removeSpaceAction(space.queryID));
   space.sounds.forEach(soundID => dispatch(removeSound(soundID)));
 };

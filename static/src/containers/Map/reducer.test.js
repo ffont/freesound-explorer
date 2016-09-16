@@ -1,7 +1,9 @@
 import expect from 'expect';
 import deepFreeze from 'deep-freeze';
 import { default as reducer, initialState } from './reducer';
+import { SET_SPACE_AS_CENTER } from '../Spaces/actions';
 import { updateMapPosition } from './actions';
+import { getMapCenter } from '../../utils/uiUtils';
 
 describe('map reducer', () => {
   it('should return initialState', () => {
@@ -14,6 +16,24 @@ describe('map reducer', () => {
     const stateAfter = Object.assign({}, initialState, position);
     it('correctly updates state', () => {
       expect(reducer(stateBefore, updateMapPosition(position))).toEqual(stateAfter);
+    });
+  });
+  describe('setSpaceAsCenter', () => {
+    const action = {
+      type: SET_SPACE_AS_CENTER,
+      spacePositionX: 400,
+      spacePositionY: 200,
+    };
+    const mapCenter = getMapCenter();
+    const stateBefore = { translateX: 10, translateY: 20, scale: 3 };
+    const expectedState = {
+      translateX: (mapCenter.x - action.spacePositionX) / stateBefore.scale,
+      translateY: (mapCenter.y - action.spacePositionY) / stateBefore.scale,
+      scale: 3,
+      forceMapUpdate: true,
+    };
+    it('automatically moves to a new space', () => {
+      expect(reducer(stateBefore, action)).toEqual(expectedState);
     });
   });
 });

@@ -9,19 +9,21 @@ $modal-transition-duration: 0.3s;
   transition: height $modal-transition-duration ease-in-out, margin-top $modal-transition-duration ease-in-out;
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
   border-radius: $defaultBorderRadius;
+  pointer-events: none;
   a {
     text-decoration: none;
   }
   div {
     opacity: 0;
-    pointer-events: none;
     transition: opacity $modal-transition-duration/4;
   }
   &.active, &.active-down {
     height: $soundInfoModalHeight;
+    a {
+      pointer-events: all;
+    }
     div {
       opacity: 1;
-      pointer-events: all;
       // wait for modal to be totally spread before showing its content
       transition: opacity $modal-transition-duration/4 $modal-transition-duration;
     }

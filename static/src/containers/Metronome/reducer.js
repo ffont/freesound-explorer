@@ -31,11 +31,11 @@ function metronome(state = initialState, action) {
         shouldPlaySound: action.shouldPlaySound,
       });
     }
-    case START_METRONOME: {
-      return Object.assign({}, state, { isPlaying: true });
-    }
+    case START_METRONOME:
     case STOP_METRONOME: {
-      return Object.assign({}, state, { isPlaying: false });
+      return Object.assign({}, state, {
+        isPlaying: action.type === START_METRONOME,
+      });
     }
     default:
       return state;

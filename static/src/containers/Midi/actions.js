@@ -26,7 +26,7 @@ export const setMidiInputDevice = makeActionCreator(SET_MIDI_INPUT_DEVICE, 'devi
 export const setMidiAvailableDevices = makeActionCreator(SET_MIDI_AVAILABLE_DEVICES, 'devicesList');
 export const disconnectExistingDevices = makeActionCreator(DISCONNECT_DEVICES);
 
-export const handleNoteOff = (note) => (dispatch, getStore) => {
+export const handleNoteOff = note => (dispatch, getStore) => {
   const store = getStore();
   const closestNote = Object.keys(store.midi.notesMapped).reduce((prev, curr) =>
     (Math.abs(curr - note) < Math.abs(prev - note) ? curr : prev));
@@ -59,9 +59,9 @@ const messageNotOnExpectedChannel = (receivedChannel, selectedChannel) =>
 const messageNotOnExpectedDevice = (receivedDevice, selectedDevice) =>
   (selectedDevice && (selectedDevice !== receivedDevice));
 
-export const onMIDIMessage = (message) => (dispatch, getStore) => {
+export const onMIDIMessage = message => (dispatch, getStore) => {
   const store = getStore();
-  const type = message.data[0] & 0xf0;
+  const type = message.data[0] && 0xf0;
   const channel = (message.data[0] - type) + 1; // channel 1-16
   const note = message.data[1];
   const velocity = message.data[2];
@@ -107,7 +107,7 @@ export const setUpMIDIDevices = () => (dispatch) => {
         const devicesList = [];
         for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
           devicesList.push(input);
-          input.value.onmidimessage = (data) => dispatch(onMIDIMessage(data));
+          input.value.onmidimessage = data => dispatch(onMIDIMessage(data));
         }
         dispatch(setMidiAvailableDevices(devicesList));
       }, () => {

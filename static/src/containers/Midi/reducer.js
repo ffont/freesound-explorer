@@ -15,7 +15,7 @@ export const initialState = {
   availableMIDIDevices: [],
 };
 
-const soundCurrentlyLearnt = (state = initialState.soundCurrentlyLearnt, action) => {
+export const soundCurrentlyLearnt = (state = initialState.soundCurrentlyLearnt, action) => {
   switch (action.type) {
     case SET_MIDI_LEARN_SOUND_ID: {
       return action.soundID || '';
@@ -25,7 +25,7 @@ const soundCurrentlyLearnt = (state = initialState.soundCurrentlyLearnt, action)
   }
 };
 
-const notesMapped = (state = initialState.notesMapped, action, soundLearnt) => {
+export const notesMapped = (state = initialState.notesMapped, action, soundLearnt) => {
   switch (action.type) {
     case ADD_MIDI_NOTE_MAPPING: {
       const { note } = action;
@@ -33,7 +33,7 @@ const notesMapped = (state = initialState.notesMapped, action, soundLearnt) => {
     }
     case REMOVE_MIDI_NOTE_MAPPING: {
       return Object.keys(state).reduce((curState, curNote) => {
-        if (curNote !== action.note) {
+        if (`${curNote}` !== `${action.note}`) {
           // add to returned state only notes that are different from action.note
           return Object.assign(curState, { [curNote]: state[curNote] });
         }
@@ -45,11 +45,11 @@ const notesMapped = (state = initialState.notesMapped, action, soundLearnt) => {
   }
 };
 
-const latestReceivedMessages = (state = initialState.latestReceivedMessages, action) => {
+export const latestReceivedMessages = (state = initialState.latestReceivedMessages, action) => {
   switch (action.type) {
     case SET_LATEST_RECEIVED_MIDI_MESSAGE: {
-      const newLatestReceivedMessages = state.slice();
-      newLatestReceivedMessages.unshift(action.message); // Add to beginning
+      // Add to beginning
+      const newLatestReceivedMessages = [action.message, ...state];
       return newLatestReceivedMessages.slice(0, N_MIDI_MESSAGES_TO_KEEP);
     }
     default:
@@ -57,7 +57,7 @@ const latestReceivedMessages = (state = initialState.latestReceivedMessages, act
   }
 };
 
-const inputDevice = (state = initialState.inputDevice, action) => {
+export const inputDevice = (state = initialState.inputDevice, action) => {
   switch (action.type) {
     case SET_MIDI_INPUT_DEVICE: {
       return action.deviceName;
@@ -67,7 +67,7 @@ const inputDevice = (state = initialState.inputDevice, action) => {
   }
 };
 
-const inputChannel = (state = initialState.inputChannel, action) => {
+export const inputChannel = (state = initialState.inputChannel, action) => {
   switch (action.type) {
     case SET_MIDI_INPUT_CHANNEL: {
       return action.channelNumber;
@@ -77,7 +77,7 @@ const inputChannel = (state = initialState.inputChannel, action) => {
   }
 };
 
-const isMidiSupported = (state = initialState.isMidiSupported, action) => {
+export const isMidiSupported = (state = initialState.isMidiSupported, action) => {
   switch (action.type) {
     case SET_MIDI_SUPPORTED: {
       return action.midiSupported;
@@ -87,14 +87,13 @@ const isMidiSupported = (state = initialState.isMidiSupported, action) => {
   }
 };
 
-const resetDevice = (device) =>
-  Object.assign({}, device, {
-    value: Object.assign({}, device.value, {
-      onmidimessage: undefined,
-    }),
-  });
+export const resetDevice = device => Object.assign({}, device, {
+  value: Object.assign({}, device.value, {
+    onmidimessage: undefined,
+  }),
+});
 
-const availableMIDIDevices = (state = initialState.availableMIDIDevices, action) => {
+export const availableMIDIDevices = (state = initialState.availableMIDIDevices, action) => {
   switch (action.type) {
     case SET_MIDI_AVAILABLE_DEVICES: {
       return action.devicesList;

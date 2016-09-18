@@ -1,5 +1,5 @@
 import { default as UUID } from 'node-uuid';
-import { audioContext, playAudio, stopAudio } from '../Audio/actions';
+import { audioContext, playAudio } from '../Audio/actions';
 import makeActionCreator from '../../utils/makeActionCreator';
 import { elementWithId } from '../../utils/arrayUtils';
 import { getRandomElement } from '../../utils/misc';
@@ -7,20 +7,22 @@ import { getRandomElement } from '../../utils/misc';
 export const ADD_PATH = 'ADD_PATH';
 export const REMOVE_PATH = 'REMOVE_PATH';
 export const SET_PATH_SYNC = 'SET_PATH_SYNC';
-export const STARTSTOP_PATH = 'STARTSTOP_PATH';
+export const PLAY_PATH = 'PLAY_PATH';
+export const STOP_PATH = 'STOP_PATH';
 export const SET_PATH_CURRENTLY_PLAYING = 'SET_PATH_CURRENTLY_PLAYING';
 export const SELECT_PATH = 'SELECT_PATH';
 export const ADD_SOUND_TO_PATH = 'ADD_SOUND_TO_PATH';
 export const DELETE_SOUND_FROM_PATH = 'DELETE_SOUND_FROM_PATH';
 export const CLEAR_ALL_PATHS = 'CLEAR_ALL_PATHS';
-export const SET_PATH_WAIT_UNTIL_FINISHED = 'SET_PATH_WAIT_UNTIL_FINISHED';
+export const TOGGLE_WAIT_UNTIL_FINISHED = 'TOGGLE_WAIT_UNTIL_FINISHED';
 export const SET_PATH_ACTIVE = 'SET_PATH_ACTIVE';
 
 export const setPathSync = makeActionCreator(SET_PATH_SYNC,
   'pathID', 'syncMode');
 
-export const startStopPath = makeActionCreator(STARTSTOP_PATH,
-  'pathID', 'isPlaying');
+export const playPath = makeActionCreator(PLAY_PATH, 'pathID');
+
+export const stopPath = makeActionCreator(STOP_PATH, 'pathID');
 
 export const setPathCurrentlyPlaying = makeActionCreator(SET_PATH_CURRENTLY_PLAYING,
   'pathID', 'soundIdx', 'willFinishAt');
@@ -40,7 +42,7 @@ export const addSoundToPath = (soundID, pathID) => (dispatch, getStore) => dispa
   pathID: pathID || getStore().paths.selectedPath,
 });
 
-export const addRandomSoundToPath = (pathID) => (dispatch, getStore) => {
+export const addRandomSoundToPath = pathID => (dispatch, getStore) => {
   const store = getStore();
   const space = elementWithId(store.spaces.spaces, store.spaces.currentSpace, 'queryID');
   const spaceSounds = space.sounds;
@@ -53,8 +55,8 @@ export const addRandomSoundToPath = (pathID) => (dispatch, getStore) => {
 
 export const clearAllPaths = makeActionCreator(CLEAR_ALL_PATHS);
 
-export const setPathWaitUntilFinished = makeActionCreator(SET_PATH_WAIT_UNTIL_FINISHED,
-  'pathID', 'waitUntilFinished');
+export const toggleWaitUntilFinished = makeActionCreator(TOGGLE_WAIT_UNTIL_FINISHED,
+  'pathID');
 
 export const playNextSoundFromPath = (pathID, time) =>
   (dispatch, getStore) => {
@@ -78,11 +80,9 @@ export const playNextSoundFromPath = (pathID, time) =>
           dispatch(playAudio(nextSoundToPlay, undefined, undefined, () => {
             dispatch(playNextSoundFromPath(pathID));
           }));
-        } else {
+        } else if (time !== undefined) {
           // If synched to metronome, sounds will be triggered by onAudioTick events
-          if (time !== undefined) {
-            dispatch(playAudio(path.sounds[nextSoundToPlayIdx], { time }));
-          }
+          dispatch(playAudio(path.sounds[nextSoundToPlayIdx], { time }));
         }
       }
     }
@@ -125,7 +125,7 @@ const linkPathToMetronome = (pathID, tickEvt, dispatch) => {
   dispatch(onAudioTickPath(pathID, bar, beat, tick, time));
 };
 
-export const addPath = (sounds) => (dispatch) => {
+export const addPath = sounds => (dispatch) => {
   const pathID = UUID.v4();
   dispatch({
     type: ADD_PATH,
@@ -133,11 +133,11 @@ export const addPath = (sounds) => (dispatch) => {
     pathID,
   });
   // link new path to metronome ticks
-  window.addEventListener('tick', (evt) => linkPathToMetronome(pathID, evt, dispatch), false);
+  window.addEventListener('tick', evt => linkPathToMetronome(pathID, evt, dispatch), false);
 };
 
-export const removePath = (pathID) => (dispatch) => {
+export const removePath = pathID => (dispatch) => {
   // remove listener for tick events
-  window.removeEventListener('tick', (evt) => linkPathToMetronome(pathID, evt, dispatch), false);
+  window.removeEventListener('tick', evt => linkPathToMetronome(pathID, evt, dispatch), false);
   dispatch({ type: REMOVE_PATH, pathID });
 };

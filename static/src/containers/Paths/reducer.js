@@ -1,10 +1,26 @@
-import { ADD_PATH, SET_PATH_SYNC, STARTSTOP_PATH,
+import { ADD_PATH, SET_PATH_SYNC, PLAY_PATH, STOP_PATH, REMOVE_PATH,
   SET_PATH_CURRENTLY_PLAYING, SELECT_PATH, DELETE_SOUND_FROM_PATH,
-  ADD_SOUND_TO_PATH, CLEAR_ALL_PATHS, SET_PATH_WAIT_UNTIL_FINISHED,
-  SET_PATH_ACTIVE, REMOVE_SOUND } from './actions';
+  ADD_SOUND_TO_PATH, CLEAR_ALL_PATHS, TOGGLE_WAIT_UNTIL_FINISHED,
+  SET_PATH_ACTIVE } from './actions';
+import { REMOVE_SOUND } from '../Sounds/actions';
 import sessions from '../Sessions/reducer';
+import { computePathname } from './utils';
 
-const path = (state = {}, action) => {
+export const pathInitialState = {
+  id: undefined,
+  name: undefined,
+  isActive: true,
+  isPlaying: false,
+  syncMode: 'beat',
+  waitUntilFinished: true,
+  soundCurrentlyPlaying: {
+    soundIdx: undefined,
+    willFinishAt: undefined,
+  },
+  sounds: [],
+};
+
+export const path = (state = {}, action) => {
   if (action.pathID && state.id !== action.pathID) {
     return state;
   }
@@ -13,17 +29,18 @@ const path = (state = {}, action) => {
     case SET_PATH_SYNC: {
       return Object.assign({}, state, { syncMode: action.syncMode });
     }
-    case STARTSTOP_PATH: {
-      const currentlyPlaying = (action.isPlaying) ? state.currentlyPlaying : {
+    case PLAY_PATH:
+    case STOP_PATH: {
+      const isPlaying = action.type === PLAY_PATH;
+      const soundCurrentlyPlaying = (isPlaying) ? state.soundCurrentlyPlaying : {
         soundIdx: undefined,
         willFinishAt: undefined,
       };
-      return Object.assign({}, state, { isPlaying: action.isPlaying, currentlyPlaying });
+      return Object.assign({}, state, { isPlaying, soundCurrentlyPlaying });
     }
     case SET_PATH_CURRENTLY_PLAYING: {
       return Object.assign({}, state, {
-        currentlyPlaying: {
-          // TODO: we shouldn't use soundIdx, only soundID
+        soundCurrentlyPlaying: {
           soundIdx: action.soundIdx,
           willFinishAt: action.willFinishAt,
         },
@@ -41,57 +58,49 @@ const path = (state = {}, action) => {
     case ADD_SOUND_TO_PATH: {
       return Object.assign({}, state, { sounds: [...state.sounds, action.soundID] });
     }
-    case SET_PATH_WAIT_UNTIL_FINISHED: {
-      return Object.assign({}, state, { waitUntilFinished: action.waitUntilFinished });
+    case TOGGLE_WAIT_UNTIL_FINISHED: {
+      return Object.assign({}, state, { waitUntilFinished: !state.waitUntilFinished });
     }
     default:
       return state;
   }
 };
 
-const pathsReducer = (state = [], action) => {
+export const pathsReducer = (state = [], action) => {
   switch (action.type) {
     case ADD_PATH: {
       const { pathID, sounds } = action;
-      let pathName = String.fromCharCode(65 + (state.length % 26));
-      if (Math.floor(state.length / 26) > 0) {
-        pathName += 1 + Math.floor(state.length / 26);
-      }
-      return [...state,
-        {
-          id: pathID,
-          name: pathName,
-          isActive: true,
-          isPlaying: false,
-          syncMode: 'beat',
-          waitUntilFinished: true,
-          currentlyPlaying: {
-            soundIdx: undefined,
-            willFinishAt: undefined,
-          },
-          sounds,
-        },
-      ];
+      const pathName = computePathname(state);
+      const newPath = Object.assign({}, pathInitialState, {
+        sounds,
+        id: pathID,
+        name: pathName,
+      });
+      return [...state, newPath];
     }
     case SET_PATH_SYNC:
-    case STARTSTOP_PATH:
+    case PLAY_PATH:
+    case STOP_PATH:
     case SET_PATH_CURRENTLY_PLAYING:
     case SET_PATH_ACTIVE:
     case REMOVE_SOUND:
     case DELETE_SOUND_FROM_PATH:
     case ADD_SOUND_TO_PATH:
-    case SET_PATH_WAIT_UNTIL_FINISHED: {
+    case TOGGLE_WAIT_UNTIL_FINISHED: {
       return state.map(curPath => path(curPath, action));
     }
     case CLEAR_ALL_PATHS: {
       return [];
+    }
+    case REMOVE_PATH: {
+      return state.filter(curPath => curPath.id !== action.pathID);
     }
     default:
       return state;
   }
 };
 
-const selectedPath = (state = null, action) => {
+export const selectedPath = (state = '', action) => {
   switch (action.type) {
     case ADD_PATH: {
       return action.pathID;
@@ -99,8 +108,14 @@ const selectedPath = (state = null, action) => {
     case SELECT_PATH: {
       return action.pathID;
     }
+    case REMOVE_PATH: {
+      if (state === action.pathID) {
+        return '';
+      }
+      return state;
+    }
     case CLEAR_ALL_PATHS: {
-      return null;
+      return '';
     }
     default:
       return state;

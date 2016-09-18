@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setPathSync, startStopPath, setPathCurrentlyPlaying, selectPath,
-  setPathWaitUntilFinished, setPathActive,
+import { setPathSync, playPath, stopPath,
+  selectPath, toggleWaitUntilFinished, setPathActive,
   playNextSoundFromPath, addRandomSoundToPath } from './actions';
 import PathListSound from './PathListSound';
 
@@ -9,17 +9,12 @@ import PathListSound from './PathListSound';
 const propTypes = {
   path: React.PropTypes.object,
   selected: React.PropTypes.bool,
-  startStopPlayingPath: React.PropTypes.func,
-  selectSound: React.PropTypes.func,
   setPathSync: React.PropTypes.func,
-  startStopPath: React.PropTypes.func,
-  setPathCurrentlyPlaying: React.PropTypes.func,
-  setPathWaitUntilFinished: React.PropTypes.func,
+  playPath: React.PropTypes.func,
+  stopPath: React.PropTypes.func,
+  toggleWaitUntilFinished: React.PropTypes.func,
   setPathActive: React.PropTypes.func,
   selectPath: React.PropTypes.func,
-  deleteSoundFromPath: React.PropTypes.func,
-  playAudio: React.PropTypes.func,
-  stopAudio: React.PropTypes.func,
   playNextSoundFromPath: React.PropTypes.func,
   addRandomSoundToPath: React.PropTypes.func,
 };
@@ -57,9 +52,9 @@ class Path extends React.Component {
   startStopPlayingPath() {
     const path = this.props.path;
     if (path.isPlaying) {
-      this.props.startStopPath(path.id, false);
+      this.props.stopPath(path.id);
     } else if (path.sounds.length) {
-      this.props.startStopPath(path.id, true);
+      this.props.playPath(path.id);
       if (path.syncMode === 'no') {
         // If path passed from stop to play and syncMode is no, trigger play next sound
         this.props.playNextSoundFromPath(path.id, 0);
@@ -92,7 +87,7 @@ class Path extends React.Component {
           <div className="button-group">
             <button
               className={(path.waitUntilFinished === false) ? 'active' : ''}
-              onClick={() => this.props.setPathWaitUntilFinished(path.id, !path.waitUntilFinished)}
+              onClick={() => this.props.toggleWaitUntilFinished(path.id)}
             >></button>
           </div>
         </div>
@@ -124,10 +119,10 @@ const mapStateToProps = () => ({});
 Path.propTypes = propTypes;
 export default connect(mapStateToProps, {
   setPathSync,
-  startStopPath,
-  setPathCurrentlyPlaying,
+  playPath,
+  stopPath,
   selectPath,
-  setPathWaitUntilFinished,
+  toggleWaitUntilFinished,
   setPathActive,
   playNextSoundFromPath,
   addRandomSoundToPath,

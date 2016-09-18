@@ -6,7 +6,7 @@ import { MESSAGE_STATUS, TSNE_CONFIG, DEFAULT_DESCRIPTOR, MAX_TSNE_ITERATIONS }
   from '../../constants';
 import { setSpaceAsCenter } from '../Spaces/actions';
 import { readObjectPropertyByPropertyAbsName } from '../../utils/objectUtils';
-import { computeSoundGlobalPosition } from './reducer';
+import { computeSoundGlobalPosition } from './utils';
 import tsnejs from '../../vendors/tsne';
 import '../../polyfills/requestAnimationFrame';
 
@@ -134,7 +134,7 @@ export const getSounds = (query, queryParams) => (dispatch, getStore) => {
   dispatch(fetchRequest(queryID, query, queryParams));
   const { maxResults, maxDuration } = queryParams;
   submitQuery(query, maxResults, maxDuration).then(
-    allPagesResults => {
+    (allPagesResults) => {
       const sounds = reshapeReceivedSounds(allPagesResults, queryID);
       const soundsFound = Object.keys(sounds).length;
       if (!soundsFound) {
@@ -148,7 +148,7 @@ export const getSounds = (query, queryParams) => (dispatch, getStore) => {
       const tsne = getTrainedTsne(sounds, queryParams);
       computeTsneSolution(tsne, sounds, dispatch, queryID, getStore);
     },
-    error => {
+    (error) => {
       dispatch(displaySystemMessage('No sounds found', MESSAGE_STATUS.ERROR));
       dispatch(fetchFailure(error, queryID));
     }

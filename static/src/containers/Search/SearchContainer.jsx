@@ -17,7 +17,7 @@ const propTypes = {
   query: React.PropTypes.string,
   descriptor: React.PropTypes.string,
   getSounds: React.PropTypes.func,
-  exampleQueryDone: React.PropTypes.bool,
+  isExampleQueryDone: React.PropTypes.bool,
   updateDescriptor: React.PropTypes.func,
   updateMinDuration: React.PropTypes.func,
   updateMaxDuration: React.PropTypes.func,
@@ -36,7 +36,7 @@ class QueryBox extends React.Component {
   componentDidMount() {
     if (PERFORM_QUERY_AT_MOUNT) {
       // query at mount to have the user play with something with no additional interaction
-      if (!this.props.exampleQueryDone) {
+      if (!this.props.isExampleQueryDone) {
         this.tryQueryAtMount();
       }
     }
@@ -121,8 +121,8 @@ class QueryBox extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { exampleQueryDone } = state.sidebar;
-  return Object.assign({}, { exampleQueryDone }, state.search);
+  const { isExampleQueryDone } = state.sidebar;
+  return Object.assign({}, { isExampleQueryDone }, state.search);
 };
 
 QueryBox.propTypes = propTypes;

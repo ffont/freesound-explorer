@@ -6,7 +6,7 @@ import { DEFAULT_SIDEBAR_TAB, SIDEBAR_TABS } from '../../constants';
 const initialState = {
   isVisible: true,
   activeTab: DEFAULT_SIDEBAR_TAB,
-  exampleQueryDone: false,
+  isExampleQueryDone: false,
   bottomArrowPosition: 0,
 };
 
@@ -30,7 +30,7 @@ const sidebar = (state = initialState, action) => {
     }
     case EXAMPLE_QUERY_DONE: {
       return Object.assign({}, state, {
-        exampleQueryDone: true,
+        isExampleQueryDone: true,
       });
     }
     case MOVE_SIDEBAR_ARROW: {

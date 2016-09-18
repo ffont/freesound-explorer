@@ -3,9 +3,9 @@ import { UPDATE_SOUNDS_POSITION } from '../Sounds/actions';
 import { UPDATE_MAP_POSITION } from '../Map/actions';
 import { soundInfoModalHeight } from 'json!../../stylesheets/variables.json';
 
-const modalHeight = parseInt(soundInfoModalHeight, 10);
+export const modalHeight = parseInt(soundInfoModalHeight, 10);
 
-const isVisibleRedux = (state = false, action) => {
+export const isVisibleReducer = (state = false, action) => {
   switch (action.type) {
     case OPEN_MODAL_FOR_SOUND:
       return true;
@@ -16,19 +16,19 @@ const isVisibleRedux = (state = false, action) => {
   }
 };
 
-const initialPositionState = {
+export const initialPositionState = {
   position: { top: 0, left: 0 },
   direction: 'up',
 };
 
-const getDirectionForPosition = (position) => {
+export const getDirectionForPosition = (position) => {
   if (position.top < modalHeight) {
     return 'down';
   }
   return 'up';
 };
 
-const positionRedux = (state = initialPositionState, action, curSoundID, allSounds) => {
+export const positionReducer = (state = initialPositionState, action, curSoundID, allSounds) => {
   switch (action.type) {
     case OPEN_MODAL_FOR_SOUND: {
       const { sound } = action;
@@ -36,20 +36,14 @@ const positionRedux = (state = initialPositionState, action, curSoundID, allSoun
       const direction = getDirectionForPosition(position);
       return { position, direction };
     }
-    case UPDATE_SOUNDS_POSITION: {
-      if (!action.sounds[curSoundID]) {
-        return state;
-      }
-      const newSoundPosition = action.sounds[curSoundID].position;
-      const position = { top: newSoundPosition.cy, left: newSoundPosition.cx };
-      const direction = getDirectionForPosition(position);
-      return { position, direction };
-    }
+    case UPDATE_SOUNDS_POSITION:
     case UPDATE_MAP_POSITION: {
-      if (!allSounds[curSoundID]) {
+      const updatedSounds = (action.type === UPDATE_SOUNDS_POSITION) ?
+        action.sounds : allSounds;
+      if (!updatedSounds[curSoundID]) {
         return state;
       }
-      const newSoundPosition = allSounds[curSoundID].position;
+      const newSoundPosition = updatedSounds[curSoundID].position;
       const position = { top: newSoundPosition.cy, left: newSoundPosition.cx };
       const direction = getDirectionForPosition(position);
       return { position, direction };
@@ -59,7 +53,7 @@ const positionRedux = (state = initialPositionState, action, curSoundID, allSoun
   }
 };
 
-const soundIDRedux = (state = '', action) => {
+export const soundIDReducer = (state = '', action) => {
   switch (action.type) {
     case OPEN_MODAL_FOR_SOUND: {
       return action.sound.id;
@@ -69,10 +63,11 @@ const soundIDRedux = (state = '', action) => {
   }
 };
 
+// Exported reducer receives `allSounds` from parent `sounds` reducer
 export default (state = {}, action, allSounds) => {
-  const isVisible = isVisibleRedux(state.isVisible, action);
-  const soundID = soundIDRedux(state.soundID, action);
-  const { position, direction } = positionRedux({
+  const isVisible = isVisibleReducer(state.isVisible, action);
+  const soundID = soundIDReducer(state.soundID, action);
+  const { position, direction } = positionReducer({
     position: state.position,
     direction: state.direction,
   }, action, soundID, allSounds);

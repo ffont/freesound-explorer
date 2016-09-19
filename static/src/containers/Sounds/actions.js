@@ -2,12 +2,9 @@ import { default as UUID } from 'node-uuid';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import makeActionCreator from '../../utils/makeActionCreator';
 import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
-import { MESSAGE_STATUS, TSNE_CONFIG, DEFAULT_DESCRIPTOR, MAX_TSNE_ITERATIONS }
-  from '../../constants';
+import { MESSAGE_STATUS, MAX_TSNE_ITERATIONS } from '../../constants';
 import { setSpaceAsCenter } from '../Spaces/actions';
-import { readObjectPropertyByPropertyAbsName } from '../../utils/objectUtils';
-import { computeSoundGlobalPosition } from './utils';
-import tsnejs from '../../vendors/tsne';
+import { getTrainedTsne, computePointsPositionInSolution } from './utils';
 import '../../polyfills/requestAnimationFrame';
 
 export const FETCH_SOUNDS_REQUEST = 'FETCH_SOUNDS_REQUEST';
@@ -27,50 +24,15 @@ const fetchFailure = makeActionCreator(FETCH_SOUNDS_FAILURE, 'error', 'queryID')
 const updateSoundsPosition = makeActionCreator(UPDATE_SOUNDS_POSITION, 'sounds', 'queryID');
 const mapComputationComplete = makeActionCreator(MAP_COMPUTATION_COMPLETE, 'queryID');
 
-const getTrainedTsne = (sounds, queryParams) => {
-  const tsne = new tsnejs.Tsne(TSNE_CONFIG);
-  const descriptor = queryParams.descriptor || DEFAULT_DESCRIPTOR;
-  const descriptorKey = `analysis.${descriptor}`;
-  const trainingData = Object.keys(sounds).map(
-    soundID => readObjectPropertyByPropertyAbsName(sounds[soundID], descriptorKey));
-  tsne.initDataRaw(trainingData);
-  return tsne;
-};
+export const selectSound = makeActionCreator(SELECT_SOUND_BY_ID, 'soundID');
+export const getSoundBuffer = makeActionCreator(GET_SOUND_BUFFER, 'soundID', 'buffer');
+export const toggleHoveringSound = makeActionCreator(TOGGLE_HOVERING_SOUND, 'soundID');
+export const removeSound = makeActionCreator(REMOVE_SOUND, 'soundID');
 
 let clearTimeoutId;
 let progress = 0;
 
-const getSoundSpacePosition = (sound, store) => {
-  const { spaces } = store.spaces;
-  // find the space to which sound belongs to
-  const space = spaces.find(curSpace => curSpace.queryID === sound.queryID);
-  return space.position;
-};
-
-const computePointsPositionInSolution = (tsne, sounds, store) => {
-  const tsneSolution = tsne.getSolution();
-  return Object.keys(sounds).reduce((curState, curSoundID, curIndex) => {
-    const sound = sounds[curSoundID];
-    const mapPosition = store.map;
-    let { spacePosition } = sound;
-    if (!spacePosition) {
-      spacePosition = getSoundSpacePosition(sound, store);
-    }
-    const tsnePosition = {
-      x: tsneSolution[curIndex][0],
-      y: tsneSolution[curIndex][1],
-    };
-    const position = computeSoundGlobalPosition(tsnePosition, spacePosition, mapPosition);
-    return Object.assign({}, curState, {
-      [curSoundID]: {
-        position,
-        spacePosition, // tsne and spacePosition could be useful later (e.g.: when user moves map)
-        tsnePosition,
-      },
-    });
-  }, {});
-};
-
+// TODO: rewrite as true async action
 const updateProgress = (sounds, dispatch, stepIteration) => {
   const computedProgress = (stepIteration + 1) / MAX_TSNE_ITERATIONS;
   const computedProgressPercentage = parseInt(100 * computedProgress, 10);
@@ -84,17 +46,20 @@ const updateProgress = (sounds, dispatch, stepIteration) => {
   }
 };
 
+// TODO: rewrite as true async action
 const centerMapAtNewSpace = (store, queryID, dispatch) => {
   const space = store.spaces.spaces.find(curSpace => curSpace.queryID === queryID);
   dispatch(setSpaceAsCenter(space));
 };
 
+// TODO: rewrite as true async action
 const handleFinalStep = (dispatch, queryID) => {
   cancelAnimationFrame(clearTimeoutId);
   dispatch(displaySystemMessage('Map computed!', MESSAGE_STATUS.SUCCESS));
   dispatch(mapComputationComplete(queryID));
 };
 
+// TODO: rewrite as true async action
 const updateSounds = (tsne, sounds, store, dispatch, queryID) => {
   const soundsWithUpdatedPosition = computePointsPositionInSolution(tsne, sounds, store);
   dispatch(updateSoundsPosition(soundsWithUpdatedPosition, queryID));
@@ -154,8 +119,3 @@ export const getSounds = (query, queryParams) => (dispatch, getStore) => {
     }
   );
 };
-
-export const selectSound = makeActionCreator(SELECT_SOUND_BY_ID, 'soundID');
-export const getSoundBuffer = makeActionCreator(GET_SOUND_BUFFER, 'soundID', 'buffer');
-export const toggleHoveringSound = makeActionCreator(TOGGLE_HOVERING_SOUND, 'soundID');
-export const removeSound = makeActionCreator(REMOVE_SOUND, 'soundID');

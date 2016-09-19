@@ -3,7 +3,7 @@ import { FETCH_SOUNDS_SUCCESS, UPDATE_SOUNDS_POSITION, SELECT_SOUND_BY_ID,
   STOP_AUDIO_SRC, MAP_COMPUTATION_COMPLETE, REMOVE_SOUND }
   from './actions';
 import { UPDATE_MAP_POSITION } from '../Map/actions';
-import { computeSoundGlobalPosition } from './utils';
+import { computeSoundGlobalPosition, thumbnailMapPosition } from './utils';
 import sessions from '../Sessions/reducer';
 import soundInfo from '../SoundInfo/reducer';
 
@@ -27,7 +27,7 @@ export const sound = (state, action) => {
       if (action.queryID !== state.queryID) {
         return state;
       }
-      const mapPosition = { translateX: 0, translateY: 0, scale: 0.3 };
+      const mapPosition = thumbnailMapPosition;
       const spacePosition = { x: 1, y: 1 };
       const { tsnePosition } = state;
       const thumbnailPosition =

@@ -45,8 +45,7 @@ export const deselectAllSounds = () => (dispatch, getStore) => {
 let clearTimeoutId;
 let progress = 0;
 
-// TODO: rewrite as true async action
-const updateProgress = (sounds, dispatch, stepIteration) => {
+const updateProgress = (sounds, stepIteration) => (dispatch) => {
   const computedProgress = (stepIteration + 1) / MAX_TSNE_ITERATIONS;
   const computedProgressPercentage = parseInt(100 * computedProgress, 10);
   if (progress !== computedProgressPercentage) {
@@ -59,42 +58,38 @@ const updateProgress = (sounds, dispatch, stepIteration) => {
   }
 };
 
-// TODO: rewrite as true async action
-const centerMapAtNewSpace = (store, queryID, dispatch) => {
-  const space = store.spaces.spaces.find(curSpace => curSpace.queryID === queryID);
+const centerMapAtNewSpace = queryID => (dispatch, getStore) => {
+  const space = getStore().spaces.spaces.find(curSpace => curSpace.queryID === queryID);
   dispatch(setSpaceAsCenter(space));
 };
 
-// TODO: rewrite as true async action
-const handleFinalStep = (dispatch, queryID) => {
+const handleFinalStep = queryID => (dispatch) => {
   cancelAnimationFrame(clearTimeoutId);
   dispatch(displaySystemMessage('Map computed!', MESSAGE_STATUS.SUCCESS));
   dispatch(mapComputationComplete(queryID));
 };
 
-// TODO: rewrite as true async action
-const updateSounds = (tsne, sounds, store, dispatch, queryID) => {
-  const soundsWithUpdatedPosition = computePointsPositionInSolution(tsne, sounds, store);
+const updateSounds = (tsne, sounds, queryID) => (dispatch, getStore) => {
+  const soundsWithUpdatedPosition = computePointsPositionInSolution(tsne, sounds, getStore());
   dispatch(updateSoundsPosition(soundsWithUpdatedPosition, queryID));
   return soundsWithUpdatedPosition;
 };
 
-const computeTsneSolution = (tsne, sounds, dispatch, queryID, getStore, stepIteration = 0) => {
+const computeTsneSolution = (tsne, sounds, queryID, stepIteration = 0) => (dispatch) => {
   /** we retrieve the store at each step to take into account user zooming/moving
   while map being computed */
-  const store = getStore();
   if (stepIteration <= MAX_TSNE_ITERATIONS) {
     // compute step solution
     tsne.step();
     if (!stepIteration) {
-      centerMapAtNewSpace(store, queryID, dispatch);
+      dispatch(centerMapAtNewSpace(queryID));
     }
-    updateProgress(sounds, dispatch, stepIteration);
-    const updatedSounds = updateSounds(tsne, sounds, store, dispatch, queryID);
+    dispatch(updateProgress(sounds, stepIteration));
+    dispatch(updateSounds(tsne, sounds, queryID));
     clearTimeoutId = requestAnimationFrame(() =>
-      computeTsneSolution(tsne, updatedSounds, dispatch, queryID, getStore, stepIteration + 1));
+      dispatch(computeTsneSolution(tsne, sounds, queryID, stepIteration + 1)));
   } else {
-    handleFinalStep(dispatch, queryID);
+    dispatch(handleFinalStep(queryID));
   }
 };
 
@@ -124,7 +119,7 @@ export const getSounds = (query, queryParams) => (dispatch, getStore) => {
       dispatch(fetchSuccess(sounds, queryID, mapPosition));
       dispatch(displaySystemMessage(`${soundsFound} sounds loaded, computing map`));
       const tsne = getTrainedTsne(sounds, queryParams);
-      computeTsneSolution(tsne, sounds, dispatch, queryID, getStore);
+      dispatch(computeTsneSolution(tsne, sounds, queryID));
     },
     (error) => {
       dispatch(displaySystemMessage('No sounds found', MESSAGE_STATUS.ERROR));

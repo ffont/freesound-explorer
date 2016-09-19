@@ -31,6 +31,11 @@ export const getSoundBuffer = makeActionCreator(GET_SOUND_BUFFER, 'soundID', 'bu
 export const toggleHoveringSound = makeActionCreator(TOGGLE_HOVERING_SOUND, 'soundID');
 export const removeSound = makeActionCreator(REMOVE_SOUND, 'soundID');
 
+export const deselectAllSounds = () => (dispatch, getStore) => {
+  const selectedSounds = getStore().sounds.selectedSounds;
+  selectedSounds.forEach(sound => dispatch(deselectSound(sound)));
+};
+
 let clearTimeoutId;
 let progress = 0;
 

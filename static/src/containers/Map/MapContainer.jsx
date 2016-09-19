@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateMapPosition } from './actions';
 import { setSoundCurrentlyLearnt } from '../Midi/actions';
-import { selectSound } from '../Sounds/actions';
+import { deselectAllSounds } from '../Sounds/actions';
 import { hideModal } from '../SoundInfo/actions';
 import Space from '../Spaces/SpaceContainer';
 import SpaceTitle from '../../components/Spaces/SpaceTitle';
@@ -15,7 +15,7 @@ import '../../polyfills/requestAnimationFrame';
 import { MIN_ZOOM, MAX_ZOOM } from '../../constants';
 
 const propTypes = {
-  selectSound: React.PropTypes.func,
+  deselectAllSounds: React.PropTypes.func,
   paths: React.PropTypes.array,
   spaces: React.PropTypes.array,
   map: React.PropTypes.shape({
@@ -60,7 +60,7 @@ class MapContainer extends React.Component {
   onClickCallback(evt) {
     if (evt.target.tagName !== 'circle') {
       // deselect all sounds when not clicking on a circle
-      this.props.selectSound();
+      this.props.deselectAllSounds();
       // turn off current midi learn
       this.props.setSoundCurrentlyLearnt();
       this.props.hideModal();
@@ -112,7 +112,7 @@ MapContainer.propTypes = propTypes;
 export default connect(mapStateToProps, {
   displaySystemMessage,
   updateMapPosition,
+  deselectAllSounds,
   setSoundCurrentlyLearnt,
-  selectSound,
   hideModal,
 })(MapContainer);

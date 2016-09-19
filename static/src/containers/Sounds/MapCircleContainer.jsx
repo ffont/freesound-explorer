@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { playAudio, stopAudio } from '../Audio/actions';
-import { selectSound, toggleHoveringSound } from './actions';
+import { selectSound, deselectSound, deselectAllSounds, toggleHoveringSound }
+  from './actions';
 import { openModalForSound, hideModal } from '../SoundInfo/actions';
 import MapCircle from '../../components/Sounds/MapCircle';
 import { isSoundInsideScreen } from './utils';
@@ -15,6 +16,8 @@ const propTypes = {
   playAudio: React.PropTypes.func,
   stopAudio: React.PropTypes.func,
   selectSound: React.PropTypes.func,
+  deselectSound: React.PropTypes.func,
+  deselectAllSounds: React.PropTypes.func,
   toggleHoveringSound: React.PropTypes.func,
   openModalForSound: React.PropTypes.func,
   hideModal: React.PropTypes.func,
@@ -66,8 +69,9 @@ class MapCircleContainer extends React.PureComponent {
     }
     if (this.props.sound.isSelected) {
       this.props.hideModal();
-      this.props.selectSound();
+      this.props.deselectSound();
     } else {
+      this.props.deselectAllSounds();
       this.props.openModalForSound(this.props.sound);
       this.props.selectSound(this.props.sound.id);
     }
@@ -118,6 +122,8 @@ export default connect(makeMapStateToProps, {
   playAudio,
   stopAudio,
   selectSound,
+  deselectSound,
+  deselectAllSounds,
   toggleHoveringSound,
   openModalForSound,
   hideModal,

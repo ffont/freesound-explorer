@@ -1,5 +1,5 @@
 import { ADD_PATH, SET_PATH_SYNC, PLAY_PATH, STOP_PATH, REMOVE_PATH,
-  SET_PATH_CURRENTLY_PLAYING, SELECT_PATH, DELETE_SOUND_FROM_PATH,
+  SET_PATH_SOUND_CURRENTLY_PLAYING, SELECT_PATH, DELETE_SOUND_FROM_PATH,
   ADD_SOUND_TO_PATH, CLEAR_ALL_PATHS, TOGGLE_WAIT_UNTIL_FINISHED,
   SET_PATH_ACTIVE } from './actions';
 import { REMOVE_SOUND } from '../Sounds/actions';
@@ -38,7 +38,7 @@ export const path = (state = {}, action) => {
       };
       return Object.assign({}, state, { isPlaying, soundCurrentlyPlaying });
     }
-    case SET_PATH_CURRENTLY_PLAYING: {
+    case SET_PATH_SOUND_CURRENTLY_PLAYING: {
       return Object.assign({}, state, {
         soundCurrentlyPlaying: {
           soundIdx: action.soundIdx,
@@ -81,7 +81,7 @@ export const pathsReducer = (state = [], action) => {
     case SET_PATH_SYNC:
     case PLAY_PATH:
     case STOP_PATH:
-    case SET_PATH_CURRENTLY_PLAYING:
+    case SET_PATH_SOUND_CURRENTLY_PLAYING:
     case SET_PATH_ACTIVE:
     case REMOVE_SOUND:
     case DELETE_SOUND_FROM_PATH:

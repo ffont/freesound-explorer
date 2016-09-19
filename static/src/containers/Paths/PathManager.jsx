@@ -42,8 +42,8 @@ class Path extends React.Component {
     if ((prevSyncMode !== 'no') && (newSyncMode === 'no')) {
       // Path changed from syncMode != 'no' to syncMode = 'no'
       if (this.props.path.isPlaying) {
-        const time = (this.props.path.currentlyPlaying.willFinishAt === undefined) ?
-          0 : this.props.path.currentlyPlaying.willFinishAt;
+        const time = (this.props.path.soundCurrentlyPlaying.willFinishAt === undefined) ?
+          0 : this.props.path.soundCurrentlyPlaying.willFinishAt;
         this.props.playNextSoundFromPath(this.props.path.id, time);
       }
     }

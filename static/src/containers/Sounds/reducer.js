@@ -1,5 +1,5 @@
 import { FETCH_SOUNDS_SUCCESS, UPDATE_SOUNDS_POSITION, SELECT_SOUND_BY_ID,
-  GET_SOUND_BUFFER, TOGGLE_HOVERING_SOUND, PLAY_AUDIO_SRC,
+  GET_SOUND_BUFFER, TOGGLE_HOVERING_SOUND, PLAY_AUDIO_SRC, DESELECT_SOUND_BY_ID,
   STOP_AUDIO_SRC, MAP_COMPUTATION_COMPLETE, REMOVE_SOUND }
   from './actions';
 import { UPDATE_MAP_POSITION } from '../Map/actions';
@@ -94,6 +94,7 @@ export const selectedSounds = (state = [], action) => {
         return removeDuplicates([...state, action.soundID]);
       }
       return state;
+    case DESELECT_SOUND_BY_ID:
     case REMOVE_SOUND:
       return state.filter(soundID => soundID !== action.soundID);
     default:

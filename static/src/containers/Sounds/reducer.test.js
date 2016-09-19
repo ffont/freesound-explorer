@@ -1,9 +1,10 @@
 import expect from 'expect';
 import { selectSound, getSoundBuffer, toggleHoveringSound, removeSound,
-  UPDATE_SOUNDS_POSITION, FETCH_SOUNDS_SUCCESS, MAP_COMPUTATION_COMPLETE }
+  deselectSound, UPDATE_SOUNDS_POSITION, FETCH_SOUNDS_SUCCESS,
+  MAP_COMPUTATION_COMPLETE }
   from './actions';
 import { UPDATE_MAP_POSITION } from '../Map/actions';
-import { selectedSound, byID, sound } from './reducer';
+import { selectedSounds, byID, sound } from './reducer';
 import { computeSoundGlobalPosition, thumbnailMapPosition } from './utils';
 
 const sound0 = {
@@ -71,5 +72,24 @@ describe('byID', () => {
 });
 
 describe('selectedSound', () => {
-
+  it('correctly adds a selected sound', () => {
+    expect(selectedSounds(undefined, selectSound('sound0'))).toEqual(['sound0']);
+  });
+  it('correctly adds multiple selected sounds', () => {
+    const stateAfter = ['sound1', 'sound2'].reduce((curState, curSound) =>
+      selectedSounds(curState, selectSound(curSound)), undefined);
+    expect(stateAfter).toEqual(['sound1', 'sound2']);
+  });
+  it('correctly handles sounds removal', () => {
+    expect(selectedSounds(['sound0', 'sound1'], removeSound('sound0')))
+      .toEqual(['sound1']);
+    expect(selectedSounds(['sound0', 'sound1'], removeSound('sound2')))
+      .toEqual(['sound0', 'sound1']);
+  });
+  it('correctly handles sounds deselection', () => {
+    expect(selectedSounds(['sound0', 'sound1'], deselectSound('sound0')))
+      .toEqual(['sound1']);
+    expect(selectedSounds(['sound0', 'sound1'], deselectSound('sound2')))
+      .toEqual(['sound0', 'sound1']);
+  });
 });

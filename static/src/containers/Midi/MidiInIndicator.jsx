@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { midiMessageTypeLabel, midiNoteNumberToMidiNoteLabel } from '../../utils/midiUtils';
+import { midiMessageTypeLabel, midiNoteNumberToMidiNoteLabel } from './utils';
 import SelectWithLabel from '../../components/Input/SelectWithLabel';
 import { MIDI_MESSAGE_INDICATOR_DURATION } from '../../constants';
 import { setMidiInputChannel, setMidiInputDevice, setUpMIDIDevices } from './actions';

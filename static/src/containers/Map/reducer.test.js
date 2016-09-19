@@ -3,7 +3,7 @@ import deepFreeze from 'deep-freeze';
 import { default as reducer, initialState } from './reducer';
 import { SET_SPACE_AS_CENTER } from '../Spaces/actions';
 import { updateMapPosition } from './actions';
-import { getMapCenter } from '../../utils/uiUtils';
+import { getMapCenter } from './utils';
 
 describe('map reducer', () => {
   it('should return initialState', () => {

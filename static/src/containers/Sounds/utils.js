@@ -1,7 +1,9 @@
-import { MAP_SCALE_FACTOR, TSNE_CONFIG, DEFAULT_DESCRIPTOR }
+import { MAP_SCALE_FACTOR, TSNE_CONFIG, DEFAULT_DESCRIPTOR, DEFAULT_RADIUS }
   from '../../constants';
 import { readObjectPropertyByPropertyAbsName } from '../../utils/objectUtils';
 import tsnejs from '../../vendors/tsne';
+import { sidebarWidth, sidebarClosedOffset, sidebarContentPadding, thumbnailHeight }
+  from 'json!../../stylesheets/variables.json';
 
 
 export const computeSoundGlobalPosition = (tsnePosition, spacePosition, mapPosition) => {
@@ -14,6 +16,11 @@ export const computeSoundGlobalPosition = (tsnePosition, spacePosition, mapPosit
 };
 
 export const thumbnailMapPosition = { translateX: 0, translateY: 0, scale: 0.3 };
+export const thumbnailSize = {
+  width: parseInt(sidebarWidth, 10) - parseInt(sidebarClosedOffset, 10) -
+    (2 * (parseInt(sidebarContentPadding, 10))),
+  height: parseInt(thumbnailHeight, 10),
+};
 
 export const getTrainedTsne = (sounds, queryParams) => {
   const tsne = new tsnejs.Tsne(TSNE_CONFIG);
@@ -54,4 +61,17 @@ export const computePointsPositionInSolution = (tsne, sounds, store) => {
       },
     });
   }, {});
+};
+
+export const isSoundInsideScreen = (position, isThumbnail = false) => {
+  if (!position) {
+    return false;
+  }
+  const screenWidth = (isThumbnail) ? thumbnailSize.width : window.innerWidth;
+  const screenHeight = (isThumbnail) ? thumbnailSize.height : window.innerHeight;
+  const isVerticallyOutOfScreen = (position.cy < -DEFAULT_RADIUS
+    || position.cy > screenHeight + DEFAULT_RADIUS);
+  const isHorizontallyOutOfScreen = (position.cx < -DEFAULT_RADIUS
+    || position.cx > screenWidth + DEFAULT_RADIUS);
+  return !(isVerticallyOutOfScreen || isHorizontallyOutOfScreen);
 };

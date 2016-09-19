@@ -1,12 +1,12 @@
-import { REQUEST_POOL_SIZE } from '../constants';
+import { REQUEST_POOL_SIZE } from '../../constants';
 
-const removeBufferFromSound = (sound) => Object.assign({}, sound, { buffer: undefined });
-export const removeSoundBuffers = (sounds) => Object.keys(sounds).reduce((curState, curSoundID) =>
+const removeBufferFromSound = sound => Object.assign({}, sound, { buffer: undefined });
+export const removeSoundBuffers = sounds => Object.keys(sounds).reduce((curState, curSoundID) =>
   Object.assign(curState, { [curSoundID]: removeBufferFromSound(sounds[curSoundID]) }), {});
 
 const requestPool = (() => {
   const pool = [];
-  for (let i = 0; i < REQUEST_POOL_SIZE; i++) {
+  for (let i = 0; i < REQUEST_POOL_SIZE; i += 1) {
     const xhr = new XMLHttpRequest();
     xhr.responseType = 'arraybuffer';
     xhr.available = true;
@@ -14,7 +14,7 @@ const requestPool = (() => {
   }
   return {
     getAvailableRequest() {
-      for (let i = 0; i < REQUEST_POOL_SIZE; i++) {
+      for (let i = 0; i < REQUEST_POOL_SIZE; i += 1) {
         const xhr = pool[i];
         if (xhr.available) {
           return xhr;
@@ -29,7 +29,7 @@ const requestPool = (() => {
  * Initializes a single XMLHttpRequest object (avoiding memory leaks)
  * and exposes a closure to use it.
  */
-const audioLoader = (audioContext) => ({
+const audioLoader = audioContext => ({
   loadSound(soundUrl) {
     return new Promise((resolve, reject) => {
       const xhr = requestPool.getAvailableRequest();
@@ -49,7 +49,7 @@ const audioLoader = (audioContext) => ({
             } catch (e) {
               // old syntax with callback
               audioContext.decodeAudioData(buffer,
-                (decodedData) => resolve(decodedData)
+                decodedData => resolve(decodedData)
               );
             }
           }

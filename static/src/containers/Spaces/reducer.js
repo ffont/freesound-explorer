@@ -3,8 +3,8 @@ import { UPDATE_MAP_POSITION } from '../Map/actions';
 import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE }
   from '../Sounds/actions';
 import { computeSoundGlobalPosition } from '../Sounds/utils';
-import { getMapCenter } from '../../utils/uiUtils';
-import { generateListOfSpacesOriginPositions } from '../../utils/misc';
+import { getMapCenter } from '../Map/utils';
+import { generateListOfSpacesOriginPositions } from './utils';
 import sessions from '../Sessions/reducer';
 
 const computeSpacePosition = (spaceIndex) => {

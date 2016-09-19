@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { midiNoteNumberToMidiNoteLabel } from '../../utils/midiUtils';
+import { midiNoteNumberToMidiNoteLabel } from './utils';
 import { removeMidiNoteMapping } from './actions';
-import { truncatedString } from '../../utils/misc';
+import { truncateString } from '../../utils/stringUtils';
 import { selectSound } from '../Sounds/actions';
 
 const propTypes = {
@@ -21,7 +21,7 @@ function MidiMapping(props) {
         <a
           className="cursor-pointer"
           onClick={() => props.selectSound(props.soundID)}
-        > {truncatedString(props.sound.name, 25)}</a>
+        > {truncateString(props.sound.name, 25)}</a>
       </div>
       <div className="remove-mapping">
         <i

@@ -1,5 +1,5 @@
 import React from 'react';
-import { lighten } from '../../utils/colors';
+import { lighten } from '../../utils/colorsUtils';
 import { DEFAULT_RADIUS, DEFAULT_FILL_OPACITY, DEFAULT_STROKE_WIDTH, DEFAULT_STROKE_OPACITY }
   from '../../constants';
 import './MapCircle.scss';

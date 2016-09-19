@@ -1,6 +1,6 @@
 import { UPDATE_MAP_POSITION } from './actions';
 import { SET_SPACE_AS_CENTER } from '../Spaces/actions';
-import { getMapCenter } from '../../utils/uiUtils';
+import { getMapCenter } from './utils';
 import sessions from '../Sessions/reducer';
 
 /*

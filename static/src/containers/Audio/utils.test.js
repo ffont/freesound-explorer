@@ -1,6 +1,6 @@
 import expect from 'expect';
 import deepFreeze from 'deep-freeze';
-import { removeSoundBuffers } from './audioLoader';
+import { removeSoundBuffers } from './utils';
 
 describe('audioLoader', () => {
   describe('removeSoundBuffers', () => {

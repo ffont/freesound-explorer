@@ -3,12 +3,21 @@ import { select } from 'd3-selection';
 import { scaleLinear, scaleBand } from 'd3-scale';
 import './Waveform.scss';
 import sassVariables from 'json!../../stylesheets/variables.json';
-import { downsampleSignal } from '../../utils/misc';
-import { lighten } from '../../utils/colors';
-
+import { lighten } from '../../utils/colorsUtils';
+import { arrayMean } from '../../utils/arrayUtils';
 
 const propTypes = {
   sound: React.PropTypes.object,
+};
+
+const downsampleSignal = (signal, numberOfPoints = 50) => {
+  const iteratorSize = Math.ceil((signal.length / numberOfPoints));
+  const points = [...Array(numberOfPoints).keys()];
+  const downsampledSignal = points.map((pointIndex) => {
+    const slicedArray = signal.slice(pointIndex * iteratorSize, (pointIndex + 1) * iteratorSize);
+    return arrayMean(slicedArray);
+  });
+  return downsampledSignal;
 };
 
 const buildSymmetricSignal = (signal) => signal.reduce((symmetricSignal, curVal) =>

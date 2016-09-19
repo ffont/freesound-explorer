@@ -4,7 +4,7 @@ import { playAudio, stopAudio } from '../Audio/actions';
 import { selectSound, toggleHoveringSound } from './actions';
 import { openModalForSound, hideModal } from '../SoundInfo/actions';
 import MapCircle from '../../components/Sounds/MapCircle';
-import { isSoundInsideScreen } from '../../utils/uiUtils';
+import { isSoundInsideScreen } from './utils';
 import { makeIsSoundSelected } from './selectors';
 
 const propTypes = {

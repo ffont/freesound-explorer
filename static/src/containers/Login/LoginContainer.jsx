@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateLoginModalVisibilility, updateBackEndAuthSupport, updateUserLoggedStatus }
   from './actions';
-import { loadJSON } from '../../utils/misc';
+import { loadJSON } from './utils';
 import Login from '../../components/Login';
 import { MESSAGE_STATUS } from '../../constants';
 

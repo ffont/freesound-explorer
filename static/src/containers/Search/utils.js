@@ -1,6 +1,6 @@
-import { DEFAULT_QUERY, DEFAULT_MAX_RESULTS } from '../constants';
-import freesound from '../vendors/freesound';
-import { rgbToHex } from './colors';
+import { DEFAULT_QUERY, DEFAULT_MAX_RESULTS } from '../../constants';
+import freesound from '../../vendors/freesound';
+import { rgbToHex } from '../../utils/colorsUtils';
 
 function getRequestParameter(name, queryUrl = location.search) {
   const parsedRegex = (new RegExp(
@@ -39,7 +39,7 @@ function search(query = DEFAULT_QUERY, filter = '', maxResults = DEFAULT_MAX_RES
       fields: 'id,previews,name,analysis,url,username,duration',
       descriptors: extraDescriptors.join(),
     }));
-    pageCounter++;
+    pageCounter += 1;
   }
   return Promise.all(promises);
 }

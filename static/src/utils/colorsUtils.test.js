@@ -1,5 +1,5 @@
 import expect from 'expect';
-import * as utils from './colors';
+import * as utils from './colorsUtils';
 
 describe('colors utils', () => {
   describe('componentToHex', () => {

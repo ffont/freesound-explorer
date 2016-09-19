@@ -1,6 +1,6 @@
 import makeActionCreator from '../../utils/makeActionCreator';
 import { displaySystemMessage } from '../MessagesBox/actions';
-import { midiMessageTypeLabel } from '../../utils/midiUtils';
+import { midiMessageTypeLabel } from './utils';
 import { playAudio, stopAudio } from '../Audio/actions';
 import { MESSAGE_STATUS } from '../../constants';
 

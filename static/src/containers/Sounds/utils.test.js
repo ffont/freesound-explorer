@@ -1,7 +1,7 @@
 import expect from 'expect';
-import { isSoundInsideScreen } from './uiUtils';
+import { isSoundInsideScreen } from './utils';
 
-describe('uiUtils', () => {
+describe('sound utils', () => {
   describe('isSoundInsideScreen', () => {
     it('works as expected', () => {
       const position = { cx: -50, cy: -50 };

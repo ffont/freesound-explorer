@@ -1,7 +1,7 @@
 import { default as UUID } from 'node-uuid';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import makeActionCreator from '../../utils/makeActionCreator';
-import { submitQuery, reshapeReceivedSounds } from '../../utils/fsQuery';
+import { submitQuery, reshapeReceivedSounds } from '../Search/utils';
 import { MESSAGE_STATUS, MAX_TSNE_ITERATIONS } from '../../constants';
 import { setSpaceAsCenter } from '../Spaces/actions';
 import { getTrainedTsne, computePointsPositionInSolution } from './utils';

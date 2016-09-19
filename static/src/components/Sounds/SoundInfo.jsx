@@ -1,7 +1,7 @@
 import React from 'react';
 import './SoundInfo.scss';
 import Waveform from '../Waveform';
-import { midiNoteNumberToMidiNoteLabel } from '../../utils/midiUtils';
+import { midiNoteNumberToMidiNoteLabel } from '../../containers/Midi/utils';
 
 const propTypes = {
   isVisible: React.PropTypes.bool,

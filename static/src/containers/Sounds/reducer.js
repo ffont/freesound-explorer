@@ -6,6 +6,7 @@ import { UPDATE_MAP_POSITION } from '../Map/actions';
 import { computeSoundGlobalPosition, thumbnailMapPosition } from './utils';
 import sessions from '../Sessions/reducer';
 import soundInfo from '../SoundInfo/reducer';
+import { removeDuplicates } from '../../utils/arrayUtils';
 
 export const sound = (state, action) => {
   const soundID = state.id;
@@ -85,12 +86,16 @@ export const byID = (state = {}, action) => {
   }
 };
 
-export const selectedSound = (state = 0, action) => {
+export const selectedSounds = (state = [], action) => {
   switch (action.type) {
     case SELECT_SOUND_BY_ID:
-      return action.soundID || 0;
+      // add to selected sounds and remove duplicates
+      if (action.soundID) {
+        return removeDuplicates([...state, action.soundID]);
+      }
+      return state;
     case REMOVE_SOUND:
-      return (state !== action.soundID) ? state : 0;
+      return state.filter(soundID => soundID !== action.soundID);
     default:
       return state;
   }
@@ -99,7 +104,7 @@ export const selectedSound = (state = 0, action) => {
 // don't use combineReducers as we want the reducer name to be 'sounds' (see sessions reducer)
 const sounds = (state = {}, action) => ({
   byID: byID(state.byID, action),
-  selectedSound: selectedSound(state.selectedSound, action),
+  selectedSounds: selectedSounds(state.selectedSounds, action),
   soundInfoModal: soundInfo(state.soundInfoModal, action, state.byID),
 });
 export default sessions(sounds);

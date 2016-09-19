@@ -5,6 +5,7 @@ import { selectSound, toggleHoveringSound } from './actions';
 import { openModalForSound, hideModal } from '../SoundInfo/actions';
 import MapCircle from '../../components/Sounds/MapCircle';
 import { isSoundInsideScreen } from '../../utils/uiUtils';
+import { makeIsSoundSelected } from './selectors';
 
 const propTypes = {
   sound: React.PropTypes.object,
@@ -98,11 +99,11 @@ class MapCircleContainer extends React.PureComponent {
 
 const makeMapStateToProps = (_, ownProps) => {
   const { soundID, isThumbnail } = ownProps;
+  const isSoundSelected = makeIsSoundSelected(soundID);
   return (state) => {
     const sound = state.sounds.byID[soundID];
-    const { selectedSound } = state.sounds;
     const { shouldPlayOnHover } = state.settings;
-    const isSelected = selectedSound === soundID;
+    const isSelected = isSoundSelected(state);
     return {
       sound,
       isThumbnail,

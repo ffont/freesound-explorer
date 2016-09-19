@@ -3,9 +3,11 @@ import { selectSound, getSoundBuffer, toggleHoveringSound, removeSound,
   deselectSound, UPDATE_SOUNDS_POSITION, FETCH_SOUNDS_SUCCESS,
   MAP_COMPUTATION_COMPLETE }
   from './actions';
+import { playAudioSrc, stopAudioSrc } from '../Audio/actions';
 import { UPDATE_MAP_POSITION } from '../Map/actions';
 import { selectedSounds, byID, sound } from './reducer';
 import { computeSoundGlobalPosition, thumbnailMapPosition } from './utils';
+import { range } from '../../utils/arrayUtils';
 
 const sound0 = {
   id: 'sound0',
@@ -68,6 +70,34 @@ describe('byID', () => {
   it('stores new sounds at each query', () => {
     const action = { type: FETCH_SOUNDS_SUCCESS, sounds: allSoundsByID };
     expect(byID(undefined, action)).toEqual(allSoundsByID);
+  });
+  it('stores received buffers', () => {
+    const buffer = [0, 0.2, 0.1, 0.2];
+    const action = getSoundBuffer('sound0', buffer);
+    expect(byID(allSoundsByID, action).sound0.buffer).toEqual(buffer);
+  });
+  it('correctly handles sound hovering', () => {
+    const action = toggleHoveringSound('sound0');
+    expect(byID(allSoundsByID, action).sound0.isHovered).toEqual(true);
+  });
+  it('correcly handles multiple sound hoverings', () => {
+    const numberOfHoverings = 2;
+    const stateAfter = range(numberOfHoverings).reduce(curState =>
+      byID(curState, toggleHoveringSound('sound0')), allSoundsByID);
+    expect(stateAfter.sound0.isHovered).toEqual(false);
+  });
+  it('correctly handles audio playback', () => {
+    const sourceKey = '';
+    const action0 = playAudioSrc(sourceKey, 'sound0');
+    const action1 = stopAudioSrc(sourceKey, 'sound0');
+    const stateAfterAction0 = byID(allSoundsByID, action0);
+    expect(stateAfterAction0.sound0.isPlaying).toEqual(true);
+    const stateAfterAction1 = byID(stateAfterAction0, action1);
+    expect(stateAfterAction1.sound0.isPlaying).toEqual(false);
+  });
+  it('correctly handles sounds removal', () => {
+    const expectedState = { sound1 };
+    expect(byID(allSoundsByID, removeSound('sound0'))).toEqual(expectedState);
   });
 });
 

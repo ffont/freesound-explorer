@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { toggleSidebarVisibility, setSidebarTab } from './actions';
 import SidebarContent from '../../components/Sidebar/SidebarContent';
 import SidebarNavMenu from '../../components/Sidebar/SidebarNavMenu';
-import { START_METRONOME_AT_MOUNT } from '../../constants';
-import { startMetronome, setStartedMetronomeAtMount } from '../Metronome/actions';
 import { setUpMIDIDevices } from '../Midi/actions';
 
 const propTypes = {
@@ -13,17 +11,12 @@ const propTypes = {
   bottomArrowPosition: React.PropTypes.number,
   toggleSidebarVisibility: React.PropTypes.func,
   setSidebarTab: React.PropTypes.func,
-  startMetronome: React.PropTypes.func,
-  setStartedMetronomeAtMount: React.PropTypes.func,
   setUpMIDIDevices: React.PropTypes.func,
 };
 
 
 class Sidebar extends React.Component {
   componentDidMount() {
-    if (START_METRONOME_AT_MOUNT) {
-      this.props.startMetronome();
-    }
     this.props.setUpMIDIDevices(); // Prepare midi stuff
   }
 
@@ -52,7 +45,5 @@ Sidebar.propTypes = propTypes;
 export default connect(mapStateToProps, {
   toggleSidebarVisibility,
   setSidebarTab,
-  startMetronome,
-  setStartedMetronomeAtMount,
   setUpMIDIDevices,
 })(Sidebar);

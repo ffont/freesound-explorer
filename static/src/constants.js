@@ -51,7 +51,7 @@ export const STEPS_TO_MOVE_TO_SPACE = 1;
 
 export const DEFAULT_TRUNCATED_STRING_LENGTH = 40;
 
-export const START_METRONOME_AT_MOUNT = false;
+export const START_METRONOME_AT_MOUNT = true;
 export const DEFAULT_TEMPO = 120.0;
 export const LOOKAHEAD = 25; // How often we'll call the scheduler function (in milliseconds)
 export const SCHEDULEAHEADTIME = 0.2; // How far we schedule notes from lookahead call (in seconds)

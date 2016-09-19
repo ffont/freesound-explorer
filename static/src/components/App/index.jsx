@@ -4,6 +4,7 @@ import LoginContainer from '../../containers/Login/LoginContainer';
 import MapContainer from '../../containers/Map/MapContainer';
 import SidebarContainer from '../../containers/Sidebar/SidebarContainer';
 import MessagesBoxContainer from '../../containers/MessagesBox/MessagesBoxContainer';
+import MetronomeStarterContainer from '../../containers/Metronome/MetronomeStarterContainer';
 import Logo from '../Logo';
 // import Modal from '../Modal';
 import './App.scss';
@@ -20,6 +21,7 @@ const App = props => (
       <SidebarContainer />
       <MessagesBoxContainer />
       <Logo />
+      <MetronomeStarterContainer />
       {/** <Modal /> */}
     </div>
   </Provider>

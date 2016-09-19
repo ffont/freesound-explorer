@@ -1,6 +1,6 @@
 import { REMOVE_SPACE } from './actions';
 import { UPDATE_MAP_POSITION } from '../Map/actions';
-import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE }
+import { REMOVE_SOUND, FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE }
   from '../Sounds/actions';
 import { computeSpacePosition, computeSpacePositionInMap, computeSpaceIndex,
   getClosestSpaceToCenter } from './utils';
@@ -56,6 +56,15 @@ export const singleSpace = (state = spaceInitialState, action, spaceIndex) => {
       const currentPositionInMap = computeSpacePositionInMap(spacePosition, mapPosition);
       return Object.assign({}, state, { currentPositionInMap });
     }
+    case REMOVE_SOUND: {
+      const { queryID, soundID } = action;
+      if (queryID !== state.queryID) {
+        return state;
+      }
+      return Object.assign({}, state, {
+        sounds: state.sounds.filter(curSoundID => curSoundID !== soundID),
+      });
+    }
     default:
       return state;
   }
@@ -68,6 +77,7 @@ export const spacesReducer = (state = [], action) => {
       const space = singleSpace(spaceInitialState, action, spaceIndex);
       return [...state, space];
     }
+    case REMOVE_SOUND:
     case FETCH_SOUNDS_SUCCESS:
     case UPDATE_MAP_POSITION: {
       return state.map(space => singleSpace(space, action));

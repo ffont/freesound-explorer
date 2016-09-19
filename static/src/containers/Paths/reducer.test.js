@@ -4,7 +4,7 @@ import { setPathSync, playPath, stopPath, setPathSoundCurrentlyPlaying,
   selectPath, setPathActive, deleteSoundFromPath, clearAllPaths,
   toggleWaitUntilFinished, ADD_SOUND_TO_PATH, ADD_PATH, REMOVE_PATH }
   from './actions';
-import { removeSound } from '../Sounds/actions';
+import { REMOVE_SOUND } from '../Sounds/actions';
 import { computePathname } from './utils';
 
 const pathID = '1';
@@ -88,7 +88,8 @@ describe('paths sounds and playback handling', () => {
         .toEqual(expectedState);
     });
     it('works when removing the sound', () => {
-      expect(paths.path(pathWithSounds, removeSound(soundID2)))
+      const action = { type: REMOVE_SOUND, soundID: soundID2 };
+      expect(paths.path(pathWithSounds, action))
         .toEqual(expectedState);
     });
   });

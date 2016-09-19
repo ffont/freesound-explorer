@@ -1,7 +1,7 @@
 import expect from 'expect';
 import { spaceInitialState, singleSpace, spacesReducer, currentSpace }
   from './reducer';
-import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE }
+import { REMOVE_SOUND, FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE }
   from '../Sounds/actions';
 import { updateMapPosition } from '../Map/actions';
 import { REMOVE_SPACE } from './actions';
@@ -42,6 +42,11 @@ describe('singleSpace', () => {
     const currentPos = computeSpacePositionInMap(space0.position, mapPos);
     const action = updateMapPosition(mapPos);
     expect(singleSpace(space0, action).currentPositionInMap).toEqual(currentPos);
+  });
+  it('correctly removes a sound from a space', () => {
+    const action = { type: REMOVE_SOUND, soundID: 'sound0', queryID };
+    const expectedState = Object.assign({}, space0WithSounds, { sounds: ['sound1'] });
+    expect(singleSpace(space0WithSounds, action)).toEqual(expectedState);
   });
 });
 

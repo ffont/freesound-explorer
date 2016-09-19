@@ -1,5 +1,5 @@
 import expect from 'expect';
-import { selectSound, getSoundBuffer, toggleHoveringSound, removeSound,
+import { selectSound, getSoundBuffer, toggleHoveringSound, REMOVE_SOUND,
   deselectSound, UPDATE_SOUNDS_POSITION, FETCH_SOUNDS_SUCCESS,
   MAP_COMPUTATION_COMPLETE }
   from './actions';
@@ -97,7 +97,8 @@ describe('byID', () => {
   });
   it('correctly handles sounds removal', () => {
     const expectedState = { sound1 };
-    expect(byID(allSoundsByID, removeSound('sound0'))).toEqual(expectedState);
+    const action = { type: REMOVE_SOUND, soundID: 'sound0' };
+    expect(byID(allSoundsByID, action)).toEqual(expectedState);
   });
 });
 
@@ -111,9 +112,11 @@ describe('selectedSound', () => {
     expect(stateAfter).toEqual(['sound1', 'sound2']);
   });
   it('correctly handles sounds removal', () => {
-    expect(selectedSounds(['sound0', 'sound1'], removeSound('sound0')))
+    const action = { type: REMOVE_SOUND, soundID: 'sound0' };
+    expect(selectedSounds(['sound0', 'sound1'], action))
       .toEqual(['sound1']);
-    expect(selectedSounds(['sound0', 'sound1'], removeSound('sound2')))
+    const action1 = { type: REMOVE_SOUND, soundID: 'sound2' };
+    expect(selectedSounds(['sound0', 'sound1'], action1))
       .toEqual(['sound0', 'sound1']);
   });
   it('correctly handles sounds deselection', () => {

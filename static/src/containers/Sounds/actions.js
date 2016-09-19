@@ -29,7 +29,13 @@ export const selectSound = makeActionCreator(SELECT_SOUND_BY_ID, 'soundID');
 export const deselectSound = makeActionCreator(DESELECT_SOUND_BY_ID, 'soundID');
 export const getSoundBuffer = makeActionCreator(GET_SOUND_BUFFER, 'soundID', 'buffer');
 export const toggleHoveringSound = makeActionCreator(TOGGLE_HOVERING_SOUND, 'soundID');
-export const removeSound = makeActionCreator(REMOVE_SOUND, 'soundID');
+
+export const removeSound = soundID => (dispatch, getStore) => {
+  const store = getStore();
+  const sound = store.sounds.byID[soundID];
+  const { queryID } = sound;
+  dispatch({ type: REMOVE_SOUND, soundID, queryID });
+};
 
 export const deselectAllSounds = () => (dispatch, getStore) => {
   const selectedSounds = getStore().sounds.selectedSounds;

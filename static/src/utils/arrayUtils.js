@@ -1,8 +1,8 @@
-export const arraySum = (array) => array.reduce(
+export const arraySum = array => array.reduce(
   (curSum, curValue) => curSum + curValue,
   0);
 
-export const arrayMean = (array) => arraySum(array) / array.length;
+export const arrayMean = array => arraySum(array) / array.length;
 
 export const elementWithId = (array, targetId, idAttr = 'id') =>
   array.find(x => x[idAttr] === targetId);
@@ -17,6 +17,13 @@ export const getRandomElement = (array) => {
 };
 
 /**
+ * Returns a new array without duplicates, without modifying the original array
+ * @param  {array} array The original array
+ * @return {array}       A copy of the original array with no duplicates
+ */
+export const removeDuplicates = array => [...new Set(array)];
+
+/**
  * Emulates python's range() function
  * @param  {int} param1
  * @param  {int} param2 (optional)
@@ -24,7 +31,7 @@ export const getRandomElement = (array) => {
  * @return {array}
  */
 export const range = (param1, param2, param3) => {
-  const isValid = (param) => Number.isInteger(param);
+  const isValid = param => Number.isInteger(param);
   if (isValid(param1) && isValid(param2)) {
     const step = (isValid(param3) && param3 !== 0) ? param3 : 1;
     const arrayLength = Math.max(Math.ceil((param2 - param1) / step), 0);

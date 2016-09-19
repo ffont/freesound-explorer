@@ -38,6 +38,15 @@ describe('array utils', () => {
       expect(utils.indexElementWithId(list, '23', 'name')).toEqual(0);
     });
   });
+  describe('removeDuplicates', () => {
+    it('works as expected', () => {
+      expect(utils.removeDuplicates([1, 2, 3])).toEqual([1, 2, 3]);
+      expect(utils.removeDuplicates([1, 2, 2])).toEqual([1, 2]);
+      expect(utils.removeDuplicates([])).toEqual([]);
+      expect(utils.removeDuplicates([1, 1, 1, 1, 1, 1, 1])).toEqual([1]);
+      expect(utils.removeDuplicates([1])).toEqual([1]);
+    });
+  });
   describe('range', () => {
     it('works as expected with 3 parameters', () => {
       expect(utils.range(0, 9, 3)).toEqual([0, 3, 6]);

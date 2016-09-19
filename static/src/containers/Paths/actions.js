@@ -8,7 +8,7 @@ export const REMOVE_PATH = 'REMOVE_PATH';
 export const SET_PATH_SYNC = 'SET_PATH_SYNC';
 export const PLAY_PATH = 'PLAY_PATH';
 export const STOP_PATH = 'STOP_PATH';
-export const SET_PATH_CURRENTLY_PLAYING = 'SET_PATH_CURRENTLY_PLAYING';
+export const SET_PATH_SOUND_CURRENTLY_PLAYING = 'SET_PATH_SOUND_CURRENTLY_PLAYING';
 export const SELECT_PATH = 'SELECT_PATH';
 export const ADD_SOUND_TO_PATH = 'ADD_SOUND_TO_PATH';
 export const DELETE_SOUND_FROM_PATH = 'DELETE_SOUND_FROM_PATH';
@@ -23,7 +23,7 @@ export const playPath = makeActionCreator(PLAY_PATH, 'pathID');
 
 export const stopPath = makeActionCreator(STOP_PATH, 'pathID');
 
-export const setPathCurrentlyPlaying = makeActionCreator(SET_PATH_CURRENTLY_PLAYING,
+export const setPathSoundCurrentlyPlaying = makeActionCreator(SET_PATH_SOUND_CURRENTLY_PLAYING,
   'pathID', 'soundIdx', 'willFinishAt');
 
 export const selectPath = makeActionCreator(SELECT_PATH,
@@ -64,17 +64,17 @@ export const playNextSoundFromPath = (pathID, time) =>
     if (path) {
       if (path.isPlaying) {
         let nextSoundToPlayIdx;
-        if ((path.currentlyPlaying.soundIdx === undefined) ||
-          (path.currentlyPlaying.soundIdx + 1 >= path.sounds.length)) {
+        if ((path.soundCurrentlyPlaying.soundIdx === undefined) ||
+          (path.soundCurrentlyPlaying.soundIdx + 1 >= path.sounds.length)) {
           nextSoundToPlayIdx = 0;
         } else {
-          nextSoundToPlayIdx = path.currentlyPlaying.soundIdx + 1;
+          nextSoundToPlayIdx = path.soundCurrentlyPlaying.soundIdx + 1;
         }
         const nextSoundToPlay = store.sounds.byID[path.sounds[nextSoundToPlayIdx]];
         const nextSoundToPlayDuration = nextSoundToPlay.duration;
         const willFinishAt = (time === undefined) ?
           audioContext.currentTime + nextSoundToPlayDuration : time + nextSoundToPlayDuration;
-        dispatch(setPathCurrentlyPlaying(path.id, nextSoundToPlayIdx, willFinishAt));
+        dispatch(setPathSoundCurrentlyPlaying(path.id, nextSoundToPlayIdx, willFinishAt));
         if (path.syncMode === 'no') {
           dispatch(playAudio(nextSoundToPlay, undefined, undefined, () => {
             dispatch(playNextSoundFromPath(pathID));
@@ -93,8 +93,8 @@ export const triggerSoundHelper = (pathID, time) =>
     const path = elementWithId(store.paths.paths, pathID);
     if (path.waitUntilFinished) {
       // Check if sound will be finished at time
-      if ((path.currentlyPlaying.willFinishAt === undefined)
-        || (path.currentlyPlaying.willFinishAt <= time)) {
+      if ((path.soundCurrentlyPlaying.willFinishAt === undefined)
+        || (path.soundCurrentlyPlaying.willFinishAt <= time)) {
         dispatch(playNextSoundFromPath(path.id, time));
       }
     } else {

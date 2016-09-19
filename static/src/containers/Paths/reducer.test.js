@@ -1,6 +1,6 @@
 import expect from 'expect';
 import * as paths from './reducer';
-import { setPathSync, playPath, stopPath, setPathCurrentlyPlaying,
+import { setPathSync, playPath, stopPath, setPathSoundCurrentlyPlaying,
   selectPath, setPathActive, deleteSoundFromPath, clearAllPaths,
   toggleWaitUntilFinished, ADD_SOUND_TO_PATH, ADD_PATH, REMOVE_PATH }
   from './actions';
@@ -49,9 +49,10 @@ describe('paths sounds and playback handling', () => {
       expect(paths.path(pathWithOneSound, action2)).toEqual(pathWithSounds);
     });
   });
-  describe('setPathCurrentlyPlaying', () => {
+  describe('setPathSoundCurrentlyPlaying', () => {
     it('works as expected', () => {
-      expect(paths.path(pathWithSounds, setPathCurrentlyPlaying(pathID, soundIdx, willFinishAt)))
+      const action = setPathSoundCurrentlyPlaying(pathID, soundIdx, willFinishAt);
+      expect(paths.path(pathWithSounds, action))
         .toEqual(pathWithCurrentlyPlayingSounds);
     });
   });

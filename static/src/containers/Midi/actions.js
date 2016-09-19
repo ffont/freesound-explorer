@@ -61,7 +61,7 @@ const messageNotOnExpectedDevice = (receivedDevice, selectedDevice) =>
 
 export const onMIDIMessage = message => (dispatch, getStore) => {
   const store = getStore();
-  const type = message.data[0] && 0xf0;
+  const type = message.data[0];
   const channel = (message.data[0] - type) + 1; // channel 1-16
   const note = message.data[1];
   const velocity = message.data[2];

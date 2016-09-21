@@ -19,6 +19,20 @@ export const readObjectPropertyByPropertyAbsName = (obj, property) => {
 };
 
 
+/**
+ * Returns a copy of the object without the selected property. Such property can be nested.
+ * Example:
+ *   const x = { a: { b: [1, 2], c: 4 }, d : 5 }
+ *   const y = pureDeleteObjectKey(x, 'a.b')
+ *   // y = { a: { c: 4 }, d: 5 }
+ *   const leaveKey = true
+ *   const z = pureDeleteObjectKey(x, 'a.b', leaveKey)
+ *   // z = { a: { b: undefined, c: 4 }, d: 5 }
+ * @param  {Object}  obj              The object from whom to get the final copy
+ * @param  {string}  property         The (nested) property to remove
+ * @param  {Boolean} [leaveKey=false] Whether to keep the deleted key (with value undefined)
+ * @return {Object}                   The new object without the selected property
+ */
 export const pureDeleteObjectKey = (obj, property, leaveKey = false) => {
   if (leaveKey && !property) {
     return undefined;

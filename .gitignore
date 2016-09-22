@@ -10,3 +10,4 @@ npm-debug.log
 static/css/
 static/fonts/
 .tern-project
+backend/sessions/

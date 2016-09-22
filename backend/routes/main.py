@@ -39,12 +39,12 @@ def save():
         user_id = g.user.id
 
     if user_id == 0 and not app.config['ALLOW_UNAUTHENTICATED_USER_SAVE_LOAD']:
-        return jsonify({'errors': True, 'msg': 'Unauthenticated user'})
+        return make_response(jsonify({'errors': True, 'msg': 'Unauthenticated user'}), 401)
 
     try:
         data = json.loads(request.data)
     except ValueError:
-        return jsonify({'errors': True, 'msg': 'No posted data or posted data not readable'})
+        return make_response(jsonify({'errors': True, 'msg': 'No posted data or posted data not readable'}), 400)
 
     session_id = request.args.get('sid', str(uuid.uuid4()))
     file_dir = '%s/%i' % (app.config['SESSIONS_FOLDER_PATH'], user_id)
@@ -60,7 +60,8 @@ def save():
     if not os.path.exists(file_dir):
         os.mkdir(file_dir)
     json.dump(file_contents, open(file_path, 'w'))
-    return jsonify({'errors': False})
+    return make_response(jsonify({'errors': False, 'sessionID': session_id }), 200)
+
 
 @app.route('/load/')
 def load():
@@ -71,7 +72,7 @@ def load():
         user_id = g.user.id
 
     if user_id == 0 and not app.config['ALLOW_UNAUTHENTICATED_USER_SAVE_LOAD']:
-        return jsonify({'errors': True, 'msg': 'Unauthenticated user'})
+        return make_response(jsonify({'errors': True, 'msg': 'Unauthenticated user'}), 401)
 
     user_sessions_file_contents = []
     user_sessions_folder_path = '%s/%i' % (app.config['SESSIONS_FOLDER_PATH'], user_id)
@@ -80,11 +81,12 @@ def load():
         file_contents = json.load(open('%s/%s' % (user_sessions_folder_path, session_filename)))
         user_sessions_file_contents.append(file_contents)
 
-    return jsonify({
+    return make_response(jsonify({
         'username': username,
         'errors': False,
         'sessions': user_sessions_file_contents
-    })
+    }), 200)
+
 
 @app.route('/logout/')
 def logout():

@@ -2,7 +2,9 @@ import { ADD_AUDIO_SRC, STOP_AUDIO_SRC } from './actions';
 
 // TODO: what about PLAY_AUDIO_SRC actions?
 
-const sourceNodes = (state = {}, action) => {
+export const initialState = { sourceNodes: {} };
+
+const sourceNodes = (state = initialState.sourceNodes, action) => {
   switch (action.type) {
     case ADD_AUDIO_SRC: {
       const { sourceKey, source, gain, soundID } = action;

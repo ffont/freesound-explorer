@@ -6,6 +6,8 @@ import { REMOVE_SOUND } from '../Sounds/actions';
 import sessions from '../Sessions/reducer';
 import { computePathname } from './utils';
 
+export const initialState = { paths: [], selectedPath: '' };
+
 export const pathInitialState = {
   id: undefined,
   name: undefined,
@@ -66,7 +68,7 @@ export const path = (state = {}, action) => {
   }
 };
 
-export const pathsReducer = (state = [], action) => {
+export const pathsReducer = (state = initialState.paths, action) => {
   switch (action.type) {
     case ADD_PATH: {
       const { pathID, sounds } = action;
@@ -100,7 +102,7 @@ export const pathsReducer = (state = [], action) => {
   }
 };
 
-export const selectedPath = (state = '', action) => {
+export const selectedPath = (state = initialState.selectedPath, action) => {
   switch (action.type) {
     case ADD_PATH: {
       return action.pathID;
@@ -123,7 +125,7 @@ export const selectedPath = (state = '', action) => {
 };
 
 // don't use combineReducers, we want reducer name to stay 'paths' (see sessions reducer)
-const paths = (state = {}, action) => ({
+const paths = (state = initialState, action) => ({
   paths: pathsReducer(state.paths, action),
   selectedPath: selectedPath(state.selectedPath, action),
 });

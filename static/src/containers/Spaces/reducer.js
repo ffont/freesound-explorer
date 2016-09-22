@@ -6,6 +6,8 @@ import { computeSpacePosition, computeSpacePositionInMap, computeSpaceIndex,
   getClosestSpaceToCenter } from './utils';
 import sessions from '../Sessions/reducer';
 
+export const initialState = { spaces: [], currentSpace: '' };
+
 export const spaceInitialState = {
   sounds: [],
   query: undefined,
@@ -70,7 +72,7 @@ export const singleSpace = (state = spaceInitialState, action, spaceIndex) => {
   }
 };
 
-export const spacesReducer = (state = [], action) => {
+export const spacesReducer = (state = initialState.spaces, action) => {
   switch (action.type) {
     case FETCH_SOUNDS_REQUEST: {
       const spaceIndex = computeSpaceIndex(state);
@@ -91,7 +93,7 @@ export const spacesReducer = (state = [], action) => {
   }
 };
 
-export const currentSpace = (state = '', action, allSpaces) => {
+export const currentSpace = (state = initialState.currentSpace, action, allSpaces) => {
   switch (action.type) {
     case FETCH_SOUNDS_SUCCESS:
       return action.queryID;
@@ -107,7 +109,7 @@ export const currentSpace = (state = '', action, allSpaces) => {
   }
 };
 
-const spaces = (state = {}, action) => ({
+const spaces = (state = initialState, action) => ({
   spaces: spacesReducer(state.spaces, action),
   currentSpace: currentSpace(state.currentSpace, action, state.spaces),
 });

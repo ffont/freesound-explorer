@@ -10,7 +10,7 @@ const displayErrorMessage = displayMessage =>
 
 const getOptions = props => [
   makeOption('file-o', 'new session', () => displayErrorMessage(props.displaySystemMessage)),
-  makeOption('save', 'save session', () => displayErrorMessage(props.displaySystemMessage)),
+  makeOption('save', 'save session', () => props.saveSession()),
   makeOption('upload', 'restore session', () => displayErrorMessage(props.displaySystemMessage)),
 ];
 

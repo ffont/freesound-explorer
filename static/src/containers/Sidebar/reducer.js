@@ -3,7 +3,7 @@ import { TOGGLE_SIDEBAR_VISIBILITY, SET_SIDEBAR_TAB, EXAMPLE_QUERY_DONE,
   from './actions';
 import { DEFAULT_SIDEBAR_TAB, SIDEBAR_TABS } from '../../constants';
 
-const initialState = {
+export const initialState = {
   isVisible: true,
   activeTab: DEFAULT_SIDEBAR_TAB,
   isExampleQueryDone: false,

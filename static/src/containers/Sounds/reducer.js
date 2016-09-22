@@ -9,6 +9,8 @@ import sessions from '../Sessions/reducer';
 import soundInfo from '../SoundInfo/reducer';
 import { removeDuplicates } from '../../utils/arrayUtils';
 
+export const initialState = { byID: {}, selectedSounds: [], soundInfoModal: {} };
+
 export const sound = (state, action) => {
   const soundID = state.id;
   switch (action.type) {
@@ -41,7 +43,7 @@ export const sound = (state, action) => {
   }
 };
 
-export const byID = (state = {}, action) => {
+export const byID = (state = initialState.byID, action) => {
   switch (action.type) {
     case FETCH_SOUNDS_SUCCESS: {
       return Object.assign({}, state, action.sounds);
@@ -87,7 +89,7 @@ export const byID = (state = {}, action) => {
   }
 };
 
-export const selectedSounds = (state = [], action) => {
+export const selectedSounds = (state = initialState.selectedSounds, action) => {
   switch (action.type) {
     case SELECT_SOUND_BY_ID:
       // add to selected sounds and remove duplicates
@@ -104,7 +106,7 @@ export const selectedSounds = (state = [], action) => {
 };
 
 // don't use combineReducers as we want the reducer name to be 'sounds' (see sessions reducer)
-const sounds = (state = {}, action) => ({
+const sounds = (state = initialState, action) => ({
   byID: byID(state.byID, action),
   selectedSounds: selectedSounds(state.selectedSounds, action),
   soundInfoModal: soundInfo(state.soundInfoModal, action, state.byID),

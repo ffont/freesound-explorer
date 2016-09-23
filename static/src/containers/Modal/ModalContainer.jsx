@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toggleModal } from './actions';
+import ModalContentContainer from './ModalContentContainer';
 import Modal from '../../components/Modal';
 
 const propTypes = {
@@ -39,11 +40,7 @@ class ModalContainer extends React.Component {
           className="ModalContainer__clickable-bg" onClick={this.props.toggleModal}
           aria-label="close"
         />
-        <Modal
-          toggleModal={this.props.toggleModal}
-          isVisible={this.props.isVisible}
-          currentPage={this.props.currentPage}
-        />
+        <ModalContentContainer currentPage={this.props.currentPage} />
       </div>
     );
   }

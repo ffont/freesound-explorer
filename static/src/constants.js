@@ -26,6 +26,11 @@ export const SIDEBAR_TABS = {
 
 export const DEFAULT_SIDEBAR_TAB = SIDEBAR_TABS.SEARCH;
 
+export const MODAL_PAGES = {
+  LOAD_SESSION: 'loadSession',
+  ERROR: 'error',
+};
+
 export const REQUEST_POOL_SIZE = 50;
 
 export const N_MIDI_MESSAGES_TO_KEEP = 10;

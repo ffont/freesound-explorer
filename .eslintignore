@@ -1,3 +1,5 @@
 static/src/vendors/
 static/src/polyfills/
 static/src/stylesheets/
+*.scss
+*.json

@@ -6,7 +6,7 @@ import SidebarContainer from '../../containers/Sidebar/SidebarContainer';
 import MessagesBoxContainer from '../../containers/MessagesBox/MessagesBoxContainer';
 import MetronomeStarterContainer from '../../containers/Metronome/MetronomeStarterContainer';
 import Logo from '../Logo';
-// import Modal from '../Modal';
+import ModalContainer from '../../containers/Modal/ModalContainer';
 import './App.scss';
 
 const propTypes = {
@@ -22,7 +22,7 @@ const App = props => (
       <MessagesBoxContainer />
       <Logo />
       <MetronomeStarterContainer />
-      {/** <Modal /> */}
+      <ModalContainer />
     </div>
   </Provider>
 );

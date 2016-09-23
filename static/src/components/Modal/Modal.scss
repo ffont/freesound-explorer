@@ -1,6 +1,6 @@
 @import "../../stylesheets/variables.json";
 
-.modal-container {
+.ModalContainer {
   position: absolute;
   top: 0;
   right: 0;
@@ -8,15 +8,41 @@
   left: 0;
   opacity: 1;
   pointer-events: all;
-  background-color: $sidebarColor;
   display: flex;
   transition: opacity 0.3s ease-in-out;
+  &:before {
+    content: '';
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: $sidebarColor;
+  }
   &:not(.active) {
     opacity: 0;
     pointer-events: none;
     .modal {
       transform: translate3d(0, -100px, 0);
     }
+  }
+}
+
+.ModalContainer__clickable-bg {
+  cursor: default;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0;
+  &:before {
+    content: '✕';
+    font-size: 2em;
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    width: 20px;
+    cursor: pointer;
   }
 }
 

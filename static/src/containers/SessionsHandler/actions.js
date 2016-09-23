@@ -61,14 +61,18 @@ export const saveSession = () => (dispatch, getStore) => {
   }
 };
 
-const loadFromBackend = () => (dispatch) => {
+const loadFromBackend = (sessionID, userID) => (dispatch, getStore) => {
+  // Provide some defaults for sessionID and userID
+  // This will be loaded form the available sessions list, but to test this is ok
+  // for non authenticated user
+  const currentState = getStore();
+  const sessionIDToLoad = sessionID ? sessionID : currentState.sessions.id;
+  const userIDToLoad = userID ? userID : 0;
+  const url = `${URLS.load}?sid=${sessionIDToLoad}&uid=${userIDToLoad}`;
   dispatch(backendLoadRequest());
-  loadJSON(URLS.load).then(
+  loadJSON(url).then(
     (data) => {
-      const userSessions = data.sessions;
-      const lastSession = userSessions[userSessions.length - 1];
-      const dataToSave = lastSession.data[lastSession.data.length - 1][1];
-      dispatch(Object.assign({}, dataToSave, { type: LOAD_SESSION }));
+      dispatch(Object.assign({}, data.data, { type: LOAD_SESSION }));
       dispatch(backendLoadSuccess());
       dispatch(displaySystemMessage(
         'Session loaded!', MESSAGE_STATUS.SUCCESS));
@@ -82,10 +86,10 @@ const loadFromBackend = () => (dispatch) => {
   );
 };
 
-export const loadSession = sessionID => (dispatch, getStore) => {
+export const loadSession = (sessionID, userID) => (dispatch, getStore) => {
   const currentState = getStore();
   if (currentState.login.isEndUserAuthSupported) {
-    dispatch(loadFromBackend(sessionID));
+    dispatch(loadFromBackend(sessionID, userID));
   } else {
     // TODO: load from local storage
   }

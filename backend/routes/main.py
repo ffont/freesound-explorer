@@ -52,19 +52,23 @@ def save():
     if os.path.exists(file_path):
         file_contents = json.load(open(file_path, 'r'))
     else:
-        file_contents = { 'id': session_id, 'username': username, 'data': [] }
-    # Append tuple with timestamp and current session data (in this way we keep versions of
-    # the session sorted by timestamp)
-    file_contents['data'].append((str(datetime.datetime.now()), data))
+        file_contents = {
+            'id': session_id,
+            'username': username,
+            'data': [],
+            'created': str(datetime.datetime.now()),
+        }
+    file_contents['last_modified'] = str(datetime.datetime.now())
+    file_contents['data'] = data
 
     if not os.path.exists(file_dir):
         os.mkdir(file_dir)
     json.dump(file_contents, open(file_path, 'w'))
     return make_response(jsonify({'errors': False, 'sessionID': session_id }), 200)
 
-
-@app.route('/load/')
-def load():
+@app.route('/available/')
+def available():
+    # Returns a list of available sessions for the logged user (or AnonymousUser)
     username = "AnonymousUser"
     user_id = 0
     if g.user.is_authenticated:
@@ -74,18 +78,42 @@ def load():
     if user_id == 0 and not app.config['ALLOW_UNAUTHENTICATED_USER_SAVE_LOAD']:
         return make_response(jsonify({'errors': True, 'msg': 'Unauthenticated user'}), 401)
 
-    user_sessions_file_contents = []
+    user_sessions = []
     user_sessions_folder_path = '%s/%i' % (app.config['SESSIONS_FOLDER_PATH'], user_id)
     for session_filename in [item for item in os.listdir(user_sessions_folder_path) \
                                                                     if item.endswith('.json')]:
         file_contents = json.load(open('%s/%s' % (user_sessions_folder_path, session_filename)))
-        user_sessions_file_contents.append(file_contents)
+        user_sessions.append({
+            'name': file_contents['data']['name'],
+            'id': file_contents['id'],
+            'last_modified': file_contents['last_modified']
+        })
 
     return make_response(jsonify({
         'username': username,
+        'user_id': user_id,
         'errors': False,
-        'sessions': user_sessions_file_contents
+        'user_sessions': user_sessions
     }), 200)
+
+
+@app.route('/load/')
+def load():
+    # Returns the contents of the session file, user does not need to be logged but user id
+    # and session id need to be provided
+
+    user_id = request.args.get('uid', None)
+    if user_id is None:
+        return make_response(jsonify({'errors': True, 'msg': 'No user id provided'}), 400)
+
+    session_id = request.args.get('sid', None)
+    if session_id is None or session_id == '':
+        return make_response(jsonify({'errors': True, 'msg': 'No session id provided'}), 400)
+
+    file_path = '%s/%s/%s.json' % (app.config['SESSIONS_FOLDER_PATH'], user_id, session_id)
+    file_contents = json.load(open(file_path))
+
+    return make_response(jsonify(file_contents), 200)
 
 
 @app.route('/logout/')

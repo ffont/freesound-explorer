@@ -3,6 +3,7 @@ import { getDataToSave } from './utils';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { MESSAGE_STATUS } from '../../constants';
 import { loadJSON } from '../../utils/requests';
+import { setSessionID } from '../Sessions/actions';
 
 export const NEW_SESSION = 'NEW_SESSION';
 export const SAVE_SESSION = 'SAVE_SESSION';
@@ -28,11 +29,7 @@ const backendLoadFailure = makeActionCreator(BACKEND_LOAD_FAILURE, 'msg');
 
 export const newSession = makeActionCreator(NEW_SESSION);
 
-export const saveSession = (sessionID = 'test') => (dispatch, getStore) => {
-  const currentState = getStore();
-  const dataToSave = getDataToSave(currentState);
-
-  // Save to backend
+const saveToBackend = (sessionID, dataToSave) => (dispatch) => {
   let url = URLS.save;
   if (sessionID) {
     url = `${url}?sid=${sessionID}`;
@@ -41,6 +38,7 @@ export const saveSession = (sessionID = 'test') => (dispatch, getStore) => {
   loadJSON(url, dataToSave).then(
     (data) => {
       dispatch(backendSaveSuccess(data.sessionID));
+      dispatch(setSessionID(data.sessionID));
       dispatch(displaySystemMessage(
         `Session successfully saved! (${data.sessionID})`, MESSAGE_STATUS.SUCCESS));
     },
@@ -53,13 +51,23 @@ export const saveSession = (sessionID = 'test') => (dispatch, getStore) => {
   );
 };
 
-export const loadSession = () => (dispatch) => {
+export const saveSession = () => (dispatch, getStore) => {
+  const currentState = getStore();
+  const dataToSave = getDataToSave(currentState);
+  if (currentState.login.isEndUserAuthSupported) {
+    dispatch(saveToBackend(currentState.sessions.id, dataToSave));
+  } else {
+    // TODO: save to local storage
+  }
+};
+
+const loadFromBackend = () => (dispatch) => {
   dispatch(backendLoadRequest());
   loadJSON(URLS.load).then(
     (data) => {
       const userSessions = data.sessions;
       const lastSession = userSessions[userSessions.length - 1];
-      const dataToSave = lastSession.data[0][1];
+      const dataToSave = lastSession.data[lastSession.data.length - 1][1];
       dispatch(Object.assign({}, dataToSave, { type: LOAD_SESSION }));
       dispatch(backendLoadSuccess());
       dispatch(displaySystemMessage(
@@ -72,4 +80,13 @@ export const loadSession = () => (dispatch) => {
         `Error loading session: ${message}`, MESSAGE_STATUS.ERROR));
     }
   );
+};
+
+export const loadSession = sessionID => (dispatch, getStore) => {
+  const currentState = getStore();
+  if (currentState.login.isEndUserAuthSupported) {
+    dispatch(loadFromBackend(sessionID));
+  } else {
+    // TODO: load from local storage
+  }
 };

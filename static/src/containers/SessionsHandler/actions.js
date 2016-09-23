@@ -10,24 +10,27 @@ export const LOAD_SESSION = 'LOAD_SESSION';
 export const BACKEND_SAVE_REQUEST = 'BACKEND_SAVE_REQUEST';
 export const BACKEND_SAVE_SUCCESS = 'BACKEND_SAVE_SUCCESS';
 export const BACKEND_SAVE_FAILURE = 'BACKEND_SAVE_FAILURE';
+export const BACKEND_LOAD_REQUEST = 'BACKEND_LOAD_REQUEST';
+export const BACKEND_LOAD_SUCCESS = 'BACKEND_LOAD_SUCCESS';
+export const BACKEND_LOAD_FAILURE = 'BACKEND_LOAD_FAILURE';
 
 const URLS = {
   save: '/save/',
   load: '/load/',
 };
-
-let dataToSave;
-
 // no need to exports all these actions as they will be used internally in saveSession
 const backendSaveRequest = makeActionCreator(BACKEND_SAVE_REQUEST, 'sessionID', 'dataToSave');
 const backendSaveSuccess = makeActionCreator(BACKEND_SAVE_SUCCESS, 'sessionID');
 const backendSaveFailure = makeActionCreator(BACKEND_SAVE_FAILURE, 'msg');
+const backendLoadRequest = makeActionCreator(BACKEND_LOAD_REQUEST);
+const backendLoadSuccess = makeActionCreator(BACKEND_LOAD_SUCCESS);
+const backendLoadFailure = makeActionCreator(BACKEND_LOAD_FAILURE, 'msg');
 
 export const newSession = makeActionCreator(NEW_SESSION);
 
-export const saveSession = (sessionID = undefined) => (dispatch, getStore) => {
+export const saveSession = (sessionID = 'test') => (dispatch, getStore) => {
   const currentState = getStore();
-  dataToSave = getDataToSave(currentState);
+  const dataToSave = getDataToSave(currentState);
 
   // Save to backend
   let url = URLS.save;
@@ -51,5 +54,22 @@ export const saveSession = (sessionID = undefined) => (dispatch, getStore) => {
 };
 
 export const loadSession = () => (dispatch) => {
-  dispatch(Object.assign({}, dataToSave, { type: LOAD_SESSION }));
+  dispatch(backendLoadRequest());
+  loadJSON(URLS.load).then(
+    (data) => {
+      const userSessions = data.sessions;
+      const lastSession = userSessions[userSessions.length - 1];
+      const dataToSave = lastSession.data[0][1];
+      dispatch(Object.assign({}, dataToSave, { type: LOAD_SESSION }));
+      dispatch(backendLoadSuccess());
+      dispatch(displaySystemMessage(
+        'Session loaded!', MESSAGE_STATUS.SUCCESS));
+    },
+    (data) => {
+      const message = (data && data.msg) || 'Unknown error';
+      dispatch(backendLoadFailure());
+      dispatch(displaySystemMessage(
+        `Error loading session: ${message}`, MESSAGE_STATUS.ERROR));
+    }
+  );
 };

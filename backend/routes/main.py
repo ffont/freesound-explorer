@@ -41,7 +41,6 @@ def save():
     if user_id == 0 and not app.config['ALLOW_UNAUTHENTICATED_USER_SAVE_LOAD']:
         return make_response(jsonify({'errors': True, 'msg': 'Unauthenticated user'}), 401)
 
-    print request.data
     try:
         data = json.loads(request.data)
     except ValueError:

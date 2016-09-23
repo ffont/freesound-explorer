@@ -8,6 +8,9 @@ export const STOP_AUDIO_SRC = 'STOP_AUDIO_SRC';
 export const PLAY_AUDIO_SRC = 'PLAY_AUDIO_SRC';
 
 const initAudioContext = () => {
+  if (!window.AudioContext) {
+    return { audioContext: undefined, loader: undefined };
+  }
   const audioContext = new window.AudioContext();
   // create a main gain node to set general volume
   audioContext.gainNode = audioContext.createGain();

@@ -5,7 +5,7 @@ import { FETCH_SOUNDS_SUCCESS, UPDATE_SOUNDS_POSITION, SELECT_SOUND_BY_ID,
 import { PLAY_AUDIO_SRC, STOP_AUDIO_SRC } from '../Audio/actions';
 import { UPDATE_MAP_POSITION } from '../Map/actions';
 import { computeSoundGlobalPosition, thumbnailMapPosition } from './utils';
-import storable from '../Sessions/storableReducer';
+import storable from '../SessionsHandler/storableReducer';
 import soundInfo from '../SoundInfo/reducer';
 import { removeDuplicates } from '../../utils/arrayUtils';
 

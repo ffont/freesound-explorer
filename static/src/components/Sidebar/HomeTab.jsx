@@ -1,6 +1,6 @@
 import React from 'react';
 import baseTab from './BaseTab';
-import SessionManager from '../../containers/Sessions/SessionManager';
+import SessionManager from '../../containers/SessionsHandler/SessionManager';
 import SettingsContainer from '../../containers/Settings/SettingsContainer';
 import MetronomeContainer from '../../containers/Metronome/MetronomeContainer';
 

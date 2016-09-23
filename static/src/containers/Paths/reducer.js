@@ -3,7 +3,7 @@ import { ADD_PATH, SET_PATH_SYNC, PLAY_PATH, STOP_PATH, REMOVE_PATH,
   ADD_SOUND_TO_PATH, CLEAR_ALL_PATHS, TOGGLE_WAIT_UNTIL_FINISHED,
   SET_PATH_ACTIVE } from './actions';
 import { REMOVE_SOUND } from '../Sounds/actions';
-import storable from '../Sessions/storableReducer';
+import storable from '../SessionsHandler/storableReducer';
 import { computePathname } from './utils';
 
 export const initialState = { paths: [], selectedPath: '' };

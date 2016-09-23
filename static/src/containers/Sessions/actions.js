@@ -16,6 +16,8 @@ const URLS = {
   load: '/load/',
 };
 
+let dataToSave;
+
 // no need to exports all these actions as they will be used internally in saveSession
 const backendSaveRequest = makeActionCreator(BACKEND_SAVE_REQUEST, 'sessionID', 'dataToSave');
 const backendSaveSuccess = makeActionCreator(BACKEND_SAVE_SUCCESS, 'sessionID');
@@ -25,7 +27,7 @@ export const newSession = makeActionCreator(NEW_SESSION);
 
 export const saveSession = (sessionID = undefined) => (dispatch, getStore) => {
   const currentState = getStore();
-  const dataToSave = getDataToSave(currentState);
+  dataToSave = getDataToSave(currentState);
 
   // Save to backend
   let url = URLS.save;
@@ -48,6 +50,6 @@ export const saveSession = (sessionID = undefined) => (dispatch, getStore) => {
   );
 };
 
-export const loadSession = () => {
-
+export const loadSession = () => (dispatch) => {
+  dispatch(Object.assign({}, dataToSave, { type: LOAD_SESSION }));
 };

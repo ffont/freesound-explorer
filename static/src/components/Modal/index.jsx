@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import '../../stylesheets/Modal.scss';
+import './Modal.scss';
 import { toggleModal } from '../../actions/modal';
 
 const propTypes = {

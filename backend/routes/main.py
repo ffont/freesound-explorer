@@ -41,6 +41,7 @@ def save():
     if user_id == 0 and not app.config['ALLOW_UNAUTHENTICATED_USER_SAVE_LOAD']:
         return make_response(jsonify({'errors': True, 'msg': 'Unauthenticated user'}), 401)
 
+    print request.data
     try:
         data = json.loads(request.data)
     except ValueError:
@@ -99,13 +100,12 @@ def get_user_data():
     access_token = None
     if g.user.is_authenticated:
         username = g.user.username
-        if include_access_token:
-            try:
-                access_token = UserSocialAuth.get_social_auth_for_user(g.user) \
-                    .filter(UserSocialAuth.provider=="freesound") \
-                    .first().access_token
-            except AttributeError:
-                pass
+        try:
+            access_token = UserSocialAuth.get_social_auth_for_user(g.user) \
+                .filter(UserSocialAuth.provider=="freesound") \
+                .first().access_token
+        except AttributeError:
+            pass
     return username, access_token
 
 

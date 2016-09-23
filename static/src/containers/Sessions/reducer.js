@@ -1,4 +1,4 @@
-import { UPDATE_SESSION_NAME } from './actions';
+import { UPDATE_SESSION_NAME, SET_SESSION_ID } from './actions';
 import storable from '../SessionsHandler/storableReducer';
 
 export const initialState = {
@@ -26,6 +26,8 @@ const name = (state = initialState.name, action) => {
 
 const sessionID = (state = initialState.id, action) => {
   switch (action.type) {
+    case SET_SESSION_ID:
+      return action.id;
     default:
       return state;
   }

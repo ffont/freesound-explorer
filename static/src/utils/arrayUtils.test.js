@@ -1,4 +1,3 @@
-import expect from 'expect';
 import * as utils from './arrayUtils';
 
 describe('array utils', () => {

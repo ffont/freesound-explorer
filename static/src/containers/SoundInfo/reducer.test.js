@@ -1,4 +1,3 @@
-import expect from 'expect';
 import { isVisibleReducer, positionReducer, soundIDReducer } from './reducer';
 import { openModalForSound, hideModal } from './actions';
 import { UPDATE_SOUNDS_POSITION } from '../Sounds/actions';

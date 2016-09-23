@@ -1,4 +1,3 @@
-import expect from 'expect';
 import { toggleSidebarVisibility, setSidebarTab, setExampleQueryDone,
   moveSidebarArrow } from './actions';
 import reducer from './reducer';

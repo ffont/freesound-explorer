@@ -1,4 +1,3 @@
-import expect from 'expect';
 import { spaceInitialState, singleSpace, spacesReducer, currentSpace }
   from './reducer';
 import { REMOVE_SOUND, FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_FAILURE }

@@ -1,4 +1,3 @@
-import expect from 'expect';
 import { truncateString } from './stringUtils';
 import { range } from './arrayUtils';
 import { DEFAULT_TRUNCATED_STRING_LENGTH } from '../constants';

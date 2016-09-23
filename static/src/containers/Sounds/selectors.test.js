@@ -1,4 +1,3 @@
-import expect from 'expect';
 import { makeIsSoundSelected } from './selectors';
 
 const state = { sounds: { selectedSounds: ['sound0', 'sound1'] } };

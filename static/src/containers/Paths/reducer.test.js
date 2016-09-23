@@ -1,4 +1,3 @@
-import expect from 'expect';
 import * as paths from './reducer';
 import { setPathSync, playPath, stopPath, setPathSoundCurrentlyPlaying,
   selectPath, setPathActive, deleteSoundFromPath, clearAllPaths,

@@ -1,4 +1,3 @@
-import expect from 'expect';
 import { selectSound, getSoundBuffer, toggleHoveringSound, REMOVE_SOUND,
   deselectSound, UPDATE_SOUNDS_POSITION, FETCH_SOUNDS_SUCCESS,
   MAP_COMPUTATION_COMPLETE }

@@ -1,4 +1,3 @@
-import expect from 'expect';
 import { addAudioSource, stopAudioSrc } from './actions';
 import reducer from './reducer';
 

@@ -1,4 +1,3 @@
-import expect from 'expect';
 import * as utils from './utils';
 
 describe('paths utils', () => {

@@ -1,4 +1,3 @@
-import expect from 'expect';
 import { togglePlayOnHover } from './actions';
 import reducer, { initialState } from './reducer';
 

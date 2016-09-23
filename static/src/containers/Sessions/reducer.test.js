@@ -1,4 +1,3 @@
-import expect from 'expect';
 import { NEW_SESSION, LOAD_SESSION } from './actions';
 import sessions, { reducersToExport } from './reducer';
 

@@ -1,4 +1,3 @@
-import expect from 'expect';
 import deepFreeze from 'deep-freeze';
 import { default as reducer, initialState } from './reducer';
 import { SET_SPACE_AS_CENTER } from '../Spaces/actions';

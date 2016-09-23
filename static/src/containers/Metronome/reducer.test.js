@@ -1,4 +1,3 @@
-import expect from 'expect';
 import { updateMetronomeStatus, setTempo, startMetronomeAction,
   stopMetronomeAction, setPlaySound }
   from './actions';

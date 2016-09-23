@@ -1,4 +1,3 @@
-import expect from 'expect';
 import deepFreeze from 'deep-freeze';
 import reducer, * as midi from './reducer';
 import { addMidiNoteMapping, setSoundCurrentlyLearnt, removeMidiNoteMapping,

@@ -30,7 +30,11 @@ export default (reducer) => {
       }
       case LOAD_SESSION: {
         const loadedState = action[reducer.name];
-        return reducer(loadedState, {});
+        const resetAction = {};
+        /* as resetAction.type is undefined, each reducer will just reach default case
+          and return its first parameter (in this case loadedState).
+          This way each reducer will replace its state with loadedState */
+        return reducer(loadedState, resetAction);
       }
       default:
         // the normal call to the reducer

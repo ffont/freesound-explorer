@@ -6,6 +6,7 @@ const jsonImporter = require('node-sass-json-importer');
 
 function getEntrySources(sources) {
   if (process.env.NODE_ENV === 'flask') {
+    sources.unshift('react-hot-loader/patch');
     sources.push('webpack-dev-server/client?http://localhost:8080');
   } else if (process.env.NODE_ENV !== 'production') {
     sources.unshift('react-hot-loader/patch');

@@ -1,8 +1,8 @@
 import { TOGGLE_MODAL, SET_MODAL_PAGE } from './actions';
 
-const initialState = {
+export const initialState = {
   isVisible: false,
-  currentPage: undefined,
+  currentPage: '',
 };
 
 const modal = (state = initialState, action) => {

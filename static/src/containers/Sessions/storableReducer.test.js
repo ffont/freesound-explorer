@@ -1,5 +1,5 @@
 import { NEW_SESSION, LOAD_SESSION } from './actions';
-import sessions, { reducersToExport } from './reducer';
+import sessions, { reducersToExport } from './storableReducer';
 
 const testInitialState = [];
 const testBaseReducer = (state = testInitialState, action) => {

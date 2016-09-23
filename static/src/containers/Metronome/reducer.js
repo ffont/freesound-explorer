@@ -1,7 +1,7 @@
 import { UPDATE_METRONOME_STATUS, SET_TEMPO, START_METRONOME,
   STOP_METRONOME, SET_PLAY_SOUND } from './actions';
 import { DEFAULT_TEMPO } from '../../constants';
-import sessions from '../Sessions/reducer';
+import storable from '../Sessions/storableReducer';
 
 export const initialState = {
   bar: 1,
@@ -42,4 +42,4 @@ function metronome(state = initialState, action) {
   }
 }
 
-export default sessions(metronome);
+export default storable(metronome);

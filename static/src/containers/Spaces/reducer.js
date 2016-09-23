@@ -4,7 +4,7 @@ import { REMOVE_SOUND, FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_SUCCESS, FETCH_SOUNDS_
   from '../Sounds/actions';
 import { computeSpacePosition, computeSpacePositionInMap, computeSpaceIndex,
   getClosestSpaceToCenter } from './utils';
-import sessions from '../Sessions/reducer';
+import storable from '../Sessions/storableReducer';
 
 export const initialState = { spaces: [], currentSpace: '' };
 
@@ -113,4 +113,4 @@ const spaces = (state = initialState, action) => ({
   spaces: spacesReducer(state.spaces, action),
   currentSpace: currentSpace(state.currentSpace, action, state.spaces),
 });
-export default sessions(spaces);
+export default storable(spaces);

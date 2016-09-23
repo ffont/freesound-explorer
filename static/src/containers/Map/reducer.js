@@ -1,7 +1,7 @@
 import { UPDATE_MAP_POSITION } from './actions';
 import { SET_SPACE_AS_CENTER } from '../Spaces/actions';
 import { getMapCenter } from './utils';
-import sessions from '../Sessions/reducer';
+import storable from '../Sessions/storableReducer';
 
 /*
   forceMapUpdate = true when a new map position is forced externally (such when the user
@@ -41,4 +41,4 @@ const map = (state = initialState, action) => {
   }
 };
 
-export default sessions(map);
+export default storable(map);

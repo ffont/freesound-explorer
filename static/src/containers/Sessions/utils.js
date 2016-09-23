@@ -1,5 +1,5 @@
 import { pick, omit, mapValues } from 'lodash';
-import { reducersToExport } from './reducer';
+import { reducersToExport } from './storableReducer';
 
 
 export const handleMapReducer = state => omit(state, 'forceMapUpdate');

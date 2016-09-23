@@ -3,7 +3,7 @@ import { ADD_PATH, SET_PATH_SYNC, PLAY_PATH, STOP_PATH, REMOVE_PATH,
   ADD_SOUND_TO_PATH, CLEAR_ALL_PATHS, TOGGLE_WAIT_UNTIL_FINISHED,
   SET_PATH_ACTIVE } from './actions';
 import { REMOVE_SOUND } from '../Sounds/actions';
-import sessions from '../Sessions/reducer';
+import storable from '../Sessions/storableReducer';
 import { computePathname } from './utils';
 
 export const initialState = { paths: [], selectedPath: '' };
@@ -124,10 +124,10 @@ export const selectedPath = (state = initialState.selectedPath, action) => {
   }
 };
 
-// don't use combineReducers, we want reducer name to stay 'paths' (see sessions reducer)
+// don't use combineReducers, we want reducer name to stay 'paths' (see storable reducer)
 const paths = (state = initialState, action) => ({
   paths: pathsReducer(state.paths, action),
   selectedPath: selectedPath(state.selectedPath, action),
 });
 
-export default sessions(paths);
+export default storable(paths);

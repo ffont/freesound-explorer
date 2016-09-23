@@ -1,5 +1,5 @@
 import { TOGGLE_PLAY_ON_HOVER } from './actions';
-import sessions from '../Sessions/reducer';
+import storable from '../Sessions/storableReducer';
 
 export const initialState = {
   shouldPlayOnHover: false,
@@ -17,4 +17,4 @@ const settings = (state = initialState, action) => {
   }
 };
 
-export default sessions(settings);
+export default storable(settings);

@@ -3,7 +3,7 @@ import { ADD_MIDI_NOTE_MAPPING, REMOVE_MIDI_NOTE_MAPPING, SET_MIDI_LEARN_SOUND_I
   SET_MIDI_INPUT_DEVICE, SET_MIDI_AVAILABLE_DEVICES, DISCONNECT_DEVICES }
   from './actions';
 import { N_MIDI_MESSAGES_TO_KEEP } from '../../constants';
-import sessions from '../Sessions/reducer';
+import storable from '../Sessions/storableReducer';
 
 export const initialState = {
   soundCurrentlyLearnt: '',
@@ -117,4 +117,4 @@ const midi = (state = {}, action) => ({
   availableMIDIDevices: availableMIDIDevices(state.availableMIDIDevices, action),
 });
 
-export default sessions(midi);
+export default storable(midi);

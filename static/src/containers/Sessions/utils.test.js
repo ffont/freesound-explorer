@@ -1,4 +1,4 @@
-import { reducersToExport } from './reducer';
+import { reducersToExport } from './storableReducer';
 import * as utils from './utils';
 import { initialState as audioInitialState } from '../Audio/reducer';
 import { initialState as loginInitialState } from '../Login/reducer';

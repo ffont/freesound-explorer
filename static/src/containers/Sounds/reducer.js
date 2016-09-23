@@ -5,7 +5,7 @@ import { FETCH_SOUNDS_SUCCESS, UPDATE_SOUNDS_POSITION, SELECT_SOUND_BY_ID,
 import { PLAY_AUDIO_SRC, STOP_AUDIO_SRC } from '../Audio/actions';
 import { UPDATE_MAP_POSITION } from '../Map/actions';
 import { computeSoundGlobalPosition, thumbnailMapPosition } from './utils';
-import sessions from '../Sessions/reducer';
+import storable from '../Sessions/storableReducer';
 import soundInfo from '../SoundInfo/reducer';
 import { removeDuplicates } from '../../utils/arrayUtils';
 
@@ -105,10 +105,10 @@ export const selectedSounds = (state = initialState.selectedSounds, action) => {
   }
 };
 
-// don't use combineReducers as we want the reducer name to be 'sounds' (see sessions reducer)
+// don't use combineReducers as we want the reducer name to be 'sounds' (see storable reducer)
 const sounds = (state = initialState, action) => ({
   byID: byID(state.byID, action),
   selectedSounds: selectedSounds(state.selectedSounds, action),
   soundInfoModal: soundInfo(state.soundInfoModal, action, state.byID),
 });
-export default sessions(sounds);
+export default storable(sounds);

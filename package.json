@@ -8,7 +8,9 @@
     "with-flask": "NODE_ENV=flask ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --colors",
     "dev": "node express_server.js",
     "eslint": "./node_modules/eslint/bin/eslint.js static/src/**/**/**/**",
-    "test": "./node_modules/jest/bin/jest.js"
+    "test": "./node_modules/jest/bin/jest.js",
+    "test-cov": "./node_modules/jest/bin/jest.js --coverage",
+    "test-json": "./node_modules/jest/bin/jest.js --json --coverage"
   },
   "repository": {
     "type": "git",

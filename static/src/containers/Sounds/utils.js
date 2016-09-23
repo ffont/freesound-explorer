@@ -2,6 +2,7 @@ import { MAP_SCALE_FACTOR, TSNE_CONFIG, DEFAULT_DESCRIPTOR, DEFAULT_RADIUS }
   from '../../constants';
 import { readObjectPropertyByPropertyAbsName } from '../../utils/objectUtils';
 import tsnejs from '../../vendors/tsne';
+import sassVariables from '../../stylesheets/variables.json';
 
 
 export const computeSoundGlobalPosition = (tsnePosition, spacePosition, mapPosition) => {
@@ -15,8 +16,6 @@ export const computeSoundGlobalPosition = (tsnePosition, spacePosition, mapPosit
 
 export const thumbnailMapPosition = { translateX: 0, translateY: 0, scale: 0.3 };
 export const thumbnailSize = () => {
-  const sassVariables = require('json!../../stylesheets/variables.json');
-
   const { sidebarWidth, sidebarClosedOffset, sidebarContentPadding, thumbnailHeight }
     = sassVariables;
   return {

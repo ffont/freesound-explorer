@@ -1,8 +1,6 @@
-export const getMapCenter = () => {
-  const sidebarWidth = require('json!../../stylesheets/variables.json').sidebarWidth;
+import { sidebarWidth } from '../../stylesheets/variables.json';
 
-  return {
-    x: parseInt(sidebarWidth, 10) + ((window.innerWidth - parseInt(sidebarWidth, 10)) / 2),
-    y: (window.innerHeight / 2),
-  };
-};
+export const getMapCenter = () => ({
+  x: parseInt(sidebarWidth, 10) + ((window.innerWidth - parseInt(sidebarWidth, 10)) / 2),
+  y: (window.innerHeight / 2),
+});

@@ -3,7 +3,7 @@ import { isVisibleReducer, positionReducer, soundIDReducer } from './reducer';
 import { openModalForSound, hideModal } from './actions';
 import { UPDATE_SOUNDS_POSITION } from '../Sounds/actions';
 import { UPDATE_MAP_POSITION } from '../Map/actions';
-import { soundInfoModalHeight } from 'json!../../stylesheets/variables.json';
+import { soundInfoModalHeight } from '../../stylesheets/variables.json';
 
 const allSounds = { sound0: { id: 'sound0', position: { cx: 10, cy: 20 } } };
 

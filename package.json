@@ -8,7 +8,7 @@
     "with-flask": "NODE_ENV=flask ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --colors",
     "dev": "node express_server.js",
     "eslint": "./node_modules/eslint/bin/eslint.js static/src/**/**/**/**",
-    "test": "karma start karma.config.js"
+    "test": "./node_modules/jest/bin/jest.js"
   },
   "repository": {
     "type": "git",

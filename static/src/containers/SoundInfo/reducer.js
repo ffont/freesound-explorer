@@ -1,7 +1,7 @@
 import { OPEN_MODAL_FOR_SOUND, HIDE_MODAL } from './actions';
 import { UPDATE_SOUNDS_POSITION } from '../Sounds/actions';
 import { UPDATE_MAP_POSITION } from '../Map/actions';
-import { soundInfoModalHeight } from 'json!../../stylesheets/variables.json';
+import { soundInfoModalHeight } from '../../stylesheets/variables.json';
 
 export const modalHeight = parseInt(soundInfoModalHeight, 10);
 

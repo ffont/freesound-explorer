@@ -1,5 +1,5 @@
 import React from 'react';
-import { sidebarClosedOffset } from 'json!../../stylesheets/variables.json';
+import { sidebarClosedOffset } from '../../stylesheets/variables.json';
 import './SliderRange.scss';
 
 const propTypes = {

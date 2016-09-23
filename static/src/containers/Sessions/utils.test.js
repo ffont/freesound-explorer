@@ -1,4 +1,3 @@
-import expect from 'expect';
 import { reducersToExport } from './reducer';
 import * as utils from './utils';
 import { initialState as audioInitialState } from '../Audio/reducer';
@@ -32,7 +31,8 @@ const curState = {
 describe('getDataToSave', () => {
   const toSave = utils.getDataToSave(curState);
   it('return object to save has the right keys', () => {
-    expect(Object.keys(toSave)).toEqual(reducersToExport);
+    Object.keys(toSave).forEach(key =>
+      expect(reducersToExport).toContain(key));
   });
 });
 

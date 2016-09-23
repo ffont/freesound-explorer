@@ -11,7 +11,10 @@ const modal = (state = initialState, action) => {
       return Object.assign({}, state, { isVisible: !state.isVisible });
     }
     case SET_MODAL_PAGE: {
-      return Object.assign({}, state, { currentPage: action.newPage });
+      return Object.assign({}, state, {
+        isVisible: true,
+        currentPage: action.newPage,
+      });
     }
     default:
       return state;

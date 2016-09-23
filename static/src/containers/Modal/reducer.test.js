@@ -16,4 +16,8 @@ describe('setModalPage', () => {
     expect(reducer(initialState, setModalPage('testPage')).currentPage)
       .toBe('testPage');
   });
+  it('setting a page automatically makes modal visible', () => {
+    expect(reducer(initialState, setModalPage('testPage')).isVisible)
+      .toBeTruthy();
+  });
 });

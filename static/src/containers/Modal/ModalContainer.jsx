@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { toggleModal } from './actions';
 import ModalContentContainer from './ModalContentContainer';
-import Modal from '../../components/Modal';
 
 const propTypes = {
   toggleModal: React.PropTypes.func,

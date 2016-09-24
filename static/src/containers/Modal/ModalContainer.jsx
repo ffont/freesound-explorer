@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toggleModal } from './actions';
-import ModalContentContainer from './ModalContentContainer';
+import ModalPageContentHandler from './ModalPageContentHandler';
 
 const propTypes = {
   toggleModal: React.PropTypes.func,
@@ -39,7 +39,7 @@ class ModalContainer extends React.Component {
           className="ModalContainer__clickable-bg" onClick={this.props.toggleModal}
           aria-label="close"
         />
-        <ModalContentContainer currentPage={this.props.currentPage} />
+        <ModalPageContentHandler currentPage={this.props.currentPage} />
       </div>
     );
   }

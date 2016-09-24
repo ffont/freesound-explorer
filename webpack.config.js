@@ -25,7 +25,7 @@ function getPlugins(plugins) {
 module.exports = {
   devtool: (process.env.NODE_ENV !== 'production') ? 'eval' : '',
   entry: getEntrySources([
-    './static/src/index',
+    './src/index',
   ]),
   output: {
     path: path.join(__dirname, 'static/js/'),
@@ -45,7 +45,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         loaders: ['babel'],
-        include: path.join(__dirname, 'static/src'),
+        include: path.join(__dirname, 'src'),
       },
       {
         test: /\.scss$/,
@@ -56,8 +56,8 @@ module.exports = {
           'sass',
         ],
         include: [
-          path.resolve(__dirname, 'static/src/components'),
-          path.resolve(__dirname, 'static/src/stylesheets'),
+          path.resolve(__dirname, 'src/components'),
+          path.resolve(__dirname, 'src/stylesheets'),
         ],
       },
       {

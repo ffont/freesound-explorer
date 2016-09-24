@@ -3,7 +3,7 @@
   "plugins": [
     "react-hot-loader/babel",
     ["module-resolver", {
-      "root": ["./static/src"]
+      "root": ["./src"]
     }]
   ]
 }

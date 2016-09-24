@@ -84,7 +84,7 @@ def available():
                                                                     if item.endswith('.json')]:
         file_contents = json.load(open('%s/%s' % (user_sessions_folder_path, session_filename)))
         user_sessions.append({
-            'name': file_contents['data']['name'],
+            'name': file_contents['data']['sessions']['name'],
             'id': file_contents['id'],
             'last_modified': file_contents['last_modified']
         })

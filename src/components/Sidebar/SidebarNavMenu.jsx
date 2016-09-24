@@ -19,31 +19,36 @@ const icons = {
 };
 
 const SidebarNavMenu = props => (
-  <div className="sidebar-menu-wrapper">
-    <nav>
-      <ol>
-      {Object.keys(SIDEBAR_TABS).map(tab => (
-        <li
-          className={(props.activeTab === SIDEBAR_TABS[tab]) ? 'active' : ''}
-          onClick={() => props.setSidebarTab(SIDEBAR_TABS[tab])}
-          key={tab}
-        >
-          <button>
-            <i className={`fa ${icons[SIDEBAR_TABS[tab]]} fa-lg`} aria-hidden />
-          </button>
-        </li>
-      ))}
-      </ol>
-    </nav>
-    <div
-      className="toggle-visibility-button"
-      onClick={() => props.toggleSidebarVisibility()}
-      style={{ bottom: props.bottomArrowPosition }}
-    >
-      {(props.isSidebarVisible) ?
-        <i className="fa fa-arrow-left" aria-hidden /> :
-        <i className="fa fa-arrow-right" aria-hidden />
-      }
+  <div className="SidebarNavMenu">
+    <div className="SidebarNavMenu__scrollable">
+      <nav>
+        <ul role="menu">
+          {Object.keys(SIDEBAR_TABS).map(tab => (
+            <li
+              className={(props.activeTab === SIDEBAR_TABS[tab]) ? 'active' : ''}
+              key={tab}
+              role="menuitem"
+            >
+              <button
+                onClick={() => props.setSidebarTab(SIDEBAR_TABS[tab])}
+              >
+                <i className={`fa ${icons[SIDEBAR_TABS[tab]]} fa-lg`} aria-hidden />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <button
+        className="SidebarNavMenu__toggle-button"
+        onClick={() => props.toggleSidebarVisibility()}
+        style={{ bottom: props.bottomArrowPosition }}
+        aria-label="close"
+      >
+        {(props.isSidebarVisible) ?
+          <i className="fa fa-arrow-left" aria-hidden /> :
+          <i className="fa fa-arrow-right" aria-hidden />
+        }
+      </button>
     </div>
   </div>
 );

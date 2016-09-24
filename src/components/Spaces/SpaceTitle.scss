@@ -1,11 +1,12 @@
 @import "../../stylesheets/variables.json";
 
-.space-title {
+.SpaceTitle {
   // out-of-screen parent div with abs positioning
   // needed to properly use z-index on actual space title (to hover on circles above it)
   pointer-events: none;
   text-shadow: 0 0 6px $blackBackground;
   position: absolute;
+  white-space: pre;
   &:not(.thumbnail) {
     transform: translate(-50%, -50%);
   }

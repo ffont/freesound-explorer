@@ -36,7 +36,7 @@ class SpaceTitle extends React.Component {
     }
     return (
       <div
-        className={`space-title${this.props.isThumbnail ? ' thumbnail' : ''}`}
+        className={`SpaceTitle${this.props.isThumbnail ? ' thumbnail' : ''}`}
         style={(this.props.isThumbnail) ? {} : getStyle(this.props)}
       >
         <header><h1>{this.props.query}</h1></header>

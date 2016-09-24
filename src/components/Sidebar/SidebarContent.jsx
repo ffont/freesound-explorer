@@ -32,7 +32,7 @@ const getContentForActiveTab = (activeTab) => {
 };
 
 const SidebarContent = props => (
-  <div className="sidebar-content-wrapper">
+  <div className="SidebarContent">
     {getContentForActiveTab(props.activeTab)}
   </div>);
 

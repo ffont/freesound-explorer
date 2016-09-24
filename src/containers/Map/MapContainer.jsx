@@ -76,7 +76,7 @@ class MapContainer extends React.Component {
 
   render() {
     return (
-      <div className="map-container" ref={(mapContainer) => { this.mapContainer = mapContainer; }}>
+      <div className="MapContainer" ref={(mapContainer) => { this.mapContainer = mapContainer; }}>
         {this.props.spaces.map(space =>
           <SpaceTitle
             key={space.queryID}

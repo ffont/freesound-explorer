@@ -11,11 +11,13 @@ const propTypes = {
   })),
 };
 
-const OptionsList = (props) => (
+const OptionsList = props => (
   <ol className="options-list">
-    {props.options.map((option, index) => (
-      <li tabIndex={index + 1} key={option.name} onClick={option.action}>
-        <i className={`fa fa-lg fa-${option.icon}`} />{option.name}
+    {props.options.map(option => (
+      <li key={option.name}>
+        <button tabIndex="0" onClick={option.action}>
+          <i className={`fa fa-lg fa-${option.icon}`} />{option.name}
+        </button>
       </li>
     ))}
   </ol>

@@ -21,7 +21,7 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const sidebarClassName = `sidebar${(this.props.isVisible) ? ' active' : ''}`;
+    const sidebarClassName = `Sidebar${(this.props.isVisible) ? ' active' : ''}`;
     return (
       <aside>
         <div className={sidebarClassName}>

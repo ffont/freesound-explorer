@@ -1,7 +1,7 @@
 import makeActionCreator from '../../utils/makeActionCreator';
 import { getDataToSave } from './utils';
 import { displaySystemMessage } from '../MessagesBox/actions';
-import { MESSAGE_STATUS } from '../../constants';
+import { MESSAGE_STATUS, URLS } from '../../constants';
 import { loadJSON } from '../../utils/requests';
 import { setSessionID } from '../Sessions/actions';
 
@@ -15,10 +15,6 @@ export const BACKEND_LOAD_REQUEST = 'BACKEND_LOAD_REQUEST';
 export const BACKEND_LOAD_SUCCESS = 'BACKEND_LOAD_SUCCESS';
 export const BACKEND_LOAD_FAILURE = 'BACKEND_LOAD_FAILURE';
 
-const URLS = {
-  save: '/save/',
-  load: '/load/',
-};
 // no need to exports all these actions as they will be used internally in saveSession
 const backendSaveRequest = makeActionCreator(BACKEND_SAVE_REQUEST, 'sessionID', 'dataToSave');
 const backendSaveSuccess = makeActionCreator(BACKEND_SAVE_SUCCESS, 'sessionID');
@@ -30,7 +26,7 @@ const backendLoadFailure = makeActionCreator(BACKEND_LOAD_FAILURE, 'msg');
 export const newSession = makeActionCreator(NEW_SESSION);
 
 const saveToBackend = (sessionID, dataToSave) => (dispatch) => {
-  let url = URLS.save;
+  let url = URLS.SAVE_SESSION;
   if (sessionID) {
     url = `${url}?sid=${sessionID}`;
   }
@@ -66,9 +62,9 @@ const loadFromBackend = (sessionID, userID) => (dispatch, getStore) => {
   // This will be loaded form the available sessions list, but to test this is ok
   // for non authenticated user
   const currentState = getStore();
-  const sessionIDToLoad = sessionID ? sessionID : currentState.sessions.id;
-  const userIDToLoad = userID ? userID : 0;
-  const url = `${URLS.load}?sid=${sessionIDToLoad}&uid=${userIDToLoad}`;
+  const sessionIDToLoad = sessionID || currentState.sessions.id;
+  const userIDToLoad = userID || 0;
+  const url = `${URLS.LOAD_SESSION}?sid=${sessionIDToLoad}&uid=${userIDToLoad}`;
   dispatch(backendLoadRequest());
   loadJSON(url).then(
     (data) => {

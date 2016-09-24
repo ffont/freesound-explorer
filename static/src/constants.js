@@ -7,6 +7,12 @@ export const PERFORM_QUERY_AT_MOUNT = false;
 
 export const USE_LOCAL_FONTAWESOME = false;
 
+export const URLS = {
+  SAVE_SESSION: '/save/',
+  LOAD_SESSION: '/load/',
+  AVAILABLE_SESSIONS: '/available/',
+};
+
 export const DEFAULT_MESSAGE_DURATION = 4000;
 export const MESSAGE_STATUS = {
   INFO: 'info',

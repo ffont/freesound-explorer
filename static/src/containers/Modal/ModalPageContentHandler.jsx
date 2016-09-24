@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from '../../components/Modal';
-import LoadSessionModal from '../../components/Modal/LoadSessionModal';
+import LoadSessionModalContainer from './LoadSessionModalContainer';
 import { MODAL_PAGES } from '../../constants';
 
 const propTypes = {
@@ -10,7 +10,7 @@ const propTypes = {
 const ModalContentContainer = (props) => {
   switch (props.currentPage) {
     case MODAL_PAGES.LOAD_SESSION: {
-      return <LoadSessionModal />;
+      return <LoadSessionModalContainer />;
     }
     default:
       return <Modal />;

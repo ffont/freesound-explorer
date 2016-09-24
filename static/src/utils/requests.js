@@ -1,4 +1,4 @@
-export const loadJSON = (url, postData = undefined) => new Promise((resolve, reject) => {
+export const loadJSON = (url, postData) => new Promise((resolve, reject) => {
   const xhr = new XMLHttpRequest();
   xhr.open(postData ? 'post' : 'get', url, true);
   xhr.responseType = 'json';

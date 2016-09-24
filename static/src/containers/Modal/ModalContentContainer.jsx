@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import Modal from '../../components/Modal';
 import LoadSessionModal from '../../components/Modal/LoadSessionModal';
 import { MODAL_PAGES } from '../../constants';
@@ -19,4 +18,4 @@ const ModalContentContainer = (props) => {
 };
 
 ModalContentContainer.propTypes = propTypes;
-export default connect(() => ({}), {})(ModalContentContainer);
+export default ModalContentContainer;

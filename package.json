@@ -2,12 +2,12 @@
   "name": "freesound-explorer",
   "version": "0.1.0",
   "description": "Visual interface for exploring Freesound search results in a 2-dimensional space. For each query, a dimensionality reduction Javascript library ([tSNEJS](https://github.com/karpathy/tsnejs)) is used for arranging the sounds in the 2-dimensional space.",
-  "main": "static/src/index.jsx",
+  "main": "src/index.jsx",
   "scripts": {
     "build": "NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p",
     "with-flask": "NODE_ENV=flask ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --colors",
     "dev": "node express_server.js",
-    "eslint": "./node_modules/eslint/bin/eslint.js static/src/**/**/**/**",
+    "eslint": "./node_modules/eslint/bin/eslint.js src/**/**/**/**",
     "test": "./node_modules/jest/bin/jest.js",
     "test-cov": "./node_modules/jest/bin/jest.js --coverage",
     "test-json": "./node_modules/jest/bin/jest.js --json --coverage"

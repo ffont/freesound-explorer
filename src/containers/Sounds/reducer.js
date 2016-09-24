@@ -1,3 +1,4 @@
+import { removeDuplicates } from 'utils/arrayUtils';
 import { FETCH_SOUNDS_SUCCESS, UPDATE_SOUNDS_POSITION, SELECT_SOUND_BY_ID,
   GET_SOUND_BUFFER, TOGGLE_HOVERING_SOUND, DESELECT_SOUND_BY_ID,
   MAP_COMPUTATION_COMPLETE, REMOVE_SOUND }
@@ -7,7 +8,6 @@ import { UPDATE_MAP_POSITION } from '../Map/actions';
 import { computeSoundGlobalPosition, thumbnailMapPosition } from './utils';
 import storable from '../SessionsHandler/storableReducer';
 import soundInfo from '../SoundInfo/reducer';
-import { removeDuplicates } from '../../utils/arrayUtils';
 
 export const initialState = { byID: {}, selectedSounds: [], soundInfoModal: {} };
 

@@ -1,7 +1,7 @@
 import deepFreeze from 'deep-freeze';
+import { MESSAGE_STATUS } from 'constants';
 import { displaySystemMessage } from './actions';
 import { default as reducer, initialState } from './reducer';
-import { MESSAGE_STATUS } from '../../constants';
 
 describe('messsagesBox reducer', () => {
   it('should return initialState', () => {

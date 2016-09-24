@@ -1,7 +1,7 @@
 import React from 'react';
-import Modal from '../../components/Modal';
+import Modal from 'components/Modal/index.jsx';
+import { MODAL_PAGES } from 'constants';
 import LoadSessionModalContainer from './LoadSessionModalContainer';
-import { MODAL_PAGES } from '../../constants';
 
 const propTypes = {
   currentPage: React.PropTypes.string,

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { truncateString } from 'utils/stringUtils';
 import { midiNoteNumberToMidiNoteLabel } from './utils';
 import { removeMidiNoteMapping } from './actions';
-import { truncateString } from '../../utils/stringUtils';
 import { selectSound } from '../Sounds/actions';
 
 const propTypes = {

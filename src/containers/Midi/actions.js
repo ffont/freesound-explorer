@@ -1,8 +1,8 @@
-import makeActionCreator from '../../utils/makeActionCreator';
+import makeActionCreator from 'utils/makeActionCreator';
+import { MESSAGE_STATUS } from 'constants';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { midiMessageTypeLabel } from './utils';
 import { playAudio, stopAudio } from '../Audio/actions';
-import { MESSAGE_STATUS } from '../../constants';
 
 export const SET_MIDI_LEARN_SOUND_ID = 'SET_MIDI_LEARN_SOUND_ID';
 export const ADD_MIDI_NOTE_MAPPING = 'ADD_MIDI_NOTE_MAPPING';

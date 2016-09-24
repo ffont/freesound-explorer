@@ -1,6 +1,6 @@
 import React from 'react';
+import Space from 'containers/Spaces/SpaceContainer.jsx';
 import SpaceTitle from './SpaceTitle';
-import Space from '../../containers/Spaces/SpaceContainer';
 
 const propTypes = {
   queryID: React.PropTypes.string,

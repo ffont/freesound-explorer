@@ -2,17 +2,17 @@ import React from 'react';
 import { select, event as d3Event } from 'd3-selection';
 import { zoom } from 'd3-zoom';
 import { connect } from 'react-redux';
+import SpaceTitle from 'components/Spaces/SpaceTitle.jsx';
+import 'polyfills/requestAnimationFrame';
+import { MIN_ZOOM, MAX_ZOOM } from 'constants';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateMapPosition } from './actions';
 import { setSoundCurrentlyLearnt } from '../Midi/actions';
 import { deselectAllSounds } from '../Sounds/actions';
 import { hideModal } from '../SoundInfo/actions';
 import Space from '../Spaces/SpaceContainer';
-import SpaceTitle from '../../components/Spaces/SpaceTitle';
 import SoundInfoContainer from '../SoundInfo/SoundInfoContainer';
 import MapPath from '../Paths/MapPath';
-import '../../polyfills/requestAnimationFrame';
-import { MIN_ZOOM, MAX_ZOOM } from '../../constants';
 
 const propTypes = {
   deselectAllSounds: React.PropTypes.func,

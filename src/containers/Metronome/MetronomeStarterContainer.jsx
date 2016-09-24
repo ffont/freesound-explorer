@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { START_METRONOME_AT_MOUNT } from 'constants';
 import { startMetronome } from './actions';
-import { START_METRONOME_AT_MOUNT } from '../../constants';
 
 const propTypes = {
   startMetronome: React.PropTypes.func,

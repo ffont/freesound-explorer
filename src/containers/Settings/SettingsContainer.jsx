@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import CheckBox from 'components/Input/CheckBox.jsx';
 import { togglePlayOnHover } from './actions';
-import CheckBox from '../../components/Input/CheckBox';
 
 const propTypes = {
   shouldPlayOnHover: React.PropTypes.bool,

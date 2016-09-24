@@ -1,6 +1,6 @@
 import React from 'react';
+import SpaceTabContainer from 'containers/Spaces/SpacesTabContainer.jsx';
 import baseTab from './BaseTab';
-import SpaceTabContainer from '../../containers/Spaces/SpacesTabContainer';
 import './SpacesTab.scss';
 
 const Spaces = () => (

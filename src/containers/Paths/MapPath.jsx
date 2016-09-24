@@ -1,6 +1,6 @@
 import React from 'react';
+import { range } from 'utils/arrayUtils';
 import MapPathLineContainer from './MapPathLineContainer';
-import { range } from '../../utils/arrayUtils';
 
 const propTypes = {
   path: React.PropTypes.object,

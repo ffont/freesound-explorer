@@ -1,10 +1,10 @@
 import React from 'react';
 import { select } from 'd3-selection';
 import { scaleLinear, scaleBand } from 'd3-scale';
+import sassVariables from 'stylesheets/variables.json';
+import { lighten } from 'utils/colorsUtils';
+import { arrayMean } from 'utils/arrayUtils';
 import './Waveform.scss';
-import sassVariables from '../../stylesheets/variables.json';
-import { lighten } from '../../utils/colorsUtils';
-import { arrayMean } from '../../utils/arrayUtils';
 
 const propTypes = {
   sound: React.PropTypes.object,

@@ -1,8 +1,8 @@
-import makeActionCreator from '../../utils/makeActionCreator';
+import makeActionCreator from 'utils/makeActionCreator';
+import { MESSAGE_STATUS, URLS } from 'constants';
+import { loadJSON } from 'utils/requests';
 import { getDataToSave } from './utils';
 import { displaySystemMessage } from '../MessagesBox/actions';
-import { MESSAGE_STATUS, URLS } from '../../constants';
-import { loadJSON } from '../../utils/requests';
 import { setSessionID } from '../Sessions/actions';
 
 export const NEW_SESSION = 'NEW_SESSION';

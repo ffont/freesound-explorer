@@ -1,5 +1,5 @@
 import React from 'react';
-import { SIDEBAR_TABS } from '../../constants';
+import { SIDEBAR_TABS } from 'constants';
 import HomeTab from './HomeTab';
 import SearchTab from './SearchTab';
 import PathsTab from './PathsTab';

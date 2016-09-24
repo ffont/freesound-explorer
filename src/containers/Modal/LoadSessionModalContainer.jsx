@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { loadJSON } from 'utils/requests';
-import LoadSessionModal from '../../components/Modal/LoadSessionModal';
+import LoadSessionModal from 'components/Modal/LoadSessionModal.jsx';
+import { URLS } from 'constants';
 import { loadSession } from '../SessionsHandler/actions';
-import { URLS } from '../../constants';
 
 const propTypes = {
   loadSession: React.PropTypes.func,

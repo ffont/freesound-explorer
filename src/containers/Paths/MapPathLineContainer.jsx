@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import MapPathLine from '../../components/Paths/MapPathLine';
+import MapPathLine from 'components/Paths/MapPathLine.jsx';
 
 const propTypes = {
   soundFrom: React.PropTypes.object,

@@ -1,4 +1,4 @@
-import { DEFAULT_TRUNCATED_STRING_LENGTH } from '../constants';
+import { DEFAULT_TRUNCATED_STRING_LENGTH } from 'constants';
 
 export const truncateString = (string, length = DEFAULT_TRUNCATED_STRING_LENGTH, extraChars = '...') => {
   const maxLength = DEFAULT_TRUNCATED_STRING_LENGTH - extraChars.length;

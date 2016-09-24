@@ -1,4 +1,4 @@
-import makeActionCreator from '../../utils/makeActionCreator';
+import makeActionCreator from 'utils/makeActionCreator';
 
 export const UPDATE_LOGIN_MODAL_VISIBILITY = 'UPDATE_LOGIN_MODAL_VISIBILITY';
 export const UPDATE_USER_LOGGED_STATUS = 'UPDATE_USER_LOGGED_STATUS';

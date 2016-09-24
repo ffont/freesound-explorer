@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { DEFAULT_MESSAGE_DURATION } from '../../constants';
+import { messagesBoxHeight } from 'stylesheets/variables.json';
+import MessagesBox from 'components/MessagesBox/index.jsx';
+import { DEFAULT_MESSAGE_DURATION } from 'constants';
 import { moveSidebarArrow } from '../Sidebar/actions';
-import { messagesBoxHeight } from '../../stylesheets/variables.json';
-import MessagesBox from '../../components/MessagesBox';
 
 // TODO: store className in reducer
 const DEFAULT_CLASSNAME = 'message-box';

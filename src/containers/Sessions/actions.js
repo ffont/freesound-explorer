@@ -1,4 +1,4 @@
-import makeActionCreator from '../../utils/makeActionCreator';
+import makeActionCreator from 'utils/makeActionCreator';
 
 export const UPDATE_SESSION_NAME = 'UPDATE_SESSION_NAME';
 export const SET_SESSION_ID = 'SET_SESSION_ID';

@@ -1,6 +1,6 @@
 import React from 'react';
+import { MESSAGE_STATUS } from 'constants';
 import './MessagesBox.scss';
-import { MESSAGE_STATUS } from '../../constants';
 
 const propTypes = {
   message: React.PropTypes.string,

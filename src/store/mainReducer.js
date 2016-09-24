@@ -1,18 +1,18 @@
 import { combineReducers } from 'redux';
-import audio from '../containers/Audio/reducer';
-import midi from '../containers/Midi/reducer';
-import login from '../containers/Login/reducer';
-import map from '../containers/Map/reducer';
-import messagesBox from '../containers/MessagesBox/reducer';
-import metronome from '../containers/Metronome/reducer';
-import modal from '../containers/Modal/reducer';
-import paths from '../containers/Paths/reducer';
-import search from '../containers/Search/reducer';
-import sessions from '../containers/Sessions/reducer';
-import settings from '../containers/Settings/reducer';
-import sidebar from '../containers/Sidebar/reducer';
-import sounds from '../containers/Sounds/reducer';
-import spaces from '../containers/Spaces/reducer';
+import audio from 'containers/Audio/reducer';
+import midi from 'containers/Midi/reducer';
+import login from 'containers/Login/reducer';
+import map from 'containers/Map/reducer';
+import messagesBox from 'containers/MessagesBox/reducer';
+import metronome from 'containers/Metronome/reducer';
+import modal from 'containers/Modal/reducer';
+import paths from 'containers/Paths/reducer';
+import search from 'containers/Search/reducer';
+import sessions from 'containers/Sessions/reducer';
+import settings from 'containers/Settings/reducer';
+import sidebar from 'containers/Sidebar/reducer';
+import sounds from 'containers/Sounds/reducer';
+import spaces from 'containers/Spaces/reducer';
 
 
 const rootReducer = combineReducers({

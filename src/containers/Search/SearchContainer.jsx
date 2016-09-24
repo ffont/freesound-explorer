@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { DEFAULT_QUERY, PERFORM_QUERY_AT_MOUNT } from 'constants';
+import InputTextButton from 'components/Input/InputTextButton.jsx';
+import SelectWithLabel from 'components/Input/SelectWithLabel.jsx';
+import SliderRange from 'components/Input/SliderRange.jsx';
 import { updateDescriptor, updateMinDuration, updateMaxDuration,
   updateMaxResults, updateQuery }
   from './actions';
 import { getSounds } from '../Sounds/actions';
 import { setExampleQueryDone } from '../Sidebar/actions';
-import { DEFAULT_QUERY, PERFORM_QUERY_AT_MOUNT } from '../../constants';
-import InputTextButton from '../../components/Input/InputTextButton';
-import SelectWithLabel from '../../components/Input/SelectWithLabel';
-import SliderRange from '../../components/Input/SliderRange';
 
 const propTypes = {
   maxResults: React.PropTypes.number,

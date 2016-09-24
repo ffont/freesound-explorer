@@ -1,3 +1,4 @@
+import { range } from 'utils/arrayUtils';
 import { selectSound, getSoundBuffer, toggleHoveringSound, REMOVE_SOUND,
   deselectSound, UPDATE_SOUNDS_POSITION, FETCH_SOUNDS_SUCCESS,
   MAP_COMPUTATION_COMPLETE }
@@ -6,7 +7,6 @@ import { playAudioSrc, stopAudioSrc } from '../Audio/actions';
 import { UPDATE_MAP_POSITION } from '../Map/actions';
 import { selectedSounds, byID, sound } from './reducer';
 import { computeSoundGlobalPosition, thumbnailMapPosition } from './utils';
-import { range } from '../../utils/arrayUtils';
 
 const sound0 = {
   id: 'sound0',

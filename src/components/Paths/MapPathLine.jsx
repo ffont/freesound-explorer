@@ -1,5 +1,5 @@
 import React from 'react';
-import { DEFAULT_PATH_STROKE_WIDTH, DEFAULT_PATH_STROKE_OPACITY } from '../../constants';
+import { DEFAULT_PATH_STROKE_WIDTH, DEFAULT_PATH_STROKE_OPACITY } from 'constants';
 
 const propTypes = {
   x1: React.PropTypes.number,

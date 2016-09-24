@@ -1,7 +1,7 @@
-import makeActionCreator from '../../utils/makeActionCreator';
+import makeActionCreator from 'utils/makeActionCreator';
+import freesound from 'vendors/freesound';
+import { MESSAGE_STATUS } from 'constants';
 import { displaySystemMessage } from '../MessagesBox/actions';
-import freesound from '../../vendors/freesound';
-import { MESSAGE_STATUS } from '../../constants';
 
 
 export const OPEN_MODAL_FOR_SOUND = 'OPEN_MODAL_FOR_SOUND';

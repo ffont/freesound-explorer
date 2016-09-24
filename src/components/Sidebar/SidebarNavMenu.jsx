@@ -1,5 +1,5 @@
 import React from 'react';
-import { SIDEBAR_TABS } from '../../constants';
+import { SIDEBAR_TABS } from 'constants';
 
 const propTypes = {
   activeTab: React.PropTypes.string,

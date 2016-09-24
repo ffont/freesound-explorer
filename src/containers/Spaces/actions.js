@@ -1,4 +1,4 @@
-import makeActionCreator from '../../utils/makeActionCreator';
+import makeActionCreator from 'utils/makeActionCreator';
 import { removeSound } from '../Sounds/actions';
 
 export const SET_SPACE_AS_CENTER = 'SET_SPACE_AS_CENTER';

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import LoginContainer from '../../containers/Login/LoginContainer';
-import MapContainer from '../../containers/Map/MapContainer';
-import SidebarContainer from '../../containers/Sidebar/SidebarContainer';
-import MessagesBoxContainer from '../../containers/MessagesBox/MessagesBoxContainer';
-import MetronomeStarterContainer from '../../containers/Metronome/MetronomeStarterContainer';
+import LoginContainer from 'containers/Login/LoginContainer.jsx';
+import MapContainer from 'containers/Map/MapContainer.jsx';
+import SidebarContainer from 'containers/Sidebar/SidebarContainer.jsx';
+import MessagesBoxContainer from 'containers/MessagesBox/MessagesBoxContainer.jsx';
+import MetronomeStarterContainer from 'containers/Metronome/MetronomeStarterContainer.jsx';
+import ModalContainer from 'containers/Modal/ModalContainer.jsx';
 import Logo from '../Logo';
-import ModalContainer from '../../containers/Modal/ModalContainer';
 import './App.scss';
 
 const propTypes = {

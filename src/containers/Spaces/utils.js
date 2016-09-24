@@ -1,4 +1,4 @@
-import { range } from '../../utils/arrayUtils';
+import { range } from 'utils/arrayUtils';
 import { computeSoundGlobalPosition } from '../Sounds/utils';
 import { getMapCenter } from '../Map/utils';
 

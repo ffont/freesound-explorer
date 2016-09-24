@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import SoundInfo from '../../components/Sounds/SoundInfo';
+import SoundInfo from 'components/Sounds/SoundInfo.jsx';
 import { addSoundToPath } from '../Paths/actions';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { setSoundCurrentlyLearnt } from '../Midi/actions';

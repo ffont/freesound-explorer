@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Metronome from 'components/Metronome/index.jsx';
 import { setTempo, stopMetronome, startMetronome, setPlaySound } from './actions';
-import Metronome from '../../components/Metronome';
 
 const propTypes = {
   setTempo: React.PropTypes.func,

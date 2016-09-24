@@ -1,11 +1,11 @@
+import { N_MIDI_MESSAGES_TO_KEEP } from 'constants';
+import { range } from 'utils/arrayUtils';
 import deepFreeze from 'deep-freeze';
 import reducer, * as midi from './reducer';
 import { addMidiNoteMapping, setSoundCurrentlyLearnt, removeMidiNoteMapping,
   setLatestReceivedMidiMessage, setMidiSupported, setMidiInputChannel,
   setMidiInputDevice, setMidiAvailableDevices, disconnectExistingDevices }
   from './actions';
-import { N_MIDI_MESSAGES_TO_KEEP } from '../../constants';
-import { range } from '../../utils/arrayUtils';
 
 describe('midi reducer', () => {
   it('should return initialState', () => {

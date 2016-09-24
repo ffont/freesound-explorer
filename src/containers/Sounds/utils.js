@@ -1,8 +1,8 @@
 import { MAP_SCALE_FACTOR, TSNE_CONFIG, DEFAULT_DESCRIPTOR, DEFAULT_RADIUS }
-  from '../../constants';
-import { readObjectPropertyByPropertyAbsName } from '../../utils/objectUtils';
-import tsnejs from '../../vendors/tsne';
-import sassVariables from '../../stylesheets/variables.json';
+  from 'constants';
+import { readObjectPropertyByPropertyAbsName } from 'utils/objectUtils';
+import tsnejs from 'vendors/tsne';
+import sassVariables from 'stylesheets/variables.json';
 
 
 export const computeSoundGlobalPosition = (tsnePosition, spacePosition, mapPosition) => {

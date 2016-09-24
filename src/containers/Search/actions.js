@@ -1,4 +1,4 @@
-import makeActionCreator from '../../utils/makeActionCreator';
+import makeActionCreator from 'utils/makeActionCreator';
 
 export const UPDATE_MAX_RESULTS = 'UPDATE_MAX_RESULTS';
 export const UPDATE_MAX_DURATION = 'UPDATE_MAX_DURATION';

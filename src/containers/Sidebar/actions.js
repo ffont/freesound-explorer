@@ -1,4 +1,4 @@
-import makeActionCreator from '../../utils/makeActionCreator';
+import makeActionCreator from 'utils/makeActionCreator';
 
 export const TOGGLE_SIDEBAR_VISIBILITY = 'TOGGLE_SIDEBAR_VISIBILITY';
 export const SET_SIDEBAR_TAB = 'SET_SIDEBAR_TAB';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { truncateString } from '../../utils/stringUtils';
+import { truncateString } from 'utils/stringUtils';
 import { deleteSoundFromPath } from './actions';
 import { selectSound } from '../Sounds/actions';
 

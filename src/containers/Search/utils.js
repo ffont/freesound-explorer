@@ -1,6 +1,6 @@
-import { DEFAULT_QUERY, DEFAULT_MAX_RESULTS } from '../../constants';
-import freesound from '../../vendors/freesound';
-import { rgbToHex } from '../../utils/colorsUtils';
+import { DEFAULT_QUERY, DEFAULT_MAX_RESULTS } from 'constants';
+import freesound from 'vendors/freesound';
+import { rgbToHex } from 'utils/colorsUtils';
 
 function getRequestParameter(name, queryUrl = location.search) {
   const parsedRegex = (new RegExp(

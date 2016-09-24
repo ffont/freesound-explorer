@@ -1,7 +1,7 @@
-import makeActionCreator from '../../utils/makeActionCreator';
+import makeActionCreator from 'utils/makeActionCreator';
+import 'polyfills/AudioContext';
 import { getSoundBuffer } from '../Sounds/actions';
 import audioLoader from './utils';
-import '../../polyfills/AudioContext';
 
 export const ADD_AUDIO_SRC = 'ADD_AUDIO_SRC';
 export const STOP_AUDIO_SRC = 'STOP_AUDIO_SRC';

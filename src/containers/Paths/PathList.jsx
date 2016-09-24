@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getRandomElement, elementWithId } from '../../utils/arrayUtils';
-import { MESSAGE_STATUS } from '../../constants';
+import { getRandomElement, elementWithId } from 'utils/arrayUtils';
+import { MESSAGE_STATUS } from 'constants';
 import { addPath } from './actions';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import PathManager from './PathManager';

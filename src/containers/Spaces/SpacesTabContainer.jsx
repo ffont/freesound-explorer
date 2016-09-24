@@ -1,7 +1,7 @@
 import React from 'react';
+import SpaceThumbnail from 'components/Spaces/SpaceThumbnail.jsx';
 import { connect } from 'react-redux';
 import { setSpaceAsCenter, removeSpace } from './actions';
-import SpaceThumbnail from '../../components/Spaces/SpaceThumbnail';
 
 const propTypes = {
   spaces: React.PropTypes.array,

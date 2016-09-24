@@ -1,7 +1,7 @@
 import React from 'react';
-import SessionManager from 'containers/SessionsHandler/SessionManager.jsx';
-import SettingsContainer from 'containers/Settings/SettingsContainer.jsx';
-import MetronomeContainer from 'containers/Metronome/MetronomeContainer.jsx';
+import SessionManager from 'containers/SessionsHandler/SessionManager';
+import SettingsContainer from 'containers/Settings/SettingsContainer';
+import MetronomeContainer from 'containers/Metronome/MetronomeContainer';
 import baseTab from './BaseTab';
 
 const propTypes = {

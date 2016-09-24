@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import SidebarContent from 'components/Sidebar/SidebarContent.jsx';
-import SidebarNavMenu from 'components/Sidebar/SidebarNavMenu.jsx';
+import SidebarContent from 'components/Sidebar/SidebarContent';
+import SidebarNavMenu from 'components/Sidebar/SidebarNavMenu';
 import { toggleSidebarVisibility, setSidebarTab } from './actions';
 import { setUpMIDIDevices } from '../Midi/actions';
 

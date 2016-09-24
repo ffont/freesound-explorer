@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import MapCircle from 'components/Sounds/MapCircle.jsx';
+import MapCircle from 'components/Sounds/MapCircle';
 import { playAudio, stopAudio } from '../Audio/actions';
 import { selectSound, deselectSound, deselectAllSounds, toggleHoveringSound }
   from './actions';

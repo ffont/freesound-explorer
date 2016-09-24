@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { messagesBoxHeight } from 'stylesheets/variables.json';
-import MessagesBox from 'components/MessagesBox/index.jsx';
+import MessagesBox from 'components/MessagesBox';
 import { DEFAULT_MESSAGE_DURATION } from 'constants';
 import { moveSidebarArrow } from '../Sidebar/actions';
 

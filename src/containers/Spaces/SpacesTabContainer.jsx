@@ -1,5 +1,5 @@
 import React from 'react';
-import SpaceThumbnail from 'components/Spaces/SpaceThumbnail.jsx';
+import SpaceThumbnail from 'components/Spaces/SpaceThumbnail';
 import { connect } from 'react-redux';
 import { setSpaceAsCenter, removeSpace } from './actions';
 

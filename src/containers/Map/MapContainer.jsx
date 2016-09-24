@@ -2,7 +2,7 @@ import React from 'react';
 import { select, event as d3Event } from 'd3-selection';
 import { zoom } from 'd3-zoom';
 import { connect } from 'react-redux';
-import SpaceTitle from 'components/Spaces/SpaceTitle.jsx';
+import SpaceTitle from 'components/Spaces/SpaceTitle';
 import 'polyfills/requestAnimationFrame';
 import { MIN_ZOOM, MAX_ZOOM } from 'constants';
 import { displaySystemMessage } from '../MessagesBox/actions';

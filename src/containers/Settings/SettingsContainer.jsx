@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import CheckBox from 'components/Input/CheckBox.jsx';
+import CheckBox from 'components/Input/CheckBox';
 import { togglePlayOnHover } from './actions';
 
 const propTypes = {

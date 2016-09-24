@@ -1,5 +1,5 @@
 import React from 'react';
-import Space from 'containers/Spaces/SpaceContainer.jsx';
+import Space from 'containers/Spaces/SpaceContainer';
 import SpaceTitle from './SpaceTitle';
 
 const propTypes = {

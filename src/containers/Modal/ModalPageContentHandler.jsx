@@ -1,5 +1,5 @@
 import React from 'react';
-import Modal from 'components/Modal/index.jsx';
+import Modal from 'components/Modal';
 import { MODAL_PAGES } from 'constants';
 import LoadSessionModalContainer from './LoadSessionModalContainer';
 

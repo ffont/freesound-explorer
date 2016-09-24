@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { loadJSON } from 'utils/requests';
-import LoadSessionModal from 'components/Modal/LoadSessionModal.jsx';
+import LoadSessionModal from 'components/Modal/LoadSessionModal';
 import { URLS } from 'constants';
 import { loadSession } from '../SessionsHandler/actions';
 

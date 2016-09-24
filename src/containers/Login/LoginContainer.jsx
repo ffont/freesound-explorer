@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { loadJSON } from 'utils/requests';
-import Login from 'components/Login/index.jsx';
+import Login from 'components/Login';
 import { MESSAGE_STATUS } from 'constants';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateLoginModalVisibilility, updateBackEndAuthSupport, updateUserLoggedStatus }

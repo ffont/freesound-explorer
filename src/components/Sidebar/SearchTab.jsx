@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchContainer from 'containers/Search/SearchContainer.jsx';
+import SearchContainer from 'containers/Search/SearchContainer';
 import baseTab from './BaseTab';
 import './SearchTab.scss';
 

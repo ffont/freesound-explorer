@@ -43,7 +43,7 @@ class QueryBox extends React.Component {
   }
 
   tryQueryAtMount() {
-    if (sessionStorage.getItem('app_token')) {
+    if (sessionStorage.getItem('appToken')) {
       this.submitQuery();
       this.props.setExampleQueryDone();
     } else {

@@ -58,7 +58,7 @@ def save():
             'data': [],
             'created': str(datetime.datetime.now()),
         }
-    file_contents['last_modified'] = str(datetime.datetime.now())
+    file_contents['lastModified'] = str(datetime.datetime.now())
     file_contents['data'] = data
 
     if not os.path.exists(file_dir):
@@ -86,14 +86,14 @@ def available():
         user_sessions.append({
             'name': file_contents['data']['sessions']['name'],
             'id': file_contents['id'],
-            'last_modified': file_contents['last_modified']
+            'lastModified': file_contents['lastModified']
         })
 
     return make_response(jsonify({
         'username': username,
-        'user_id': user_id,
+        'userID': user_id,
         'errors': False,
-        'user_sessions': user_sessions
+        'userSessions': user_sessions
     }), 200)
 
 
@@ -149,7 +149,7 @@ def prepare_auth():
     username, access_token = get_user_data()
     return make_response(jsonify({
         'username': username,
-        'access_token': access_token,
+        'accessToken': access_token,
         'logged': g.user.is_authenticated,
         }), 200)
 
@@ -158,5 +158,5 @@ def prepare_auth():
 def get_app_token():
     username, access_token = get_user_data()
     return make_response(jsonify({
-        'app_token': app.config['FREESOUND_CLIENT_SECRET']
+        'appToken': app.config['FREESOUND_CLIENT_SECRET']
         }), 200)

@@ -12,7 +12,7 @@ export const hideModal = makeActionCreator(HIDE_MODAL);
 export const openModalForSound = makeActionCreator(OPEN_MODAL_FOR_SOUND, 'sound');
 
 export const bookmarkSound = sound => (dispatch) => {
-  freesound.setToken(sessionStorage.getItem('access_token'), 'oauth');
+  freesound.setToken(sessionStorage.getItem('accessToken'), 'oauth');
   sound.bookmark(
     sound.name,  // Use sound name
     'Freesound Explorer' // Category

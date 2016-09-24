@@ -30,7 +30,7 @@ function search(query = DEFAULT_QUERY, filter = '', maxResults = DEFAULT_MAX_RES
     const maxPageResults = (pageCounter + 1 !== pagesToGet) ?
       Math.min(maxResults, freesoundMaxPageSize) :
       maxResults - (pageCounter * freesoundMaxPageSize);
-    freesound.setToken(sessionStorage.getItem('app_token'));
+    freesound.setToken(sessionStorage.getItem('appToken'));
     promises.push(freesound.textSearch(query, {
       page: pageCounter + 1,
       page_size: maxPageResults,

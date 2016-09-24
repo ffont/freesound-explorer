@@ -17,26 +17,26 @@ const URLS = {
 const staticAppToken = 'eecfe4981d7f41d2811b4b03a894643d5e33f812';
 
 const clearSession = () => {
-  const sessionKeys = ['username', 'access_token'];
+  const sessionKeys = ['username', 'accessToken'];
   sessionKeys.forEach((key) => {
     sessionStorage.removeItem(key);
   });
 };
 
 const setSessionStorage = (accessToken, userName) => {
-  sessionStorage.setItem('access_token', accessToken);
+  sessionStorage.setItem('accessToken', accessToken);
   sessionStorage.setItem('username', userName);
 };
 
 const getAppToken = () => new Promise((resolve, reject) => {
   loadJSON(URLS.getAppToken).then(
-    data => {
-      sessionStorage.setItem('app_token', data.app_token);
+    (data) => {
+      sessionStorage.setItem('appToken', data.appToken);
       // back-end app is running, inform with resolve()
       resolve();
     },
     () => {
-      sessionStorage.setItem('app_token', staticAppToken);
+      sessionStorage.setItem('appToken', staticAppToken);
       // client-only mode, inform with reject()
       reject();
     });
@@ -70,7 +70,7 @@ class LoginContainer extends React.Component {
 
   getAccessToken() {
     loadJSON(URLS.prepareAuth).then((data) => {
-      setSessionStorage(data.access_token, data.username);
+      setSessionStorage(data.accessToken, data.username);
       if (data.logged) {
         this.props.updateUserLoggedStatus(true);
       }

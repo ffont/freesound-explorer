@@ -5,26 +5,6 @@
   list-style: none;
   padding: 0;
   margin-bottom: 50px;
-  button {
-    padding: $sidebarClosedOffset/2 $sidebarClosedOffset/4;
-    text-transform: capitalize;
-    border-radius: 0;
-    cursor: pointer;
-    @include base-focus;
-    position: relative;
-    &:hover {
-      background-color: $accentColor;
-    }
-    &:before {
-      background-color: $sidebarIconHoverColor;
-      content: '';
-      position: absolute;
-      right: -$inputBorderPadding;
-      bottom: -$inputBorderPadding;
-      left: -$inputBorderPadding;
-      height: 1px;
-    }
-  }
   i {
     margin-right: 10px;
   }

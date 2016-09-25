@@ -92,7 +92,6 @@ class QueryBox extends React.Component {
           label="Number of results"
           minValue="20"
           maxValue="450"
-          defaultValue={this.props.maxResults}
           onChange={(evt) => {
             const maxResults = evt.target.value;
             this.props.updateMaxResults(maxResults);
@@ -105,7 +104,6 @@ class QueryBox extends React.Component {
           label="Maximum duration"
           minValue="0.5"
           maxValue="30"
-          defaultValue={this.props.maxDuration}
           step="0.5"
           onChange={(evt) => {
             const maxDuration = evt.target.value;

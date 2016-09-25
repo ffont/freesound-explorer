@@ -18,7 +18,6 @@ const Metronome = props => (
         label="Tempo"
         minValue="40"
         maxValue="300"
-        defaultValue={props.tempo}
         onChange={(evt) => {
           const newTempo = evt.target.value;
           props.setTempo(parseInt(newTempo, 10));

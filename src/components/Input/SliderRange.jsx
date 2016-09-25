@@ -3,14 +3,12 @@ import { sidebarClosedOffset } from 'stylesheets/variables.json';
 import './SliderRange.scss';
 
 const propTypes = {
-  defaultValue: React.PropTypes.number,
   currentValue: React.PropTypes.number,
   minValue: React.PropTypes.string,
   maxValue: React.PropTypes.string,
   label: React.PropTypes.string,
   onChange: React.PropTypes.func,
   step: React.PropTypes.string,
-  showDoubleInput: React.PropTypes.bool,
   tabIndex: React.PropTypes.string,
   id: React.PropTypes.string,
 };
@@ -18,12 +16,10 @@ const propTypes = {
 const defaultProps = {
   minValue: 0,
   maxValue: 100,
-  defaultValue: 0,
   currentValue: 0,
   onChange: () => {},
   label: '',
   step: '1',
-  showDoubleInput: true,
   id: 'slider-range-input',
 };
 

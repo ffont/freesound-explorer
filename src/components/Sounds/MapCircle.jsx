@@ -13,7 +13,7 @@ const propTypes = {
   onClick: React.PropTypes.func,
 };
 
-const animationDuration = 1;
+const animationDuration = 0.5;
 // length of animations that reset initial circle look
 const resetAnimationDuration = 0.3;
 

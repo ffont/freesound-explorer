@@ -1,5 +1,5 @@
 @import "../../stylesheets/variables.json";
-@import "../../stylesheets/button";
+@import "../../stylesheets/mixins";
 
 .Sidebar {
   position: absolute;
@@ -45,47 +45,19 @@
   }
 }
 
-// @extend
-.sidebar-nav-button {
-  width: 100%;
-  height: $sidebarClosedOffset;
-  text-align: center;
-  line-height: $sidebarClosedOffset - $inputBorderPadding * 2;
-  cursor: pointer;
-  box-sizing: border-box;
-  transition: background-color 0.3s ease-in-out,
-    color 0.3s ease-in-out, border 0.3s ease-in-out;
-  border: $inputBorderPadding solid transparent;
-  i {
-    color: white;
-  }
-  &:hover, &.active {
-    background-color: $sidebarIconHoverColor;
-    i {
-      color: $blackBackground;
-    }
-  }
-  &:focus {
-    border: $inputBorderPadding solid $sidebarIconHoverColor;
-    outline: none;
-  }
-}
-
 .SidebarNavMenu {
   height: 100%;
   width: $sidebarClosedOffset;
   overflow-y: scroll;
-  ol {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+  button {
+    @include sidebar-nav-button;
   }
-  li {
-    button {
-      margin: -$inputBorderPadding 0;
-    }
-    @extend .sidebar-nav-button;
-  }
+}
+
+.SidebarNavMenu__nav-icons {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .SidebarNavMenu__scrollable {
@@ -95,7 +67,5 @@
 }
 
 .SidebarNavMenu__toggle-button {
-  @extend .sidebar-nav-button;
   position: absolute;
-  transition: bottom 0.3s ease-in-out;
 }

@@ -1,0 +1,19 @@
+button {
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  line-height: normal;
+  overflow: visible;
+  padding: 0;
+  user-select: none;
+  border: $inputBorderPadding solid transparent;
+  box-sizing: border-box;
+  &:-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+  &:focus {
+    outline: 0;
+  }
+}

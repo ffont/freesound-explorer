@@ -34,7 +34,7 @@ class PathList extends React.Component {
 
   render() {
     return (
-      <ul className="paths-list">
+      <ul className="PathList">
         {this.props.paths.map(path =>
           <PathManager key={path.id} path={path} selected={path.id === this.props.selectedPath} />
         )}

@@ -1,6 +1,6 @@
 @import "../../stylesheets/variables.json";
 
-.paths-list {
+.PathList {
   user-select: none;
   ul {
     list-style-type: none;
@@ -60,5 +60,16 @@
   li:hover { background: $sidebarIconHoverColor }
   li.playing {
     background: $sidebarIconHoverColor;
+  }
+}
+
+.button-group {
+  display: inline-block;
+  vertical-align: bottom;
+  margin-left: 5px;
+  overflow: hidden;
+  button {
+    border-radius: $defaultBorderRadius;
+    min-width: 30px;
   }
 }

@@ -25,7 +25,27 @@
   border: 3px solid transparent;
   transition: border 0.2s ease-in-out;
   &:focus {
-    outline: none;
+    outline: 0;
     border: 3px solid $accentColor;
+  }
+}
+
+@mixin sidebar-nav-button {
+  width: 100%;
+  height: $sidebarClosedOffset;
+  text-align: center;
+  line-height: $sidebarClosedOffset - $inputBorderPadding * 2;
+  transition: all 0.3s ease-in-out;
+  i {
+    color: white;
+  }
+  &:hover, &.active {
+    background-color: $sidebarIconHoverColor;
+    i {
+      color: $blackBackground;
+    }
+  }
+  &:focus {
+    border: $inputBorderPadding solid $sidebarIconHoverColor;
   }
 }

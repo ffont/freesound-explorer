@@ -22,7 +22,7 @@ const SidebarNavMenu = props => (
   <div className="SidebarNavMenu">
     <div className="SidebarNavMenu__scrollable">
       <nav>
-        <ul role="menu">
+        <ul className="SidebarNavMenu__nav-icons" role="menu">
           {Object.keys(SIDEBAR_TABS).map(tab => (
             <li
               className={(props.activeTab === SIDEBAR_TABS[tab]) ? 'active' : ''}

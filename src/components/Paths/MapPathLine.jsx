@@ -1,5 +1,5 @@
 import React from 'react';
-import { DEFAULT_PATH_STROKE_WIDTH, DEFAULT_PATH_STROKE_OPACITY } from 'constants';
+import { paths } from 'stylesheets/variables.json';
 
 const propTypes = {
   x1: React.PropTypes.number,
@@ -15,11 +15,11 @@ const MapPathLine = props => (
     y1={props.y1}
     x2={props.x2}
     y2={props.y2}
+    className="MapPathLine"
     stroke="white"
-    strokeWidth={DEFAULT_PATH_STROKE_WIDTH}
     strokeOpacity={(props.isPathPlaying) ?
-      DEFAULT_PATH_STROKE_OPACITY * 10 :
-      DEFAULT_PATH_STROKE_OPACITY}
+      paths.defaultStrokeOpacity * 10 :
+      paths.defaultStrokeOpacity}
   />
 );
 

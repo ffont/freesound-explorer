@@ -1,14 +1,12 @@
-@import "../../stylesheets/animations";
+@import "../../stylesheets/variables.json";
 
-.main-circle {
+.MapCircle {
   mix-blend-mode: screen;
-  &.playing {
-    animation: wobble 0.5s linear infinite alternate;
-  }
+  stroke-width: map-get($mapCircles, defaultStrokeWidth);
+  fill-opacity: map-get($mapCircles, defaultFillOpacity);
+  stroke-opacity: map-get($mapCircles, defaultStrokeOpacity);
 }
-.play-fill-circle {
+.MapFillCircle {
   fill: none;
-  &.playing {
-    animation: wobble 0.5s linear infinite alternate;
-  }
+  stroke-opacity: map-get($mapCircles, defaultStrokeOpacity);
 }

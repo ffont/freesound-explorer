@@ -8,8 +8,18 @@
   },
   "defaultBorderRadius": "5px",
   "inputBorderPadding": "3px",
+  "mapCircles": {
+    "defaultRadius": "15px",
+    "defaultStrokeWidth": "2px",
+    "defaultFillOpacity": "0.9",
+    "defaultStrokeOpacity": "1"
+  },
   "messagesBoxHeight": "40px",
   "metronomeHeight": "60px",
+  "paths": {
+    "defaultStrokeWidth": "2px",
+    "defaultStrokeOpacity": "0.05"
+  },
   "redRegular": "#97171e",
   "sidebarClosedOffset": "40px",
   "sidebarColor": "rgba(14, 14, 16, 0.9)",

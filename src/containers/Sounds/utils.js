@@ -1,4 +1,4 @@
-import { MAP_SCALE_FACTOR, TSNE_CONFIG, DEFAULT_DESCRIPTOR, DEFAULT_RADIUS }
+import { MAP_SCALE_FACTOR, TSNE_CONFIG, DEFAULT_DESCRIPTOR }
   from 'constants';
 import { readObjectPropertyByPropertyAbsName } from 'utils/objectUtils';
 import tsnejs from 'vendors/tsne';
@@ -71,11 +71,12 @@ export const isSoundInsideScreen = (position, isThumbnail = false) => {
     return false;
   }
   const thumbSize = thumbnailSize();
+  const circleDiameter = parseInt(sassVariables.mapCircles.defaultRadius, 10) * 2;
   const screenWidth = (isThumbnail) ? thumbSize.width : window.innerWidth;
   const screenHeight = (isThumbnail) ? thumbSize.height : window.innerHeight;
-  const isVerticallyOutOfScreen = (position.cy < -DEFAULT_RADIUS
-    || position.cy > screenHeight + DEFAULT_RADIUS);
-  const isHorizontallyOutOfScreen = (position.cx < -DEFAULT_RADIUS
-    || position.cx > screenWidth + DEFAULT_RADIUS);
+  const isVerticallyOutOfScreen = (position.cy < -circleDiameter
+    || position.cy > screenHeight + circleDiameter);
+  const isHorizontallyOutOfScreen = (position.cx < -circleDiameter
+    || position.cx > screenWidth + circleDiameter);
   return !(isVerticallyOutOfScreen || isHorizontallyOutOfScreen);
 };

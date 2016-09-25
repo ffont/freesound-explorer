@@ -1,7 +1,7 @@
 import React from 'react';
 import { lighten } from 'utils/colorsUtils';
-import { DEFAULT_RADIUS, DEFAULT_FILL_OPACITY, DEFAULT_STROKE_WIDTH, DEFAULT_STROKE_OPACITY }
-  from 'constants';
+import { mapCircles } from 'stylesheets/variables.json';
+import TweenMax from 'gsap';
 import './MapCircle.scss';
 
 const propTypes = {
@@ -13,49 +13,49 @@ const propTypes = {
   onClick: React.PropTypes.func,
 };
 
-const MapCircle = (props) => {
-  const { color, isHovered, isPlaying } = props.sound;
-  const { isSelected } = props;
-  const { cx, cy } = (props.isThumbnail) ?
-    props.sound.thumbnailPosition : props.sound.position;
-  const fillColor = (isHovered || isSelected || isPlaying) ? lighten(color, 1.5) : color;
-  const className = `main-circle${(isPlaying) ? ' playing' : ''}`;
-  const fillCircleClassName = `play-fill-circle${(isPlaying) ? ' playing' : ''}`;
-  const radius = DEFAULT_RADIUS / 2;
-  const fillWidthProportion = 2;
-  const circleLength = 2 * Math.PI * (radius / fillWidthProportion);
-  const completed = 0; // TODO: connect it with actual playbackPosition
-  const completionOffset = (1 - (completed)) * circleLength;
-  return (
-    <g>
-      <circle
-        cx={cx}
-        cy={cy}
-        r={radius}
-        fill={fillColor}
-        className={className}
-        fillOpacity={DEFAULT_FILL_OPACITY}
-        stroke={fillColor}
-        strokeWidth={DEFAULT_STROKE_WIDTH}
-        strokeOpacity={DEFAULT_STROKE_OPACITY}
-        onMouseEnter={props.onMouseEnter}
-        onMouseLeave={props.onMouseLeave}
-        onClick={props.onClick}
-      />
-      <circle
-        cx={cx}
-        cy={cy}
-        r={radius / fillWidthProportion}
-        className={fillCircleClassName}
-        strokeDasharray={circleLength}
-        strokeDashoffset={completionOffset}
-        stroke={color}
-        strokeWidth={(DEFAULT_STROKE_WIDTH * 2) * fillWidthProportion}
-        strokeOpacity={DEFAULT_STROKE_OPACITY}
-      />
-    </g>
-  );
-};
+class MapCircle extends React.Component {
+  render() {
+    const { color, isHovered, isPlaying } = this.props.sound;
+    const { isSelected } = this.props;
+    const { cx, cy } = (this.props.isThumbnail) ?
+      this.props.sound.thumbnailPosition : this.props.sound.position;
+    const shouldHighlight = (isHovered || isSelected || isPlaying);
+    const fillColor = shouldHighlight ? lighten(color, 1.5) : color;
+    const { defaultRadius, defaultStrokeWidth } = mapCircles;
+    const fillWidthProportion = 2;
+    const radius = parseInt(defaultRadius, 10);
+    const strokeWidth = parseInt(defaultStrokeWidth, 10);
+    const mapFillCircleRadius = radius / fillWidthProportion;
+    const circleLength = 2 * Math.PI * (radius / fillWidthProportion);
+    const completed = 0; // TODO: connect it with actual playbackPosition
+    const completionOffset = (1 - (completed)) * circleLength;
+    return (
+      <g>
+        <circle
+          cx={cx}
+          cy={cy}
+          r={defaultRadius}
+          className="MapCircle"
+          fill={fillColor}
+          stroke={fillColor}
+          onMouseEnter={this.props.onMouseEnter}
+          onMouseLeave={this.props.onMouseLeave}
+          onClick={this.props.onClick}
+        />
+        <circle
+          cx={cx}
+          cy={cy}
+          r={mapFillCircleRadius}
+          className="MapFillCircle"
+          strokeDasharray={circleLength}
+          strokeDashoffset={completionOffset}
+          stroke={color}
+          strokeWidth={(strokeWidth * 2) * fillWidthProportion}
+        />
+      </g>
+    );
+  }
+}
 
 MapCircle.propTypes = propTypes;
 export default MapCircle;

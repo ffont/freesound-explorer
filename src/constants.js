@@ -45,12 +45,6 @@ export const MIDI_MESSAGE_INDICATOR_DURATION = 1000;
 export const MIN_ZOOM = 0.05;
 export const MAX_ZOOM = 15;
 export const MAP_SCALE_FACTOR = 20;
-export const DEFAULT_RADIUS = 30;
-export const DEFAULT_STROKE_WIDTH = 2;
-export const DEFAULT_FILL_OPACITY = 0.9;
-export const DEFAULT_STROKE_OPACITY = 1;
-export const DEFAULT_PATH_STROKE_WIDTH = 2;
-export const DEFAULT_PATH_STROKE_OPACITY = 0.05;
 
 export const MAX_TSNE_ITERATIONS = 150;
 export const TSNE_CONFIG = {

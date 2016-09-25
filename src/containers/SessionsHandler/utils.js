@@ -15,6 +15,8 @@ export const handlePathsReducer = (state) => {
   return { paths: filteredPaths };
 };
 
+export const handleSessionReducer = state => omit(state, 'hasUnsavedProgress');
+
 export const byIDForbiddenKeys = ['buffer', 'isHovered', 'isPlaying'];
 export const handleSoundsReducer = (state) => {
   const { byID } = state;
@@ -39,6 +41,10 @@ export const filterDataForReducer = (reducerState, reducerName) => {
     }
     case 'paths': {
       handler = handlePathsReducer;
+      break;
+    }
+    case 'session': {
+      handler = handleSessionReducer;
       break;
     }
     case 'sounds': {

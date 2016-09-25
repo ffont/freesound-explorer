@@ -38,6 +38,8 @@ export const DEFAULT_SIDEBAR_TAB = SIDEBAR_TABS.SEARCH;
 
 // modal
 export const MODAL_PAGES = {
+  NEW_SESSION: 'newSession',
+  SAVE_SESSION: 'saveSession',
   LOAD_SESSION: 'loadSession',
   ERROR: 'error',
 };

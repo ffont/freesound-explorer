@@ -76,6 +76,17 @@ describe('handlePathsReducer', () => {
   });
 });
 
+describe('handleSessionReducer', () => {
+  const session = { name: 'test', id: 'xxx', hasUnsavedProgress: true };
+  it('correctly picks information to be saved', () => {
+    expect(Object.keys(utils.handleSessionReducer(session))).toContain('name');
+    expect(Object.keys(utils.handleSessionReducer(session))).toContain('id');
+  });
+  it('correctly doesn\'t include hasUnsavedProgress key', () => {
+    expect(Object.keys(utils.handleSessionReducer(session))).not.toContain('hasUnsavedProgress');
+  });
+});
+
 describe('handleSoundsReducer', () => {
   const sounds = {
     byID: { 's-1': { id: 's-1', user: 'xx', buffer: [], isHovered: true, isPlaying: true } },

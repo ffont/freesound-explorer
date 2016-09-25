@@ -6,6 +6,7 @@ export const initialState = {
   name: '',
   id: '',
   date: {},
+  hasUnsavedProgress: false,
 };
 
 const author = (state = initialState.author, action) => {
@@ -40,11 +41,19 @@ const date = (state = initialState.date, action) => {
   }
 };
 
+const hasUnsavedProgress = (state = initialState.hasUnsavedProgress, action) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+
 const session = (state = initialState, action) => ({
   author: author(state.author, action),
   name: name(state.name, action),
   id: sessionID(state.id, action),
   date: date(state.date, action),
+  hasUnsavedProgress: hasUnsavedProgress(state.hasUnsavedProgress, action),
 });
 
 export default storable(session);

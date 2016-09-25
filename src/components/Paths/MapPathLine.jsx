@@ -1,5 +1,6 @@
 import React from 'react';
 import { paths } from 'stylesheets/variables.json';
+import './MapPathLine.scss';
 
 const propTypes = {
   x1: React.PropTypes.number,

@@ -4,13 +4,13 @@ import { default as fseReducer } from './mainReducer';
 
 const generateStore = (initialState) => {
   if (process.env.NODE_ENV !== 'production') {
+    const middleware = (window.devToolsExtension) ?
+      compose(applyMiddleware(thunk), window.devToolsExtension()) :
+      applyMiddleware(thunk);
     return createStore(
       fseReducer,
       initialState,
-      compose(
-        applyMiddleware(thunk),
-        window.devToolsExtension && window.devToolsExtension()
-      )
+      middleware
     );
   }
   return createStore(

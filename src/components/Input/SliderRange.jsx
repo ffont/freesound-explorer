@@ -66,9 +66,10 @@ class SliderRange extends React.Component {
             type="range"
             step={this.props.step}
             min={this.props.minValue}
-            max={this.props.maxValue} defaultValue={this.props.defaultValue}
+            max={this.props.maxValue}
             onChange={this.props.onChange}
             ref={(input) => { this.input = input; }}
+            value={this.props.currentValue}
             tabIndex={this.props.tabIndex}
           />
           <span style={this.getThumbLabelStyle()}>{this.props.currentValue}</span>

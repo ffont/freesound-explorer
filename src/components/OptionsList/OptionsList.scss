@@ -1,5 +1,5 @@
 @import "../../stylesheets/variables.json";
-@import "./InputText";
+@import "../../stylesheets/mixins";
 
 ol.options-list {
   list-style: none;
@@ -10,7 +10,7 @@ ol.options-list {
     text-transform: capitalize;
     border-radius: 0;
     cursor: pointer;
-    @extend .base-focus;
+    @include base-focus;
     position: relative;
     &:hover {
       background-color: $accentColor;

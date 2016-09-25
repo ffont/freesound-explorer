@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import OptionsList, { makeOption } from 'components/Input/OptionsList';
+import OptionsList, { makeOption } from 'components/OptionsList';
 import { MODAL_PAGES } from 'constants';
 import { newSession, saveSession, loadSession } from './actions';
 import { setModalPage } from '../Modal/actions';

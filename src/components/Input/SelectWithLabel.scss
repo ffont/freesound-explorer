@@ -1,5 +1,5 @@
-@import "./InputText";
 @import "../../stylesheets/variables.json";
+@import "../../stylesheets/mixins";
 
 .select-with-label {
   margin: 15px 0 30px;
@@ -9,7 +9,7 @@
     vertical-align: middle;
   }
   select {
-    @extend .base-focus;
+    @include base-focus;
     background-color: white;
     color: $blackBackground;
     width: 40%;

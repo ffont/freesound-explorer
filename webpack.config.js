@@ -50,9 +50,9 @@ module.exports = {
       {
         test: /\.scss$/,
         loaders: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader',
+          'style',
+          'css',
+          'postcss',
           'sass',
         ],
         include: [

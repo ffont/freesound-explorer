@@ -6,7 +6,7 @@ export const initialState = {
   name: '',
   id: '',
   date: {},
-  hasUnsavedProgress: false,
+  hasUnsavedProgress: true,
 };
 
 const author = (state = initialState.author, action) => {

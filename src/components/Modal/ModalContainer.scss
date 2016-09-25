@@ -9,6 +9,7 @@
   opacity: 1;
   pointer-events: all;
   display: flex;
+  font-size: 1.4em;
   transition: opacity 0.3s ease-in-out;
   &:before {
     content: '';
@@ -44,15 +45,4 @@
     width: 20px;
     cursor: pointer;
   }
-}
-
-.modal {
-  transform: translate3d(0, 0, 0);
-  margin: auto;
-  box-sizing: border-box;
-  width: 50%;
-  height: 60%;
-  background-color: $sidebarColor;
-  box-shadow: 1px 1px 5px $sidebarColor;
-  transition: all 0.3s ease-in-out;
 }

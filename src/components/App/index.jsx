@@ -8,6 +8,7 @@ import MetronomeStarterContainer from 'containers/Metronome/MetronomeStarterCont
 import ModalContainer from 'containers/Modal/ModalContainer';
 import Logo from '../Logo';
 import './App.scss';
+import '../Modal/ModalContainer.scss';
 
 const propTypes = {
   store: React.PropTypes.object,

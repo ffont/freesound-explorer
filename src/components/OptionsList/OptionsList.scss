@@ -1,11 +1,11 @@
 @import "../../stylesheets/variables.json";
 @import "../../stylesheets/mixins";
 
-ol.options-list {
+.OptionsList {
   list-style: none;
   padding: 0;
   margin-bottom: 50px;
-  li {
+  button {
     padding: $sidebarClosedOffset/2 $sidebarClosedOffset/4;
     text-transform: capitalize;
     border-radius: 0;
@@ -27,5 +27,29 @@ ol.options-list {
   }
   i {
     margin-right: 10px;
+  }
+}
+
+.OptionsList__clickable-option {
+  width: 100%;
+  padding: $sidebarClosedOffset/2 $sidebarClosedOffset/4;
+  text-transform: capitalize;
+  border-radius: 0;
+  position: relative;
+  &:hover {
+    background-color: $accentColor;
+  }
+  &:before {
+    background-color: $sidebarIconHoverColor;
+    content: '';
+    position: absolute;
+    right: -$inputBorderPadding;
+    bottom: -$inputBorderPadding;
+    left: -$inputBorderPadding;
+    height: 1px;
+  }
+  @include base-focus;
+  &:not(.centered) {
+    text-align: left;
   }
 }

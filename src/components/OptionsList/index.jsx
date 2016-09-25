@@ -9,13 +9,18 @@ const propTypes = {
     name: React.PropTypes.string,
     action: React.PropTypes.func,
   })),
+  centerText: React.PropTypes.bool,
 };
 
 const OptionsList = props => (
-  <ol className="options-list">
+  <ol className="OptionsList">
     {props.options.map(option => (
       <li key={option.name}>
-        <button tabIndex="0" onClick={option.action}>
+        <button
+          className={`OptionsList__clickable-option${(props.centerText) ? ' centered' : ''}`}
+          tabIndex="0"
+          onClick={option.action}
+        >
           <i className={`fa fa-lg fa-${option.icon}`} />{option.name}
         </button>
       </li>

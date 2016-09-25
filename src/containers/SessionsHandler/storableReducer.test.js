@@ -1,5 +1,5 @@
 import { NEW_SESSION, LOAD_SESSION } from './actions';
-import sessions, { reducersToExport } from './storableReducer';
+import storable, { reducersToExport } from './storableReducer';
 
 const testInitialState = [];
 const testBaseReducer = (state = testInitialState, action) => {
@@ -9,9 +9,9 @@ const testBaseReducer = (state = testInitialState, action) => {
   }
 };
 
-const testReducer = sessions(testBaseReducer);
+const testReducer = storable(testBaseReducer);
 
-describe('sessions reducer', () => {
+describe('storable higher-order reducer', () => {
   it('correcly adds to list of reducers to export', () => {
     expect(reducersToExport).toEqual(['testBaseReducer']);
   });

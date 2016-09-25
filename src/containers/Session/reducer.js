@@ -40,11 +40,11 @@ const date = (state = initialState.date, action) => {
   }
 };
 
-const sessions = (state = initialState, action) => ({
+const session = (state = initialState, action) => ({
   author: author(state.author, action),
   name: name(state.name, action),
   id: sessionID(state.id, action),
   date: date(state.date, action),
 });
 
-export default storable(sessions);
+export default storable(session);

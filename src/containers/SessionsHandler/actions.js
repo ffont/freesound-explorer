@@ -3,7 +3,7 @@ import { MESSAGE_STATUS, URLS } from 'constants';
 import { loadJSON } from 'utils/requests';
 import { getDataToSave } from './utils';
 import { displaySystemMessage } from '../MessagesBox/actions';
-import { setSessionID } from '../Sessions/actions';
+import { setSessionID } from '../Session/actions';
 
 export const NEW_SESSION = 'NEW_SESSION';
 export const SAVE_SESSION = 'SAVE_SESSION';
@@ -51,7 +51,7 @@ export const saveSession = () => (dispatch, getStore) => {
   const currentState = getStore();
   const dataToSave = getDataToSave(currentState);
   if (currentState.login.isEndUserAuthSupported) {
-    dispatch(saveToBackend(currentState.sessions.id, dataToSave));
+    dispatch(saveToBackend(currentState.session.id, dataToSave));
   } else {
     // TODO: save to local storage
   }
@@ -62,7 +62,7 @@ const loadFromBackend = (sessionID, userID) => (dispatch, getStore) => {
   // This will be loaded form the available sessions list, but to test this is ok
   // for non authenticated user
   const currentState = getStore();
-  const sessionIDToLoad = sessionID || currentState.sessions.id;
+  const sessionIDToLoad = sessionID || currentState.session.id;
   const userIDToLoad = userID || 0;
   const url = `${URLS.LOAD_SESSION}?sid=${sessionIDToLoad}&uid=${userIDToLoad}`;
   dispatch(backendLoadRequest());

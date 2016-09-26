@@ -2,9 +2,9 @@
 
 .metronome-wrapper {
   position:absolute;
-  bottom: 20px;
-  right: 20px;
-  height: $metronomeHeight;
+  right: 5px;
+  height: 45px;
+  transition: bottom 0.3s ease-in-out;
 }
 
 .metronome-slider {

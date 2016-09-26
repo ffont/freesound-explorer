@@ -12,10 +12,11 @@ const propTypes = {
   bar: React.PropTypes.number,
   beat: React.PropTypes.number,
   tick: React.PropTypes.number,
+  bottomArrowPosition: React.PropTypes.number,
 };
 
 const Metronome = props => (
-  <div className="metronome-wrapper">
+  <div className="metronome-wrapper" style={{ bottom: props.bottomArrowPosition }}>
     <div className="metronome-slider">
       <SliderRange
         label=""

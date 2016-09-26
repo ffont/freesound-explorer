@@ -25,7 +25,7 @@ const saveSessionOptions = (props) => {
   if (props.currentSessionName) {
     return [saveNewOption, saveAsOption];
   }
-  return [saveAsOption];
+  return [saveNewOption, saveAsOption];
 };
 
 const getOptions = props => [

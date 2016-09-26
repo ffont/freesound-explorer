@@ -3,7 +3,7 @@ import { MESSAGE_STATUS, URLS } from 'constants';
 import { loadJSON } from 'utils/requests';
 import { getDataToSave } from './utils';
 import { displaySystemMessage } from '../MessagesBox/actions';
-import { setSessionID } from '../Session/actions';
+import { setSessionID, updateSessionName } from '../Session/actions';
 
 export const NEW_SESSION = 'NEW_SESSION';
 export const SAVE_SESSION = 'SAVE_SESSION';
@@ -35,8 +35,9 @@ const saveToBackend = (sessionID, dataToSave) => (dispatch) => {
     (data) => {
       dispatch(backendSaveSuccess(data.sessionID));
       dispatch(setSessionID(data.sessionID));
+      dispatch(updateSessionName(data.sessionName));
       dispatch(displaySystemMessage(
-        `Session successfully saved! (${data.sessionID})`, MESSAGE_STATUS.SUCCESS));
+        `Session successfully saved '${data.sessionName}'! (${data.sessionID})`, MESSAGE_STATUS.SUCCESS));
     },
     (data) => {
       const message = (data && data.msg) || 'Unknown error';
@@ -57,14 +58,8 @@ export const saveSession = () => (dispatch, getStore) => {
   }
 };
 
-const loadFromBackend = (sessionID, userID) => (dispatch, getStore) => {
-  // Provide some defaults for sessionID and userID
-  // This will be loaded form the available sessions list, but to test this is ok
-  // for non authenticated user
-  const currentState = getStore();
-  const sessionIDToLoad = sessionID || currentState.session.id;
-  const userIDToLoad = userID || 0;
-  const url = `${URLS.LOAD_SESSION}?sid=${sessionIDToLoad}&uid=${userIDToLoad}`;
+const loadFromBackend = sessionID => (dispatch) => {
+  const url = `${URLS.LOAD_SESSION}?sid=${sessionID}`;
   dispatch(backendLoadRequest());
   loadJSON(url).then(
     (data) => {
@@ -82,10 +77,10 @@ const loadFromBackend = (sessionID, userID) => (dispatch, getStore) => {
   );
 };
 
-export const loadSession = (sessionID, userID) => (dispatch, getStore) => {
+export const loadSession = sessionID => (dispatch, getStore) => {
   const currentState = getStore();
   if (currentState.login.isEndUserAuthSupported) {
-    dispatch(loadFromBackend(sessionID, userID));
+    dispatch(loadFromBackend(sessionID));
   } else {
     // TODO: load from local storage
   }

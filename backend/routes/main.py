@@ -1,8 +1,9 @@
 from flask import Flask, render_template, jsonify, request, make_response, redirect, g, url_for, send_from_directory
 from flask_login import login_required, logout_user
 from social.apps.flask_app.default.models import UserSocialAuth
-from backend import app
+from backend import app, db_session
 from social.exceptions import SocialAuthBaseException
+from backend.models.session import Session
 import json
 import uuid
 import datetime
@@ -60,11 +61,30 @@ def save():
         }
     file_contents['lastModified'] = str(datetime.datetime.now())
     file_contents['data'] = data
+    if data['session']['name']:
+        session_name = data['session']['name']
+    else:
+        n_existing_sessions = Session.query.filter_by(user_id=user_id).count()
+        session_name = 'Untitled session #%i' % (n_existing_sessions + 1)
+        data['session']['name'] = session_name
 
+    # Save session file
     if not os.path.exists(file_dir):
         os.mkdir(file_dir)
     json.dump(file_contents, open(file_path, 'w'))
-    return make_response(jsonify({'errors': False, 'sessionID': session_id }), 200)
+
+    # Save session entry in db
+    instance = Session.query.filter_by(id=session_id).first()
+    if not instance:
+        # Session is new, create new row
+        instance = Session(id=session_id, name=session_name, user_id=user_id)
+        instance.created = datetime.datetime.utcnow()
+    instance.last_modified = datetime.datetime.utcnow()
+    instance.name = session_name
+    db_session.add(instance)
+    db_session.commit()
+    return make_response(jsonify(
+        {'errors': False, 'sessionName': session_name, 'sessionID': session_id }), 200)
 
 @app.route('/available/')
 def available():
@@ -78,16 +98,11 @@ def available():
     if user_id == 0 and not app.config['ALLOW_UNAUTHENTICATED_USER_SAVE_LOAD']:
         return make_response(jsonify({'errors': True, 'msg': 'Unauthenticated user'}), 401)
 
-    user_sessions = []
-    user_sessions_folder_path = '%s/%i' % (app.config['SESSIONS_FOLDER_PATH'], user_id)
-    for session_filename in [item for item in os.listdir(user_sessions_folder_path) \
-                                                                    if item.endswith('.json')]:
-        file_contents = json.load(open('%s/%s' % (user_sessions_folder_path, session_filename)))
-        user_sessions.append({
-            'name': file_contents['data']['session']['name'],
-            'id': file_contents['id'],
-            'lastModified': file_contents['lastModified']
-        })
+    sessions = Session.query.filter_by(user_id=user_id)
+    user_sessions = [{
+        'name': session.name,
+        'id': session.id,
+        'lastModified': str(session.last_modified) } for session in sessions]
 
     return make_response(jsonify({
         'username': username,
@@ -99,21 +114,54 @@ def available():
 
 @app.route('/load/')
 def load():
-    # Returns the contents of the session file, user does not need to be logged but user id
-    # and session id need to be provided
-
-    user_id = request.args.get('uid', None)
-    if user_id is None:
-        return make_response(jsonify({'errors': True, 'msg': 'No user id provided'}), 400)
+    # Returns the contents of the session file
 
     session_id = request.args.get('sid', None)
     if session_id is None or session_id == '':
         return make_response(jsonify({'errors': True, 'msg': 'No session id provided'}), 400)
 
-    file_path = '%s/%s/%s.json' % (app.config['SESSIONS_FOLDER_PATH'], user_id, session_id)
-    file_contents = json.load(open(file_path))
+    instance = Session.query.filter_by(id=session_id).first()
+    if not instance:
+        return make_response(jsonify({'errors': True, 'msg': 'Session not found'}), 400)
 
+    file_path = '%s/%s/%s.json' % (app.config['SESSIONS_FOLDER_PATH'], session.user_id, session_id)
+    if not os.path.exists(file_path):
+        return make_response(jsonify({'errors': True, 'msg': 'Session data could not be found'}), 400)
+
+    file_contents = json.load(open(file_path))
     return make_response(jsonify(file_contents), 200)
+
+
+@app.route('/delete/')
+def detlete():
+    # Deletes the session with given id (including json file)
+
+    session_id = request.args.get('sid', None)
+    if session_id is None or session_id == '':
+        return make_response(jsonify({'errors': True, 'msg': 'No session id provided'}), 400)
+
+    if not g.user.is_authenticated:
+        # Unauthenticated users can't delete sessions
+        return make_response(jsonify({'errors': True, 'msg': 'Unauthenticated user'}), 401)
+
+    instance = Session.query.filter_by(id=session_id).first()
+    if not instance:
+        return make_response(jsonify({'errors': True, 'msg': 'Session not found'}), 400)
+
+    if g.user.id != instance.user_id:
+        return make_response(jsonify({'errors': True, 'msg': 'Unnauthorized user'}), 401)
+
+    # Do delete...
+    db_session.delete(instance)
+    db_session.commit()
+    file_path = '%s/%s/%s.json' % (app.config['SESSIONS_FOLDER_PATH'], session.user_id, session_id)
+    try:
+        os.remove(file_path)
+    except OSError:
+        # No probme if file does not exist
+        pass
+
+    return make_response(jsonify({'errors': False}), 200)
 
 
 @app.route('/logout/')

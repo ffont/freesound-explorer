@@ -29,7 +29,6 @@ class LoadSessionModalContainer extends React.Component {
       <LoadSessionModal
         sessions={this.state.availableSessions}
         loadSession={this.props.loadSession}
-        userID={this.state.userID}
       />
     );
   }

@@ -6,7 +6,7 @@ export const initialState = {
   name: '',
   id: '',
   date: {},
-  hasUnsavedProgress: true,
+  hasUnsavedProgress: false,
 };
 
 const author = (state = initialState.author, action) => {
@@ -42,10 +42,11 @@ const date = (state = initialState.date, action) => {
 };
 
 const hasUnsavedProgress = (state = initialState.hasUnsavedProgress, action) => {
-  switch (action.type) {
-    default:
-      return state;
+  const actionsToBeSaved = [];
+  if (!state && actionsToBeSaved.includes(action.type)) {
+    return true;
   }
+  return state;
 };
 
 const session = (state = initialState, action) => ({

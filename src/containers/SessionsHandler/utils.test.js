@@ -45,11 +45,11 @@ describe('handleMapReducer', () => {
 
 describe('handleMetronomeReducer', () => {
   const filteredData = utils.handleMetronomeReducer(curState.metronome);
-  it('picks shouldPlaySound', () => {
-    expect(Object.keys(filteredData).includes('shouldPlaySound')).toEqual(true);
+  it('omits shouldPlaySound', () => {
+    expect(Object.keys(filteredData)).not.toContain('shouldPlaySound');
   });
-  it('doesn\'t pick any other key', () => {
-    expect(Object.keys(filteredData).length).toEqual(1);
+  it('picks tempo', () => {
+    expect(Object.keys(filteredData)).toContain('tempo');
   });
 });
 

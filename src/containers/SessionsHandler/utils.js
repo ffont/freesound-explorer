@@ -4,7 +4,7 @@ import { reducersToExport } from './storableReducer';
 
 export const handleMapReducer = state => omit(state, 'forceMapUpdate');
 
-export const handleMetronomeReducer = state => pick(state, 'shouldPlaySound');
+export const handleMetronomeReducer = state => omit(state, 'shouldPlaySound');
 
 export const handleMidiReducer = state => pick(state, 'notesMapped');
 

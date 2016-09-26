@@ -47,7 +47,35 @@ def save():
     except ValueError:
         return make_response(jsonify({'errors': True, 'msg': 'No posted data or posted data not readable'}), 400)
 
-    session_id = request.args.get('sid', str(uuid.uuid4()))
+    # Create object in db
+    session_id = request.args.get('sid', None)
+    if session_id is not None:
+        instance = Session.query.filter_by(id=session_id).first()
+        if not instance:
+            return make_response(jsonify({'errors': True, 'msg': 'Session not found'}), 400)
+        # If user is not the same as the one that created the session, add a new id and update
+        # existing user id (this will effectively create a new session object)
+        if user_id == instance.user_id:
+            session_id = str(uuid.uuid4())
+            instance.id = session_id
+            instance.user_id = user_id
+    else:
+        # Should create a new session
+        session_id = str(uuid.uuid4())
+        instance = Session(id=session_id, user_id=user_id)
+        instance.created = datetime.datetime.utcnow()
+
+    if data['session']['name']:
+        session_name = data['session']['name']
+    else:
+        n_existing_sessions = Session.query.filter_by(user_id=user_id).count()
+        session_name = 'Untitled session #%i' % (n_existing_sessions + 1)
+        data['session']['name'] = session_name
+    instance.name = session_name
+    instance.last_modified = datetime.datetime.utcnow()
+    db_session.add(instance)
+    db_session.commit()
+
     file_dir = '%s/%i' % (app.config['SESSIONS_FOLDER_PATH'], user_id)
     file_path = '%s/%s.json' % (file_dir, session_id)
     if os.path.exists(file_path):
@@ -61,28 +89,13 @@ def save():
         }
     file_contents['lastModified'] = str(datetime.datetime.now())
     file_contents['data'] = data
-    if data['session']['name']:
-        session_name = data['session']['name']
-    else:
-        n_existing_sessions = Session.query.filter_by(user_id=user_id).count()
-        session_name = 'Untitled session #%i' % (n_existing_sessions + 1)
-        data['session']['name'] = session_name
 
     # Save session file
     if not os.path.exists(file_dir):
         os.mkdir(file_dir)
     json.dump(file_contents, open(file_path, 'w'))
 
-    # Save session entry in db
-    instance = Session.query.filter_by(id=session_id).first()
-    if not instance:
-        # Session is new, create new row
-        instance = Session(id=session_id, name=session_name, user_id=user_id)
-        instance.created = datetime.datetime.utcnow()
-    instance.last_modified = datetime.datetime.utcnow()
-    instance.name = session_name
-    db_session.add(instance)
-    db_session.commit()
+
     return make_response(jsonify(
         {'errors': False, 'sessionName': session_name, 'sessionID': session_id }), 200)
 
@@ -124,7 +137,7 @@ def load():
     if not instance:
         return make_response(jsonify({'errors': True, 'msg': 'Session not found'}), 400)
 
-    file_path = '%s/%s/%s.json' % (app.config['SESSIONS_FOLDER_PATH'], session.user_id, session_id)
+    file_path = '%s/%s/%s.json' % (app.config['SESSIONS_FOLDER_PATH'], instance.user_id, session_id)
     if not os.path.exists(file_path):
         return make_response(jsonify({'errors': True, 'msg': 'Session data could not be found'}), 400)
 

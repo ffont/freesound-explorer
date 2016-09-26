@@ -1,4 +1,5 @@
 import React from 'react';
+import './ConfirmActionModal.scss';
 
 const modalEntryPropTypes = {
   session: React.PropTypes.object,
@@ -18,7 +19,7 @@ const propTypes = {
 };
 
 const LoadSessionModal = props =>
-  <div className="modal">
+  <div className="ConfirmActionModal">
     {props.sessions.map(session =>
       <ModalEntry
         key={session.id}

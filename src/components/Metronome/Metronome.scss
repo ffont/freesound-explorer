@@ -1,27 +1,48 @@
 @import "../../stylesheets/variables.json";
 
 .metronome-wrapper {
-  margin-top: 20px;
+  position:absolute;
+  bottom: 20px;
+  right: 20px;
+  height: $metronomeHeight;
 }
 
 .metronome-slider {
-  display: inline-block;
-  width: 200px;
+  float: left;
   height: $metronomeHeight;
+  width: 180px;
+  margin-top:-10px;
   margin-right: 5px;
-  margin-top:0px;
 }
 
 .metronome-controls {
   float: right;
-  text-align: center;
-  width: 90px;
   height: $metronomeHeight;
-  line-height: $metronomeHeight;
-  margin-top:0px;
-
+  width: 40px;
+  margin-top:2px;
+  font-size: 120%;
   button {
     width: 40px;
   }
+}
 
+.metronome-position {
+  float: right;
+  height: $metronomeHeight;
+  width: 110px;
+  font-size: 1.4em;
+  ul {
+    margin-top: 0px;
+    margin-left: -40px;
+
+  }
+  li {
+    display:inline-block;
+    width: 35px;
+    height: $metronomeHeight;
+    line-height: $metronomeHeight;
+    text-align: center;
+    border-right: solid 1px white;
+  }
+  li:last-child { border-right:0px; }
 }

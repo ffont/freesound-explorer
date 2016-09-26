@@ -11,6 +11,9 @@ const propTypes = {
   stopMetronome: React.PropTypes.func,
   startMetronome: React.PropTypes.func,
   setPlaySound: React.PropTypes.func,
+  bar: React.PropTypes.number,
+  beat: React.PropTypes.number,
+  tick: React.PropTypes.number,
 };
 
 class MetronomeContainer extends React.Component {
@@ -36,14 +39,17 @@ class MetronomeContainer extends React.Component {
         toggleMetronome={this.toggleMetronome}
         isPlaying={this.props.isPlaying}
         setTempo={this.props.setTempo}
+        bar={this.props.bar}
+        beat={this.props.beat}
+        tick={this.props.tick}
       />
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  const { tempo, isPlaying, shouldPlaySound } = state.metronome;
-  return { tempo, isPlaying, shouldPlaySound };
+  const { tempo, isPlaying, shouldPlaySound, bar, beat, tick } = state.metronome;
+  return { tempo, isPlaying, shouldPlaySound, bar, beat, tick };
 };
 
 MetronomeContainer.propTypes = propTypes;

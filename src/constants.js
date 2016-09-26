@@ -68,7 +68,7 @@ export const TSNE_CONFIG = {
 export const DEFAULT_TRUNCATED_STRING_LENGTH = 40;
 
 // metronome and syncing
-export const START_METRONOME_AT_MOUNT = true;
+export const START_METRONOME_AT_MOUNT = false;
 export const DEFAULT_TEMPO = 120.0;
 export const LOOKAHEAD = 25; // How often we'll call the scheduler function (in milliseconds)
 export const SCHEDULEAHEADTIME = 0.2; // How far we schedule notes from lookahead call (in seconds)

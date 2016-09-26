@@ -15,7 +15,7 @@
     "defaultStrokeOpacity": "1"
   },
   "messagesBoxHeight": "40px",
-  "metronomeHeight": "60px",
+  "metronomeHeight": "40px",
   "paths": {
     "defaultStrokeWidth": "2px",
     "defaultStrokeOpacity": "0.05"

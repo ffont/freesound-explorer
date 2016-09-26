@@ -9,13 +9,16 @@ const propTypes = {
   shouldPlaySound: React.PropTypes.bool,
   toggleMetronome: React.PropTypes.func,
   isPlaying: React.PropTypes.bool,
+  bar: React.PropTypes.number,
+  beat: React.PropTypes.number,
+  tick: React.PropTypes.number,
 };
 
 const Metronome = props => (
   <div className="metronome-wrapper">
     <div className="metronome-slider">
       <SliderRange
-        label="Tempo"
+        label=""
         minValue="40"
         maxValue="300"
         onChange={(evt) => {
@@ -28,16 +31,18 @@ const Metronome = props => (
       />
     </div>
     <div className="metronome-controls">
-      <button onClick={() => props.setPlaySound(!props.shouldPlaySound)} >
-        {(props.shouldPlaySound) ?
-          <i className="fa fa-volume-up fa-2x" aria-hidden="true" /> :
-          <i className="fa fa-volume-off fa-2x" aria-hidden="true" />}
-      </button>
       <button onClick={props.toggleMetronome} >
         {(props.isPlaying) ?
           <i className="fa fa-stop fa-2x" aria-hidden="true" /> :
           <i className="fa fa-play fa-2x" aria-hidden="true" />}
       </button>
+    </div>
+    <div className="metronome-position">
+      <ul>
+        <li>{props.bar}</li>
+        <li>{props.beat}</li>
+        <li>{props.tick}</li>
+      </ul>
     </div>
   </div>
 );

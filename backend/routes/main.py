@@ -55,7 +55,7 @@ def save():
             return make_response(jsonify({'errors': True, 'msg': 'Session not found'}), 400)
         # If user is not the same as the one that created the session, add a new id and update
         # existing user id (this will effectively create a new session object)
-        if user_id == instance.user_id:
+        if user_id != instance.user_id:
             session_id = str(uuid.uuid4())
             instance.id = session_id
             instance.user_id = user_id

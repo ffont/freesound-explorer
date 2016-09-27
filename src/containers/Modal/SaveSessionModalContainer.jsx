@@ -8,28 +8,16 @@ const propTypes = {
   currentSessionName: React.PropTypes.string,
 };
 
-class LoadSessionModalContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { availableSessions: [], userID: '' };
-  }
-
-  componentWillMount() {
-  }
-
-  render() {
-    return (
-      <SaveSessionModal
-        saveSessionAs={this.props.saveSessionAs}
-        currentSessionName={this.props.currentSessionName}
-      />
-    );
-  }
-}
+const SaveSessionModalContainer = props => (
+  <SaveSessionModal
+    saveSessionAs={props.saveSessionAs}
+    currentSessionName={props.currentSessionName}
+  />
+);
 
 const mapStateToProps = state => ({ currentSessionName: state.session.name });
 
-LoadSessionModalContainer.propTypes = propTypes;
+SaveSessionModalContainer.propTypes = propTypes;
 export default connect(mapStateToProps, {
   saveSessionAs,
-})(LoadSessionModalContainer);
+})(SaveSessionModalContainer);

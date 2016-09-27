@@ -76,7 +76,7 @@ class QueryBox extends React.Component {
             const query = evt.target.value;
             this.props.updateQuery(query);
           }}
-          value={this.props.query}
+          currentValue={this.props.query}
           tabIndex="0"
           placeholder="query terms, e.g.: instruments"
           buttonIcon="fa fa-search fa-lg"

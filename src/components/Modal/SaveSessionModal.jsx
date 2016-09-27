@@ -37,7 +37,7 @@ class SaveSessionModal extends React.Component {
         >
           <InputTextButton
             placeholder="Session Name"
-            value={this.state.currentName}
+            currentValue={this.state.currentName}
             onTextChange={evt => this.updateInput(evt)}
             buttonIcon="fa fa-lg fa-save"
           />

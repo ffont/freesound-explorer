@@ -7,7 +7,7 @@ const propTypes = {
   tabIndex: React.PropTypes.string,
   placeholder: React.PropTypes.string,
   buttonIcon: React.PropTypes.string,
-  value: React.PropTypes.string,
+  currentValue: React.PropTypes.string,
 };
 
 const defaultProps = {
@@ -15,7 +15,7 @@ const defaultProps = {
   onButtonClick: () => {},
   tabIndex: '0',
   placeholder: '',
-  value: '',
+  currentValue: '',
 };
 
 function InputTextButton(props) {
@@ -27,7 +27,7 @@ function InputTextButton(props) {
         placeholder={props.placeholder}
         onChange={props.onTextChange}
         tabIndex={props.tabIndex}
-        value={props.value}
+        value={props.currentValue}
       />
       <button
         tabIndex="0"

@@ -1,41 +1,43 @@
 @import "../../stylesheets/variables.json";
 @import "../../stylesheets/mixins";
 
-input[type=text] {
+.InputTextButton {
+	.SaveSessionModal & {
+		width: 50%;
+		margin: auto;
+	}
+}
+
+.InputTextButton__input {
 	height: $sidebarClosedOffset;
-  display: inline-block;
-  vertical-align: top;
-  @include base-focus;
-}
-
-button {
-  box-sizing: border-box;
-  display: inline-block;
-  vertical-align: top;
-}
-
-input.input-text-button {
+	display: inline-block;
+	vertical-align: top;
+	@include base-focus;
   width: calc(100% - #{$sidebarClosedOffset});
   padding: 7px;
   border-radius: $defaultBorderRadius;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   color: black;
-  + button {
-    border-radius: $defaultBorderRadius;
-    height: $sidebarClosedOffset;
-    width: $sidebarClosedOffset;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    background-color: $sidebarIconHoverColor;
-    transition: background-color 0.3s ease-in-out;
-    i {
-      color: $blackBackground;
-      transition: color 0.3s ease-in-out;
-    }
-    &:focus, &:hover {
-      background-color: $accentColor;
-      i { color: white; }
-    }
-  }
+}
+
+.InputTextButton__button {
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: top;
+	border-radius: $defaultBorderRadius;
+	height: $sidebarClosedOffset;
+	width: $sidebarClosedOffset;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	background-color: $sidebarIconHoverColor;
+	transition: background-color 0.3s ease-in-out;
+	i {
+		color: $blackBackground;
+		transition: color 0.3s ease-in-out;
+	}
+	&:focus, &:hover {
+		background-color: $accentColor;
+		i { color: white; }
+	}
 }

@@ -1,0 +1,9 @@
+@import "BaseModal";
+
+.SaveSessionModal {
+  @include base-modal;
+}
+
+.SaveSessionModal__content {
+  @include modal-content;
+}

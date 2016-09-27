@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadJSON } from 'utils/requests';
-import LoadSessionModal from 'components/Modal/LoadSessionModal';
-import { URLS } from 'constants';
-import { loadSession } from '../SessionsHandler/actions';
+import SaveSessionModal from 'components/Modal/SaveSessionModal';
+import { saveSessionAs } from '../SessionsHandler/actions';
 
 const propTypes = {
-  loadSession: React.PropTypes.func,
+  saveSessionAs: React.PropTypes.func,
+  currentSessionName: React.PropTypes.string,
 };
 
 class LoadSessionModalContainer extends React.Component {
@@ -16,25 +15,21 @@ class LoadSessionModalContainer extends React.Component {
   }
 
   componentWillMount() {
-    loadJSON(URLS.AVAILABLE_SESSIONS).then((response) => {
-      this.setState({
-        availableSessions: response.userSessions,
-        userID: `${response.userID}`,
-      });
-    });
   }
 
   render() {
     return (
-      <LoadSessionModal
-        sessions={this.state.availableSessions}
-        loadSession={this.props.loadSession}
-        userID={this.state.userID}
+      <SaveSessionModal
+        saveSessionAs={this.props.saveSessionAs}
+        currentSessionName={this.props.currentSessionName}
       />
     );
   }
 }
 
+const mapStateToProps = state => ({ currentSessionName: state.session.name });
 
 LoadSessionModalContainer.propTypes = propTypes;
-export default connect(() => ({}), { loadSession })(LoadSessionModalContainer);
+export default connect(mapStateToProps, {
+  saveSessionAs,
+})(LoadSessionModalContainer);

@@ -1,5 +1,6 @@
 import React from 'react';
-import './ConfirmActionModal.scss';
+import ModalTitle from './ModalTitle';
+import './LoadSessionModal.scss';
 
 const modalEntryPropTypes = {
   session: React.PropTypes.object,
@@ -7,9 +8,9 @@ const modalEntryPropTypes = {
 };
 
 const ModalEntry = props =>
-  <div onClick={() => props.loadSession(props.session.id)}>
+  <button onClick={() => props.loadSession(props.session.id)}>
     {props.session.name} | {props.session.lastModified} | {props.session.id}
-  </div>;
+  </button>;
 ModalEntry.propTypes = modalEntryPropTypes;
 
 
@@ -19,7 +20,8 @@ const propTypes = {
 };
 
 const LoadSessionModal = props =>
-  <div className="ConfirmActionModal">
+  <div className="LoadSessionModal">
+    <ModalTitle title="Load session" />
     {props.sessions.map(session =>
       <ModalEntry
         key={session.id}

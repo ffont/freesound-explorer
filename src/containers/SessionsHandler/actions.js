@@ -1,6 +1,6 @@
 import makeActionCreator from 'utils/makeActionCreator';
 import { MESSAGE_STATUS, URLS } from 'constants';
-import { loadJSON } from 'utils/requests';
+import { loadJSON, postJSON } from 'utils/requests';
 import { getDataToSave } from './utils';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { setSessionID, updateSessionName } from '../Session/actions';
@@ -31,7 +31,7 @@ const saveToBackend = (sessionID, dataToSave) => (dispatch) => {
     url = `${url}?sid=${sessionID}`;
   }
   dispatch(backendSaveRequest(sessionID, dataToSave));
-  loadJSON(url, dataToSave).then(
+  postJSON(url, dataToSave).then(
     (data) => {
       dispatch(backendSaveSuccess(data.sessionID));
       dispatch(setSessionID(data.sessionID));
@@ -49,6 +49,17 @@ const saveToBackend = (sessionID, dataToSave) => (dispatch) => {
 };
 
 export const saveSession = () => (dispatch, getStore) => {
+  const currentState = getStore();
+  const dataToSave = getDataToSave(currentState);
+  if (currentState.login.isEndUserAuthSupported) {
+    dispatch(saveToBackend(currentState.session.id, dataToSave));
+  } else {
+    // TODO: save to local storage
+  }
+};
+
+export const saveSessionAs = sessionName => (dispatch, getStore) => {
+  dispatch(updateSessionName(sessionName));
   const currentState = getStore();
   const dataToSave = getDataToSave(currentState);
   if (currentState.login.isEndUserAuthSupported) {

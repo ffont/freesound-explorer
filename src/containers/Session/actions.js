@@ -1,5 +1,9 @@
 import makeActionCreator from 'utils/makeActionCreator';
 
+export const actionsToBeSaved = [];
+
+export const actionRequiresSave = actionType => [...actionsToBeSaved, actionType];
+
 export const UPDATE_SESSION_NAME = 'UPDATE_SESSION_NAME';
 export const SET_SESSION_ID = 'SET_SESSION_ID';
 

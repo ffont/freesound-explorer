@@ -63,18 +63,22 @@ class QueryBox extends React.Component {
 
   render() {
     return (
-      <form id="query-form" className="query-form">
+      <form
+        id="query-form"
+        className="query-form"
+        onSubmit={(evt) => {
+          evt.preventDefault();
+          this.submitQuery();
+        }}
+      >
         <InputTextButton
           onTextChange={(evt) => {
             const query = evt.target.value;
             this.props.updateQuery(query);
           }}
+          value={this.props.query}
           tabIndex="0"
           placeholder="query terms, e.g.: instruments"
-          onButtonClick={(evt) => {
-            evt.preventDefault();
-            this.submitQuery();
-          }}
           buttonIcon="fa fa-search fa-lg"
         />
         <SelectWithLabel

@@ -1,4 +1,4 @@
-import { UPDATE_SESSION_NAME, SET_SESSION_ID } from './actions';
+import { UPDATE_SESSION_NAME, SET_SESSION_ID, actionsToBeSaved } from './actions';
 import storable from '../SessionsHandler/storableReducer';
 
 export const initialState = {
@@ -42,7 +42,6 @@ const date = (state = initialState.date, action) => {
 };
 
 const hasUnsavedProgress = (state = initialState.hasUnsavedProgress, action) => {
-  const actionsToBeSaved = [];
   if (!state && actionsToBeSaved.includes(action.type)) {
     return true;
   }

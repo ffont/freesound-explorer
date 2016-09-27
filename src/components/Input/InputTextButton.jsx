@@ -7,28 +7,32 @@ const propTypes = {
   tabIndex: React.PropTypes.string,
   placeholder: React.PropTypes.string,
   buttonIcon: React.PropTypes.string,
+  value: React.PropTypes.string,
 };
 
 const defaultProps = {
   onTextChange: () => {},
   onButtonClick: () => {},
-  tabIndex: 0,
+  tabIndex: '0',
   placeholder: '',
+  value: '',
 };
 
 function InputTextButton(props) {
   return (
-    <div>
+    <div className="InputTextButton">
       <input
-        className="input-text-button"
+        className="InputTextButton__input"
         type="text"
         placeholder={props.placeholder}
         onChange={props.onTextChange}
         tabIndex={props.tabIndex}
+        value={props.value}
       />
       <button
-        onClick={props.onButtonClick}
         tabIndex="0"
+        className="InputTextButton__button"
+        type="submit"
       >
         <i className={props.buttonIcon} aria-hidden />
       </button>

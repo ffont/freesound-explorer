@@ -1,5 +1,4 @@
 import React from 'react';
-import Modal from 'components/Modal';
 import { MODAL_PAGES } from 'constants';
 import SaveSessionModalContainer from './SaveSessionModalContainer';
 import NewSessionModalContainer from './NewSessionModalContainer';
@@ -18,7 +17,7 @@ const ModalContentContainer = (props) => {
     case MODAL_PAGES.LOAD_SESSION:
       return <LoadSessionModalContainer />;
     default:
-      return <Modal />;
+      return null;
   }
 };
 

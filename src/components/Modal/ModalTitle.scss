@@ -1,0 +1,9 @@
+@import "../../stylesheets/variables.json";
+
+.ModalTitle {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid $sidebarIconHoverColor;
+  padding: 20px;
+}

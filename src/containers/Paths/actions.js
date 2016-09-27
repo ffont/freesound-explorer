@@ -33,7 +33,7 @@ export const setPathActive = makeActionCreator(SET_PATH_ACTIVE,
   'pathID', 'isActive');
 
 export const deleteSoundFromPath = makeActionCreator(DELETE_SOUND_FROM_PATH,
-  'soundID', 'pathID');
+  'pathID', 'soundIdx');
 
 export const addSoundToPath = (soundID, pathID) => (dispatch, getStore) => dispatch({
   type: ADD_SOUND_TO_PATH,

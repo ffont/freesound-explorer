@@ -23,6 +23,12 @@
   .fa-plus {
     margin-right: 10px;
   }
+  button {
+    padding: 4px;
+  }
+  button.active {
+    background-color: $accentColor;
+  }
 }
 
 .path-controls {

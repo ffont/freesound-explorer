@@ -11,12 +11,15 @@
   </head>
   <body>
     <div id="app"></div>
-
-    {% if use_js_dev_server %}
-      <script src="http://localhost:8080/static/js/bundle.js"></script>
-    {% else %}
-      <script src="static/js/bundle.js"></script>
-    {% endif %}
+    <script>
+      var script = document.createElement('script');
+      if ("{{ use_js_dev_server }}" === "True") {
+        script.src = 'http://localhost:8080/static/js/bundle.js';
+      } else {
+        script.src = 'static/js/bundle.js';
+      }
+      document.body.appendChild(script);
+    </script>
 
   </body>
 </html>

@@ -12,7 +12,7 @@ const propTypes = {
 const defaultProps = {
   onTextChange: () => {},
   onButtonClick: () => {},
-  tabIndex: 1,
+  tabIndex: 0,
   placeholder: '',
 };
 
@@ -28,9 +28,9 @@ function InputTextButton(props) {
       />
       <button
         onClick={props.onButtonClick}
-        tabIndex={parseInt(props.tabIndex, 10) + 1}
+        tabIndex="0"
       >
-        <i className={props.buttonIcon} aria-hidden="true" />
+        <i className={props.buttonIcon} aria-hidden />
       </button>
     </div>
   );

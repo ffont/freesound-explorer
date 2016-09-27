@@ -51,10 +51,14 @@ export const path = (state = {}, action) => {
     case SET_PATH_ACTIVE: {
       return Object.assign({}, state, { isActive: action.isActive });
     }
-    case REMOVE_SOUND:
-    case DELETE_SOUND_FROM_PATH: {
-      return Object.assign({}, state, {
+    case REMOVE_SOUND: {
+      return Object.assign({}, state, {  // Remove all instances of sounds with given ID
         sounds: state.sounds.filter(id => id !== action.soundID),
+      });
+    }
+    case DELETE_SOUND_FROM_PATH: {
+      return Object.assign({}, state, {  // Remove sound using Idx (position in path)
+        sounds: state.sounds.filter((id, idx) => idx !== action.soundIdx),
       });
     }
     case ADD_SOUND_TO_PATH: {

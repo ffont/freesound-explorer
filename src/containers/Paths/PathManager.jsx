@@ -96,6 +96,7 @@ class Path extends React.Component {
             {path.sounds.map((soundID, soundIdx) => (
               <PathListSound
                 key={soundIdx}
+                soundIdx={soundIdx}
                 soundID={soundID}
                 pathID={path.id}
               />

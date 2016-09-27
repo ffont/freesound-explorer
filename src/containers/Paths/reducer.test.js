@@ -83,7 +83,7 @@ describe('paths sounds and playback handling', () => {
       sounds: [soundID],
     });
     it('works when deleting sound from path', () => {
-      expect(paths.path(pathWithSounds, deleteSoundFromPath(soundID2, pathID)))
+      expect(paths.path(pathWithSounds, deleteSoundFromPath(pathID, 1)))
         .toEqual(expectedState);
     });
     it('works when removing the sound', () => {

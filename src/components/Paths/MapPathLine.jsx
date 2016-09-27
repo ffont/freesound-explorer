@@ -1,5 +1,4 @@
 import React from 'react';
-import { paths } from 'stylesheets/variables.json';
 import './MapPathLine.scss';
 
 const propTypes = {
@@ -16,11 +15,7 @@ const MapPathLine = props => (
     y1={props.y1}
     x2={props.x2}
     y2={props.y2}
-    className="MapPathLine"
-    stroke="white"
-    strokeOpacity={(props.isPathPlaying) ?
-      paths.defaultStrokeOpacity * 10 :
-      paths.defaultStrokeOpacity}
+    className={(props.isPathPlaying) ? 'MapPathLine playing' : 'MapPathLine'}
   />
 );
 

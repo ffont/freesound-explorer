@@ -3,4 +3,9 @@
 .MapPathLine {
   stroke-width: map-get($paths, defaultStrokeWidth);
   stroke-opacity: map-get($paths, defaultStrokeOpacity);
+  stroke: white;
+
+  &.playing {
+    stroke-opacity: map-get($paths, playingStrokeOpacity);
+  }
 }

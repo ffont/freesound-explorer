@@ -18,7 +18,8 @@
   "metronomeHeight": "40px",
   "paths": {
     "defaultStrokeWidth": "2px",
-    "defaultStrokeOpacity": "0.05"
+    "defaultStrokeOpacity": "0.05",
+    "playingStrokeOpacity": "0.5"
   },
   "redRegular": "#97171e",
   "sidebarClosedOffset": "40px",

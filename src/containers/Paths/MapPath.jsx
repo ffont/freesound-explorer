@@ -13,7 +13,7 @@ const MapPath = props => (
       const soundToID = props.path.sounds[index + 1];
       return (
         <MapPathLineContainer
-          key={index}
+          key={`${index}_${props.path.isPlaying}`}
           soundFromID={soundFromID}
           soundToID={soundToID}
           isPathPlaying={props.path.isPlaying}

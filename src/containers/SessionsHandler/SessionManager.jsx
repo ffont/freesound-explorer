@@ -15,16 +15,14 @@ const newSessionOption = props => makeOption('file-o', 'new session', () => {
 });
 
 const saveSessionOptions = (props) => {
-  // option "Save as", that opens new modal
+  /** option "Save as", that opens new modal */
   const saveAsOption = makeOption('save', 'save session as', () =>
     props.setModalPage(MODAL_PAGES.SAVE_SESSION));
-  // option "Save", that overrides current saved session
-  const saveNewOption = makeOption('save', 'save session', () =>
-    props.saveSession()
-  );
-  if (props.currentSessionName) {
-    return [saveNewOption, saveAsOption];
-  }
+  /** option "Save", that overrides current saved session.
+  It should be available only if session is already saved */
+  const isSaveEnabled = !props.currentSessionName;
+  const saveNewOption = makeOption('save', 'save session',
+    () => props.saveSession(), isSaveEnabled);
   return [saveNewOption, saveAsOption];
 };
 

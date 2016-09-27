@@ -16,9 +16,6 @@
   text-transform: capitalize;
   border-radius: 0;
   position: relative;
-  &:hover {
-    background-color: $accentColor;
-  }
   &:before {
     background-color: $sidebarIconHoverColor;
     content: '';
@@ -28,7 +25,19 @@
     left: -$inputBorderPadding;
     height: 1px;
   }
-  @include base-focus;
+  &:disabled {
+    color: darken($sidebarIconHoverColor, 40);
+    cursor: default;
+    i {
+      color: inherit;
+    }
+  }
+  &:not(:disabled) {
+    &:hover {
+      background-color: $accentColor;
+    }
+    @include base-focus;
+  }
   &:not(.centered) {
     text-align: left;
   }

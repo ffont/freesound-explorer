@@ -28,16 +28,16 @@ const setSessionStorage = (accessToken, userName) => {
   sessionStorage.setItem('username', userName);
 };
 
+const useStaticAppToken = () => sessionStorage.setItem('appToken', staticAppToken);
+
 const getAppToken = () => new Promise((resolve, reject) => {
   loadJSON(URLS.getAppToken).then(
     (data) => {
       sessionStorage.setItem('appToken', data.appToken);
-      // back-end app is running, inform with resolve()
       resolve();
     },
     () => {
-      sessionStorage.setItem('appToken', staticAppToken);
-      // client-only mode, inform with reject()
+      useStaticAppToken();
       reject();
     });
 });
@@ -79,14 +79,15 @@ class LoginContainer extends React.Component {
 
   prepareAuth() {
     clearSession();
-    getAppToken().then(
-      () => {
-        // getAppToken success: back-end available
-        this.props.updateBackEndAuthSupport(true);
-        this.getAccessToken();
-      },
-      () => { // getAppToken error: no back-end available
-      });
+    if (window.isBackEndAvailable) {
+      getAppToken().then(
+        () => {
+          this.props.updateBackEndAuthSupport(true);
+          this.getAccessToken();
+        });
+    } else {
+      useStaticAppToken();
+    }
   }
 
   handleFreesoundLogin() {

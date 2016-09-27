@@ -26,7 +26,9 @@ def error_handler(error):
 @app.route('/')
 def index():
     use_js_dev_server = app.config['USE_JS_DEV_SERVER']
-    return render_template('index.html', use_js_dev_server=use_js_dev_server)
+    is_back_end_available = True
+    return render_template('index.html', use_js_dev_server=use_js_dev_server,
+        is_back_end_available=is_back_end_available)
 
 
 # Example curl post: curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz",

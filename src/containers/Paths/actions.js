@@ -133,7 +133,7 @@ const pathEventsListeners = (() => {
       if (!listeners[pathID]) {
         listeners[pathID] = evt => dispatch(linkPathToMetronome(pathID, evt));
       }
-      return listeners.pathID;
+      return listeners[pathID];
     },
   };
 })();

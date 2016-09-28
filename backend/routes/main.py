@@ -191,7 +191,7 @@ def load():
 
 
 @app.route('/delete/')
-def detlete():
+def delete():
     # Deletes the session with given id (including json file)
 
     session_id = request.args.get('sid', None)

@@ -113,9 +113,9 @@ def save():
             'id': session_id,
             'username': username,
             'data': [],
-            'created': str(datetime.datetime.now()),
+            'created': datetime.datetime.now().isoformat(),
         }
-    file_contents['lastModified'] = str(datetime.datetime.now())
+    file_contents['lastModified'] = datetime.datetime.now().isoformat()
     file_contents['data'] = data
 
     # Save session file
@@ -152,7 +152,7 @@ def available():
     user_sessions = [{
         'name': session.name,
         'id': session.id,
-        'lastModified': str(session.last_modified),
+        'lastModified': session.last_modified.isoformat(),
         'author': username
     } for session in sessions]
 

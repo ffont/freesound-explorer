@@ -20,7 +20,8 @@ const propTypes = {
 };
 
 const beatButtons = [
-  { name: 'no', icon: 'x' },
+  { name: '1_4beat', icon: 'x' }, // We use 1/16 which effectively means no sync
+  { name: '1_2beat', icon: '1/8' },
   { name: 'beat', icon: '1/4' },
   { name: '2xbeat', icon: '1/2' },
   { name: 'bar', icon: '1' },
@@ -71,7 +72,7 @@ class Path extends React.Component {
             <i className={`fa fa-${(path.isPlaying) ? 'pause' : 'play'} fa-lg`} aria-hidden />
           </button>
           <a className="cursor-pointer" onClick={() => this.onPathClick()} >
-            {path.name} ({path.sounds.length} sounds)
+            {path.name} ({path.sounds.length})
           </a>&nbsp;
           <div className="button-group">
             {beatButtons.map((button) => (

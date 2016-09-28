@@ -103,6 +103,8 @@ export const triggerSoundHelper = (pathID, time) =>
   };
 
 const shouldTriggerSoundHelper = (path, tick) => (
+  (path.syncMode === '1_4beat' && tick % 1 === 0) ||
+  (path.syncMode === '1_2beat' && tick % 2 === 0) ||
   (path.syncMode === 'beat' && tick % 4 === 0) ||
   (path.syncMode === '2xbeat' && tick % 8 === 0) ||
   (path.syncMode === 'bar' && tick === 0)

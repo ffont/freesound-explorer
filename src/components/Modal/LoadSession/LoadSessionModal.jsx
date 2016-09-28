@@ -20,6 +20,7 @@ class LoadSessionModal extends React.Component {
       sortBy: '',
       demoSessions: [],
       userSessions: [],
+      isInputFocused: false,
     };
     this.onSearchInputChange = this.onSearchInputChange.bind(this);
   }
@@ -38,39 +39,53 @@ class LoadSessionModal extends React.Component {
   }
 
   render() {
+    const inputContainerClass = (this.state.isInputFocused) ?
+      'LoadSessionModal__inputs--search__container focus' :
+      'LoadSessionModal__inputs--search__container';
     return (
       <div className="LoadSessionModal">
         <ModalTitle title="Load session" />
         <div className="LoadSessionModal__inputs">
-          <input
-            type="search"
-            onChange={this.onSearchInputChange}
-          />
-          <label htmlFor="sort-sessions-by">
-            Sort By:
-            <select id="sort-sessions-by" />
-          </label>
-        </div>
-        <div className="LoadSessionModal__user-sessions">
-          {this.state.userSessions.map(session =>
-            <LoadSessionEntry
-              key={session.id}
-              loadSession={this.props.loadSession}
-              session={session}
-              removeSession={this.props.removeSession}
+          <div className={inputContainerClass}>
+            <input
+              type="search"
+              onChange={this.onSearchInputChange}
+              className="LoadSessionModal__inputs--search"
+              onFocus={() => this.setState({ isInputFocused: true })}
+              onBlur={() => this.setState({ isInputFocused: false })}
+              onKeyDown={(evt) => evt.stopPropagation()}
             />
-          )}
+            <i className="fa fa-search LoadSessionModal__inputs--search__icon" />
+          </div>
         </div>
-        <div className="LoadSessionModal__demo-sessions">
-          {this.state.demoSessions.map(session =>
-            <LoadSessionEntry
-              key={session.id}
-              loadSession={this.props.loadSession}
-              session={session}
-              isDemoSession
-            />
-          )}
-        </div>
+        {(this.state.userSessions.length) ? (
+          <section className="LoadSessionModal__user-sessions">
+            <div className="LoadSessionModal__sessions-table">
+              {/** <div className="LoadSessionModal__sessions-table_8">Name</div>
+              <div className="LoadSessionModal__sessions-table_3">Date</div>
+              <div className="LoadSessionModal__sessions-table_1">Delete</div>*/}
+              {this.state.userSessions.map(session =>
+                <LoadSessionEntry
+                  key={session.id}
+                  loadSession={this.props.loadSession}
+                  session={session}
+                  removeSession={this.props.removeSession}
+                />
+              )}
+            </div>
+          </section>) : null}
+        {(this.state.demoSessions.length) ? (
+          <section className="LoadSessionModal__demo-sessions">
+            <header className="LoadSessionModal__section-header">Examples</header>
+            {this.state.demoSessions.map(session =>
+              <LoadSessionEntry
+                key={session.id}
+                loadSession={this.props.loadSession}
+                session={session}
+                isDemoSession
+              />
+            )}
+          </section>) : null}
       </div>
     );
   }

@@ -15,6 +15,8 @@ def is_valid_uuid(uuid_string):
         val = uuid.UUID(uuid_string)
     except ValueError:
         return False
+    except TypeError:
+        return False
     return True
 
 demo_sessions_data = []
@@ -181,12 +183,13 @@ def load():
         file_path = '%s/%s/%s.json' % (app.config['SESSIONS_FOLDER_PATH'], instance.user_id, session_id)
         if not os.path.exists(file_path):
             return make_response(jsonify({'errors': True, 'msg': 'Session data could not be found'}), 400)
+        file_contents = json.load(open(file_path))
     else:
         # Demo session
-        print session_id
         file_path = '%s/%s.json' % (app.config['DEMO_SESSIONS_FOLDER_PATH'], session_id)
+        file_contents = json.load(open(file_path))
+        file_contents['data']['session']['id'] = ''  # Ignore id (if any)
 
-    file_contents = json.load(open(file_path))
     return make_response(jsonify(file_contents), 200)
 
 
@@ -210,6 +213,7 @@ def delete():
         return make_response(jsonify({'errors': True, 'msg': 'Unnauthorized user'}), 401)
 
     # Do delete...
+    name = instance.name
     db_session.delete(instance)
     db_session.commit()
     file_path = '%s/%s/%s.json' % (app.config['SESSIONS_FOLDER_PATH'], session.user_id, session_id)
@@ -219,7 +223,7 @@ def delete():
         # No probme if file does not exist
         pass
 
-    return make_response(jsonify({'errors': False}), 200)
+    return make_response(jsonify({'errors': False, 'name': name, 'id': session_id}), 200)
 
 
 @app.route('/logout/')

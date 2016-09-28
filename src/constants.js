@@ -13,6 +13,7 @@ export const PERFORM_QUERY_AT_MOUNT = false;
 export const URLS = {
   SAVE_SESSION: '/save/',
   LOAD_SESSION: '/load/',
+  REMOVE_SESSION: '/delete/',
   AVAILABLE_SESSIONS: '/available/',
   DELETE_SESSION: '/delete/',
 };

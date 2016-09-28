@@ -65,7 +65,7 @@ export const saveSessionAs = sessionName => (dispatch, getStore) => {
   const currentState = getStore();
   const dataToSave = getDataToSave(currentState);
   if (currentState.login.isEndUserAuthSupported) {
-    dispatch(saveToBackend(currentState.session.id, dataToSave));
+    dispatch(saveToBackend(undefined, dataToSave));  // Always create a new session id
   } else {
     // TODO: save to local storage
   }
@@ -111,5 +111,29 @@ export const loadSession = sessionID => (dispatch, getStore) => {
     dispatch(loadFromBackend(sessionID));
   } else {
     // TODO: load from local storage
+  }
+};
+
+const removeFromBackend = sessionID => (dispatch) => {
+  const url = `${URLS.REMOVE_SESSION}?sid=${sessionID}`;
+  loadJSON(url).then(
+    (data) => {
+      dispatch(displaySystemMessage(`Deleted session ${data.name}!`, MESSAGE_STATUS.SUCCESS));
+    },
+    (data) => {
+      const message = (data && data.msg) || 'Unknown error';
+      dispatch(displaySystemMessage(
+        `Error loading session: ${message}`, MESSAGE_STATUS.ERROR));
+    }
+  );
+};
+
+
+export const removeSession = sessionID => (dispatch, getStore) => {
+  const currentState = getStore();
+  if (currentState.login.isEndUserAuthSupported) {
+    dispatch(removeFromBackend(sessionID));
+  } else {
+    // TODO: remove from local storage
   }
 };

@@ -20,7 +20,7 @@ const saveSessionOptions = (props) => {
     props.setModalPage(MODAL_PAGES.SAVE_SESSION));
   /** option "Save", that overrides current saved session.
   It should be available only if session is already saved */
-  const isSaveEnabled = !props.currentSessionName;
+  const isSaveEnabled = !props.currentSessionID;
   const saveNewOption = makeOption('save', 'save session',
     () => props.saveSession(), isSaveEnabled);
   return [saveNewOption, saveAsOption];
@@ -37,7 +37,7 @@ const propTypes = {
   newSession: React.PropTypes.func,
   saveSession: React.PropTypes.func,
   setModalPage: React.PropTypes.func,
-  currentSessionName: React.PropTypes.string,
+  currentSessionID: React.PropTypes.string,
   hasUnsavedProgress: React.PropTypes.bool,
 };
 
@@ -49,7 +49,7 @@ const SessionManager = props => (
 
 const mapStateToProps = state => ({
   hasUnsavedProgress: state.session.hasUnsavedProgress,
-  currentSessionName: state.session.name,
+  currentSessionID: state.session.id,
 });
 
 SessionManager.propTypes = propTypes;

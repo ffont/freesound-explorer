@@ -65,7 +65,7 @@ export const saveSessionAs = sessionName => (dispatch, getStore) => {
   const currentState = getStore();
   const dataToSave = getDataToSave(currentState);
   if (currentState.login.isEndUserAuthSupported) {
-    dispatch(saveToBackend(currentState.session.id, dataToSave));
+    dispatch(saveToBackend(undefined, dataToSave));  // Always create a new session id
   } else {
     // TODO: save to local storage
   }

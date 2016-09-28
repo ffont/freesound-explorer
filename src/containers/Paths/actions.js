@@ -121,17 +121,29 @@ export const onAudioTickPath = (pathID, bar, beat, tick, time) =>
     }
   };
 
-const linkPathToMetronome = (pathID, tickEvt, dispatch) => {
+const linkPathToMetronome = (pathID, tickEvt) => (dispatch) => {
   const { bar, beat, tick, time } = tickEvt.detail;
   dispatch(onAudioTickPath(pathID, bar, beat, tick, time));
 };
 
+const pathEventsListeners = (() => {
+  const listeners = {};
+  return {
+    getPathEventListener(pathID, dispatch) {
+      if (!listeners.pathID) {
+        listeners.pathID = evt => dispatch(linkPathToMetronome(pathID, evt));
+      }
+      return listeners.pathID;
+    },
+  };
+})();
+
 export const addPathEventListener = pathID => (dispatch) => {
-  window.addEventListener('tick', evt => linkPathToMetronome(pathID, evt, dispatch), false);
+  window.addEventListener('tick', pathEventsListeners.getPathEventListener(pathID, dispatch), false);
 };
 
 export const removePathEventListener = pathID => (dispatch) => {
-  window.removeEventListener('tick', evt => linkPathToMetronome(pathID, evt, dispatch), false);
+  window.removeEventListener('tick', pathEventsListeners.getPathEventListener(pathID, dispatch), false);
 };
 
 export const addPath = sounds => (dispatch) => {

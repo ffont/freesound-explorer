@@ -4,6 +4,8 @@ import { loadJSON, postJSON } from 'utils/requests';
 import { getDataToSave } from './utils';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { setSessionID, updateSessionName } from '../Session/actions';
+import { addPathEventListener, removePathEventListener } from '../Paths/actions';
+import { stopMetronome } from '../Metronome/actions';
 
 export const NEW_SESSION = 'NEW_SESSION';
 export const SAVE_SESSION = 'SAVE_SESSION';
@@ -69,12 +71,27 @@ export const saveSessionAs = sessionName => (dispatch, getStore) => {
   }
 };
 
+const preRestoreSession = () => (dispatch, getStore) => {
+  dispatch(stopMetronome());
+  const state = getStore();
+  state.paths.paths.forEach(path => dispatch(removePathEventListener(path.id)));
+};
+
+const postRestoreSession = () => (dispatch, getStore) => {
+  // Use this function to do all the stuff that is needed to
+  // make a loaded session ready for playing/continue editing (e.g. setting listeners on paths)
+  const state = getStore();
+  state.paths.paths.forEach(path => dispatch(addPathEventListener(path.id)));
+};
+
 const loadFromBackend = sessionID => (dispatch) => {
   const url = `${URLS.LOAD_SESSION}?sid=${sessionID}`;
   dispatch(backendLoadRequest());
   loadJSON(url).then(
     (data) => {
+      dispatch(preRestoreSession());
       dispatch(Object.assign({}, data.data, { type: LOAD_SESSION }));
+      dispatch(postRestoreSession());
       dispatch(backendLoadSuccess());
       dispatch(displaySystemMessage(
         'Session loaded!', MESSAGE_STATUS.SUCCESS));

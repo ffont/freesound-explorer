@@ -1,5 +1,6 @@
 import { pick, omit, mapValues } from 'lodash';
 import { reducersToExport } from './storableReducer';
+// import { pathInitialState } from '../Paths/reducer';
 
 
 export const handleMapReducer = state => omit(state, 'forceMapUpdate');
@@ -8,10 +9,13 @@ export const handleMetronomeReducer = state => pick(state, 'tempo');
 
 export const handleMidiReducer = state => pick(state, 'notesMapped');
 
-export const pathsForbiddenKeys = ['soundCurrentlyPlaying'];
 export const handlePathsReducer = (state) => {
   const { paths } = state;
-  const filteredPaths = paths.map(path => omit(path, pathsForbiddenKeys));
+  const filteredPaths = paths.map(path =>
+    Object.assign({}, path,
+      { soundCurrentlyPlaying: { soundIdx: undefined, willFinishAt: undefined } })
+      // { soundCurrentlyPlaying: pathInitialState.soundCurrentlyPlaying })
+  );
   return { paths: filteredPaths };
 };
 

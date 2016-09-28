@@ -10,6 +10,7 @@ SESSION_PROTECTION = 'strong'
 CUSTOM_STATIC_FOLDER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),"..","static"))
 
 ALLOW_UNAUTHENTICATED_USER_SAVE_LOAD = True
+DEMO_SESSIONS_FOLDER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),"demo_sessions"))
 SESSIONS_FOLDER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),"sessions"))
 if not os.path.exists(SESSIONS_FOLDER_PATH): os.mkdir(SESSIONS_FOLDER_PATH)
 

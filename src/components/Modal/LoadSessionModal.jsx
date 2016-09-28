@@ -9,7 +9,7 @@ const modalEntryPropTypes = {
 
 const ModalEntry = props =>
   <button onClick={() => props.loadSession(props.session.id)}>
-    {props.session.name} | {props.session.lastModified} | {props.session.id}
+    {`"${props.session.name}"`} {(props.session.author) ? `by ${props.session.author}` : null } | {props.session.lastModified.slice(0, -10)}
   </button>;
 ModalEntry.propTypes = modalEntryPropTypes;
 

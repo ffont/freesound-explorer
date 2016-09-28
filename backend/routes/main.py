@@ -10,6 +10,29 @@ import datetime
 import os
 
 
+def is_valid_uuid(uuid_string):
+    try:
+        val = uuid.UUID(uuid_string)
+    except ValueError:
+        return False
+    return True
+
+demo_sessions_data = []
+def load_demo_sessions_data():
+    for filename in [f for f in os.listdir(app.config['DEMO_SESSIONS_FOLDER_PATH']) if f.endswith('.json')]:
+        file_path = '%s/%s' % (app.config['DEMO_SESSIONS_FOLDER_PATH'], filename)
+        file_contents = json.load(open(file_path, 'r'))
+        demo_sessions_data.append((
+            file_contents['data']['session']['name'],
+            filename.replace('.json', ''),  # Use filename instead of id
+            file_contents['lastModified'],
+            file_contents['data']['session']['author'],
+            file_contents
+        ))
+
+# On start load demo sessions data (only run once)
+load_demo_sessions_data()
+
 # Reoute to serve static files from a folder outside the flask app package
 @app.route('/static/<path:filename>')
 def custom_static(filename):
@@ -51,6 +74,8 @@ def save():
 
     # Create object in db
     session_id = request.args.get('sid', None)
+    if not is_valid_uuid(session_id):
+        session_id = None  # Session id comes from demo session, we create new version with new id
     if session_id is not None:
         instance = Session.query.filter_by(id=session_id).first()
         if not instance:
@@ -67,6 +92,7 @@ def save():
         instance = Session(id=session_id, user_id=user_id)
         instance.created = datetime.datetime.utcnow()
 
+    data['session']['author'] = username
     if data['session']['name']:
         session_name = data['session']['name']
     else:
@@ -113,35 +139,52 @@ def available():
     if user_id == 0 and not app.config['ALLOW_UNAUTHENTICATED_USER_SAVE_LOAD']:
         return make_response(jsonify({'errors': True, 'msg': 'Unauthenticated user'}), 401)
 
+    # Add demo sessions
+    demo_sessions = [{
+        'name': ds_name,
+        'id': ds_id,
+        'lastModified': ds_modified,
+        'author': ds_author
+    } for ds_name, ds_id, ds_modified, ds_author, _ in demo_sessions_data]
+
+    # Add user sessions
     sessions = Session.query.filter_by(user_id=user_id)
     user_sessions = [{
         'name': session.name,
         'id': session.id,
-        'lastModified': str(session.last_modified) } for session in sessions]
+        'lastModified': str(session.last_modified),
+        'author': username
+    } for session in sessions]
 
     return make_response(jsonify({
         'username': username,
         'userID': user_id,
         'errors': False,
-        'userSessions': user_sessions
+        'userSessions': user_sessions,
+        'demoSessions': demo_sessions
     }), 200)
 
 
 @app.route('/load/')
 def load():
     # Returns the contents of the session file
-
     session_id = request.args.get('sid', None)
     if session_id is None or session_id == '':
         return make_response(jsonify({'errors': True, 'msg': 'No session id provided'}), 400)
 
-    instance = Session.query.filter_by(id=session_id).first()
-    if not instance:
-        return make_response(jsonify({'errors': True, 'msg': 'Session not found'}), 400)
+    if is_valid_uuid(session_id):
+        # Session stored in db
+        instance = Session.query.filter_by(id=session_id).first()
+        if not instance:
+            return make_response(jsonify({'errors': True, 'msg': 'Session not found'}), 400)
 
-    file_path = '%s/%s/%s.json' % (app.config['SESSIONS_FOLDER_PATH'], instance.user_id, session_id)
-    if not os.path.exists(file_path):
-        return make_response(jsonify({'errors': True, 'msg': 'Session data could not be found'}), 400)
+        file_path = '%s/%s/%s.json' % (app.config['SESSIONS_FOLDER_PATH'], instance.user_id, session_id)
+        if not os.path.exists(file_path):
+            return make_response(jsonify({'errors': True, 'msg': 'Session data could not be found'}), 400)
+    else:
+        # Demo session
+        print session_id
+        file_path = '%s/%s.json' % (app.config['DEMO_SESSIONS_FOLDER_PATH'], session_id)
 
     file_contents = json.load(open(file_path))
     return make_response(jsonify(file_contents), 200)

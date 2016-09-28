@@ -12,13 +12,14 @@ const propTypes = {
 class LoadSessionModalContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { availableSessions: [], userID: '' };
+    this.state = { demoSessions: [], availableSessions: [], userID: '' };
   }
 
   componentWillMount() {
     loadJSON(URLS.AVAILABLE_SESSIONS).then((response) => {
       this.setState({
         availableSessions: response.userSessions,
+        demoSessions: response.demoSessions,
         userID: `${response.userID}`,
       });
     });
@@ -27,7 +28,7 @@ class LoadSessionModalContainer extends React.Component {
   render() {
     return (
       <LoadSessionModal
-        sessions={this.state.availableSessions}
+        sessions={this.state.demoSessions.concat(this.state.availableSessions)}
         loadSession={this.props.loadSession}
       />
     );

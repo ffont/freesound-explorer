@@ -14,6 +14,7 @@ export const URLS = {
   SAVE_SESSION: '/save/',
   LOAD_SESSION: '/load/',
   AVAILABLE_SESSIONS: '/available/',
+  DELETE_SESSION: '/delete/',
 };
 
 // messagesBox

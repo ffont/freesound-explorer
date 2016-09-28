@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { loadJSON } from 'utils/requests';
-import LoadSessionModal from 'components/Modal/LoadSessionModal';
+import LoadSessionModal from 'components/Modal/LoadSession/LoadSessionModal';
 import { URLS } from 'constants';
 import { loadSession } from '../SessionsHandler/actions';
 
@@ -28,8 +28,10 @@ class LoadSessionModalContainer extends React.Component {
   render() {
     return (
       <LoadSessionModal
-        sessions={this.state.demoSessions.concat(this.state.availableSessions)}
+        userSessions={this.state.availableSessions}
+        demoSessions={this.state.demoSessions}
         loadSession={this.props.loadSession}
+        deleteSession={() => { console.log('delete session'); }}
       />
     );
   }

@@ -44,3 +44,20 @@ export const range = (param1, param2, param3) => {
   }
   throw Error('Range must be called with at least one valid parameter');
 };
+
+/** the actual search engine */
+const entrySatisfiesSearch = (entry, search, nameKey, aliasesKey) => {
+  const preprocessName = name => name.replace(/\W/g, '').toLowerCase();
+  const letters = Array.prototype.slice.call(preprocessName(search));
+  const alphanumeric = '\\w*';
+  const regex = letters.reduce((curRegex, curLetter) =>
+    curRegex + curLetter + alphanumeric,
+    alphanumeric);
+  const aliases = (aliasesKey && entry[aliasesKey]) || [];
+  const entryNames = [entry[nameKey], ...aliases];
+  return entryNames.some(name => Boolean(preprocessName(name).match(new RegExp(regex))));
+};
+
+export const robustSearch = (searchInput, items, nameKey = 'name', aliasesKey) => {
+  return items.filter(item => entrySatisfiesSearch(item, searchInput, nameKey, aliasesKey));
+};

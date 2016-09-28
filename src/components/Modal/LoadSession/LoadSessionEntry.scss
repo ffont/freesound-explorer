@@ -1,0 +1,20 @@
+@import "../../../stylesheets/variables.json";
+@import "../../../stylesheets/mixins";
+
+.LoadSessionEntry {
+  text-align: center;
+  position: relative;
+  padding: 20px;
+  &:not(:last-child) {
+    border-bottom: 1px solid white;
+  }
+}
+
+.LoadSessionEntry__button {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  @include base-focus;
+}

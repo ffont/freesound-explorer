@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { loadJSON } from 'utils/requests';
 import LoadSessionModal from 'components/Modal/LoadSession/LoadSessionModal';
 import { URLS } from 'constants';
-import { loadSession } from '../SessionsHandler/actions';
+import { loadSession, removeSession } from '../SessionsHandler/actions';
 
 const propTypes = {
   loadSession: React.PropTypes.func,
+  removeSession: React.PropTypes.func,
 };
 
 class LoadSessionModalContainer extends React.Component {
@@ -31,7 +32,7 @@ class LoadSessionModalContainer extends React.Component {
         userSessions={this.state.availableSessions}
         demoSessions={this.state.demoSessions}
         loadSession={this.props.loadSession}
-        deleteSession={() => { console.log('delete session'); }}
+        removeSession={this.props.removeSession}
       />
     );
   }
@@ -39,4 +40,7 @@ class LoadSessionModalContainer extends React.Component {
 
 
 LoadSessionModalContainer.propTypes = propTypes;
-export default connect(() => ({}), { loadSession })(LoadSessionModalContainer);
+export default connect(() => ({}), {
+  loadSession,
+  removeSession,
+})(LoadSessionModalContainer);

@@ -2,4 +2,11 @@
 
 .LoadSessionModal {
   @include base-modal;
+  padding: 30px;
+}
+
+.LoadSessionModal__inputs {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }

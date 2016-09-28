@@ -29,7 +29,7 @@ const saveSessionOptions = (props) => {
 const getOptions = props => [
   newSessionOption(props),
   ...saveSessionOptions(props),
-  makeOption('upload', 'restore session', () =>
+  makeOption('upload', 'load session', () =>
     props.setModalPage(MODAL_PAGES.LOAD_SESSION)),
 ];
 

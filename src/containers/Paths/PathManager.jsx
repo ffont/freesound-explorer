@@ -20,7 +20,7 @@ const propTypes = {
 };
 
 const beatButtons = [
-  { name: '1_4beat', icon: 'x' }, // We use 1/16 which effectively means no sync
+  { name: '1_4beat', icon: '1/16' },
   { name: '1_2beat', icon: '1/8' },
   { name: 'beat', icon: '1/4' },
   { name: '2xbeat', icon: '1/2' },

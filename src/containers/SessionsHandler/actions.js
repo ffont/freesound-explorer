@@ -125,12 +125,38 @@ export const loadSession = sessionID => (dispatch, getStore) => {
   }
 };
 
+export const getAvailableSessionsBackend = () => (dispatch) => {
+  loadJSON(URLS.AVAILABLE_SESSIONS).then(
+    (data) => {
+      dispatch(setAvailableUserSessions(data.userSessions));
+      dispatch(setAvailableDemoSessions(data.demoSessions));
+    },
+    (data) => {
+      const message = (data && data.msg) || 'Unknown error';
+      dispatch(displaySystemMessage(
+        `Error loading available sessions: ${message}`, MESSAGE_STATUS.ERROR));
+    }
+  );
+};
+
+export const getAvailableSessions = () => (dispatch, getStore) => {
+  const currentState = getStore();
+  if (currentState.login.isEndUserAuthSupported) {
+    dispatch(getAvailableSessionsBackend());
+  } else {
+    // TODO: remove from local storage
+    dispatch(displaySystemMessage('Cant\'t get available sessions because no backend has been detected...',
+      MESSAGE_STATUS.ERROR));
+  }
+};
+
 const removeFromBackend = sessionID => (dispatch) => {
   const url = `${URLS.REMOVE_SESSION}?sid=${sessionID}`;
   loadJSON(url).then(
     (data) => {
       dispatch(backendDeleteSuccess());
       dispatch(displaySystemMessage(`Deleted session ${data.name}!`, MESSAGE_STATUS.SUCCESS));
+      dispatch(getAvailableSessions());
     },
     (data) => {
       const message = (data && data.msg) || 'Unknown error';
@@ -148,31 +174,6 @@ export const removeSession = sessionID => (dispatch, getStore) => {
   } else {
     // TODO: remove from local storage
     dispatch(displaySystemMessage('Cant\'t delete because no backend has been detected...',
-      MESSAGE_STATUS.ERROR));
-  }
-};
-
-export const getAvailableSessionsBackend = () => (dispatch) => {
-  loadJSON(URLS.AVAILABLE_SESSIONS).then(
-    (data) => {
-      dispatch(setAvailableUserSessions(data.userSessions));
-      dispatch(setAvailableDemoSessions(data.demoSessions));
-    },
-    (data) => {
-      const message = (data && data.msg) || 'Unknown error';
-      dispatch(displaySystemMessage(
-        `Error loading available sessions: ${message}`, MESSAGE_STATUS.ERROR));
-    }
-  );
-};
-
-export const getAvailableSessions = sessionID => (dispatch, getStore) => {
-  const currentState = getStore();
-  if (currentState.login.isEndUserAuthSupported) {
-    dispatch(getAvailableSessionsBackend(sessionID));
-  } else {
-    // TODO: remove from local storage
-    dispatch(displaySystemMessage('Cant\'t get available sessions because no backend has been detected...',
       MESSAGE_STATUS.ERROR));
   }
 };

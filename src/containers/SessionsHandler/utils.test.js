@@ -39,7 +39,7 @@ describe('getDataToSave', () => {
 describe('handleMapReducer', () => {
   const filteredData = utils.handleMapReducer(curState.map);
   it('omits forceMapUpdate', () => {
-    expect(Object.keys(filteredData).includes('forceMapUpdate')).toEqual(false);
+    expect(Object.keys(filteredData)).not.toContain('forceMapUpdate');
   });
 });
 
@@ -56,7 +56,7 @@ describe('handleMetronomeReducer', () => {
 describe('handleMidiReducer', () => {
   const filteredData = utils.handleMidiReducer(curState.midi);
   it('picks notesMapped', () => {
-    expect(Object.keys(filteredData).includes('notesMapped')).toEqual(true);
+    expect(Object.keys(filteredData)).toContain('notesMapped');
   });
   it('doesn\'t pick any other key', () => {
     expect(Object.keys(filteredData).length).toEqual(1);
@@ -100,9 +100,9 @@ describe('handleSoundsReducer', () => {
   });
   it('removes the key forbidden keys', () => {
     const filteredSound = filteredData.byID['s-1'];
-    expect(Object.keys(filteredSound).includes('buffer')).toEqual(false);
-    expect(Object.keys(filteredSound).includes('isHovered')).toEqual(false);
-    expect(Object.keys(filteredSound).includes('isPlaying')).toEqual(false);
+    expect(Object.keys(filteredSound)).not.toContain('buffer');
+    expect(Object.keys(filteredSound)).not.toContain('isHovered');
+    expect(Object.keys(filteredSound)).not.toContain('isPlaying');
     expect(Object.keys(filteredSound).length).toEqual(2);
   });
 });

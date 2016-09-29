@@ -70,9 +70,9 @@ describe('handlePathsReducer', () => {
     expect(Object.keys(filteredData).length).toEqual(1);
     expect(Object.keys(filteredData)[0]).toEqual('paths');
   });
-  it('removes the key soundCurrentlyPlaying', () => {
-    expect(Object.keys(filteredData.paths[0]).includes('soundCurrentlyPlaying')).toEqual(false);
-    expect(Object.keys(filteredData.paths[0]).length).toEqual(2);
+  const pathInitialState = require('../Paths/reducer').pathInitialState; // eslint-disable-line
+  it('sets soundCurrentlyPlaying to its initial state', () => {
+    expect(filteredData.paths[0].soundCurrentlyPlaying).toEqual(pathInitialState.soundCurrentlyPlaying); // eslint-disable-line
   });
 });
 

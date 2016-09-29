@@ -25,5 +25,9 @@
   bottom: 0;
   right: 0;
   width: 50px;
-  @include base-focus;
+  i { color: #8a5252; }
+  @include base-focus(transform 0.2s ease-in-out);
+  &:hover {
+    transform: scale(1.3);
+  }
 }

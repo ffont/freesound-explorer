@@ -19,10 +19,10 @@
   }
 }
 
-@mixin base-focus {
+@mixin base-focus($transitions...) {
   box-sizing: border-box;
   border: 3px solid transparent;
-  transition: border 0.2s ease-in-out;
+  transition: border 0.2s ease-in-out, $transitions;
   &:focus, &.focus {
     outline: 0;
     border: 3px solid $accentColor;

@@ -3,6 +3,7 @@ import { MESSAGE_STATUS, URLS } from 'constants';
 import { loadJSON, postJSON } from 'utils/requests';
 import { getDataToSave } from './utils';
 import { displaySystemMessage } from '../MessagesBox/actions';
+import { forceMapPositionUpdate } from '../Map/actions';
 import { setSessionID, updateSessionName } from '../Session/actions';
 import { addPathEventListener, removePathEventListener } from '../Paths/actions';
 import { stopMetronome } from '../Metronome/actions';
@@ -80,6 +81,7 @@ export const saveSessionAs = sessionName => (dispatch, getStore) => {
 
 const preRestoreSession = () => (dispatch, getStore) => {
   dispatch(stopMetronome());
+  dispatch(forceMapPositionUpdate({ translateX: 0, translateY: 0, scale: 1 }));
   const state = getStore();
   state.paths.paths.forEach(path => dispatch(removePathEventListener(path.id)));
 };

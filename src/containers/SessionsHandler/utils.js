@@ -19,7 +19,9 @@ export const handlePathsReducer = (state) => {
   return { paths: filteredPaths };
 };
 
-export const handleSessionReducer = state => omit(state, 'hasUnsavedProgress');
+export const sessionsForbiddenKeys = ['hasUnsavedProgress',
+  'availableUserSessions', 'availableDemoSessions'];
+export const handleSessionReducer = state => omit(state, sessionsForbiddenKeys);
 
 export const byIDForbiddenKeys = ['buffer', 'isHovered', 'isPlaying'];
 export const handleSoundsReducer = (state) => {

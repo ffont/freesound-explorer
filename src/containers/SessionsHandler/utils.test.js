@@ -82,8 +82,10 @@ describe('handleSessionReducer', () => {
     expect(Object.keys(utils.handleSessionReducer(session))).toContain('name');
     expect(Object.keys(utils.handleSessionReducer(session))).toContain('id');
   });
-  it('correctly doesn\'t include hasUnsavedProgress key', () => {
+  it('correctly doesn\'t include forbidden keys', () => {
     expect(Object.keys(utils.handleSessionReducer(session))).not.toContain('hasUnsavedProgress');
+    expect(Object.keys(utils.handleSessionReducer(session))).not.toContain('availableUserSessions');
+    expect(Object.keys(utils.handleSessionReducer(session))).not.toContain('availableDemoSessions');
   });
 });
 

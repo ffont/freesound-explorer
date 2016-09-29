@@ -3,7 +3,8 @@ import { MESSAGE_STATUS, URLS } from 'constants';
 import { loadJSON, postJSON } from 'utils/requests';
 import { getDataToSave } from './utils';
 import { displaySystemMessage } from '../MessagesBox/actions';
-import { setSessionID, updateSessionName } from '../Session/actions';
+import { setSessionID, updateSessionName, setAvailableUserSessions,
+  setAvailableDemoSessions } from '../Session/actions';
 import { addPathEventListener, removePathEventListener } from '../Paths/actions';
 import { stopMetronome } from '../Metronome/actions';
 
@@ -134,7 +135,7 @@ const removeFromBackend = sessionID => (dispatch) => {
     (data) => {
       const message = (data && data.msg) || 'Unknown error';
       dispatch(displaySystemMessage(
-        `Error loading session: ${message}`, MESSAGE_STATUS.ERROR));
+        `Error removing session: ${message}`, MESSAGE_STATUS.ERROR));
     }
   );
 };
@@ -147,6 +148,31 @@ export const removeSession = sessionID => (dispatch, getStore) => {
   } else {
     // TODO: remove from local storage
     dispatch(displaySystemMessage('Cant\'t delete because no backend has been detected...',
+      MESSAGE_STATUS.ERROR));
+  }
+};
+
+export const getAvailableSessionsBackend = () => (dispatch) => {
+  loadJSON(URLS.AVAILABLE_SESSIONS).then(
+    (data) => {
+      dispatch(setAvailableUserSessions(data.userSessions));
+      dispatch(setAvailableDemoSessions(data.demoSessions));
+    },
+    (data) => {
+      const message = (data && data.msg) || 'Unknown error';
+      dispatch(displaySystemMessage(
+        `Error loading available sessions: ${message}`, MESSAGE_STATUS.ERROR));
+    }
+  );
+};
+
+export const getAvailableSessions = sessionID => (dispatch, getStore) => {
+  const currentState = getStore();
+  if (currentState.login.isEndUserAuthSupported) {
+    dispatch(getAvailableSessionsBackend(sessionID));
+  } else {
+    // TODO: remove from local storage
+    dispatch(displaySystemMessage('Cant\'t get available sessions because no backend has been detected...',
       MESSAGE_STATUS.ERROR));
   }
 };

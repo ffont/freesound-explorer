@@ -1,36 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadJSON } from 'utils/requests';
 import LoadSessionModal from 'components/Modal/LoadSession/LoadSessionModal';
-import { URLS } from 'constants';
-import { loadSession, removeSession } from '../SessionsHandler/actions';
+import { loadSession, removeSession, getAvailableSessions } from '../SessionsHandler/actions';
 
 const propTypes = {
   loadSession: React.PropTypes.func,
   removeSession: React.PropTypes.func,
+  getAvailableSessions: React.PropTypes.func,
+  availableUserSessions: React.PropTypes.array,
+  availableDemoSessions: React.PropTypes.array,
 };
 
 class LoadSessionModalContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { demoSessions: [], availableSessions: [], userID: '' };
-  }
 
   componentWillMount() {
-    loadJSON(URLS.AVAILABLE_SESSIONS).then((response) => {
-      this.setState({
-        availableSessions: response.userSessions,
-        demoSessions: response.demoSessions,
-        userID: `${response.userID}`,
-      });
-    });
+    this.props.getAvailableSessions();
   }
 
   render() {
     return (
       <LoadSessionModal
-        userSessions={this.state.availableSessions}
-        demoSessions={this.state.demoSessions}
+        userSessions={this.props.availableUserSessions}
+        demoSessions={this.props.availableDemoSessions}
         loadSession={this.props.loadSession}
         removeSession={this.props.removeSession}
       />
@@ -38,9 +29,14 @@ class LoadSessionModalContainer extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  availableUserSessions: state.session.availableUserSessions,
+  availableDemoSessions: state.session.availableDemoSessions,
+});
 
 LoadSessionModalContainer.propTypes = propTypes;
-export default connect(() => ({}), {
+export default connect(mapStateToProps, {
   loadSession,
   removeSession,
+  getAvailableSessions,
 })(LoadSessionModalContainer);

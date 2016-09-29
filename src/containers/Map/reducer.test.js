@@ -1,7 +1,7 @@
 import deepFreeze from 'deep-freeze';
 import { default as reducer, initialState } from './reducer';
 import { SET_SPACE_AS_CENTER } from '../Spaces/actions';
-import { updateMapPosition } from './actions';
+import { updateMapPosition, forceMapPositionUpdate } from './actions';
 import { getMapCenter } from './utils';
 
 describe('map reducer', () => {
@@ -15,6 +15,14 @@ describe('map reducer', () => {
     const stateAfter = Object.assign({}, initialState, position);
     it('correctly updates state', () => {
       expect(reducer(stateBefore, updateMapPosition(position))).toEqual(stateAfter);
+    });
+  });
+  describe('forceMapPositionUpdate', () => {
+    const position = { translateX: 10, translateY: 20, scale: 3 };
+    const stateBefore = initialState;
+    const stateAfter = Object.assign({}, initialState, position, { forceMapUpdate: true });
+    it('correctly updates state', () => {
+      expect(reducer(stateBefore, forceMapPositionUpdate(position))).toEqual(stateAfter);
     });
   });
   describe('setSpaceAsCenter', () => {

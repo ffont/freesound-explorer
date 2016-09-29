@@ -1,4 +1,4 @@
-import { UPDATE_MAP_POSITION } from './actions';
+import { UPDATE_MAP_POSITION, FORCE_MAP_POSITION_UPDATE } from './actions';
 import { SET_SPACE_AS_CENTER } from '../Spaces/actions';
 import { getMapCenter } from './utils';
 import storable from '../SessionsHandler/storableReducer';
@@ -19,9 +19,10 @@ export const initialState = {
 
 const map = (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_MAP_POSITION: {
+    case UPDATE_MAP_POSITION:
+    case FORCE_MAP_POSITION_UPDATE: {
       const { translateX, translateY, scale } = action.position;
-      const forceMapUpdate = false;
+      const forceMapUpdate = action.type === FORCE_MAP_POSITION_UPDATE;
       return Object.assign({}, state, { translateX, translateY, scale, forceMapUpdate });
     }
     case SET_SPACE_AS_CENTER: {

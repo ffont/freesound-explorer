@@ -201,7 +201,13 @@ def delete():
     if session_id is None or session_id == '':
         return make_response(jsonify({'errors': True, 'msg': 'No session id provided'}), 400)
 
-    if not g.user.is_authenticated:
+    username = "AnonymousUser"
+    user_id = 0
+    if g.user.is_authenticated:
+        username = g.user.username
+        user_id = g.user.id
+
+    if not user_id and not app.config['ALLOW_UNAUTHENTICATED_USER_DELETE']:
         # Unauthenticated users can't delete sessions
         return make_response(jsonify({'errors': True, 'msg': 'Unauthenticated user'}), 401)
 
@@ -209,14 +215,14 @@ def delete():
     if not instance:
         return make_response(jsonify({'errors': True, 'msg': 'Session not found'}), 400)
 
-    if g.user.id != instance.user_id:
+    if user_id != instance.user_id:
         return make_response(jsonify({'errors': True, 'msg': 'Unnauthorized user'}), 401)
 
     # Do delete...
     name = instance.name
     db_session.delete(instance)
     db_session.commit()
-    file_path = '%s/%s/%s.json' % (app.config['SESSIONS_FOLDER_PATH'], session.user_id, session_id)
+    file_path = '%s/%s/%s.json' % (app.config['SESSIONS_FOLDER_PATH'], instance.user_id, session_id)
     try:
         os.remove(file_path)
     except OSError:

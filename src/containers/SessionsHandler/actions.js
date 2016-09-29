@@ -16,6 +16,7 @@ export const BACKEND_SAVE_FAILURE = 'BACKEND_SAVE_FAILURE';
 export const BACKEND_LOAD_REQUEST = 'BACKEND_LOAD_REQUEST';
 export const BACKEND_LOAD_SUCCESS = 'BACKEND_LOAD_SUCCESS';
 export const BACKEND_LOAD_FAILURE = 'BACKEND_LOAD_FAILURE';
+export const BACKEND_DELETE_SUCCESS = 'BACKEND_DELETE_SUCCESS';
 
 // no need to exports all these actions as they will be used internally in saveSession
 const backendSaveRequest = makeActionCreator(BACKEND_SAVE_REQUEST, 'sessionID', 'dataToSave');
@@ -24,6 +25,7 @@ const backendSaveFailure = makeActionCreator(BACKEND_SAVE_FAILURE, 'msg');
 const backendLoadRequest = makeActionCreator(BACKEND_LOAD_REQUEST);
 const backendLoadSuccess = makeActionCreator(BACKEND_LOAD_SUCCESS);
 const backendLoadFailure = makeActionCreator(BACKEND_LOAD_FAILURE, 'msg');
+const backendDeleteSuccess = makeActionCreator(BACKEND_DELETE_SUCCESS);
 
 export const newSession = makeActionCreator(NEW_SESSION);
 
@@ -39,7 +41,7 @@ const saveToBackend = (sessionID, dataToSave) => (dispatch) => {
       dispatch(setSessionID(data.sessionID));
       dispatch(updateSessionName(data.sessionName));
       dispatch(displaySystemMessage(
-        `Session successfully saved '${data.sessionName}'! (${data.sessionID})`, MESSAGE_STATUS.SUCCESS));
+        `Session successfully saved '${data.sessionName}'!`, MESSAGE_STATUS.SUCCESS));
     },
     (data) => {
       const message = (data && data.msg) || 'Unknown error';
@@ -118,6 +120,7 @@ const removeFromBackend = sessionID => (dispatch) => {
   const url = `${URLS.REMOVE_SESSION}?sid=${sessionID}`;
   loadJSON(url).then(
     (data) => {
+      dispatch(backendDeleteSuccess());
       dispatch(displaySystemMessage(`Deleted session ${data.name}!`, MESSAGE_STATUS.SUCCESS));
     },
     (data) => {

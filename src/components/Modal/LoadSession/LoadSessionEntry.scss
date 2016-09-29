@@ -15,6 +15,15 @@
   top: 0;
   bottom: 0;
   left: 0;
-  width: 100%;
+  width: calc(100% - 50px);
+  @include base-focus;
+}
+
+.LoadSessionEntry__delete-session {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 50px;
   @include base-focus;
 }

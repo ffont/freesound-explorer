@@ -17,7 +17,7 @@ const LoadSessionEntry = props => {
     <button
       className="LoadSessionEntry__delete-session"
       onClick={() => props.removeSession(props.session.id)}
-    >Delete</button>;
+    ><i className="fa fa-trash-o fa-lg" aria-hidden="true" /></button>;
   return (
     <div className="LoadSessionEntry">
       <button

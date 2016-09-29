@@ -1,5 +1,6 @@
 import { TOGGLE_MODAL, SET_MODAL_PAGE } from './actions';
-import { BACKEND_LOAD_SUCCESS, BACKEND_SAVE_SUCCESS } from '../SessionsHandler/actions';
+import { BACKEND_LOAD_SUCCESS, BACKEND_SAVE_SUCCESS,
+  BACKEND_DELETE_SUCCESS } from '../SessionsHandler/actions';
 
 export const initialState = {
   isVisible: false,
@@ -23,6 +24,9 @@ const modal = (state = initialState, action) => {
       return initialState;
     }
     case BACKEND_SAVE_SUCCESS: {
+      return initialState;
+    }
+    case BACKEND_DELETE_SUCCESS: {
       return initialState;
     }
     default:

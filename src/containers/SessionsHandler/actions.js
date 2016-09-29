@@ -156,7 +156,8 @@ const removeFromBackend = sessionID => (dispatch) => {
     (data) => {
       dispatch(backendDeleteSuccess());
       dispatch(displaySystemMessage(`Deleted session ${data.name}!`, MESSAGE_STATUS.SUCCESS));
-      dispatch(getAvailableSessions());
+      dispatch(setAvailableUserSessions(data.userSessions));
+      dispatch(setAvailableDemoSessions(data.demoSessions));
     },
     (data) => {
       const message = (data && data.msg) || 'Unknown error';

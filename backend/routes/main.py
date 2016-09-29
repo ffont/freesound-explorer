@@ -129,6 +129,25 @@ def save():
     return make_response(jsonify(
         {'errors': False, 'sessionName': session_name, 'sessionID': session_id }), 200)
 
+def get_available_sessions_for_user(user_id, username):
+    sessions = Session.query.filter_by(user_id=user_id)
+    user_sessions = [{
+        'name': session.name,
+        'id': session.id,
+        'lastModified': session.last_modified.isoformat(),
+        'author': username
+    } for session in sessions]
+    return user_sessions
+
+def get_availavle_demo_sessions():
+    demo_sessions = [{
+        'name': ds_name,
+        'id': ds_id,
+        'lastModified': ds_modified,
+        'author': ds_author
+    } for ds_name, ds_id, ds_modified, ds_author, _ in demo_sessions_data]
+    return demo_sessions
+
 @app.route('/available/')
 def available():
     # Returns a list of available sessions for the logged user (or AnonymousUser)
@@ -141,29 +160,12 @@ def available():
     if user_id == 0 and not app.config['ALLOW_UNAUTHENTICATED_USER_SAVE_LOAD']:
         return make_response(jsonify({'errors': True, 'msg': 'Unauthenticated user'}), 401)
 
-    # Add demo sessions
-    demo_sessions = [{
-        'name': ds_name,
-        'id': ds_id,
-        'lastModified': ds_modified,
-        'author': ds_author
-    } for ds_name, ds_id, ds_modified, ds_author, _ in demo_sessions_data]
-
-    # Add user sessions
-    sessions = Session.query.filter_by(user_id=user_id)
-    user_sessions = [{
-        'name': session.name,
-        'id': session.id,
-        'lastModified': session.last_modified.isoformat(),
-        'author': username
-    } for session in sessions]
-
     return make_response(jsonify({
         'username': username,
         'userID': user_id,
         'errors': False,
-        'userSessions': user_sessions,
-        'demoSessions': demo_sessions
+        'userSessions': get_available_sessions_for_user(user_id, username),
+        'demoSessions': get_availavle_demo_sessions()
     }), 200)
 
 
@@ -188,7 +190,7 @@ def load():
         # Demo session
         file_path = '%s/%s.json' % (app.config['DEMO_SESSIONS_FOLDER_PATH'], session_id)
         file_contents = json.load(open(file_path))
-        file_contents['data']['session']['id'] = ''  # Ignore id (if any)
+        file_contents['data']['session']['id'] = ''  # Ignore id (if any) so that session can't be saved in frontend (only 'saved as')
 
     return make_response(jsonify(file_contents), 200)
 
@@ -229,7 +231,13 @@ def delete():
         # No probme if file does not exist
         pass
 
-    return make_response(jsonify({'errors': False, 'name': name, 'id': session_id}), 200)
+    # Compute currently available sessions for the user (so that forntend does not need to
+    # make an extra request to update the panel)
+    user_sessions = get_available_sessions_for_user(user_id, username)
+    demo_sessions = get_availavle_demo_sessions()
+
+    return make_response(jsonify({'errors': False, 'name': name, 'id': session_id,
+        'userSessions': user_sessions, 'demoSessions': demo_sessions }), 200)
 
 
 @app.route('/logout/')

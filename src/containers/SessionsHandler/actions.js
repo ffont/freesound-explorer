@@ -73,6 +73,8 @@ export const saveSessionAs = sessionName => (dispatch, getStore) => {
     dispatch(saveToBackend(undefined, dataToSave));  // Always create a new session id
   } else {
     // TODO: save to local storage
+    dispatch(displaySystemMessage('Cant\'t save as because no backend has been detected...',
+      MESSAGE_STATUS.ERROR));
   }
 };
 

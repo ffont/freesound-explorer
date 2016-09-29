@@ -4,7 +4,8 @@ import { loadJSON, postJSON } from 'utils/requests';
 import { getDataToSave } from './utils';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { forceMapPositionUpdate } from '../Map/actions';
-import { setSessionID, updateSessionName } from '../Session/actions';
+import { setSessionID, updateSessionName, setAvailableUserSessions,
+  setAvailableDemoSessions } from '../Session/actions';
 import { addPathEventListener, removePathEventListener } from '../Paths/actions';
 import { stopMetronome } from '../Metronome/actions';
 
@@ -126,17 +127,44 @@ export const loadSession = sessionID => (dispatch, getStore) => {
   }
 };
 
+export const getAvailableSessionsBackend = () => (dispatch) => {
+  loadJSON(URLS.AVAILABLE_SESSIONS).then(
+    (data) => {
+      dispatch(setAvailableUserSessions(data.userSessions));
+      dispatch(setAvailableDemoSessions(data.demoSessions));
+    },
+    (data) => {
+      const message = (data && data.msg) || 'Unknown error';
+      dispatch(displaySystemMessage(
+        `Error loading available sessions: ${message}`, MESSAGE_STATUS.ERROR));
+    }
+  );
+};
+
+export const getAvailableSessions = () => (dispatch, getStore) => {
+  const currentState = getStore();
+  if (currentState.login.isEndUserAuthSupported) {
+    dispatch(getAvailableSessionsBackend());
+  } else {
+    // TODO: remove from local storage
+    dispatch(displaySystemMessage('Cant\'t get available sessions because no backend has been detected...',
+      MESSAGE_STATUS.ERROR));
+  }
+};
+
 const removeFromBackend = sessionID => (dispatch) => {
   const url = `${URLS.REMOVE_SESSION}?sid=${sessionID}`;
   loadJSON(url).then(
     (data) => {
       dispatch(backendDeleteSuccess());
       dispatch(displaySystemMessage(`Deleted session ${data.name}!`, MESSAGE_STATUS.SUCCESS));
+      dispatch(setAvailableUserSessions(data.userSessions));
+      dispatch(setAvailableDemoSessions(data.demoSessions));
     },
     (data) => {
       const message = (data && data.msg) || 'Unknown error';
       dispatch(displaySystemMessage(
-        `Error loading session: ${message}`, MESSAGE_STATUS.ERROR));
+        `Error removing session: ${message}`, MESSAGE_STATUS.ERROR));
     }
   );
 };

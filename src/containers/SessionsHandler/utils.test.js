@@ -70,7 +70,7 @@ describe('handlePathsReducer', () => {
     expect(Object.keys(filteredData).length).toEqual(1);
     expect(Object.keys(filteredData)[0]).toEqual('paths');
   });
-  it('removes the key soundCurrentlyPlaying', () => {
+  it('sets soundCurrentlyPlaying to its initial state', () => {
     expect(filteredData.paths[0].soundCurrentlyPlaying)
       .toEqual(pathInitialState.soundCurrentlyPlaying);
   });
@@ -82,8 +82,10 @@ describe('handleSessionReducer', () => {
     expect(Object.keys(utils.handleSessionReducer(session))).toContain('name');
     expect(Object.keys(utils.handleSessionReducer(session))).toContain('id');
   });
-  it('correctly doesn\'t include hasUnsavedProgress key', () => {
+  it('correctly doesn\'t include forbidden keys', () => {
     expect(Object.keys(utils.handleSessionReducer(session))).not.toContain('hasUnsavedProgress');
+    expect(Object.keys(utils.handleSessionReducer(session))).not.toContain('availableUserSessions');
+    expect(Object.keys(utils.handleSessionReducer(session))).not.toContain('availableDemoSessions');
   });
 });
 

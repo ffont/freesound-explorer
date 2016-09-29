@@ -6,7 +6,7 @@ import { initialState as mapInitialState } from '../Map/reducer';
 import { initialState as messagesBoxInitialState } from '../MessagesBox/reducer';
 import { initialState as metronomeInitialState } from '../Metronome/reducer';
 import { initialState as midiInitialState } from '../Midi/reducer';
-import { initialState as pathsInitialState } from '../Paths/reducer';
+import { initialState as pathsInitialState, pathInitialState } from '../Paths/reducer';
 import { initialState as searchInitialState } from '../Search/reducer';
 import { initialState as settingsInitialState } from '../Settings/reducer';
 import { initialState as sidebarInitialState } from '../Sidebar/reducer';
@@ -64,15 +64,15 @@ describe('handleMidiReducer', () => {
 });
 
 describe('handlePathsReducer', () => {
-  const paths = { paths: [{ id: '1', name: 'a', soundCurrentlyPlaying: false }] };
+  const paths = { paths: [{ id: '1', name: 'a', soundCurrentlyPlaying: {} }] };
   const filteredData = utils.handlePathsReducer(paths);
   it('correctly maps returns only paths key', () => {
     expect(Object.keys(filteredData).length).toEqual(1);
     expect(Object.keys(filteredData)[0]).toEqual('paths');
   });
   it('removes the key soundCurrentlyPlaying', () => {
-    expect(Object.keys(filteredData.paths[0]).includes('soundCurrentlyPlaying')).toEqual(false);
-    expect(Object.keys(filteredData.paths[0]).length).toEqual(2);
+    expect(filteredData.paths[0].soundCurrentlyPlaying)
+      .toEqual(pathInitialState.soundCurrentlyPlaying);
   });
 });
 

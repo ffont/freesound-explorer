@@ -35,6 +35,7 @@ const saveToBackend = (sessionID, dataToSave) => (dispatch) => {
     url = `${url}?sid=${sessionID}`;
   }
   dispatch(backendSaveRequest(sessionID, dataToSave));
+  dispatch(displaySystemMessage('Saving session...'));
   postJSON(url, dataToSave).then(
     (data) => {
       dispatch(backendSaveSuccess(data.sessionID));
@@ -59,6 +60,8 @@ export const saveSession = () => (dispatch, getStore) => {
     dispatch(saveToBackend(currentState.session.id, dataToSave));
   } else {
     // TODO: save to local storage
+    dispatch(displaySystemMessage('Cant\'t save because no backend has been detected...',
+      MESSAGE_STATUS.ERROR));
   }
 };
 
@@ -89,6 +92,7 @@ const postRestoreSession = () => (dispatch, getStore) => {
 const loadFromBackend = sessionID => (dispatch) => {
   const url = `${URLS.LOAD_SESSION}?sid=${sessionID}`;
   dispatch(backendLoadRequest());
+  dispatch(displaySystemMessage('Loading session...'));
   loadJSON(url).then(
     (data) => {
       dispatch(preRestoreSession());
@@ -113,6 +117,8 @@ export const loadSession = sessionID => (dispatch, getStore) => {
     dispatch(loadFromBackend(sessionID));
   } else {
     // TODO: load from local storage
+    dispatch(displaySystemMessage('Cant\'t load because no backend has been detected...',
+      MESSAGE_STATUS.ERROR));
   }
 };
 
@@ -138,5 +144,7 @@ export const removeSession = sessionID => (dispatch, getStore) => {
     dispatch(removeFromBackend(sessionID));
   } else {
     // TODO: remove from local storage
+    dispatch(displaySystemMessage('Cant\'t delete because no backend has been detected...',
+      MESSAGE_STATUS.ERROR));
   }
 };

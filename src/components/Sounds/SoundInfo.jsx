@@ -106,6 +106,21 @@ class SoundInfo extends React.Component {
     );
   }
 
+  getLicenseLabel() {
+    switch (this.props.sound.license) {
+      case 'http://creativecommons.org/publicdomain/zero/1.0/':
+        return 'CC0';
+      case 'http://creativecommons.org/licenses/by/3.0/':
+        return 'CC-BY';
+      case 'http://creativecommons.org/licenses/by-nc/3.0/':
+        return 'CC-BY-NC';
+      case 'http://creativecommons.org/licenses/sampling+/1.0/':
+        return 'S+';
+      default:
+        return '-';
+    }
+  }
+
   render() {
     const userButtons = this.getUserButtons();
     return (
@@ -113,7 +128,7 @@ class SoundInfo extends React.Component {
         <a href={this.props.sound.url} target="_blank">
           <div className="sound-info-modal-title">
             <div>{this.props.sound.name}</div>
-            <div>by {this.props.sound.username}</div>
+            <div>by {this.props.sound.username} ({this.getLicenseLabel()})</div>
           </div>
         </a>
         <div className="sound-info-modal-content">

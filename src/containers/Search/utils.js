@@ -36,7 +36,7 @@ function search(query = DEFAULT_QUERY, filter = '', maxResults = DEFAULT_MAX_RES
       page_size: maxPageResults,
       group_by_pack: 0,
       filter,
-      fields: 'id,previews,name,analysis,url,username,duration',
+      fields: 'id,previews,name,analysis,url,username,duration,tags,license',
       descriptors: extraDescriptors.join(),
     }));
     pageCounter += 1;
@@ -64,7 +64,7 @@ export function submitQuery(submittedQuery, maxResults, maxDuration) {
 const reshapePageResults = (pageResults, queryID) => {
   const results = pageResults.results;
   return results.reduce((curState, curSound, curIndex) => {
-    const { analysis, url, name, username, duration } = curSound;
+    const { analysis, url, name, username, duration, license, tags } = curSound;
     const id = `${curSound.id}-${queryID}`;
     const previewUrl = curSound.previews['preview-lq-mp3'];
     const fsObject = pageResults.getSound(curIndex);
@@ -89,6 +89,8 @@ const reshapePageResults = (pageResults, queryID) => {
           name,
           color,
           username,
+          license,
+          tags,
           duration, // Will be updated once sound is loaded to buffer
           bookmark,
           download,

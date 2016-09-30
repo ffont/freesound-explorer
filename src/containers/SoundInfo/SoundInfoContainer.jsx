@@ -8,6 +8,7 @@ import { bookmarkSound, downloadSound } from './actions';
 
 const propTypes = {
   isVisible: React.PropTypes.bool,
+  isMidiSupported: React.PropTypes.bool,
   soundID: React.PropTypes.string,
   sound: React.PropTypes.object,
   position: React.PropTypes.object,
@@ -30,11 +31,11 @@ const SoundInfoContainer = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const { notesMapped, soundCurrentlyLearnt } = state.midi;
+  const { notesMapped, soundCurrentlyLearnt, isMidiSupported } = state.midi;
   const { selectedPath } = state.paths;
   const sound = state.sounds.byID && state.sounds.byID[state.sounds.soundInfoModal.soundID];
   return Object.assign({}, state.sounds.soundInfoModal,
-    { sound, selectedPath, notesMapped, soundCurrentlyLearnt });
+    { sound, selectedPath, notesMapped, soundCurrentlyLearnt, isMidiSupported });
 };
 
 SoundInfoContainer.propTypes = propTypes;

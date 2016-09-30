@@ -5,6 +5,7 @@ import Waveform from '../Waveform';
 
 const propTypes = {
   isVisible: React.PropTypes.bool,
+  isMidiSupported: React.PropTypes.bool,
   sound: React.PropTypes.object,
   position: React.PropTypes.object,
   direction: React.PropTypes.string,
@@ -94,7 +95,7 @@ class SoundInfo extends React.Component {
 
   getUserButtons() {
     const { bookmarkSoundIcon, downloadSoundIcon } = this.getFreesoundButtons();
-    const midiLearnButton = this.getMidiLearnButton();
+    const midiLearnButton = (this.props.isMidiSupported) ? this.getMidiLearnButton() : null;
     const addToPathButton = this.getAddToPathButton();
     return (
       <div className="sound-info-buttons-container">

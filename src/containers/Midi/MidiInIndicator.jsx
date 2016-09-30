@@ -13,6 +13,7 @@ const propTypes = {
   inputDevice: React.PropTypes.string,
   setUpMIDIDevices: React.PropTypes.func,
   availableMIDIDevices: React.PropTypes.array,
+  isMidiSupported: React.PropTypes.bool,
 };
 
 class MidiInIndicator extends React.Component {
@@ -56,8 +57,11 @@ class MidiInIndicator extends React.Component {
           break;
       }
     }
+    const midiSupportedWarning = (this.props.isMidiSupported) ? null :
+      'MIDI input is not supported in your browser. Please use a browser that supports the Web MIDI api.';
     return (
       <div className="midi-indicator">
+        { midiSupportedWarning }
         <div className="selectors">
           <SelectWithLabel
             onChange={(evt) => {
@@ -113,8 +117,12 @@ class MidiInIndicator extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { latestReceivedMessages, inputChannel, inputDevice, availableMIDIDevices } = state.midi;
-  return { latestReceivedMessages, inputChannel, inputDevice, availableMIDIDevices };
+  const { latestReceivedMessages, inputChannel, inputDevice, availableMIDIDevices, isMidiSupported } = state.midi;
+  return { latestReceivedMessages,
+    inputChannel,
+    inputDevice,
+    availableMIDIDevices,
+    isMidiSupported };
 };
 
 MidiInIndicator.propTypes = propTypes;

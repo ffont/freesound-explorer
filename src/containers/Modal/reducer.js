@@ -1,5 +1,5 @@
 import { TOGGLE_MODAL, SET_MODAL_PAGE } from './actions';
-import { BACKEND_LOAD_SUCCESS, BACKEND_SAVE_SUCCESS } from '../SessionsHandler/actions';
+import { LOAD_SUCCESS, SAVE_SUCCESS } from '../SessionsHandler/actions';
 
 export const initialState = {
   isVisible: false,
@@ -19,10 +19,10 @@ const modal = (state = initialState, action) => {
         currentPage: action.newPage,
       });
     }
-    case BACKEND_LOAD_SUCCESS: {
+    case LOAD_SUCCESS: {
       return initialState;
     }
-    case BACKEND_SAVE_SUCCESS: {
+    case SAVE_SUCCESS: {
       return initialState;
     }
     default:

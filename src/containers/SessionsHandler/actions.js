@@ -8,28 +8,31 @@ import { setSessionID, updateSessionName, setAvailableUserSessions,
   setAvailableDemoSessions } from '../Session/actions';
 import { addPathEventListener, removePathEventListener } from '../Paths/actions';
 import { stopMetronome } from '../Metronome/actions';
+import { default as UUID } from 'node-uuid';
 
 export const NEW_SESSION = 'NEW_SESSION';
 export const SAVE_SESSION = 'SAVE_SESSION';
 export const LOAD_SESSION = 'LOAD_SESSION';
 export const BACKEND_SAVE_REQUEST = 'BACKEND_SAVE_REQUEST';
-export const BACKEND_SAVE_SUCCESS = 'BACKEND_SAVE_SUCCESS';
-export const BACKEND_SAVE_FAILURE = 'BACKEND_SAVE_FAILURE';
+export const SAVE_SUCCESS = 'SAVE_SUCCESS';
+export const SAVE_FAILURE = 'SAVE_FAILURE';
 export const BACKEND_LOAD_REQUEST = 'BACKEND_LOAD_REQUEST';
-export const BACKEND_LOAD_SUCCESS = 'BACKEND_LOAD_SUCCESS';
-export const BACKEND_LOAD_FAILURE = 'BACKEND_LOAD_FAILURE';
-export const BACKEND_DELETE_SUCCESS = 'BACKEND_DELETE_SUCCESS';
+export const LOAD_SUCCESS = 'LOAD_SUCCESS';
+export const LOAD_FAILURE = 'LOAD_FAILURE';
+export const DELETE_SUCCESS = 'DELETE_SUCCESS';
 
 // no need to exports all these actions as they will be used internally in saveSession
-const backendSaveRequest = makeActionCreator(BACKEND_SAVE_REQUEST, 'sessionID', 'dataToSave');
-const backendSaveSuccess = makeActionCreator(BACKEND_SAVE_SUCCESS, 'sessionID');
-const backendSaveFailure = makeActionCreator(BACKEND_SAVE_FAILURE, 'msg');
+const backendSaveRequest = makeActionCreator(BACKEND_SAVE_REQUEST);
+const saveSuccess = makeActionCreator(SAVE_SUCCESS);
+const saveFailure = makeActionCreator(SAVE_FAILURE);
 const backendLoadRequest = makeActionCreator(BACKEND_LOAD_REQUEST);
-const backendLoadSuccess = makeActionCreator(BACKEND_LOAD_SUCCESS);
-const backendLoadFailure = makeActionCreator(BACKEND_LOAD_FAILURE, 'msg');
-const backendDeleteSuccess = makeActionCreator(BACKEND_DELETE_SUCCESS);
+const loadSuccess = makeActionCreator(LOAD_SUCCESS);
+const loadFailure = makeActionCreator(LOAD_FAILURE);
+const deleteSuccess = makeActionCreator(DELETE_SUCCESS);
 
 export const newSession = makeActionCreator(NEW_SESSION);
+
+const SAVED_SESSIONS_LOCAL_STORAGE_KEY = 'savedSessions';
 
 const saveToBackend = (sessionID, dataToSave) => (dispatch) => {
   let url = URLS.SAVE_SESSION;
@@ -40,7 +43,7 @@ const saveToBackend = (sessionID, dataToSave) => (dispatch) => {
   dispatch(displaySystemMessage('Saving session...'));
   postJSON(url, dataToSave).then(
     (data) => {
-      dispatch(backendSaveSuccess(data.sessionID));
+      dispatch(saveSuccess());
       dispatch(setSessionID(data.sessionID));
       dispatch(updateSessionName(data.sessionName));
       dispatch(displaySystemMessage(
@@ -48,11 +51,49 @@ const saveToBackend = (sessionID, dataToSave) => (dispatch) => {
     },
     (data) => {
       const message = (data && data.msg) || 'Unknown error';
-      dispatch(backendSaveFailure(message));
+      dispatch(saveFailure());
       dispatch(displaySystemMessage(
         `Could not save the session: ${message}`, MESSAGE_STATUS.ERROR));
     }
   );
+};
+
+const saveToLocalStorage = (sessionID, dataToSave) => (dispatch) => {
+  dispatch(displaySystemMessage('Saving session...'));
+  let itemID = sessionID;
+  if (!itemID) {
+    itemID = UUID.v4();
+  }
+  let existingSessions = localStorage.getItem(SAVED_SESSIONS_LOCAL_STORAGE_KEY);
+  if (!existingSessions) {
+    existingSessions = [];
+  } else {
+    existingSessions = JSON.parse(existingSessions);
+  }
+  let sessionName = dataToSave.session.name;
+  if (!sessionName) {
+    sessionName = `Untitled session #${existingSessions.length + 1}`;
+  }
+  const mutableDataToSave = Object.assign({}, dataToSave);
+  mutableDataToSave.session.name = sessionName;
+  mutableDataToSave.session.id = itemID;
+  const d = new Date();
+  const objectToSave = { id: itemID, lastModified: d.toISOString(), data: mutableDataToSave };
+  let foundInExistingSessions = false;
+  existingSessions = existingSessions.map(session => {
+    if (session.id !== sessionID) return session;
+    foundInExistingSessions = true;
+    return objectToSave;
+  });
+  if (!foundInExistingSessions) {
+    existingSessions.push(objectToSave);
+  }
+  localStorage.setItem(SAVED_SESSIONS_LOCAL_STORAGE_KEY, JSON.stringify(existingSessions));
+  dispatch(saveSuccess());
+  dispatch(setSessionID(itemID));
+  dispatch(updateSessionName(sessionName));
+  dispatch(displaySystemMessage(
+    `Session successfully saved '${sessionName}'!`, MESSAGE_STATUS.SUCCESS));
 };
 
 export const saveSession = () => (dispatch, getStore) => {
@@ -61,9 +102,7 @@ export const saveSession = () => (dispatch, getStore) => {
   if (currentState.login.isEndUserAuthSupported) {
     dispatch(saveToBackend(currentState.session.id, dataToSave));
   } else {
-    // TODO: save to local storage
-    dispatch(displaySystemMessage('Cant\'t save because no backend has been detected...',
-      MESSAGE_STATUS.ERROR));
+    dispatch(saveToLocalStorage(currentState.session.id, dataToSave));
   }
 };
 
@@ -74,9 +113,7 @@ export const saveSessionAs = sessionName => (dispatch, getStore) => {
   if (currentState.login.isEndUserAuthSupported) {
     dispatch(saveToBackend(undefined, dataToSave));  // Always create a new session id
   } else {
-    // TODO: save to local storage
-    dispatch(displaySystemMessage('Cant\'t save as because no backend has been detected...',
-      MESSAGE_STATUS.ERROR));
+    dispatch(saveToLocalStorage(undefined, dataToSave));  // Always create a new session id
   }
 };
 
@@ -103,17 +140,36 @@ const loadFromBackend = sessionID => (dispatch) => {
       dispatch(preRestoreSession());
       dispatch(Object.assign({}, data.data, { type: LOAD_SESSION }));
       dispatch(postRestoreSession());
-      dispatch(backendLoadSuccess());
+      dispatch(loadSuccess());
       dispatch(displaySystemMessage(
         'Session loaded!', MESSAGE_STATUS.SUCCESS));
     },
     (data) => {
       const message = (data && data.msg) || 'Unknown error';
-      dispatch(backendLoadFailure());
+      dispatch(loadFailure());
       dispatch(displaySystemMessage(
         `Error loading session: ${message}`, MESSAGE_STATUS.ERROR));
     }
   );
+};
+
+const loadFromLocalStorage = sessionID => (dispatch) => {
+  const existingSessions = localStorage.getItem(SAVED_SESSIONS_LOCAL_STORAGE_KEY);
+  let filteredSessions = [];
+  if (existingSessions) {
+    filteredSessions = JSON.parse(existingSessions).filter(session => session.id === sessionID);
+  }
+  if (filteredSessions.length) {
+    dispatch(preRestoreSession());
+    dispatch(Object.assign({}, filteredSessions[0].data, { type: LOAD_SESSION }));
+    dispatch(postRestoreSession());
+    dispatch(loadSuccess());
+    dispatch(displaySystemMessage(
+      'Session loaded!', MESSAGE_STATUS.SUCCESS));
+  } else {
+    dispatch(displaySystemMessage(
+      'Session not found...', MESSAGE_STATUS.ERROR));
+  }
 };
 
 export const loadSession = sessionID => (dispatch, getStore) => {
@@ -121,9 +177,7 @@ export const loadSession = sessionID => (dispatch, getStore) => {
   if (currentState.login.isEndUserAuthSupported) {
     dispatch(loadFromBackend(sessionID));
   } else {
-    // TODO: load from local storage
-    dispatch(displaySystemMessage('Cant\'t load because no backend has been detected...',
-      MESSAGE_STATUS.ERROR));
+    dispatch(loadFromLocalStorage(sessionID));
   }
 };
 
@@ -141,14 +195,29 @@ export const getAvailableSessionsBackend = () => (dispatch) => {
   );
 };
 
+export const getAvailableSessionsLocalStorage = () => (dispatch) => {
+  const existingSessions = localStorage.getItem(SAVED_SESSIONS_LOCAL_STORAGE_KEY);
+  if (existingSessions) {
+    const formattedSessions = JSON.parse(existingSessions).map((session) => {
+      return {
+        name: session.data.session.name,
+        id: session.id,
+        lastModified: session.lastModified,
+        author: session.data.session.author,
+      };
+    });
+    dispatch(setAvailableUserSessions(formattedSessions));
+  } else {
+    dispatch(setAvailableUserSessions([]));
+  }
+};
+
 export const getAvailableSessions = () => (dispatch, getStore) => {
   const currentState = getStore();
   if (currentState.login.isEndUserAuthSupported) {
     dispatch(getAvailableSessionsBackend());
   } else {
-    // TODO: remove from local storage
-    dispatch(displaySystemMessage('Cant\'t get available sessions because no backend has been detected...',
-      MESSAGE_STATUS.ERROR));
+    dispatch(getAvailableSessionsLocalStorage());
   }
 };
 
@@ -156,7 +225,7 @@ const removeFromBackend = sessionID => (dispatch) => {
   const url = `${URLS.REMOVE_SESSION}?sid=${sessionID}`;
   loadJSON(url).then(
     (data) => {
-      dispatch(backendDeleteSuccess());
+      dispatch(deleteSuccess());
       dispatch(displaySystemMessage(`Deleted session ${data.name}!`, MESSAGE_STATUS.SUCCESS));
       dispatch(setAvailableUserSessions(data.userSessions));
       dispatch(setAvailableDemoSessions(data.demoSessions));
@@ -169,14 +238,23 @@ const removeFromBackend = sessionID => (dispatch) => {
   );
 };
 
+const removeFromLocalStorage = sessionID => (dispatch) => {
+  const existingSessions = localStorage.getItem(SAVED_SESSIONS_LOCAL_STORAGE_KEY);
+  let filteredSessions = [];
+  if (existingSessions) {
+    filteredSessions = JSON.parse(existingSessions).filter(session => session.id !== sessionID);
+  }
+  localStorage.setItem(SAVED_SESSIONS_LOCAL_STORAGE_KEY, JSON.stringify(filteredSessions));
+  dispatch(deleteSuccess());
+  dispatch(displaySystemMessage('Deleted session!', MESSAGE_STATUS.SUCCESS));
+  dispatch(getAvailableSessionsLocalStorage());
+};
 
 export const removeSession = sessionID => (dispatch, getStore) => {
   const currentState = getStore();
   if (currentState.login.isEndUserAuthSupported) {
     dispatch(removeFromBackend(sessionID));
   } else {
-    // TODO: remove from local storage
-    dispatch(displaySystemMessage('Cant\'t delete because no backend has been detected...',
-      MESSAGE_STATUS.ERROR));
+    dispatch(removeFromLocalStorage(sessionID));
   }
 };

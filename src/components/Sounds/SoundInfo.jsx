@@ -42,7 +42,7 @@ class SoundInfo extends React.Component {
 
   getCurrentlyAssignedMidiNoteLabel() {
     return Object.keys(this.props.notesMapped).reduce((curNoteLabel, curNote) => {
-      if (this.props.notesMapped[curNoteLabel] === this.props.sound.id) {
+      if (this.props.notesMapped[curNote] === this.props.sound.id) {
         return midiNoteNumberToMidiNoteLabel(curNote);
       }
       return curNoteLabel;
@@ -110,7 +110,7 @@ class SoundInfo extends React.Component {
     const userButtons = this.getUserButtons();
     return (
       <div className={this.getClassName()} style={this.getPosition()}>
-        <a href={this.props.sound.url}>
+        <a href={this.props.sound.url} target="_blank">
           <div className="sound-info-modal-title">
             <div>{this.props.sound.name}</div>
             <div>by {this.props.sound.username}</div>

@@ -18,10 +18,8 @@ $modal-transition-duration: 0.3s;
     transition: opacity $modal-transition-duration/4;
   }
   &.active, &.active-down {
+    pointer-events: all;
     height: $soundInfoModalHeight;
-    a {
-      pointer-events: all;
-    }
     div {
       opacity: 1;
       // wait for modal to be totally spread before showing its content

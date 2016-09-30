@@ -52,6 +52,9 @@
   button {
     @include sidebar-nav-button;
   }
+  li.active {
+    background-color: $sidebarIconHoverColor;
+  }
 }
 
 .SidebarNavMenu__nav-icons {

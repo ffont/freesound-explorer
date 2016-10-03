@@ -123,7 +123,7 @@ def save():
     # Save session file
     if not os.path.exists(file_dir):
         os.mkdir(file_dir)
-    json.dump(file_contents, open(file_path, 'w'))
+    json.dump(file_contents, open(file_path, 'w'), indent=4)
 
 
     return make_response(jsonify(

@@ -54,9 +54,9 @@ class SliderRange extends React.Component {
 
   render() {
     return (
-      <div className="slider-range">
+      <div className="SliderRange">
         <label htmlFor={this.props.id}>{this.props.label}</label>
-        <div className="slider-range-wrapper">
+        <div className="SliderRange-wrapper">
           <input
             id={this.props.id}
             type="range"

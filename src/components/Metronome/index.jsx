@@ -15,8 +15,8 @@ const propTypes = {
 };
 
 const Metronome = props => (
-  <div className="metronome-wrapper" style={{ bottom: props.bottomArrowPosition }}>
-    <div className="metronome-slider">
+  <div className="Metronome__wrapper" style={{ bottom: props.bottomArrowPosition }}>
+    <div className="Metronome__slider">
       <SliderRange
         label=""
         minValue="40"
@@ -30,19 +30,19 @@ const Metronome = props => (
         id="max-results-slider"
       />
     </div>
-    <div className="metronome-controls">
-      <button onClick={props.toggleMetronome} >
-        {(props.isPlaying) ?
-          <i className="fa fa-stop fa-2x" aria-hidden="true" /> :
-          <i className="fa fa-play fa-2x" aria-hidden="true" />}
-      </button>
-    </div>
-    <div className="metronome-position">
+    <div className="Metronome__position">
       <ul>
         <li>{props.bar}</li>
         <li>{props.beat}</li>
         <li>{props.tick}</li>
       </ul>
+    </div>
+    <div className="Metronome__controls">
+      <button onClick={props.toggleMetronome} >
+        {(props.isPlaying) ?
+          <i className="fa fa-stop fa-2x" aria-hidden="true" /> :
+          <i className="fa fa-play fa-2x" aria-hidden="true" />}
+      </button>
     </div>
   </div>
 );

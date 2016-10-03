@@ -1,35 +1,32 @@
 @import "../../stylesheets/variables.json";
 
-.metronome-wrapper {
+.Metronome__wrapper {
   position:absolute;
-  right: 5px;
+  right: 20px;
+  padding-bottom: 15px;
   height: 45px;
+  display: flex;
+  align-items: center;
   transition: bottom 0.3s ease-in-out;
 }
 
-.metronome-slider {
-  float: left;
+.Metronome__slider {
   height: $metronomeHeight;
   width: 180px;
-  margin-top:-10px;
   margin-right: 5px;
 }
 
-.metronome-controls {
-  float: right;
+.Metronome__controls {
   height: $metronomeHeight;
   width: 40px;
-  margin-top:2px;
   font-size: 120%;
   button {
     width: 40px;
   }
 }
 
-.metronome-position {
-  float: right;
+.Metronome__position {
   height: $metronomeHeight;
-  width: 110px;
   font-size: 1.4em;
   ul {
     margin-top: 0px;
@@ -38,7 +35,7 @@
   }
   li {
     display:inline-block;
-    width: 35px;
+    min-width: 50px;
     height: $metronomeHeight;
     line-height: $metronomeHeight;
     text-align: center;

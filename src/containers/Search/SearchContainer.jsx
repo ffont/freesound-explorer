@@ -65,7 +65,7 @@ class QueryBox extends React.Component {
     return (
       <form
         id="query-form"
-        className="query-form"
+        className="QueryForm"
         onSubmit={(evt) => {
           evt.preventDefault();
           this.submitQuery();

@@ -1,7 +1,7 @@
 @import "./InputText.scss";
 @import "../../stylesheets/range.scss";
 
-.slider-range {
+.SliderRange {
   input[type=range] {
     @include styledInputRange();
     background-color: transparent;
@@ -10,9 +10,11 @@
   }
 }
 
-.slider-range-wrapper {
+.SliderRange-wrapper {
   position: relative;
-  margin: 10px 0 20px;
+  .QueryForm & {
+    margin: 5px 0 20px;
+  }
   span {
     position: absolute;
     transform: translate(-50%, -50%);

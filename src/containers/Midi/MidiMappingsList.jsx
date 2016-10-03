@@ -4,10 +4,12 @@ import MidiMapping from './MidiMapping';
 
 const propTypes = {
   notesMapped: React.PropTypes.object,
+  isMidiSupported: React.PropTypes.bool,
 };
 
 class MidiMappingsList extends React.Component {
-  render() {
+
+  getMappingsList() {
     return (
       <div className="midi-list">
         <div className="title-text">Assigned MIDI notes:</div>
@@ -23,11 +25,16 @@ class MidiMappingsList extends React.Component {
       </div>
     );
   }
+
+  render() {
+    const mappingsList = (this.props.isMidiSupported) ? this.getMappingsList() : null;
+    return mappingsList;
+  }
 }
 
 const mapStateToProps = (state) => {
-  const { notesMapped } = state.midi;
-  return { notesMapped };
+  const { notesMapped, isMidiSupported } = state.midi;
+  return { notesMapped, isMidiSupported };
 };
 
 MidiMappingsList.propTypes = propTypes;

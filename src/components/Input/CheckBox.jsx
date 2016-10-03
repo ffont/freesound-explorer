@@ -12,12 +12,16 @@ const propTypes = {
 const defaultProps = {
   onChange: () => {},
   id: 'check-box',
+  tabIndex: '0',
 };
 
 function CheckBox(props) {
   return (
-    <div className="check-box" onClick={props.onChange}>
-      <label htmlFor={props.id}>Play on hover</label>
+    <label
+      className="CheckBox__label"
+      htmlFor={props.id}
+    >
+      {props.label}
       <input
         id={props.id}
         type="checkbox"
@@ -28,7 +32,7 @@ function CheckBox(props) {
       <span
         className={`box${(props.checked) ? ' active' : ''}`}
       />
-    </div>
+    </label>
   );
 }
 

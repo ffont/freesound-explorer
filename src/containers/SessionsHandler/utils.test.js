@@ -45,8 +45,8 @@ describe('handleMapReducer', () => {
 
 describe('handleMetronomeReducer', () => {
   const filteredData = utils.handleMetronomeReducer(curState.metronome);
-  it('omits shouldPlaySound', () => {
-    expect(Object.keys(filteredData)).not.toContain('shouldPlaySound');
+  it('omits isPlaying', () => {
+    expect(Object.keys(filteredData)).not.toContain('isPlaying');
   });
   it('picks tempo', () => {
     expect(Object.keys(filteredData)).toContain('tempo');

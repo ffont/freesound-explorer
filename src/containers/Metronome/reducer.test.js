@@ -1,5 +1,5 @@
 import { updateMetronomeStatus, setTempo, startMetronomeAction,
-  stopMetronomeAction, setPlaySound }
+  stopMetronomeAction }
   from './actions';
 import { default as reducer, initialState } from './reducer';
 
@@ -36,14 +36,6 @@ describe('metronome reducer', () => {
     const stateAfter = Object.assign({}, initialState, { isPlaying: false });
     it('works correctly', () => {
       expect(reducer(initialState, stopMetronomeAction()))
-        .toEqual(stateAfter);
-    });
-  });
-  describe('setPlaySound', () => {
-    const shouldPlaySound = false;
-    const stateAfter = Object.assign({}, initialState, { shouldPlaySound });
-    it('works correctly', () => {
-      expect(reducer(initialState, setPlaySound(shouldPlaySound)))
         .toEqual(stateAfter);
     });
   });

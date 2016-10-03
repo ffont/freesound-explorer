@@ -9,6 +9,7 @@ import { setSessionID, updateSessionName, setAvailableUserSessions,
 import { addPathEventListener, removePathEventListener } from '../Paths/actions';
 import { stopMetronome } from '../Metronome/actions';
 import { default as UUID } from 'node-uuid';
+import { setUpMIDIDevices } from '../Midi/actions';
 
 export const NEW_SESSION = 'NEW_SESSION';
 export const SAVE_SESSION = 'SAVE_SESSION';
@@ -129,6 +130,7 @@ const postRestoreSession = () => (dispatch, getStore) => {
   // make a loaded session ready for playing/continue editing (e.g. setting listeners on paths)
   const state = getStore();
   state.paths.paths.forEach(path => dispatch(addPathEventListener(path.id)));
+  dispatch(setUpMIDIDevices());
 };
 
 const loadFromBackend = sessionID => (dispatch) => {

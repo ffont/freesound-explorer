@@ -11,13 +11,13 @@ const propTypes = {
     action: React.PropTypes.func,
     isDisabled: React.PropTypes.bool,
   })),
-  centerText: React.PropTypes.bool,
+  shouldCenterText: React.PropTypes.bool,
 };
 
 const OptionsList = props => (
   <ol className="OptionsList">
     {props.options.map((option) => {
-      const centeredClass = (props.centerText) ? ' centered' : '';
+      const centeredClass = (props.shouldCenterText) ? ' centered' : '';
       const buttonClassName = `OptionsList__clickable-option${centeredClass}`;
       return (
         <li key={option.name}>

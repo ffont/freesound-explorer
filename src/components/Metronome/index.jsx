@@ -5,7 +5,6 @@ import './Metronome.scss';
 const propTypes = {
   tempo: React.PropTypes.number,
   setTempo: React.PropTypes.func,
-  setPlaySound: React.PropTypes.func,
   shouldPlaySound: React.PropTypes.bool,
   toggleMetronome: React.PropTypes.func,
   isPlaying: React.PropTypes.bool,

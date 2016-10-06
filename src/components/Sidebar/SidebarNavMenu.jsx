@@ -25,12 +25,12 @@ const SidebarNavMenu = props => (
         <ul className="SidebarNavMenu__nav-icons" role="menu">
           {Object.keys(SIDEBAR_TABS).map(tab => (
             <li
-              className={(props.activeTab === SIDEBAR_TABS[tab]) ? 'active' : ''}
               key={tab}
               role="menuitem"
             >
               <button
                 onClick={() => props.setSidebarTab(SIDEBAR_TABS[tab])}
+                className={(props.activeTab === SIDEBAR_TABS[tab]) ? 'active' : ''}
               >
                 <i className={`fa ${icons[SIDEBAR_TABS[tab]]} fa-lg`} aria-hidden />
               </button>

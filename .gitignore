@@ -9,3 +9,6 @@ npm-debug.log
 .idea
 static/css/
 static/fonts/
+.tern-project
+backend/sessions/
+coverage/

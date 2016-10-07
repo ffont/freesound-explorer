@@ -1,0 +1,74 @@
+@import "../../stylesheets/variables.json";
+@import "../../stylesheets/mixins";
+
+.Sidebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  transform: translate3d($sidebarClosedOffset - $sidebarWidth, 0, 0);
+  width: $sidebarWidth;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  background-color: $sidebarColor;
+  &.active {
+    transform: translate3d(0,0,0);
+  }
+  h1 {
+    margin: 0.2em 0 0.67em;
+  }
+  p.info-paragraph {
+    margin-bottom: 8px;
+  }
+}
+
+.SidebarContent {
+  width: $sidebarWidth - $sidebarClosedOffset;
+  height: 100%;
+  font-size: 1.1em;
+  & > div {
+    height: 100%;
+    padding: $sidebarContentPadding $sidebarContentPadding 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.SidebarContent__scrollable {
+  width: 100%;
+  height: 100%;
+  margin-bottom: $sidebarContentPadding;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  ul, ol {
+    margin-top: 0;
+  }
+}
+
+.SidebarNavMenu {
+  height: 100%;
+  width: $sidebarClosedOffset;
+  overflow-y: scroll;
+  button {
+    @include sidebar-nav-button;
+  }
+  li.active {
+    background-color: $sidebarIconHoverColor;
+  }
+}
+
+.SidebarNavMenu__nav-icons {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.SidebarNavMenu__scrollable {
+  position: relative;
+  height: 100%;
+  min-height: 300px;
+}
+
+.SidebarNavMenu__toggle-button {
+  position: absolute;
+}

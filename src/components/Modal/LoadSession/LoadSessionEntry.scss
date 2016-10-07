@@ -1,0 +1,33 @@
+@import "../../../stylesheets/variables.json";
+@import "../../../stylesheets/mixins";
+
+.LoadSessionEntry {
+  text-align: center;
+  position: relative;
+  padding: 20px;
+  &:not(:last-child) {
+    border-bottom: 1px solid white;
+  }
+}
+
+.LoadSessionEntry__button {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(100% - 50px);
+  @include base-focus;
+}
+
+.LoadSessionEntry__delete-session {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 50px;
+  i { color: #8a5252; }
+  @include base-focus(transform 0.2s ease-in-out);
+  &:hover {
+    transform: scale(1.3);
+  }
+}

@@ -1,5 +1,7 @@
 # Freesound Explorer
 
+![Dependencies](https://david-dm.org/ffont/freesound-explorer.svg)
+
 Visual interface for exploring Freesound content in a 2-dimensional space and create music :)
 For each query, a dimensionality reduction Javascript library ([tSNEJS](https://github.com/karpathy/tsnejs)) is used for arranging the sounds in the 2-dimensional space.
 

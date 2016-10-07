@@ -1,0 +1,52 @@
+@import "../../stylesheets/variables.json";
+
+.ModalContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 1;
+  pointer-events: all;
+  display: flex;
+  overflow: scroll;
+  padding: 40px 0;
+  font-size: 1.4em;
+  transition: opacity 0.3s ease-in-out;
+  &:before {
+    content: '';
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $sidebarColor;
+    background-image: radial-gradient(circle at center, rgba(27, 40, 47, 0.52), rgba(20, 20, 20, 0.52));
+  }
+  &:not(.active) {
+    opacity: 0;
+    pointer-events: none;
+    > div {
+      transform: translate3d(0, -100px, 0);
+    }
+  }
+}
+
+.ModalContainer__clickable-bg {
+  cursor: default;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0;
+  &:before {
+    content: '✕';
+    font-size: 2em;
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    width: 20px;
+    cursor: pointer;
+  }
+}

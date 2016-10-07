@@ -1,0 +1,45 @@
+@import "../../stylesheets/variables.json";
+
+.Metronome__wrapper {
+  position:absolute;
+  right: 20px;
+  padding-bottom: 15px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  transition: bottom 0.3s ease-in-out;
+}
+
+.Metronome__slider {
+  height: $metronomeHeight;
+  width: 180px;
+  margin-right: 5px;
+}
+
+.Metronome__controls {
+  height: $metronomeHeight;
+  width: 40px;
+  font-size: 120%;
+  button {
+    width: 40px;
+  }
+}
+
+.Metronome__position {
+  height: $metronomeHeight;
+  font-size: 1.4em;
+  ul {
+    margin-top: 0px;
+    margin-left: -40px;
+
+  }
+  li {
+    display:inline-block;
+    min-width: 50px;
+    height: $metronomeHeight;
+    line-height: $metronomeHeight;
+    text-align: center;
+    border-right: solid 1px white;
+  }
+  li:last-child { border-right:0px; }
+}

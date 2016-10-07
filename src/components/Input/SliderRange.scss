@@ -1,0 +1,26 @@
+@import "./InputText.scss";
+@import "../../stylesheets/range.scss";
+
+.SliderRange {
+  input[type=range] {
+    @include styledInputRange();
+    background-color: transparent;
+    margin: 0;
+    height: $sidebarClosedOffset;
+  }
+}
+
+.SliderRange-wrapper {
+  position: relative;
+  .QueryForm & {
+    margin: 5px 0 20px;
+  }
+  span {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: $sidebarClosedOffset / 2;
+    pointer-events: none;
+    color: $blackBackground;
+    transition: color 0.3s ease-in-out;
+  }
+}

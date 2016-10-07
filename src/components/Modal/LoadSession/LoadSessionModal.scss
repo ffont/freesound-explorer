@@ -1,0 +1,41 @@
+@import "../BaseModal";
+@import "../../../stylesheets/variables.json";
+@import "../../../stylesheets/mixins";
+
+.LoadSessionModal {
+  @include base-modal;
+  padding: 30px;
+}
+
+.LoadSessionModal__inputs {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.LoadSessionModal__inputs--search__container {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 5px 10px;
+  margin: auto;
+  border-radius: $defaultBorderRadius;
+  @include base-focus;
+}
+
+.LoadSessionModal__inputs--search {
+  background: none;
+  border: 0;
+  outline: 0;
+  &:focus {
+    outline: 0;
+  }
+}
+
+.LoadSessionModal__inputs--search__icon {
+  color: $blackBackground;
+}
+
+.LoadSessionModal__section-header {
+  text-transform: uppercase;
+}

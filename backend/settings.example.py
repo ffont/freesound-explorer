@@ -9,6 +9,12 @@ DEBUG_TB_INTERCEPT_REDIRECTS = False
 SESSION_PROTECTION = 'strong'
 CUSTOM_STATIC_FOLDER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),"..","static"))
 
+ALLOW_UNAUTHENTICATED_USER_SAVE_LOAD = False
+ALLOW_UNAUTHENTICATED_USER_DELETE = False
+DEMO_SESSIONS_FOLDER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),"demo_sessions"))
+SESSIONS_FOLDER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),"sessions"))
+if not os.path.exists(SESSIONS_FOLDER_PATH): os.mkdir(SESSIONS_FOLDER_PATH)
+
 SOCIAL_AUTH_LOGIN_URL = '/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/done/'
 SOCIAL_AUTH_USER_MODEL = 'backend.models.user.User'

@@ -12,9 +12,11 @@ manager.add_command('shell', Shell(make_context=lambda: {
 
 @manager.command
 def syncdb():
-    from backend.models import user
+    from backend.models import user, session
     from social.apps.flask_app.default import models
+
     user.Base.metadata.create_all(engine)
+    session.Base.metadata.create_all(engine)
     models.PSABase.metadata.create_all(engine)
 
 if __name__ == '__main__':

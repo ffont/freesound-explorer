@@ -1,0 +1,16 @@
+@import "../../stylesheets/variables.json";
+
+@mixin base-modal {
+  transform: translate3d(0, 0, 0);
+  margin: auto;
+  box-sizing: border-box;
+  width: 50%;
+  background-color: $sidebarColor;
+  box-shadow: 0 5px 20px $sidebarColor;
+  transition: all 0.3s ease-in-out;
+}
+
+@mixin modal-content {
+  display: flex;
+  min-height: 200px;
+}

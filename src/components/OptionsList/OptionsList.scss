@@ -1,0 +1,44 @@
+@import "../../stylesheets/variables.json";
+@import "../../stylesheets/mixins";
+
+.OptionsList {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 50px;
+  i {
+    margin-right: 10px;
+  }
+}
+
+.OptionsList__clickable-option {
+  width: 100%;
+  padding: $sidebarClosedOffset/2 $sidebarClosedOffset/4;
+  text-transform: capitalize;
+  border-radius: 0;
+  position: relative;
+  &:before {
+    background-color: $sidebarIconHoverColor;
+    content: '';
+    position: absolute;
+    right: -$inputBorderPadding;
+    bottom: -$inputBorderPadding;
+    left: -$inputBorderPadding;
+    height: 1px;
+  }
+  &:disabled {
+    color: darken($sidebarIconHoverColor, 40);
+    cursor: default;
+    i {
+      color: inherit;
+    }
+  }
+  &:not(:disabled) {
+    &:hover {
+      background-color: $accentColor;
+    }
+    @include base-focus;
+  }
+  &:not(.centered) {
+    text-align: left;
+  }
+}

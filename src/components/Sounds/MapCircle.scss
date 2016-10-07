@@ -1,0 +1,12 @@
+@import "../../stylesheets/variables.json";
+
+.MapCircle {
+  mix-blend-mode: screen;
+  stroke-width: map-get($mapCircles, defaultStrokeWidth);
+  fill-opacity: map-get($mapCircles, defaultFillOpacity);
+  stroke-opacity: map-get($mapCircles, defaultStrokeOpacity);
+}
+.MapFillCircle {
+  fill: none;
+  stroke-opacity: map-get($mapCircles, defaultStrokeOpacity);
+}

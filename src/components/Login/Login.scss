@@ -1,0 +1,57 @@
+.login-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.login-button .username {
+  margin-right: 10px;
+}
+
+.login-modal-bg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  z-index: -1;
+  opacity: 0;
+  &.active {
+    opacity: 1;
+    z-index: 1;
+  }
+  transition: opacity 0.3s ease-in-out;
+  background-color: rgba(10, 10, 10, 0.6);
+}
+
+.login-modal {
+  margin: auto;
+  position: relative;
+}
+
+.modal-content {
+	position: relative;
+}
+
+.modal-close-button {
+	position: absolute;
+	right: 40px;
+	top: 28px;
+	color:gray;
+	font-size: 15px;
+  cursor: pointer;
+}
+
+.modal-close-button a {
+	color: black;
+  text-decoration: none;
+}
+
+.login-form {
+	height: 400px;
+	width: 500px;
+}

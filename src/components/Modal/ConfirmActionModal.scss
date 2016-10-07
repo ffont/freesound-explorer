@@ -1,0 +1,6 @@
+@import "../../stylesheets/variables.json";
+@import "./BaseModal";
+
+.ConfirmActionModal {
+  @include base-modal;
+}

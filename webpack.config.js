@@ -19,6 +19,12 @@ function getPlugins(plugins) {
   if (process.env.NODE_ENV !== 'production') {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
+  if (process.env.NODE_ENV === 'production') {
+    plugins.push(new webpack.optimize.UglifyJsPlugin({
+      sourceMap: false,
+      mangle: false,
+    }));
+  }
   return plugins;
 }
 

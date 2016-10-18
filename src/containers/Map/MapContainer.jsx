@@ -82,6 +82,7 @@ class MapContainer extends React.Component {
   }
 
   onKeydownCallback(evt) {
+    if (evt.target.tagName.toUpperCase() === 'INPUT') { return; }
     if (evt.keyCode === PLAY_ON_HOVER_SHORTCUT_KEYCODE) {
       // Turn play sounds on hover on
       this.props.setShouldPlayOnHover(true);
@@ -89,6 +90,7 @@ class MapContainer extends React.Component {
   }
 
   onKeyupCallback(evt) {
+    if (evt.target.tagName.toUpperCase() === 'INPUT') { return; }
     if (evt.keyCode === PLAY_ON_HOVER_SHORTCUT_KEYCODE) {
       // Turn play sounds on hover off
       this.props.setShouldPlayOnHover(false);

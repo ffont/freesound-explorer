@@ -4,7 +4,7 @@ import { zoom } from 'd3-zoom';
 import { connect } from 'react-redux';
 import SpaceTitle from 'components/Spaces/SpaceTitle';
 import 'polyfills/requestAnimationFrame';
-import { MIN_ZOOM, MAX_ZOOM } from 'constants';
+import { MIN_ZOOM, MAX_ZOOM, PLAY_ON_HOVER_SHORTCUT_KEYCODE } from 'constants';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateMapPosition } from './actions';
 import { setSoundCurrentlyLearnt } from '../Midi/actions';
@@ -13,6 +13,7 @@ import { hideModal } from '../SoundInfo/actions';
 import Space from '../Spaces/SpaceContainer';
 import SoundInfoContainer from '../SoundInfo/SoundInfoContainer';
 import MapPath from '../Paths/MapPath';
+import { setShouldPlayOnHover } from '../Settings/actions';
 
 const propTypes = {
   deselectAllSounds: React.PropTypes.func,
@@ -26,6 +27,7 @@ const propTypes = {
   setSoundCurrentlyLearnt: React.PropTypes.func,
   updateMapPosition: React.PropTypes.func,
   hideModal: React.PropTypes.func,
+  setShouldPlayOnHover: React.PropTypes.func,
 };
 
 class MapContainer extends React.Component {
@@ -33,6 +35,13 @@ class MapContainer extends React.Component {
     super(props);
     this.zoomHandler = this.zoomHandler.bind(this);
     this.onClickCallback = this.onClickCallback.bind(this);
+    this.onKeydownCallback = this.onKeydownCallback.bind(this);
+    this.onKeyupCallback = this.onKeyupCallback.bind(this);
+  }
+
+  componentWillMount() {
+    document.addEventListener('keydown', this.onKeydownCallback, false);
+    document.addEventListener('keyup', this.onKeyupCallback, false);
   }
 
   componentDidMount() {
@@ -57,6 +66,11 @@ class MapContainer extends React.Component {
       nextProps.paths !== this.props.paths);
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKeypressCallback, false);
+    document.removeEventListener('keyup', this.onKeyupCallback, false);
+  }
+
   onClickCallback(evt) {
     if (evt.target.tagName !== 'circle') {
       // deselect all sounds when not clicking on a circle
@@ -64,6 +78,22 @@ class MapContainer extends React.Component {
       // turn off current midi learn
       this.props.setSoundCurrentlyLearnt();
       this.props.hideModal();
+    }
+  }
+
+  onKeydownCallback(evt) {
+    if (evt.target.tagName.toUpperCase() === 'INPUT') { return; }
+    if (evt.keyCode === PLAY_ON_HOVER_SHORTCUT_KEYCODE) {
+      // Turn play sounds on hover on
+      this.props.setShouldPlayOnHover(true);
+    }
+  }
+
+  onKeyupCallback(evt) {
+    if (evt.target.tagName.toUpperCase() === 'INPUT') { return; }
+    if (evt.keyCode === PLAY_ON_HOVER_SHORTCUT_KEYCODE) {
+      // Turn play sounds on hover off
+      this.props.setShouldPlayOnHover(false);
     }
   }
 
@@ -115,4 +145,5 @@ export default connect(mapStateToProps, {
   deselectAllSounds,
   setSoundCurrentlyLearnt,
   hideModal,
+  setShouldPlayOnHover,
 })(MapContainer);

@@ -1,4 +1,5 @@
-import { TOGGLE_PLAY_ON_HOVER, TOGGLE_METRONOME_SOUND } from './actions';
+import { TOGGLE_PLAY_ON_HOVER, TOGGLE_METRONOME_SOUND,
+  SET_SHOULD_PLAY_ON_HOVER } from './actions';
 import storable from '../SessionsHandler/storableReducer';
 
 export const initialState = {
@@ -11,6 +12,11 @@ const settings = (state = initialState, action) => {
     case TOGGLE_PLAY_ON_HOVER: {
       return Object.assign({}, state, {
         shouldPlayOnHover: !state.shouldPlayOnHover,
+      });
+    }
+    case SET_SHOULD_PLAY_ON_HOVER: {
+      return Object.assign({}, state, {
+        shouldPlayOnHover: action.shouldPlayOnHover,
       });
     }
     case TOGGLE_METRONOME_SOUND: {

@@ -57,6 +57,7 @@ export const MIDI_MESSAGE_INDICATOR_DURATION = 1000;
 export const MIN_ZOOM = 0.05;
 export const MAX_ZOOM = 15;
 export const MAP_SCALE_FACTOR = 20;
+export const PLAY_ON_HOVER_SHORTCUT_KEYCODE = 18; // alt key
 
 // tsne
 export const MAX_TSNE_ITERATIONS = 150;

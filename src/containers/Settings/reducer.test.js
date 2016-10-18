@@ -1,4 +1,4 @@
-import { togglePlayOnHover } from './actions';
+import { togglePlayOnHover, setShouldPlayOnHover } from './actions';
 import reducer, { initialState } from './reducer';
 
 describe('settings reducer', () => {
@@ -11,6 +11,14 @@ describe('settings reducer', () => {
     expect(reducer(stateBefore, togglePlayOnHover()))
       .toEqual(stateAfter);
     expect(reducer(stateAfter, togglePlayOnHover()))
+      .toEqual(stateBefore);
+  });
+  it('correctly sets shouldPlayOnHover setting', () => {
+    const stateBefore = { shouldPlayOnHover: false };
+    const stateAfter = { shouldPlayOnHover: true };
+    expect(reducer(stateBefore, setShouldPlayOnHover(true)))
+      .toEqual(stateAfter);
+    expect(reducer(stateAfter, setShouldPlayOnHover(false)))
       .toEqual(stateBefore);
   });
 });

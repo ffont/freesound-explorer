@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from flask import Flask, g
 import flask_login as login
+from settings import APPLICATION_ROOT
 
 sys.path.append('../..')
 
@@ -16,6 +17,11 @@ from social.apps.flask_app.default.models import init_social
 # in routes/main.py takes precedene.
 app = Flask(__name__, static_url_path='')
 app.config.from_object('backend.settings')
+
+if APPLICATION_ROOT:
+    from werkzeug.serving import run_simple
+    from werkzeug.wsgi import DispatcherMiddleware
+    app.wsgi_app = DispatcherMiddleware(Flask('dummy_app'), {APPLICATION_ROOT: app.wsgi_app})
 
 
 # Templates

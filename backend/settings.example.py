@@ -1,5 +1,6 @@
 import os
 
+APPLICATION_ROOT = ''
 DEBUG = False
 USE_JS_DEV_SERVER = True
 SECRET_KEY = 'secret_key'

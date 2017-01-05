@@ -2,17 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { loadJSON } from 'utils/requests';
 import Login from 'components/Login';
-import { MESSAGE_STATUS } from 'constants';
+import { MESSAGE_STATUS, URLS } from 'constants';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateLoginModalVisibilility, updateBackEndAuthSupport, updateUserLoggedStatus }
   from './actions';
-
-const URLS = {
-  login: '/login/freesound/',
-  logout: '/logout/',
-  prepareAuth: '/prepare_auth/',
-  getAppToken: '/get_app_token/',
-};
 
 const staticAppToken = 'eecfe4981d7f41d2811b4b03a894643d5e33f812';
 
@@ -31,7 +24,7 @@ const setSessionStorage = (accessToken, userName) => {
 const useStaticAppToken = () => sessionStorage.setItem('appToken', staticAppToken);
 
 const getAppToken = () => new Promise((resolve, reject) => {
-  loadJSON(URLS.getAppToken).then(
+  loadJSON(URLS.GET_APP_TOKEN).then(
     (data) => {
       sessionStorage.setItem('appToken', data.appToken);
       resolve();
@@ -69,7 +62,7 @@ class LoginContainer extends React.Component {
   }
 
   getAccessToken() {
-    loadJSON(URLS.prepareAuth).then((data) => {
+    loadJSON(URLS.PREPARE_AUTH).then((data) => {
       setSessionStorage(data.accessToken, data.username);
       if (data.logged) {
         this.props.updateUserLoggedStatus(true);
@@ -95,7 +88,7 @@ class LoginContainer extends React.Component {
   }
 
   handleFreesoundLogout() {
-    loadJSON(URLS.logout).then(() => {
+    loadJSON(URLS.LOGOUT).then(() => {
       clearSession();
       this.props.updateUserLoggedStatus(false);
       this.props.displaySystemMessage('Logged out');
@@ -125,7 +118,7 @@ class LoginContainer extends React.Component {
         handleFreesoundLogout={this.handleFreesoundLogout}
         isUserLoggedIn={this.props.isUserLoggedIn}
         isModalVisible={this.props.isModalVisible}
-        modalContentURL={URLS.login}
+        modalContentURL={URLS.LOGIN}
         setLoginModalVisibility={this.props.updateLoginModalVisibilility}
       />
     );

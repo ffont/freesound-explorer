@@ -9,13 +9,18 @@ export const DEFAULT_MAX_DURATION = 5;
 export const DEFAULT_DESCRIPTOR = 'lowlevel.mfcc.mean';
 export const PERFORM_QUERY_AT_MOUNT = false;
 
-// backend urls
+// backend and login urls
+const BACKEND_APPLICATION_ROOT = '/fse';  // must match with backend's application root
 export const URLS = {
-  SAVE_SESSION: '/save/',
-  LOAD_SESSION: '/load/',
-  REMOVE_SESSION: '/delete/',
-  AVAILABLE_SESSIONS: '/available/',
-  DELETE_SESSION: '/delete/',
+  SAVE_SESSION: `${BACKEND_APPLICATION_ROOT}/save/`,
+  LOAD_SESSION: `${BACKEND_APPLICATION_ROOT}/load/`,
+  REMOVE_SESSION: `${BACKEND_APPLICATION_ROOT}/delete/`,
+  AVAILABLE_SESSIONS: `${BACKEND_APPLICATION_ROOT}/available/`,
+  DELETE_SESSION: `${BACKEND_APPLICATION_ROOT}/delete/`,
+  LOGIN: `${BACKEND_APPLICATION_ROOT}/login/freesound/`,
+  LOGOUT: `${BACKEND_APPLICATION_ROOT}/logout/`,
+  PREPARE_AUTH: `${BACKEND_APPLICATION_ROOT}/prepare_auth/`,
+  GET_APP_TOKEN: `${BACKEND_APPLICATION_ROOT}/get_app_token/`,
 };
 
 // messagesBox

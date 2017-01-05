@@ -1,7 +1,7 @@
 from social.backends.oauth import BaseOAuth2
 from social.utils import handle_http_errors
 
-# NOTE: For this settings to work, the redirect url of the client set up in Freeosund 
+# NOTE: For this settings to work, the redirect url of the client set up in Freeosund
 # shoud redirect to http://your.site.com/complete/freesound
 
 class FreesoundAuth(BaseOAuth2):
@@ -20,8 +20,6 @@ class FreesoundAuth(BaseOAuth2):
     def auth_url(self):
         client_id, client_secret = self.get_key_and_secret()
         url = self.AUTHORIZATION_URL
-        if self.setting('FREESOUND_FORCE_LOGIN', False):
-            url = url.replace('authorize?', 'logout_and_authorize?')
         return url.format(client_id=client_id, state=self.get_or_create_state())
 
     def auth_complete_params(self, state=None):

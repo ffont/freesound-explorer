@@ -16,11 +16,10 @@ DEMO_SESSIONS_FOLDER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file_
 SESSIONS_FOLDER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),"sessions"))
 if not os.path.exists(SESSIONS_FOLDER_PATH): os.mkdir(SESSIONS_FOLDER_PATH)
 
-SOCIAL_AUTH_LOGIN_URL = '/'
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/done/'
+SOCIAL_AUTH_LOGIN_URL = APPLICATION_ROOT + '/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = APPLICATION_ROOT + '/done/'
 SOCIAL_AUTH_USER_MODEL = 'backend.models.user.User'
 SOCIAL_AUTH_AUTHENTICATION_BACKENDS = ('backend.freesound_auth.FreesoundAuth', )
 
 FREESOUND_CLIENT_ID = "YOUR_CLIENT_ID"
 FREESOUND_CLIENT_SECRET = "YOUR_CLIENT_SECRET"
-FREESOUND_FORCE_LOGIN = True

@@ -1,6 +1,6 @@
 import os
 
-APPLICATION_ROOT = ''
+APPLICATION_ROOT = '/fse'
 DEBUG = False
 USE_JS_DEV_SERVER = True
 SECRET_KEY = 'secret_key'

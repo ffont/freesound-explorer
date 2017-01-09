@@ -13,7 +13,7 @@ class MidiMappingsList extends React.Component {
     return (
       <div className="midi-list">
         <div className="title-text">Assigned MIDI notes:</div>
-        <ul>
+        <ul>{this.props.notesMapped.length > 0 ? '' : <li>No MIDI notes have been assigned yet</li>}
           {Object.keys(this.props.notesMapped).map((key, index) =>
             <MidiMapping
               key={index}

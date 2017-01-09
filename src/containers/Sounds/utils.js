@@ -6,6 +6,9 @@ import sassVariables from 'stylesheets/variables.json';
 
 
 export const computeSoundGlobalPosition = (tsnePosition, spacePosition, mapPosition) => {
+  if (tsnePosition === undefined) {
+    return { cx: 0.0, cy: 0.0 };
+  }
   const { translateX, translateY, scale } = mapPosition;
   const cx = ((tsnePosition.x + (window.innerWidth / (MAP_SCALE_FACTOR * 2))) *
     MAP_SCALE_FACTOR * scale * spacePosition.x) + translateX;

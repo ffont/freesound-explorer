@@ -112,10 +112,10 @@ export const setUpMIDIDevices = () => (dispatch) => {
         dispatch(setMidiAvailableDevices(devicesList));
       }, () => {
       dispatch(setMidiSupported(false));
-      dispatch(displaySystemMessage('No MIDI support...', MESSAGE_STATUS.ERROR));
+      // dispatch(displaySystemMessage('No MIDI support...', MESSAGE_STATUS.ERROR));
     });
   } else {
     dispatch(setMidiSupported(false));
-    dispatch(displaySystemMessage('No MIDI support in your browser...', MESSAGE_STATUS.ERROR));
+    // dispatch(displaySystemMessage('No MIDI support in your browser...', MESSAGE_STATUS.ERROR));
   }
 };

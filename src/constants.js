@@ -35,8 +35,8 @@ export const MESSAGE_STATUS = {
 // sidebar
 export const SIDEBAR_TABS = {
   SEARCH: 'search',
-  PATHS: 'paths',
   SPACES: 'spaces',
+  PATHS: 'paths',
   MIDI: 'midi',
   HOME: 'home',
   INFO: 'info',

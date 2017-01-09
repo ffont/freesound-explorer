@@ -9,8 +9,6 @@ Freesound Explorer uses a python [Flask](http://flask.pocoo.org) backend for han
 
 Use Freesound Explorer live here: [http://labs.freesound.org/fse/](http://labs.freesound.org/fse/)
 
-You can also try the reduced statically-hosted Freesound Explorer version here: [https://ffont.github.io/freesound-explorer/](https://ffont.github.io/freesound-explorer/)
-
 # Development
 ## Front-end
 First use
@@ -54,5 +52,5 @@ npm run with-flask
 # License
 MIT
 
-The MIDI icon we use has been created by [Jonathan Higley](https://thenounproject.com/term/dj/136540/) and
+The MIDI controller icon we use has been created by [Daouna Jeong](https://thenounproject.com/search/?q=midi&i=145742) and
 is released under Creative Commons By 3.0 license.

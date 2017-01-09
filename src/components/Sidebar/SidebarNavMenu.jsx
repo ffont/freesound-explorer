@@ -12,7 +12,7 @@ const propTypes = {
 const icons = {
   [SIDEBAR_TABS.HOME]: 'fa-cog',
   [SIDEBAR_TABS.SEARCH]: 'fa-search',
-  [SIDEBAR_TABS.SPACES]: 'fa-object-group',
+  [SIDEBAR_TABS.SPACES]: 'fa-th-large',
   [SIDEBAR_TABS.PATHS]: 'fa-exchange',
   [SIDEBAR_TABS.MIDI]: 'fse-icon-synth',
   [SIDEBAR_TABS.INFO]: 'fa-info',

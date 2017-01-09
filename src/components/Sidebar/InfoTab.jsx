@@ -17,6 +17,13 @@ function InfoTab() {
           Music Technology Group, Universitat Pompeu Fabra.
         </p>
       </section>
+      <section>
+        <p className="info-paragraph">
+          Code at: <a href="https://github.com/ffont/freesound-explorer">
+            https://github.com/ffont/freesound-explorer
+          </a>
+        </p>
+      </section>
     </div>
   );
 }

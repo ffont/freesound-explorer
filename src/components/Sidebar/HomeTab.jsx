@@ -16,4 +16,4 @@ const HomeTab = () => (
 );
 
 HomeTab.propTypes = propTypes;
-export default baseTab('Home', HomeTab);
+export default baseTab('Settings', HomeTab);

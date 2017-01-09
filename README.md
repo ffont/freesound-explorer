@@ -5,7 +5,11 @@
 Visual interface for exploring Freesound content in a 2-dimensional space and create music :)
 For each query, a dimensionality reduction Javascript library ([tSNEJS](https://github.com/karpathy/tsnejs)) is used for arranging the sounds in the 2-dimensional space.
 
-Freesound Explorer uses a python [Flask](http://flask.pocoo.org) backend for handling user accounts, but it can also be run statically without the backend (with reduced functionality and no user handling). You can try the "reduced" Freesound Explorer here: [https://ffont.github.io/freesound-explorer/](https://ffont.github.io/freesound-explorer/)
+Freesound Explorer uses a python [Flask](http://flask.pocoo.org) backend for handling user accounts, but it can also be run statically without the backend (with reduced functionality and no user handling).
+
+Use Freesound Explorer live here: [http://labs.freesound.org/fse/](http://labs.freesound.org/fse/)
+
+You can also try the reduced statically-hosted Freesound Explorer version here: [https://ffont.github.io/freesound-explorer/](https://ffont.github.io/freesound-explorer/)
 
 # Development
 ## Front-end
@@ -49,3 +53,6 @@ npm run with-flask
 
 # License
 MIT
+
+The MIDI icon we use has been created by [Jonathan Higley](https://thenounproject.com/term/dj/136540/) and
+is released under Creative Commons By 3.0 license.

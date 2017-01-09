@@ -34,11 +34,11 @@ export const MESSAGE_STATUS = {
 
 // sidebar
 export const SIDEBAR_TABS = {
-  HOME: 'home',
   SEARCH: 'search',
   PATHS: 'paths',
   SPACES: 'spaces',
   MIDI: 'midi',
+  HOME: 'home',
   INFO: 'info',
 };
 export const DEFAULT_SIDEBAR_TAB = SIDEBAR_TABS.SEARCH;

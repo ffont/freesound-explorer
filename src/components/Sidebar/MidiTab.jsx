@@ -13,4 +13,4 @@ function MidiTab() {
   );
 }
 
-export default baseTab('MIDI Input', MidiTab);
+export default baseTab('MIDI', MidiTab);

@@ -8,7 +8,7 @@ class FreesoundAuth(BaseOAuth2):
     name = 'freesound'
     ID_KEY = 'unique_id'
     BASE_URL = "https://www.freesound.org/apiv2/"
-    AUTHORIZATION_URL = BASE_URL + 'oauth2/authorize/?client_id={client_id}&response_type=code&state={state}'
+    AUTHORIZATION_URL = BASE_URL + 'oauth2/logout_and_authorize/?client_id={client_id}&response_type=code&state={state}'
     ACCESS_TOKEN_URL = BASE_URL + 'oauth2/access_token/'
     REFRESH_TOKEN_URL = BASE_URL + 'oauth2/refresh_token/'
     ACCESS_TOKEN_METHOD = 'POST'

@@ -42,6 +42,8 @@ class MetronomeContainer extends React.Component {
         beat={this.props.beat}
         tick={this.props.tick}
         bottomArrowPosition={this.props.bottomArrowPosition}
+        isRecording={this.props.isPlaying}
+        toggleRecording={this.toggleMetronome}
       />
     );
   }

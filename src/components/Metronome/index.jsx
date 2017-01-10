@@ -12,6 +12,8 @@ const propTypes = {
   beat: React.PropTypes.number,
   tick: React.PropTypes.number,
   bottomArrowPosition: React.PropTypes.number,
+  isRecording: React.PropTypes.bool,
+  toggleRecording: React.PropTypes.func,
 };
 
 const Metronome = props => (
@@ -42,6 +44,11 @@ const Metronome = props => (
         {(props.isPlaying) ?
           <i className="fa fa-stop fa-2x" aria-hidden="true" /> :
           <i className="fa fa-play fa-2x" aria-hidden="true" />}
+      </button>
+      <button onClick={props.toggleRecording} >
+        {(props.isRecording) ?
+          <i className="fa fa-stop-circle fa-2x Metronome__record-button" aria-hidden="true" /> :
+          <i className="fa fa-circle fa-2x Metronome__record-button" aria-hidden="true" />}
       </button>
     </div>
   </div>

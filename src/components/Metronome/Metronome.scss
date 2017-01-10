@@ -18,7 +18,7 @@
 
 .Metronome__controls {
   height: $metronomeHeight;
-  width: 40px;
+  width: 80px;
   font-size: 120%;
   button {
     width: 40px;
@@ -42,4 +42,8 @@
     border-right: solid 1px white;
   }
   li:last-child { border-right:0px; }
+}
+
+.Metronome__record-button {
+  color: $redRegular;
 }

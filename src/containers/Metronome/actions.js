@@ -1,6 +1,7 @@
 import makeActionCreator from 'utils/makeActionCreator';
 import { LOOKAHEAD, SCHEDULEAHEADTIME, TICKRESOLUTION } from 'constants';
 import { audioContext } from '../Audio/actions';
+import { record } from '../Recorder/actions';
 
 export const UPDATE_METRONOME_STATUS = 'UPDATE_METRONOME_STATUS';
 export const SET_TEMPO = 'SET_TEMPO';
@@ -104,10 +105,16 @@ export const startMetronome = () => (dispatch) => {
   updateStateInSyncTimer = setTimeout(() => dispatch(updateStateInSync()), LOOKAHEAD * 2);
 };
 
-export const stopMetronome = () => (dispatch) => {
+export const stopMetronome = () => (dispatch, getStore) => {
   clearTimeout(schedulerTimer);
   clearTimeout(updateStateInSyncTimer);
   dispatch(stopMetronomeAction());
   const [bar, beat, tick] = [1, 0, 0];
   dispatch(updateMetronomeStatus(bar, beat, tick));
+
+  // If is recording, stop recorder
+  const store = getStore();
+  if (store.recorder.isRecording) {
+    dispatch(record());  // record() will toggle to stop
+  }
 };

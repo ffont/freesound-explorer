@@ -13,6 +13,7 @@ import settings from 'containers/Settings/reducer';
 import sidebar from 'containers/Sidebar/reducer';
 import sounds from 'containers/Sounds/reducer';
 import spaces from 'containers/Spaces/reducer';
+import recorder from 'containers/Recorder/reducer';
 
 
 const rootReducer = combineReducers({
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   sidebar,
   sounds,
   spaces,
+  recorder,
 });
 
 export default rootReducer;

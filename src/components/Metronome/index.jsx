@@ -45,10 +45,10 @@ const Metronome = props => (
           <i className="fa fa-stop fa-2x" aria-hidden="true" /> :
           <i className="fa fa-play fa-2x" aria-hidden="true" />}
       </button>
-      <button onClick={props.toggleRecording} >
+      <button onClick={props.toggleRecording}>
         {(props.isRecording) ?
-          <i className="fa fa-stop-circle fa-2x Metronome__record-button" aria-hidden="true" /> :
-          <i className="fa fa-circle fa-2x Metronome__record-button" aria-hidden="true" />}
+          <i className="fa fa-circle fa-2x Metronome__recording" aria-hidden="true" /> :
+          <i className="fa fa-circle fa-2x" aria-hidden="true" />}
       </button>
     </div>
   </div>

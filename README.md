@@ -9,6 +9,11 @@ Freesound Explorer uses a python [Flask](http://flask.pocoo.org) backend for han
 
 Use Freesound Explorer live here: [http://labs.freesound.org/fse/](http://labs.freesound.org/fse/)
 
+![Freesound Explorer Screenshot 1](https://cloud.githubusercontent.com/assets/478615/24897804/9122f2a8-1e9a-11e7-913a-2580acbf89be.png?raw=true "Freesound Explorer Screenshot 1")
+
+![Freesound Explorer Screenshot 2](https://cloud.githubusercontent.com/assets/478615/24897793/897463ca-1e9a-11e7-9182-c6b4ff55ea5b.png?raw=true "Freesound Explorer Screenshot 2")
+
+
 # Development
 ## Front-end
 First use

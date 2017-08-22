@@ -8,20 +8,20 @@ function InfoTab() {
       <section>
         <p className="info-paragraph">
           Freesound Explorer is a visual interface for exploring Freesound content
-          in a 2-dimensional space and for creating music :)
+          in a 2-dimensional space and create music at the same time :)
         </p>
       </section>
       <section>
         <p className="info-paragraph">
-          Freesound Explorer is developed by Frederic Font and Giuseppe Bandiera at the
-          Music Technology Group, Universitat Pompeu Fabra.
+          Please, <a href="https://github.com/ffont/freesound-explorer#tutorialhow-to-use" target="_blank">
+          check this tutorial</a> to learn how Freesound Explorer works.
         </p>
       </section>
       <section>
         <p className="info-paragraph">
-          Code at: <a href="https://github.com/ffont/freesound-explorer">
-            https://github.com/ffont/freesound-explorer
-          </a>
+          Freesound Explorer has been developed (so far) by Frederic Font and Giuseppe Bandiera at the
+          Music Technology Group, Universitat Pompeu Fabra. You can find the <a href="https://github.com/ffont/freesound-explorer" target="_blank">
+            source code here</a>.
         </p>
       </section>
     </div>

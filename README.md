@@ -25,6 +25,7 @@ Freesound Explorer has been (so far) developed by Frederic Font and Giuseppe Ban
 
 * **TIP**: try using query terms that might result in sounds with different timbre qualities. For example, raise to number of sounds to ~200 and search for the keyword *Bells*.
 
+![Freesound Explorer Search](https://user-images.githubusercontent.com/478615/29562418-1ea0183c-8731-11e7-8a23-977a9e810619.png?raw=true "Freesound Explorer Search")
 
 ### 2) Explore the map of sounds
 
@@ -42,7 +43,7 @@ Freesound Explorer has been (so far) developed by Frederic Font and Giuseppe Ban
 
 * Click on the "Spaces" icon in the sidebar (the one with the 4 squares in a grid) to see a list of all the Spaces you have created. 
 
-![Freesound Explorer Screenshot 2](https://cloud.githubusercontent.com/assets/478615/24897793/897463ca-1e9a-11e7-9182-c6b4ff55ea5b.png?raw=true "Freesound Explorer Screenshot 2")
+![Freesound Explorer Spaces](https://cloud.githubusercontent.com/assets/478615/24897793/897463ca-1e9a-11e7-9182-c6b4ff55ea5b.png?raw=true "Freesound Explorer Spaces")
 
 ### 4) Create sound Paths
 
@@ -54,7 +55,8 @@ Freesound Explorer has been (so far) developed by Frederic Font and Giuseppe Ban
 
 * Alternatively, you can add a sound of your choice by clicking on the corresponding point (which will open the info box) and then clicking on **Add to path** option.
 
-![Freesound Explorer Screenshot 1](https://cloud.githubusercontent.com/assets/478615/24897804/9122f2a8-1e9a-11e7-913a-2580acbf89be.png?raw=true "Freesound Explorer Screenshot 1")
+![Freesound Explorer Paths](https://cloud.githubusercontent.com/assets/478615/24897804/9122f2a8-1e9a-11e7-913a-2580acbf89be.png?raw=true "Freesound Explorer Paths Screenshot")
+
 
 ### 5) Play sound Paths
 
@@ -63,6 +65,8 @@ Freesound Explorer has been (so far) developed by Frederic Font and Giuseppe Ban
 * You can start the **global metronome** using the "Play" button at the bottom right of the map and all sounds from the paths will then be played in sync with the global metronome. This means that sounds will only be triggered at "correct" beat positions.
 
 * Use the different sync options to trigger sounds at different subdivisions of the global tempo and to select whether or not to allow overlapping of sounds of a single Path.
+
+![Freesound Explorer Sync Settings](https://user-images.githubusercontent.com/478615/29562417-1e5fda88-8731-11e7-9fa0-014228fbc9da.png?raw=true "Freesound Explorer Sync Settings")
 
 * **TIP**: create some Paths and assign some sounds randomly. Then start the metornome and play all the paths at the same time with different sync settings. If it does not sound good enough, just add more sounds/paths ;)
 
@@ -77,6 +81,9 @@ Freesound Explorer has been (so far) developed by Frederic Font and Giuseppe Ban
 * You can map multiple sounds to different keys. When pressing a key with no directly mapped sound, the closest mapped sound will be played with the playback speed modified accordingly.
 
 * **TIP**: Search for sounds with the name of an instrument and the "single-note" query term to get results of recordings of single notes. The simply MIDI learn one of the notes and you'll have a full new instrument to play ;)
+
+![Freesound Explorer MIDI Learn](https://user-images.githubusercontent.com/478615/29562416-1e5be20c-8731-11e7-9b8c-3d58826f7a4c.png?raw=true "Freesound Explorer MIDI Learn")
+
 
 ### 7) Save your session
 

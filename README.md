@@ -2,6 +2,7 @@
 
 [http://labs.freesound.org/fse/](http://labs.freesound.org/fse/) (use Chrome for better experience)
 
+## About
 
 [Freesound Explorer](http://labs.freesound.org/fse/) is a visual interface for exploring [Freesound](https://freesound.org) in a 2-dimensional space and create music at the same time :)
 Using Freesound Explorer you can perform text-based queries in Freesound, and see the results arranged in a 2-dimensional space. We usa a well known dimensionality reduction technique ([tSNEJS](https://github.com/karpathy/tsnejs)) and learn the space from spectral audio features provided by Freesound. In this way, sounds are self-organised according to some sort of timbre similarity.
@@ -13,7 +14,7 @@ More information can be found in the [demo paper](http://eecs.qmul.ac.uk/~keno/2
 Freesound Explorer has been (so far) developed by Frederic Font and Giuseppe Bandiera, researchers at the [Music Technology Group](http://mtg.upf.edu) of Universitat Pompeu Fabra, Barcelona.
 
 
-# Tutorial/How to use
+## Tutorial/How to use
 
 ### 1) Search sounds
 
@@ -66,7 +67,7 @@ Freesound Explorer has been (so far) developed by Frederic Font and Giuseppe Ban
 
 * Use the different sync options to trigger sounds at different subdivisions of the global tempo and to select whether or not to allow overlapping of sounds of a single Path.
 
-![Freesound Explorer Sync Settings](https://user-images.githubusercontent.com/478615/29562417-1e5fda88-8731-11e7-9fa0-014228fbc9da.png?raw=true "Freesound Explorer Sync Settings")
+<img src="https://user-images.githubusercontent.com/478615/29562417-1e5fda88-8731-11e7-9fa0-014228fbc9da.png?raw=true" alt="Freesound Explorer Sync Settings" title="Freesound Explorer Sync Settings" width=320>
 
 * **TIP**: create some Paths and assign some sounds randomly. Then start the metornome and play all the paths at the same time with different sync settings. If it does not sound good enough, just add more sounds/paths ;)
 
@@ -82,7 +83,7 @@ Freesound Explorer has been (so far) developed by Frederic Font and Giuseppe Ban
 
 * **TIP**: Search for sounds with the name of an instrument and the "single-note" query term to get results of recordings of single notes. The simply MIDI learn one of the notes and you'll have a full new instrument to play ;)
 
-![Freesound Explorer MIDI Learn](https://user-images.githubusercontent.com/478615/29562416-1e5be20c-8731-11e7-9b8c-3d58826f7a4c.png?raw=true "Freesound Explorer MIDI Learn")
+<img src="https://user-images.githubusercontent.com/478615/29562416-1e5be20c-8731-11e7-9b8c-3d58826f7a4c.png?raw=true" alt="Freesound Explorer MIDI Learn" title="Freesound Explorer MIDI Learn" width=520>
 
 
 ### 7) Save your session
@@ -95,13 +96,13 @@ Freesound Explorer has been (so far) developed by Frederic Font and Giuseppe Ban
 
 
 
-# Development
+## Development
 
 ![Dependencies](https://david-dm.org/ffont/freesound-explorer.svg)
 
 Want to get involved in the development? We welcome contributions :) Here are some instructions to set up the development environment:
 
-## Front-end
+### Front-end
 First use
 ```
 npm install
@@ -124,7 +125,7 @@ To run the tests, run:
 npm test
 ```
 
-## Back-end
+### Back-end
 To run the Flask server (for enabling Freesound user auth), you will need to create a new virtualenv and install all the dependencies:
 ```
 pip install -r requirements.txt
@@ -140,13 +141,13 @@ npm run with-flask
 ```
 (instead of `npm run dev`) and ensure you have `USE_JS_DEV_SERVER=True` in your `settings.py`. This will make the flask server correctly load the bundle served at port 8080 (and with hot reloading) by webpack.
 
-# Citations
+## Citations
 
 To cite Freesound explorer please use the following refernece:
 
 [Font, F., & Bandiera G. (2017).  Freesound Explorer: Make Music While Discovering Freesound!. Web Audio Conference (WAC 2017). ](http://eecs.qmul.ac.uk/~keno/20.pdf)
 
-# License
+## License
 MIT
 
 The MIDI controller icon we use has been created by [Daouna Jeong](https://thenounproject.com/search/?q=midi&i=145742) and

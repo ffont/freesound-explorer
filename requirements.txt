@@ -1,5 +1,5 @@
-Flask
-Flask-Login
-Flask-Script
-Flask-SQLAlchemy
-python-social-auth
+Flask==0.11
+Flask-Login==0.3.2
+Flask-Script==2.0.5
+Flask-SQLAlchemy==2.1
+python-social-auth==0.2.19

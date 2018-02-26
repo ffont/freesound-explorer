@@ -87,7 +87,7 @@ const freesound = (function () {
       return fd;
   };
 
-  var search = function(options, uri, success, error,wrapper){
+  var searchFS = function(options, uri, success, error,wrapper){
       if(options.analysis_file){
               makeRequest(makeUri(uri), success,error,null, wrapper, 'POST',makeFD(options));
       }
@@ -250,17 +250,17 @@ const freesound = (function () {
           textSearch: function(query, options, success, error){
               options = options || {};
               options.query = query ? query : " ";
-              return search(options,uris.textSearch,success,error,SoundCollection);
+              return searchFS(options,uris.textSearch,success,error,SoundCollection);
           },
           contentSearch: function(options, success, error){
               if(!(options.target || options.analysis_file))
                  throw("Missing target or analysis_file");
-              search(options,uris.contentSearch,success,error,SoundCollection);
+              searchFS(options,uris.contentSearch,success,error,SoundCollection);
           },
           combinedSearch:function(options, success, error){
              if(!(options.target || options.analysis_file || options.query))
                  throw("Missing query, target or analysis_file");
-              search(options,uris.contentSearch,success,error);
+              searchFS(options,uris.contentSearch,success,error);
           },
           getSound: function(soundId,success, error){
               makeRequest(makeUri(uris.sound, [soundId]), success,error,{}, SoundObject);

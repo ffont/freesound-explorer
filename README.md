@@ -1,10 +1,10 @@
 # Freesound Explorer
 
-[http://labs.freesound.org/fse/](http://labs.freesound.org/fse/) (use Chrome for better experience)
+[https://labs.freesound.org/fse/](http://labs.freesound.org/fse/) (use Chrome for better experience)
 
 ## About
 
-[Freesound Explorer](http://labs.freesound.org/fse/) is a visual interface for exploring [Freesound](https://freesound.org) in a 2-dimensional space and create music at the same time :)
+[Freesound Explorer](https://labs.freesound.org/fse/) is a visual interface for exploring [Freesound](https://freesound.org) in a 2-dimensional space and create music at the same time :)
 Using Freesound Explorer you can perform text-based queries in Freesound, and see the results arranged in a 2-dimensional space. We usa a well known dimensionality reduction technique ([tSNEJS](https://github.com/karpathy/tsnejs)) and learn the space from spectral audio features provided by Freesound. In this way, sounds are self-organised according to some sort of timbre similarity.
 
 Freesound Explorer is implemented as a web application which takes advantage of modern web technologies including the [Web Audio API](https://www.w3.org/TR/webaudio/) and the [Web MIDI API](https://www.w3.org/TR/webmidi/). Freesound Explorer also uses a Python [Flask](http://flask.pocoo.org) backend for handling user accounts, but it can also be run statically without the backend (with reduced functionality and no user handling).

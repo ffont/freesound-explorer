@@ -7,7 +7,7 @@ from social.utils import handle_http_errors
 class FreesoundAuth(BaseOAuth2):
     name = 'freesound'
     ID_KEY = 'unique_id'
-    BASE_URL = "https://www.freesound.org/apiv2/"
+    BASE_URL = "https://freesound.org/apiv2/"
     AUTHORIZATION_URL = BASE_URL + 'oauth2/logout_and_authorize/?client_id={client_id}&response_type=code&state={state}'
     ACCESS_TOKEN_URL = BASE_URL + 'oauth2/access_token/'
     REFRESH_TOKEN_URL = BASE_URL + 'oauth2/refresh_token/'

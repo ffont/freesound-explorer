@@ -2,6 +2,7 @@ import React from 'react';
 import { SIDEBAR_TABS } from 'constants';
 import HomeTab from './HomeTab';
 import SearchTab from './SearchTab';
+import SoundListTab from './SoundListTab'
 import PathsTab from './PathsTab';
 import SpacesTab from './SpacesTab';
 import MidiTab from './MidiTab';
@@ -18,6 +19,8 @@ const getContentForActiveTab = (activeTab) => {
       return <HomeTab />;
     case SIDEBAR_TABS.SEARCH:
       return <SearchTab />;
+    case SIDEBAR_TABS.SOUNDLIST:
+      return <SoundListTab />;
     case SIDEBAR_TABS.PATHS:
       return <PathsTab />;
     case SIDEBAR_TABS.SPACES:

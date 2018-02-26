@@ -36,6 +36,7 @@ export const MESSAGE_STATUS = {
 export const SIDEBAR_TABS = {
   SEARCH: 'search',
   SPACES: 'spaces',
+  SOUNDLIST: 'soundlist',
   PATHS: 'paths',
   MIDI: 'midi',
   HOME: 'home',

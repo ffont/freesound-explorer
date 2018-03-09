@@ -72,6 +72,14 @@ export const computeSpaceIndex = (spaces) => {
   return spaceIndex;
 };
 
+export const getCurrentSpace = function(spaces, queryID){
+  for (var idx in spaces) {
+    if (spaces[idx].queryID === queryID) {
+    return spaces[idx]
+    }
+  }
+};
+
 export const getSpaceDistanceToCenter = (space, center) =>
   Math.sqrt(Math.pow((space.currentPositionInMap.x - center.x), 2) +
     Math.pow((space.currentPositionInMap.y - center.y), 2));

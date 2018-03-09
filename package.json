@@ -49,9 +49,11 @@
     "precss": "^1.4.0",
     "react": "^15.3.2",
     "react-addons-perf": "^15.3.2",
+    "react-bootstrap-table-next": "^0.1.4",
     "react-dom": "^15.3.2",
     "react-hot-loader": "^3.0.0-beta.5",
     "react-redux": "^4.4.5",
+    "react-table": "^6.8.0",
     "redux": "^3.6.0",
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.1.0",
@@ -61,7 +63,7 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.2",
-    "webpack-hot-middleware": "^2.12.1",
+    "webpack-hot-middleware": "^2.21.2",
     "why-did-you-update": "0.0.8"
   },
   "devDependencies": {

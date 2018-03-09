@@ -1,41 +1,42 @@
 import React from 'react';
-import SoundList from '/components/Sounds/SoundList';
 import { connect } from 'react-redux';
+import { getCurrentSpace } from '../Spaces/utils';
+import SoundListItem from '../../components/Sounds/SoundListItem';
 // import actions here
 
 const propTypes = {
-  spaces : React.PropTypes.array,
-  currentSpace: React.PropTypes.string,
-  sounds: React.PropTypes.array
+  space: React.PropTypes.object,
+//  currentSpace: React.PropTypes.string,
+  sounds: React.PropTypes.object,
 };
 
-const SoundListContainer = props => (
-  <ul>{props.spaces.map(space => (
-    <SoundList
-      space={space}
-      sounds={props.sounds}
-      />
-    ))}
-  </ul>
-);
+// Q?? class or not?! tab as container?
+// const space = props => getCurrentSpace(props.spaces.spaces, props.currentSpace);
 
-
-//class SoundListContainer extends React.Component {
-//  constructor(props) {
-//    super(props);
-//  }
-//  
-//  render(){
-//    return (
-//      <div>
-//        <SoundList />
-//      </div>
-//    );
-//  };
-//};
-
+const SoundListContainer = props =>
+  (
+    <div>
+      {typeof props.space === 'undefined' ?
+        <div className="empty-soundlist">No sounds to list, please search first!</div> :
+        <div className="soundList-container">
+          <SoundListItem
+            key={props.space.queryID}
+            space={props.space}
+            sounds={props.sounds.byID}
+          />
+        </div>}
+    </div>
+  );
 
 SoundListContainer.propTypes = propTypes;
-const mapStateToProps = state => state.spaces;
+
+function mapStateToProps(state) {
+  return {
+    space: getCurrentSpace(state.spaces.spaces, state.spaces.currentSpace),
+//    currentSpace: state.spaces.currentSpace,
+    sounds: state.sounds,
+  };
+}
+
 
 export default connect(mapStateToProps)(SoundListContainer);

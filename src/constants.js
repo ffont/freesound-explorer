@@ -63,7 +63,10 @@ export const MIDI_MESSAGE_INDICATOR_DURATION = 1000;
 export const MIN_ZOOM = 0.05;
 export const MAX_ZOOM = 15;
 export const MAP_SCALE_FACTOR = 20;
+export const ADD_SELECTION_KEYCODE = 16; // shift key 
+export const TOGGLE_SELECTION_KEYCODE = 17; //ctrl key
 export const PLAY_ON_HOVER_SHORTCUT_KEYCODE = 18; // alt key
+export const TOGGLE_SELECTION_MAC_KEYCODE = 91 || 93; // cmd key left /right 
 
 // tsne
 export const MAX_TSNE_ITERATIONS = 150;

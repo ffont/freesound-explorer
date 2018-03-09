@@ -67,10 +67,14 @@ class MapCircleContainer extends React.PureComponent {
     } else {
       this.props.playAudio(this.props.sound);
     }
+    
+    // FIX: does not work, sound stays selected, Modal gemains open
+    // -> this.props.sound.isSelected is undefined!!
     if (this.props.sound.isSelected) {
       this.props.hideModal();
       this.props.deselectSound();
-    } else {
+    } 
+    else {
       this.props.deselectAllSounds();
       this.props.openModalForSound(this.props.sound);
       this.props.selectSound(this.props.sound.id);

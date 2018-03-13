@@ -6,7 +6,7 @@ import 'react-table/react-table.css';
 
 
 const propTypes = {
-  sounds : React.PropTypes.object,
+  sounds: React.PropTypes.object,
   space: React.PropTypes.object,
 };
 
@@ -15,68 +15,83 @@ const propTypes = {
 
 class SoundListItem extends React.Component {
   constructor(props) {
-    super(props);  
+    super(props);
   }
-  render(){
+  render() {
     const data = [];
-    
+
     // only list sounds of current selected space
     Object.values(this.props.space.sounds)
       .forEach((id) => {
-      const sound = this.props.sounds[id];
-      //TODO: fix variing precisions
-      
+        const sound = this.props.sounds[id];
+        // console.log(sound.duration.toFixed(2));
+
+      // TODO: fix variing precisions
+
       // format data fields
-      
-      if (sound.duration){
-        sound.duration = sound.duration.toPrecision(3);
-      };
-      if (sound.license) {
-        switch (sound.license) {
-          case "http://creativecommons.org/licenses/by/3.0/": sound.license =  "CC BY 3.0";
-            break;
-          case "http://creativecommons.org/publicdomain/zero/1.0/":
-            sound.license =  "CC0 1.0";
-            break;
-          case "http://creativecommons.org/licenses/by-nc/3.0/":
-            sound.license =  "CC BY-NC 3.0";
-            break;
-          default:
-            sound.license = "not specified!"
+      // debugger;
+        if (sound.duration) {
+          sound.durationfixed = sound.duration.toFixed(2);
         }
-      }
-      
+        if (sound.license) {
+          switch (sound.license) {
+            case 'http://creativecommons.org/licenses/by/3.0/':
+              sound.shortLicense = 'CC BY 3.0';
+              break;
+            case 'http://creativecommons.org/publicdomain/zero/1.0/':
+              sound.shortLicense = 'CC0 1.0';
+              break;
+            case 'http://creativecommons.org/licenses/by-nc/3.0/':
+              sound.shortLicense = 'CC BY-NC 3.0';
+              break;
+            case 'http://creativecommons.org/licenses/by-nc/4.0/':
+              sound.shortLicense = 'CC BY-NC 4.0';
+              break;
+            case 'http://creativecommons.org/licenses/sampling+/1.0/':
+              sound.shortLicense = 'Sampling Plus 1.0';
+              break;
+            case 'http://creativecommons.org/licenses/by-sa/4.0/':
+              sound.shortLicense = 'CC BY-SA 4.0';
+              break;
+            case 'http://creativecommons.org/licenses/by-nd/4.0/':
+              sound.shortLicense = 'CC BY-ND 4.0';
+              break;
+            default:
+              sound.shortLicense = 'not specified!';
+          }
+        }
+
       if (sound.tags){
-        sound.tags = sound.tags.sort().join(", ");
+        sound.tagsStr = sound.tags.sort().join(', ');
       }
-      
-      data.push(sound);
-    });
-    
+
+        data.push(sound);
+      });
+
     const columns = [{
-    Header: 'Name',
-    accessor: 'name',
-    minWidth: 150 // String-based value accessors!
-  },{
-    Header: 'Username',
-    accessor: 'username',
-  }, {Header: 'Duration',
-     accessor: 'duration',
+      Header: 'Name',
+      accessor: 'name',
+      minWidth: 150, // String-based value accessors!
+    }, {
+      Header: 'Username',
+      accessor: 'username',
+    }, { Header: 'Duration',
+      accessor: 'durationfixed',
 //     style:{color:"red"}
-    
-  }, {
-    Header: 'License',
-    accessor: 'license',
-  },
+
+    }, {
+      Header: 'License',
+      accessor: 'shortLicense',
+    },
 //   TODO: deconcat tags
-   {
-    Header: 'Tags',
-    accessor: 'tags',
+    {
+      Header: 'Tags',
+      accessor: 'tagsStr',
 //    Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
-  }
-                     
- ]
-    
+    },
+
+    ];
+
 //    {
 //    id: 'friendName', // Required because our accessor is not a string
 //    Header: 'Friend Name',
@@ -85,12 +100,12 @@ class SoundListItem extends React.Component {
 //    Header: props => <span>Friend Age</span>, // Custom header components!
 //    accessor: 'friend.age'
 //  }]
-    return(    
+    return (
       <ReactTable
         data={data}
-        showPageSizeOptions= {false}
-        showPaginationBottom= {false}
-        defaultPageSize= {data.length}
+        showPageSizeOptions={false}
+        showPaginationBottom={false}
+        defaultPageSize={data.length}
         columns={columns}
         className="-striped -highlight"
         // TODO: click handling etc.
@@ -101,7 +116,7 @@ class SoundListItem extends React.Component {
   }
 }
 
-//TODO: handle clicks on table >> must be dorpped as prop into react Table:
+// TODO: handle clicks on table >> must be dorpped as prop into react Table:
 //        getTdProps={(state, rowInfo, column, instance) => {
 //          return {
 //            onClick: (e, handleOriginal) => {

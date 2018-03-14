@@ -21,6 +21,7 @@ const propTypes = {
   toggleHoveringSound: React.PropTypes.func,
   openModalForSound: React.PropTypes.func,
   hideModal: React.PropTypes.func,
+  isSoundModalVisible: React.PropTypes.bool,
 };
 
 const isSoundVisible = (props) => {
@@ -68,11 +69,12 @@ class MapCircleContainer extends React.PureComponent {
       this.props.playAudio(this.props.sound);
     }
 
-    // FIXED: -> this.props.sound.isSelected was undefined!!
-    // changed to this.props.isSelected as it seems to hold the proper value
-    // FIX: Modal does not open again when sound is selected
     if (this.props.isSelected) {
-      this.props.hideModal();
+      if (this.props.isSoundModalVisible) {
+        this.props.hideModal();
+      } else {
+        this.props.openModalForSound(this.props.sound);
+      }
       this.props.deselectSound();
     } else {
       this.props.deselectAllSounds(); // does not work on sounds.selectedSounds
@@ -89,6 +91,7 @@ class MapCircleContainer extends React.PureComponent {
   }
 
   render() {
+    // debugger;
     if (!isSoundVisible(this.props)) {
       return null;
     }
@@ -110,10 +113,14 @@ const makeMapStateToProps = (_, ownProps) => {
   const isSoundSelected = makeIsSoundSelected(soundID);
   return (state) => {
     const sound = state.sounds.byID[soundID];
+    const selectedSounds = state.sounds.selectedSounds;
+    const isSoundModalVisible = state.sounds.soundInfoModal.isVisible;
     const { shouldPlayOnHover } = state.settings;
     const isSelected = isSoundSelected(state);
     return {
       sound,
+      selectedSounds,
+      isSoundModalVisible,
       isThumbnail,
       shouldPlayOnHover,
       isSelected,

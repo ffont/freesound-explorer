@@ -74,8 +74,7 @@ class MapCircleContainer extends React.PureComponent {
     if (this.props.isSelected) {
       this.props.hideModal();
       this.props.deselectSound();
-    }
-    else {
+    } else {
       this.props.deselectAllSounds(); // does not work on sounds.selectedSounds
       this.props.openModalForSound(this.props.sound);
       this.props.selectSound(this.props.sound.id);

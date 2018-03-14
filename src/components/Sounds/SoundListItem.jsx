@@ -1,9 +1,8 @@
 import React from 'react';
-import { lighten } from 'utils/colorsUtils';
-import './SoundListItem.scss';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-
+import { lighten } from 'utils/colorsUtils';
+import './SoundListItem.scss';
 
 const propTypes = {
   sounds: React.PropTypes.object,
@@ -24,12 +23,7 @@ class SoundListItem extends React.Component {
     Object.values(this.props.space.sounds)
       .forEach((id) => {
         const sound = this.props.sounds[id];
-        // console.log(sound.duration.toFixed(2));
-
-      // TODO: fix variing precisions
-
-      // format data fields
-      // debugger;
+        // format data fields
         if (sound.duration) {
           sound.durationfixed = sound.duration.toFixed(2);
         }
@@ -60,11 +54,9 @@ class SoundListItem extends React.Component {
               sound.shortLicense = 'not specified!';
           }
         }
-
-      if (sound.tags){
-        sound.tagsStr = sound.tags.sort().join(', ');
-      }
-
+        if (sound.tags) {
+          sound.tagsStr = sound.tags.sort().join(', ');
+        }
         data.push(sound);
       });
 
@@ -100,6 +92,7 @@ class SoundListItem extends React.Component {
 //    Header: props => <span>Friend Age</span>, // Custom header components!
 //    accessor: 'friend.age'
 //  }]
+
     return (
       <ReactTable
         data={data}

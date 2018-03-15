@@ -50,6 +50,8 @@ class SoundInfo extends React.Component {
     }, '');
   }
 
+
+  // TODO: implement direct GET request, this is a shortcut -> downloadSound is now bypassed
   getFreesoundButtons() {
     let bookmarkSoundIcon = null;
     let downloadSoundIcon = null;
@@ -64,9 +66,11 @@ class SoundInfo extends React.Component {
         </button>
       );
       downloadSoundIcon = (
-        <button onClick={() => this.props.downloadSound(this.props.sound)}>
-          <i className="fa fa-download fa-lg" aria-hidden="true" />
-        </button>
+        // <button onClick={() => this.props.downloadSound(this.props.sound)}>
+          <a href={this.props.sound.url + 'download'} target="_blank" >
+            <i className="fa fa-download fa-lg" aria-hidden="true" />
+          </a>
+        // </button>
       );
     }
     return { bookmarkSoundIcon, downloadSoundIcon };

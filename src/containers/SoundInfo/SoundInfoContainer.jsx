@@ -21,6 +21,7 @@ const propTypes = {
   addSoundToPath: React.PropTypes.func,
   downloadSound: React.PropTypes.func,
   bookmarkSound: React.PropTypes.func,
+  isMidiSupported: React.PropTypes.bool,
 };
 
 const SoundInfoContainer = (props) => {

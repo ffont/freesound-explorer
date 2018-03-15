@@ -33,9 +33,10 @@ const SoundInfoContainer = (props) => {
 const mapStateToProps = (state) => {
   const { notesMapped, soundCurrentlyLearnt, isMidiSupported } = state.midi;
   const { selectedPath } = state.paths;
+  const { isUserLoggedIn } = state.login;
   const sound = state.sounds.byID && state.sounds.byID[state.sounds.soundInfoModal.soundID];
   return Object.assign({}, state.sounds.soundInfoModal,
-    { sound, selectedPath, notesMapped, soundCurrentlyLearnt, isMidiSupported });
+    { sound, selectedPath, notesMapped, soundCurrentlyLearnt, isMidiSupported, isUserLoggedIn });
 };
 
 SoundInfoContainer.propTypes = propTypes;

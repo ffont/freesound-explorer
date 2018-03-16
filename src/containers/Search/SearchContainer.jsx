@@ -4,7 +4,7 @@ import { DEFAULT_QUERY, PERFORM_QUERY_AT_MOUNT } from 'constants';
 import InputTextButton from 'components/Input/InputTextButton';
 import SelectWithLabel from 'components/Input/SelectWithLabel';
 import SliderRange from 'components/Input/SliderRange';
-import { updateDescriptor, updateMinDuration, updateMaxDuration,
+import { updateSorting, updateDescriptor, updateMinDuration, updateMaxDuration,
   updateMaxResults, updateQuery }
   from './actions';
 import { getSounds } from '../Sounds/actions';
@@ -16,9 +16,11 @@ const propTypes = {
   minDuration: React.PropTypes.number,
   query: React.PropTypes.string,
   descriptor: React.PropTypes.string,
+  sorting: React.PropTypes.string,
   getSounds: React.PropTypes.func,
   isExampleQueryDone: React.PropTypes.bool,
   updateDescriptor: React.PropTypes.func,
+  updateSorting: React.PropTypes.func,
   updateMinDuration: React.PropTypes.func,
   updateMaxDuration: React.PropTypes.func,
   updateMaxResults: React.PropTypes.func,
@@ -53,8 +55,8 @@ class QueryBox extends React.Component {
 
   submitQuery() {
     let { query } = this.props;
-    const { descriptor, maxResults, minDuration, maxDuration } = this.props;
-    const queryParams = { descriptor, maxResults, minDuration, maxDuration };
+    const { sorting, descriptor, maxResults, minDuration, maxDuration } = this.props;
+    const queryParams = { sorting, descriptor, maxResults, minDuration, maxDuration };
     if (!query.length) {
       query = DEFAULT_QUERY;
     }
@@ -91,6 +93,25 @@ class QueryBox extends React.Component {
           label="Arrange by"
           tabIndex="0"
           defaultValue={this.props.descriptor}
+        />
+        <SelectWithLabel
+          onChange={(evt) => {
+            const sorting = evt.target.value;
+            this.props.updateSorting(sorting);
+          }}
+          options={[
+            { value: 'rating', name: 'Rating' },
+            { value: 'duration', name: 'Duration' },
+            // { value: '', name: '' },
+            // { value: '', name: '' },
+            // { value: '', name: '' },
+            // { value: '', name: '' },
+            // { value: '', name: '' },
+            // { value: '', name: '' },
+          ]}
+          label="Sort by"
+          tabIndex="0"
+          defaultValue={this.props.sorting}
         />
         <SliderRange
           label="Number of results"
@@ -132,6 +153,7 @@ export default connect(mapStateToProps, {
   getSounds,
   setExampleQueryDone,
   updateDescriptor,
+  updateSorting,
   updateMinDuration,
   updateMaxDuration,
   updateMaxResults,

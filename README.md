@@ -1,6 +1,6 @@
 # Freesound Explorer
 
-[https://labs.freesound.org/fse/](http://labs.freesound.org/fse/) (use Chrome for better experience)
+[https://labs.freesound.org/fse/](https://labs.freesound.org/fse/) (use Chrome for better experience)
 
 ## About
 

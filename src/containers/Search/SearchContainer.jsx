@@ -100,14 +100,11 @@ class QueryBox extends React.Component {
             this.props.updateSorting(sorting);
           }}
           options={[
-            { value: 'rating', name: 'Rating' },
-            { value: 'duration', name: 'Duration' },
-            // { value: '', name: '' },
-            // { value: '', name: '' },
-            // { value: '', name: '' },
-            // { value: '', name: '' },
-            // { value: '', name: '' },
-            // { value: '', name: '' },
+            { value: 'score', name: 'Relevance' },
+            { value: 'rating_desc', name: 'Rating' },
+            { value: 'duration_desc', name: 'Duration' },
+            { value: 'downloads_desc', name: 'Downloads' },
+            { value: 'creation_desc', name: 'Creation Date' },
           ]}
           label="Sort by"
           tabIndex="0"

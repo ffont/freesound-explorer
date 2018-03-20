@@ -9,7 +9,6 @@ const propTypes = {
   space: React.PropTypes.object,
 };
 
-// TODO: get sound Objects by ID and display columns
 // TODO: build table
 
 class SoundListItem extends React.Component {
@@ -75,7 +74,6 @@ class SoundListItem extends React.Component {
       Header: 'License',
       accessor: 'shortLicense',
     },
-//   TODO: deconcat tags
     {
       Header: 'Tags',
       accessor: 'tagsStr',

@@ -1,7 +1,7 @@
 import { DEFAULT_MAX_DURATION, DEFAULT_DESCRIPTOR, DEFAULT_MAX_RESULTS,
-  DEFAULT_MIN_DURATION }
+  DEFAULT_MIN_DURATION, DEFAULT_SORTING }
   from 'constants';
-import { UPDATE_DESCRIPTOR, UPDATE_MAX_RESULTS, UPDATE_MIN_DURATION,
+import { UPDATE_SORTING, UPDATE_DESCRIPTOR, UPDATE_MAX_RESULTS, UPDATE_MIN_DURATION,
   UPDATE_MAX_DURATION, UPDATE_QUERY }
   from './actions';
 import { FETCH_SOUNDS_REQUEST, FETCH_SOUNDS_FAILURE, MAP_COMPUTATION_COMPLETE }
@@ -14,6 +14,7 @@ export const initialState = {
   minDuration: DEFAULT_MIN_DURATION,
   maxDuration: DEFAULT_MAX_DURATION,
   descriptor: DEFAULT_DESCRIPTOR,
+  sorting: DEFAULT_SORTING,
 };
 
 const search = (state = initialState, action) => {
@@ -21,6 +22,11 @@ const search = (state = initialState, action) => {
     case UPDATE_DESCRIPTOR: {
       return Object.assign({}, state, {
         descriptor: action.descriptor,
+      });
+    }
+    case UPDATE_SORTING: {
+      return Object.assign({}, state, {
+        sorting: action.sorting,
       });
     }
     case UPDATE_MAX_RESULTS: {

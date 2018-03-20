@@ -106,8 +106,8 @@ export const getSounds = (query, queryParams) => (dispatch, getStore) => {
   dispatch(displaySystemMessage('Searching for sounds...'));
   const queryID = UUID.v4();
   dispatch(fetchRequest(queryID, query, queryParams));
-  const { maxResults, maxDuration } = queryParams;
-  submitQuery(query, maxResults, maxDuration).then(
+  const { maxResults, maxDuration, sorting } = queryParams;
+  submitQuery(query, maxResults, maxDuration, sorting).then(
     (allPagesResults) => {
       const sounds = reshapeReceivedSounds(allPagesResults, queryID);
       const soundsFound = Object.keys(sounds).length;

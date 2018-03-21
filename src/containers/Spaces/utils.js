@@ -72,10 +72,10 @@ export const computeSpaceIndex = (spaces) => {
   return spaceIndex;
 };
 
-export const getCurrentSpace = function(spaces, queryID){
+export const getCurrentSpaceObj = function(spaces, queryID) {
   for (var idx in spaces) {
     if (spaces[idx].queryID === queryID) {
-    return spaces[idx]
+      return spaces[idx];
     }
   }
 };

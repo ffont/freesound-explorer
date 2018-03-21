@@ -1,17 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getCurrentSpace } from '../Spaces/utils';
+import { getCurrentSpaceObj } from '../Spaces/utils';
 import SoundListItem from '../../components/Sounds/SoundListItem';
 // import actions here
 
 const propTypes = {
   space: React.PropTypes.object,
-//  currentSpace: React.PropTypes.string,
   sounds: React.PropTypes.object,
 };
 
-// Q?? class or not?! tab as container?
-// const space = props => getCurrentSpace(props.spaces.spaces, props.currentSpace);
+/* 
+* The Sound List is a comlementary feature to the MapCircle view.
+* Here sorting shall be possible to navigate on more abstract criteria, eg. duration.
+* Highlight on hovering and selection shall be synchronous ot the map.
+*/
 
 const SoundListContainer = props =>
   (
@@ -32,8 +34,7 @@ SoundListContainer.propTypes = propTypes;
 
 function mapStateToProps(state) {
   return {
-    space: getCurrentSpace(state.spaces.spaces, state.spaces.currentSpace),
-//    currentSpace: state.spaces.currentSpace,
+    space: getCurrentSpaceObj(state.spaces.spaces, state.spaces.currentSpace),
     sounds: state.sounds,
   };
 }

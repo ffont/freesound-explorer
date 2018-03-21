@@ -98,7 +98,7 @@ class MapContainer extends React.Component {
   }
   
   
-//  TODO: enable add / remove from selection
+//  TODO: enable add / remove from selection per keydown mouse modifier
 //  onKeydownCallback(evt) {
 //    if (evt.target.tagName.toUpperCase() === 'INPUT') { return; }
 //    if (evt.keyCode === TOGGLE_SELECTION_KEYCODE) {

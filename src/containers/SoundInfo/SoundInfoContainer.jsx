@@ -21,6 +21,7 @@ const propTypes = {
   addSoundToPath: React.PropTypes.func,
   downloadSound: React.PropTypes.func,
   bookmarkSound: React.PropTypes.func,
+  isMidiSupported: React.PropTypes.bool,
 };
 
 const SoundInfoContainer = (props) => {
@@ -33,9 +34,10 @@ const SoundInfoContainer = (props) => {
 const mapStateToProps = (state) => {
   const { notesMapped, soundCurrentlyLearnt, isMidiSupported } = state.midi;
   const { selectedPath } = state.paths;
+  const { isUserLoggedIn } = state.login;
   const sound = state.sounds.byID && state.sounds.byID[state.sounds.soundInfoModal.soundID];
   return Object.assign({}, state.sounds.soundInfoModal,
-    { sound, selectedPath, notesMapped, soundCurrentlyLearnt, isMidiSupported });
+    { sound, selectedPath, notesMapped, soundCurrentlyLearnt, isMidiSupported, isUserLoggedIn });
 };
 
 SoundInfoContainer.propTypes = propTypes;

@@ -12,3 +12,9 @@ static/fonts/
 .tern-project
 backend/sessions/
 coverage/
+bundle.js
+freesound-explorer_instlog
+package-lock.json
+.python-version
+npm_install_log.txt
+launch.json

@@ -15,7 +15,7 @@ const SettingsContainer = props => (
     <CheckBox
       checked={props.shouldPlayOnHover}
       onChange={props.togglePlayOnHover}
-      label="Play on hover"
+      label="Play on hover (or hold alt-key)"
       id="play-on-hover-toggle"
     />
     <CheckBox

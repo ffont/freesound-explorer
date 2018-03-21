@@ -1,0 +1,15 @@
+
+// .clustertag:hover {
+//   fill:           black;
+//   fill-opacity:   1.0;
+// }
+
+.clustertag { 
+  font-size: 1.1em;
+  overflow-wrap: break-word;
+  text-align: center;
+  text-anchor: middle;
+  fill: white;
+  fill-opacity: 0.75;
+  pointer-events: none;
+}

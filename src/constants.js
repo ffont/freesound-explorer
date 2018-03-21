@@ -81,3 +81,13 @@ export const DEFAULT_TEMPO = 120.0;
 export const LOOKAHEAD = 25; // How often we'll call the scheduler function (in milliseconds)
 export const SCHEDULEAHEADTIME = 0.2; // How far we schedule notes from lookahead call (in seconds)
 export const TICKRESOLUTION = 16; // 16 for 16th note or 32 for 32th note
+
+// clustering / rescans until constants are given
+export const MIN_ITEMS_PER_CLUSTER = 4;
+export const MIN_CLUSTERS_PER_SCAN = 2;
+export const MAX_CLUSTERS_PER_SCAN = 5;
+
+// frequent itemset mining (in tags) / rescans until constants are given
+export const MIN_SUPPORT = 0.4;
+export const MIN_FREQTAG_LENGTH = 1;
+export const MAX_FREQTAG_LENGTH = 5;

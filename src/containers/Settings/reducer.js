@@ -1,10 +1,11 @@
 import { TOGGLE_PLAY_ON_HOVER, TOGGLE_METRONOME_SOUND,
-  SET_SHOULD_PLAY_ON_HOVER } from './actions';
+  SET_SHOULD_PLAY_ON_HOVER, TOGGLE_CLUSTER_TAGS } from './actions';
 import storable from '../SessionsHandler/storableReducer';
 
 export const initialState = {
   shouldPlayOnHover: false,
   shouldPlayMetronomeSound: false,
+  shouldShowClusterTags: false,
 };
 
 const settings = (state = initialState, action) => {
@@ -22,6 +23,11 @@ const settings = (state = initialState, action) => {
     case TOGGLE_METRONOME_SOUND: {
       return Object.assign({}, state, {
         shouldPlayMetronomeSound: !state.shouldPlayMetronomeSound,
+      });
+    }
+    case TOGGLE_CLUSTER_TAGS: {
+      return Object.assign({}, state, {
+        shouldShowClusterTags: !state.shouldShowClusterTags,
       });
     }
     default:

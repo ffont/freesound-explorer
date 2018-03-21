@@ -121,10 +121,11 @@ class MapContainer extends React.Component {
           {this.props.spaces.map(space =>
             <Space
               key={space.queryID}
+              queryID={space.queryID}
               sounds={space.sounds}
+              clusters={space.clusters}
             />)}
         </svg>
-        <SoundInfoContainer />
       </div>
     );
   }

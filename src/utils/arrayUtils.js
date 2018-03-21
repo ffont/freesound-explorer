@@ -4,6 +4,41 @@ export const arraySum = array => array.reduce(
 
 export const arrayMean = array => arraySum(array) / array.length;
 
+// takes two vectors of arbitrary size and sums the values without changing dimensions
+export const vectorSum = (v1, v2) => {
+  const summed = [];
+  if (v1 && v2 && v1.length === v2.length) {
+    for (const idx in v1) {
+      summed.push(v1[idx] + v2[idx]);
+    }
+  }
+  return summed;
+};
+
+// takes two vectors of arbitrary size and devides the values per element or by one number
+export const vectorDiv = (v1, v2) => {
+  const divided = [];
+  if (typeof v2 === 'object' && v1.length === v2.length) {
+    for (const idx in v1) {
+      divided.push(v1[idx] / v2[idx]);
+    }
+  } else if (typeof v2 === 'number') {
+    for (const idx in v1) {
+      divided.push(v1[idx] / v2);
+    }
+  }
+  return divided;
+};
+
+// takes an array of vectors and calculates eg the centroid of a cluster
+export const vectorMean = (vectorArray) => {
+  const m = vectorDiv(
+    vectorArray.reduce((currentValue, previousValue) => vectorSum(currentValue, previousValue)),
+    vectorArray.length
+    );
+  return m;
+};
+
 export const elementWithId = (array, targetId, idAttr = 'id') =>
   array.find(x => x[idAttr] === targetId);
 

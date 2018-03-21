@@ -1,13 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import CheckBox from 'components/Input/CheckBox';
-import { togglePlayOnHover, toggleMetronomeSound } from './actions';
+import { togglePlayOnHover, toggleMetronomeSound, toggleClusterTags } from './actions';
 
 const propTypes = {
   shouldPlayOnHover: React.PropTypes.bool,
   shouldPlayMetronomeSound: React.PropTypes.bool,
+  shouldShowClusterTags: React.PropTypes.bool,
   togglePlayOnHover: React.PropTypes.func,
   toggleMetronomeSound: React.PropTypes.func,
+  toggleClusterTags: React.PropTypes.func,
+
 };
 
 const SettingsContainer = props => (
@@ -24,6 +27,12 @@ const SettingsContainer = props => (
       label="Play metronome sound"
       id="play-metronome-toggle"
     />
+    <CheckBox
+      checked={!!props.shouldShowClusterTags} // !! -> casting the calue from null to false
+      onChange={props.toggleClusterTags}
+      label="Show frequent tags of clusters"
+      id="show-cluster-tags-toggle"
+    />
   </div>
 );
 
@@ -32,4 +41,5 @@ const mapStateToProps = state => state.settings;
 export default connect(mapStateToProps, {
   togglePlayOnHover,
   toggleMetronomeSound,
+  toggleClusterTags,
 })(SettingsContainer);

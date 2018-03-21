@@ -4,7 +4,7 @@ import { MESSAGE_STATUS, MAX_TSNE_ITERATIONS } from 'constants';
 import 'polyfills/requestAnimationFrame';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { submitQuery, reshapeReceivedSounds } from '../Search/utils';
-import { setSpaceAsCenter } from '../Spaces/actions';
+import { setSpaceAsCenter, computeSpaceClusters } from '../Spaces/actions';
 import { getTrainedTsne, computePointsPositionInSolution } from './utils';
 
 export const FETCH_SOUNDS_REQUEST = 'FETCH_SOUNDS_REQUEST';
@@ -67,6 +67,7 @@ const handleFinalStep = queryID => (dispatch) => {
   cancelAnimationFrame(clearTimeoutId);
   dispatch(displaySystemMessage('Map computed!', MESSAGE_STATUS.SUCCESS));
   dispatch(mapComputationComplete(queryID));
+  dispatch(computeSpaceClusters(queryID)); 
 };
 
 const updateSounds = (tsne, sounds, queryID) => (dispatch, getStore) => {

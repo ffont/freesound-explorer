@@ -2,9 +2,11 @@ import { UPDATE_LOGIN_MODAL_VISIBILITY, UPDATE_USER_LOGGED_STATUS,
   UPDATE_BACK_END_AUTH_SUPPORT, UPDATE_LOGGED_USERNAME }
   from './actions';
 
+
+// TODO: RESET LOGIN FLAG TO FALSE!!
 export const initialState = {
   isModalVisible: false,
-  isUserLoggedIn: false,
+  isUserLoggedIn: true,
   isEndUserAuthSupported: false,
   username: '',
 };

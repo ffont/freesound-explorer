@@ -8,7 +8,7 @@ import { MIN_ZOOM, MAX_ZOOM, PLAY_ON_HOVER_SHORTCUT_KEYCODE, TOGGLE_SELECTION_KE
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateMapPosition } from './actions';
 import { setSoundCurrentlyLearnt } from '../Midi/actions';
-import { deselectAllSounds } from '../Sounds/actions';
+import { deselectAllSounds, stopAllSoundsPlaying } from '../Sounds/actions';
 import { hideModal } from '../SoundInfo/actions';
 import Space from '../Spaces/SpaceContainer';
 import SoundInfoContainer from '../SoundInfo/SoundInfoContainer';
@@ -17,6 +17,7 @@ import { setShouldPlayOnHover } from '../Settings/actions';
 
 const propTypes = {
   deselectAllSounds: React.PropTypes.func,
+  stopAllSoundsPlaying: React.PropTypes.func,
   paths: React.PropTypes.array,
   spaces: React.PropTypes.array,
   map: React.PropTypes.shape({
@@ -75,6 +76,7 @@ class MapContainer extends React.Component {
     if (evt.target.tagName !== 'circle') {
       // deselect all sounds when not clicking on a circle
       this.props.deselectAllSounds();
+      this.props.stopAllSoundsPlaying();
       // turn off current midi learn
       this.props.setSoundCurrentlyLearnt();
       this.props.hideModal();
@@ -161,6 +163,7 @@ export default connect(mapStateToProps, {
   displaySystemMessage,
   updateMapPosition,
   deselectAllSounds,
+  stopAllSoundsPlaying,
   setSoundCurrentlyLearnt,
   hideModal,
   setShouldPlayOnHover,

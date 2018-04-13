@@ -64,14 +64,10 @@ class MapCircleContainer extends React.PureComponent {
   }
 
   onClick() {
-    // console.log(this.props.selectedSounds);
-    // console.log('modalID: ' + this.props.soundInfoModal.soundID + 'sel> ' + this.props.isSelected);
-    // console.log('sound: ' + this.props.sound.id + 'pl> ' + this.props.sound.isPlaying);
-    // console.log(this.props.soundInfoModal.soundID === this.props.sound.soundID);
     // play and stop sound
-    if (!this.props.sound.isPlaying && this.props.isSelected) {
+    if (this.props.sound.isPlaying) {
       this.props.stopAudio(this.props.sound);
-    } else {
+    } else if (!this.props.isSelected) {
       this.props.playAudio(this.props.sound);
     }
     if (this.props.isSelected) {
@@ -90,7 +86,6 @@ class MapCircleContainer extends React.PureComponent {
       // open modal if sound is not yet selected
         this.props.openModalForSound(this.props.sound);
     }
-  console.log(this.props.selectedSounds);
   }
 
   shouldThumbnailUpdate(nextProps) {

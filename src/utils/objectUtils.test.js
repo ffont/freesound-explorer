@@ -19,6 +19,16 @@ describe('object utils', () => {
       expect(utils.readObjectPropertyByPropertyAbsName(x, 'a.1.b')).toEqual(3);
     });
   });
+  describe('getPropertyArrayOfDictionaryEntries', () => {
+    it('correctly returns the array of property values of an dictionary like object', () => {
+      const x = {
+        0: { a: [22, { b: 3 }] },
+        1: { a: [22, { b: 2 }] },
+      };
+      expect(utils.getPropertyArrayOfDictionaryEntries(x, 'a[1].b')).toEqual([3, 2]);
+      expect(utils.getPropertyArrayOfDictionaryEntries(x, 'a.1.b')).toEqual([3, 2]);
+    });
+  });
   describe('pureDeleteObjectKey', () => {
     const testObj = { x: 1, y: { a: 4, b: [3, 4, 5], c: { d: 1 } } };
     deepFreeze(testObj);

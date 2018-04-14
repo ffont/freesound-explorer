@@ -8,6 +8,7 @@ const propTypes = {
   sounds: React.PropTypes.object,
   space: React.PropTypes.object,
   selectSound: React.PropTypes.func,
+  deselectSound: React.PropTypes.func,
   playAudio: React.PropTypes.func,
   toggleHoveringSound: React.PropTypes.func,
 };
@@ -107,11 +108,23 @@ class SoundListItem extends React.Component {
         defaultPageSize={data.length}
         columns={columns}
         className="-striped -highlight"
-        getTrProps={(state, rowInfo) => {
-          return ({
+        getTrProps={(_, rowInfo) => {
+          return {
             onClick: (e, handleOriginal) => {
-              this.props.selectSound(rowInfo.original.id);
-              this.props.playAudio(rowInfo.original.id);
+              // this.props.selectSound(rowInfo.original.id);
+              // this.props.playAudio(rowInfo.original.id);
+              if (rowInfo.original.isPlaying) {
+                this.props.stopAudio(rowInfo.original.id);
+              } else if (!rowInfo.original.isSelected) {
+                this.props.playAudio(rowInfo.original.id);
+              }
+              if (rowInfo.original.isSelected) {
+                // toggle selecion
+                this.props.deselectSound(rowInfo.original.id);
+              } else {
+                // toggle selection
+                this.props.selectSound(rowInfo.original.id);
+              }
               if (handleOriginal) {
                 handleOriginal();
               }
@@ -130,7 +143,7 @@ class SoundListItem extends React.Component {
               opacity: '0.9',
               borderRadius: '7px',
             },
-          })
+          }
           }
         }
       />

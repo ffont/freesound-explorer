@@ -1,19 +1,25 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { lighten } from 'utils/colorsUtils';
-import './SoundListItem.scss';
+import './SoundList.scss';
+import { selectSound, deselectSound, toggleHoveringSound } from '../../containers/Sounds/actions';
+import { playAudio, stopAudio } from '../../containers/Audio/actions';
 
 const propTypes = {
   sounds: React.PropTypes.object,
   space: React.PropTypes.object,
+  selectedSounds: React.PropTypes.array,
   selectSound: React.PropTypes.func,
   deselectSound: React.PropTypes.func,
   playAudio: React.PropTypes.func,
+  stopAudio: React.PropTypes.func,
   toggleHoveringSound: React.PropTypes.func,
+  shouldPlayOnHover: React.PropTypes.bool,
 };
 
-class SoundListItem extends React.Component {
+class SoundList extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -24,10 +30,11 @@ class SoundListItem extends React.Component {
 
     // only list sounds of current selected space
     // TODO: UMGESTELLT AUF sounds statt byID
-    Object.values(this.props.space.sounds)
+    Object.keys(this.props.sounds)
       .forEach((id) => {
         // copy sound here, so redux state remains uncanged!
-        const sound = Object.assign({}, this.props.sounds.byID[id]);
+        const { license, tags, name, username, duration, isPlaying, isHovered, color } = this.props.sounds[id];
+        const sound = { id, license, tags, name, username, duration, isPlaying, isHovered, color }; // Object.assign({}, this.props.sounds.byID[id]);
         // format data fields
         if (sound.duration) {
           sound.durationfixed = sound.duration.toFixed(2);
@@ -68,7 +75,7 @@ class SoundListItem extends React.Component {
             return 1;
           }).join(', ');
         }
-        sound.isSelected = this.props.sounds.selectedSounds.includes(sound.id);
+        sound.isSelected = this.props.selectedSounds.includes(sound.id);
         data.push(sound);
       });
 
@@ -130,6 +137,9 @@ class SoundListItem extends React.Component {
               }
             },
             onMouseEnter: () => {
+              if (this.props.shouldPlayOnHover) {
+                this.props.playAudio(rowInfo.original.id);
+              }
               this.props.toggleHoveringSound(rowInfo.original.id);
             },
             onMouseLeave: () => {
@@ -151,5 +161,26 @@ class SoundListItem extends React.Component {
   }
 }
 
-SoundListItem.propTypes = propTypes;
-export default SoundListItem;
+SoundList.propTypes = propTypes;
+function mapStateToProps(_, ownProps) {
+  const { space } = ownProps;
+  return (state) => {
+    const { shouldPlayOnHover } = state.settings;
+    const sounds = {};
+    space.sounds.forEach(soundID => sounds[soundID] = state.sounds.byID[soundID]);
+    const { selectedSounds } = state.sounds;
+    return {
+      sounds,
+      shouldPlayOnHover,
+      selectedSounds,
+    };
+  }
+}
+
+export default connect(mapStateToProps, {
+  selectSound,
+  deselectSound,
+  playAudio,
+  stopAudio,
+  toggleHoveringSound,
+})(SoundList);

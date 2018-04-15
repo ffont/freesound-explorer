@@ -113,8 +113,27 @@ class SoundList extends React.Component {
         showPageSizeOptions={false}
         showPaginationBottom={false}
         defaultPageSize={data.length}
+        style={{
+          height: "650px" // This will force the table body to overflow and scroll, since there is not enough room
+        }}
+        defaultSorted={[
+          {
+            id: "name",
+            desc: false,
+          }
+        ]}
         columns={columns}
-        className="-striped -highlight"
+        className="ReactTable -striped -highlight"
+        getTheadProps = {() => {
+          return {
+            style: {
+              background: "#373737",
+              borderRadius: "7px",
+              // textAlignment: "left",
+            },
+          }
+        }}
+
         getTrProps={(_, rowInfo) => {
           return {
             onClick: (e, handleOriginal) => {

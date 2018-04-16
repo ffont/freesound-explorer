@@ -5,10 +5,11 @@ import 'react-table/react-table.css';
 import { lighten } from 'utils/colorsUtils';
 import './SoundList.scss';
 import { selectSound, deselectSound, toggleHoveringSound } from '../../containers/Sounds/actions';
+import { reshapeSoundListData } from '../../containers/Sounds/utils';
 import { playAudio, stopAudio } from '../../containers/Audio/actions';
 
 const propTypes = {
-  sounds: React.PropTypes.object,
+  sounds: React.PropTypes.array,
   space: React.PropTypes.object,
   selectedSounds: React.PropTypes.array,
   selectSound: React.PropTypes.func,
@@ -20,64 +21,16 @@ const propTypes = {
 };
 
 class SoundList extends React.Component {
-  constructor(props) {
-    super(props);
+
+  shouldComponentUpdate(nextProps) {
+    return (
+      nextProps.selectedSounds !== this.props.selectedSounds
+      || nextProps.space !== this.props.space
+    );
   }
 
   render() {
-    
-    const data = [];
-
-    // only list sounds of current selected space
-    // TODO: UMGESTELLT AUF sounds statt byID
-    Object.keys(this.props.sounds)
-      .forEach((id) => {
-        // copy sound here, so redux state remains uncanged!
-        const { license, tags, name, username, duration, isPlaying, isHovered, color } = this.props.sounds[id];
-        const sound = { id, license, tags, name, username, duration, isPlaying, isHovered, color }; // Object.assign({}, this.props.sounds.byID[id]);
-        // format data fields
-        if (sound.duration) {
-          sound.durationfixed = sound.duration.toFixed(2);
-        }
-        if (sound.license) {
-          switch (sound.license) {
-            case 'http://creativecommons.org/licenses/by/3.0/':
-              sound.shortLicense = 'CC BY 3.0';
-              break;
-            case 'http://creativecommons.org/publicdomain/zero/1.0/':
-              sound.shortLicense = 'CC0 1.0';
-              break;
-            case 'http://creativecommons.org/licenses/by-nc/3.0/':
-              sound.shortLicense = 'CC BY-NC 3.0';
-              break;
-            case 'http://creativecommons.org/licenses/by-nc/4.0/':
-              sound.shortLicense = 'CC BY-NC 4.0';
-              break;
-            case 'http://creativecommons.org/licenses/sampling+/1.0/':
-              sound.shortLicense = 'Sampling Plus 1.0';
-              break;
-            case 'http://creativecommons.org/licenses/by-sa/4.0/':
-              sound.shortLicense = 'CC BY-SA 4.0';
-              break;
-            case 'http://creativecommons.org/licenses/by-nd/4.0/':
-              sound.shortLicense = 'CC BY-ND 4.0';
-              break;
-            default:
-              sound.shortLicense = 'not specified!';
-          }
-        }
-        if (sound.tags) {
-          // sort array lexically, ignoring case
-          sound.tagsStr = sound.tags.sort((a, b) => {
-            if (a.toUpperCase() < b.toUpperCase()) {
-              return -1;
-            }
-            return 1;
-          }).join(', ');
-        }
-        sound.isSelected = this.props.selectedSounds.includes(sound.id);
-        data.push(sound);
-      });
+    const data = this.props.sounds;
 
     const columns = [{
       Header: 'Name',
@@ -114,25 +67,32 @@ class SoundList extends React.Component {
         showPaginationBottom={false}
         defaultPageSize={data.length}
         style={{
-          height: "650px" // This will force the table body to overflow and scroll, since there is not enough room
+          height: '650px', // This will force the table body to overflow and scroll, since there is not enough room
         }}
         defaultSorted={[
           {
-            id: "name",
+            id: 'name',
             desc: false,
-          }
+          },
         ]}
         columns={columns}
         className="ReactTable -striped -highlight"
-        getTheadProps = {() => {
+        getTheadProps={() => {
           return {
             style: {
-              background: "#373737",
-              borderRadius: "7px",
+              background: '#373737',
+              borderRadius: '7px',
               // textAlignment: "left",
             },
-          }
+          };
         }}
+        // getTrProps={() => {
+        //   return {
+        //     style: {
+        //       height: '20px',
+        //     },
+        //   };
+        // }}
 
         getTrProps={(_, rowInfo) => {
           return {
@@ -185,9 +145,10 @@ function mapStateToProps(_, ownProps) {
   const { space } = ownProps;
   return (state) => {
     const { shouldPlayOnHover } = state.settings;
-    const sounds = {};
-    space.sounds.forEach(soundID => sounds[soundID] = state.sounds.byID[soundID]);
     const { selectedSounds } = state.sounds;
+    const collectedsounds = {};
+    space.sounds.forEach(soundID => collectedsounds[soundID] = state.sounds.byID[soundID]);
+    const sounds = reshapeSoundListData(collectedsounds, selectedSounds);
     return {
       sounds,
       shouldPlayOnHover,

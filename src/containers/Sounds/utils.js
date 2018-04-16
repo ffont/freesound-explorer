@@ -83,3 +83,58 @@ export const isSoundInsideScreen = (position, isThumbnail = false) => {
     || position.cx > screenWidth + circleDiameter);
   return !(isVerticallyOutOfScreen || isHorizontallyOutOfScreen);
 };
+
+export const reshapeSoundListData = (sounds, selectedSounds) => {
+  const data = [];
+
+  // only list sounds of current selected space
+  Object.keys(sounds)
+    .forEach((id) => {
+      // copy sound here, so redux state remains uncanged!
+      const { license, tags, name, username, duration, isPlaying, isHovered, color } = sounds[id];
+      const sound = { id, license, tags, name, username, duration, isPlaying, isHovered, color };
+      // format data fields
+      if (sound.duration) {
+        sound.durationfixed = sound.duration.toFixed(2);
+      }
+      if (sound.license) {
+        switch (sound.license) {
+          case 'http://creativecommons.org/licenses/by/3.0/':
+            sound.shortLicense = 'CC BY 3.0';
+            break;
+          case 'http://creativecommons.org/publicdomain/zero/1.0/':
+            sound.shortLicense = 'CC0 1.0';
+            break;
+          case 'http://creativecommons.org/licenses/by-nc/3.0/':
+            sound.shortLicense = 'CC BY-NC 3.0';
+            break;
+          case 'http://creativecommons.org/licenses/by-nc/4.0/':
+            sound.shortLicense = 'CC BY-NC 4.0';
+            break;
+          case 'http://creativecommons.org/licenses/sampling+/1.0/':
+            sound.shortLicense = 'Sampling Plus 1.0';
+            break;
+          case 'http://creativecommons.org/licenses/by-sa/4.0/':
+            sound.shortLicense = 'CC BY-SA 4.0';
+            break;
+          case 'http://creativecommons.org/licenses/by-nd/4.0/':
+            sound.shortLicense = 'CC BY-ND 4.0';
+            break;
+          default:
+            sound.shortLicense = 'not specified!';
+        }
+      }
+      if (sound.tags) {
+        // sort array lexically, ignoring case
+        sound.tagsStr = sound.tags.sort((a, b) => {
+          if (a.toUpperCase() < b.toUpperCase()) {
+            return -1;
+          }
+          return 1;
+        }).join(', ');
+      }
+      sound.isSelected = selectedSounds.includes(sound.id);
+      data.push(sound);
+    });
+  return data;
+};

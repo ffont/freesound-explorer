@@ -66,9 +66,9 @@ class SoundList extends React.Component {
         showPageSizeOptions={false}
         showPaginationBottom={false}
         defaultPageSize={data.length}
-        style={{
-          height: '650px', // This will force the table body to overflow and scroll, since there is not enough room
-        }}
+        // style={{
+        //   height: '650px', // This will force the table body to overflow and scroll, since there is not enough room
+        // }}
         defaultSorted={[
           {
             id: 'name',
@@ -93,6 +93,14 @@ class SoundList extends React.Component {
         //     },
         //   };
         // }}
+
+        getTbodyProps={() => {
+          return {
+            style: {
+              overflowY: 'auto',
+            },
+          };
+        }}
 
         getTrProps={(_, rowInfo) => {
           return {

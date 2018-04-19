@@ -32,11 +32,10 @@ export const vectorDiv = (v1, v2) => {
 
 // takes an array of vectors and calculates eg the centroid of a cluster
 export const vectorMean = (vectorArray) => {
-  const m = vectorDiv(
-    vectorArray.reduce((currentValue, previousValue) => vectorSum(currentValue, previousValue)),
+  return vectorDiv(
+    (vectorArray.reduce((currentValue, previousValue) => vectorSum(currentValue, previousValue))),
     vectorArray.length
     );
-  return m;
 };
 
 export const elementWithId = (array, targetId, idAttr = 'id') =>

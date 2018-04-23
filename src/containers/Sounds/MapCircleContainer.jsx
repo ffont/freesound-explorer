@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import MapCircle from 'components/Sounds/MapCircle';
 import { playAudio, stopAudio } from '../Audio/actions';
-import { selectSound, deselectSound, deselectAllSounds, toggleHoveringSound }
-  from './actions';
+import { selectSound, deselectSound, deselectAllSounds,
+  toggleHoveringSound } from './actions';
 import { openModalForSound, hideModal } from '../SoundInfo/actions';
 import { isSoundInsideScreen } from './utils';
 import { makeIsSoundSelected } from './selectors';
@@ -13,10 +13,10 @@ const propTypes = {
   isThumbnail: React.PropTypes.bool,
   shouldPlayOnHover: React.PropTypes.bool,
   isSelected: React.PropTypes.bool,
+  shouldMultiSelect: React.PropTypes.bool,
   playAudio: React.PropTypes.func,
   stopAudio: React.PropTypes.func,
   selectSound: React.PropTypes.func,
-  selectedSounds: React.PropTypes.array,
   deselectSound: React.PropTypes.func,
   deselectAllSounds: React.PropTypes.func,
   toggleHoveringSound: React.PropTypes.func,
@@ -64,17 +64,13 @@ class MapCircleContainer extends React.PureComponent {
   }
 
   onClick() {
-    // console.log(this.props.selectedSounds);
-    // console.log('modalID: ' + this.props.soundInfoModal.soundID + 'sel> ' + this.props.isSelected);
-    // console.log('sound: ' + this.props.sound.id + 'pl> ' + this.props.sound.isPlaying);
-    // console.log(this.props.soundInfoModal.soundID === this.props.sound.soundID);
     // play and stop sound
-    if (!this.props.sound.isPlaying && this.props.isSelected) {
+    if (this.props.sound.isPlaying) {
       this.props.stopAudio(this.props.sound);
-    } else {
+    } else if (!this.props.sound.isSelected && !this.props.sound.isPlaying) {
       this.props.playAudio(this.props.sound);
     }
-    if (this.props.isSelected) {
+    if (this.props.isSelected && !this.props.sound.isPlaying) {
       // toggle selecion
       this.props.deselectSound(this.props.sound.id);
 
@@ -83,15 +79,19 @@ class MapCircleContainer extends React.PureComponent {
         && this.props.soundInfoModal.soundID === this.props.sound.id) {
         this.props.hideModal();
       }
+    } else if (this.props.shouldMultiSelect) {
+      this.props.selectSound(this.props.sound.id);
+      this.props.openModalForSound(this.props.sound);
     } else {
       // toggle selection
+      this.props.deselectAllSounds();
       this.props.selectSound(this.props.sound.id);
 
       // open modal if sound is not yet selected
-        this.props.openModalForSound(this.props.sound);
+      this.props.openModalForSound(this.props.sound);
     }
-  console.log(this.props.selectedSounds);
   }
+
 
   shouldThumbnailUpdate(nextProps) {
     const currentPosition = this.props.sound.thumbnailPosition;
@@ -122,16 +122,15 @@ const makeMapStateToProps = (_, ownProps) => {
   const isSoundSelected = makeIsSoundSelected(soundID);
   return (state) => {
     const sound = state.sounds.byID[soundID];
-    const selectedSounds = state.sounds.selectedSounds;
     const soundInfoModal = state.sounds.soundInfoModal;
-    const { shouldPlayOnHover } = state.settings;
+    const { shouldPlayOnHover, shouldMultiSelect } = state.settings;
     const isSelected = isSoundSelected(state);
     return {
       sound,
-      selectedSounds,
       soundInfoModal,
       isThumbnail,
       shouldPlayOnHover,
+      shouldMultiSelect,
       isSelected,
     };
   };

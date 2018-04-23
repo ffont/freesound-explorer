@@ -45,8 +45,7 @@ class SpaceTitle extends React.Component {
           <li>Arranged by {
             (this.props.queryParams.descriptor) === 'lowlevel.mfcc.mean' ? 'Timbre' : 'Tonality'}
           </li>
-          <li>Duration: [{this.props.queryParams.minDuration},
-            {this.props.queryParams.maxDuration}]s</li>
+          <li>Duration: {this.props.queryParams.minDuration} to {this.props.queryParams.maxDuration} s</li>
         </ol>
       </div>);
   }

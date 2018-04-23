@@ -1,6 +1,6 @@
 import makeActionCreator from 'utils/makeActionCreator';
 import { removeSound } from '../Sounds/actions';
-import { computeClustersFromTsnePos, computeSpacePosition } from './utils';
+import { computeClustersFromTsnePos } from './utils';
 
 export const SET_SPACE_AS_CENTER = 'SET_SPACE_AS_CENTER';
 export const REMOVE_SPACE = 'REMOVE_SPACE';
@@ -31,13 +31,10 @@ export const computeSpaceClusters = queryID => (dispatch, getStore) => {
   // get space obj for queryID from state
   const space = state.spaces.spaces.find(curSpace =>
     curSpace.queryID === queryID);
-  const { spaceIndex } = space;
-
   // get sound objs for space
   const sounds = {};
   space.sounds.forEach(soundID => sounds[soundID] = allsounds[soundID]);
-  computeClustersFromTsnePos(sounds, computeSpacePosition(spaceIndex), mapPosition)
-  .then(clusters => dispatch(clustersComputed(clusters)
-  ));
+  computeClustersFromTsnePos(sounds, space, mapPosition)
+  .then(clusters => dispatch(clustersComputed(clusters)));
 };
 

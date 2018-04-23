@@ -83,9 +83,10 @@ export const SCHEDULEAHEADTIME = 0.2; // How far we schedule notes from lookahea
 export const TICKRESOLUTION = 16; // 16 for 16th note or 32 for 32th note
 
 // clustering / rescans until constants are given
-export const MIN_ITEMS_PER_CLUSTER = 3;
-export const MIN_CLUSTERS_PER_SCAN = 2;
+export const MIN_ITEMS_PER_CLUSTER = 4;
+export const MIN_CLUSTERS_PER_SCAN = 3;
 export const MAX_CLUSTERS_PER_SCAN = 8;
+export const MIN_CLUSTERS_RATIO = 0.07;
 export const MAX_CLUSTERS_RATIO = 0.166; // max one cluster per 6 Sounds = 1/6
 
 

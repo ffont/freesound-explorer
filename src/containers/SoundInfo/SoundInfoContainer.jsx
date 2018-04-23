@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SoundInfo from 'components/Sounds/SoundInfo';
 import { addSoundToPath } from '../Paths/actions';
@@ -7,21 +8,20 @@ import { setSoundCurrentlyLearnt } from '../Midi/actions';
 import { bookmarkSound, downloadSound } from './actions';
 
 const propTypes = {
-  isVisible: React.PropTypes.bool,
-  isMidiSupported: React.PropTypes.bool,
-  soundID: React.PropTypes.string,
-  sound: React.PropTypes.object,
-  position: React.PropTypes.object,
-  direction: React.PropTypes.string,
-  isUserLoggedIn: React.PropTypes.bool,
-  setSoundCurrentlyLearnt: React.PropTypes.func,
-  soundCurrentlyLearnt: React.PropTypes.string,
-  notesMapped: React.PropTypes.object,
-  selectedPath: React.PropTypes.string,
-  addSoundToPath: React.PropTypes.func,
-  downloadSound: React.PropTypes.func,
-  bookmarkSound: React.PropTypes.func,
-  isMidiSupported: React.PropTypes.bool,
+  isVisible: PropTypes.bool,
+  isMidiSupported: PropTypes.bool,
+  soundID: PropTypes.string,
+  sound: PropTypes.object,
+  position: PropTypes.object,
+  direction: PropTypes.string,
+  isUserLoggedIn: PropTypes.bool,
+  setSoundCurrentlyLearnt: PropTypes.func,
+  soundCurrentlyLearnt: PropTypes.string,
+  notesMapped: PropTypes.object,
+  selectedPath: PropTypes.string,
+  addSoundToPath: PropTypes.func,
+  downloadSound: PropTypes.func,
+  bookmarkSound: PropTypes.func,
 };
 
 const SoundInfoContainer = (props) => {

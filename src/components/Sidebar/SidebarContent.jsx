@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { SIDEBAR_TABS } from 'constants';
 import HomeTab from './HomeTab';
 import SearchTab from './SearchTab';
@@ -9,7 +10,7 @@ import InfoTab from './InfoTab';
 import './Sidebar.scss';
 
 const propTypes = {
-  activeTab: React.PropTypes.string,
+  activeTab: PropTypes.string,
 };
 
 const getContentForActiveTab = (activeTab) => {

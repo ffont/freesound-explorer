@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setPathSync, playPath, stopPath,
   selectPath, toggleWaitUntilFinished, setPathActive,
@@ -7,16 +8,16 @@ import PathListSound from './PathListSound';
 
 
 const propTypes = {
-  path: React.PropTypes.object,
-  selected: React.PropTypes.bool,
-  setPathSync: React.PropTypes.func,
-  playPath: React.PropTypes.func,
-  stopPath: React.PropTypes.func,
-  toggleWaitUntilFinished: React.PropTypes.func,
-  setPathActive: React.PropTypes.func,
-  selectPath: React.PropTypes.func,
-  playNextSoundFromPath: React.PropTypes.func,
-  addRandomSoundToPath: React.PropTypes.func,
+  path: PropTypes.object,
+  selected: PropTypes.bool,
+  setPathSync: PropTypes.func,
+  playPath: PropTypes.func,
+  stopPath: PropTypes.func,
+  toggleWaitUntilFinished: PropTypes.func,
+  setPathActive: PropTypes.func,
+  selectPath: PropTypes.func,
+  playNextSoundFromPath: PropTypes.func,
+  addRandomSoundToPath: PropTypes.func,
 };
 
 const beatButtons = [

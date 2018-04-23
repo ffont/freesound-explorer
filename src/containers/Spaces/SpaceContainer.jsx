@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MapCircleContainer from '../Sounds/MapCircleContainer';
 
 const propTypes = {
-  sounds: React.PropTypes.array,
-  isThumbnail: React.PropTypes.bool,
+  sounds: PropTypes.array,
+  isThumbnail: PropTypes.bool,
 };
 
 const defaultProps = {

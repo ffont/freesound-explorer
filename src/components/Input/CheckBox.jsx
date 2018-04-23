@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './CheckBox.scss';
 
 const propTypes = {
-  checked: React.PropTypes.bool,
-  onChange: React.PropTypes.func,
-  label: React.PropTypes.string,
-  tabIndex: React.PropTypes.string,
-  id: React.PropTypes.string,
+  checked: PropTypes.bool,
+  onChange: PropTypes.func,
+  label: PropTypes.string,
+  tabIndex: PropTypes.string,
+  id: PropTypes.string,
 };
 
 const defaultProps = {

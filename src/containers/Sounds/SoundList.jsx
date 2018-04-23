@@ -14,10 +14,12 @@ const propTypes = {
   selectedSounds: React.PropTypes.array,
   selectSound: React.PropTypes.func,
   deselectSound: React.PropTypes.func,
+  deselectAllSounds: React.PropTypes.func,
   playAudio: React.PropTypes.func,
   stopAudio: React.PropTypes.func,
   toggleHoveringSound: React.PropTypes.func,
   shouldPlayOnHover: React.PropTypes.bool,
+  shouldMultiSelect: React.PropTypes.bool,
 };
 
 class SoundList extends React.Component {
@@ -117,8 +119,11 @@ class SoundList extends React.Component {
               if (rowInfo.original.isSelected) {
                 // toggle selecion
                 this.props.deselectSound(rowInfo.original.id);
+              } else if (this.props.shouldMultiSelect) {
+                this.props.selectSound(rowInfo.original.id);
               } else {
                 // toggle selection
+                this.props.deselectAllSounds();
                 this.props.selectSound(rowInfo.original.id);
               }
               if (handleOriginal) {

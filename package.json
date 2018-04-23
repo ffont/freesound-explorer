@@ -47,6 +47,7 @@
     "normalize.css": "^4.2.0",
     "postcss-loader": "^0.13.0",
     "precss": "^1.4.0",
+    "prop-types": "^15.6.1",
     "react": "^15.3.2",
     "react-addons-perf": "^15.3.2",
     "react-dom": "^15.3.2",

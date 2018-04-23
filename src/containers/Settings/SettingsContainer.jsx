@@ -1,13 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CheckBox from 'components/Input/CheckBox';
 import { togglePlayOnHover, toggleMetronomeSound } from './actions';
 
 const propTypes = {
-  shouldPlayOnHover: React.PropTypes.bool,
-  shouldPlayMetronomeSound: React.PropTypes.bool,
-  togglePlayOnHover: React.PropTypes.func,
-  toggleMetronomeSound: React.PropTypes.func,
+  shouldPlayOnHover: PropTypes.bool,
+  shouldPlayMetronomeSound: PropTypes.bool,
+  togglePlayOnHover: PropTypes.func,
+  toggleMetronomeSound: PropTypes.func,
 };
 
 const SettingsContainer = props => (

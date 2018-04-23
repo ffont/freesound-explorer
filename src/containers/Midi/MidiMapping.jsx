@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { truncateString } from 'utils/stringUtils';
 import { midiNoteNumberToMidiNoteLabel } from './utils';
@@ -6,11 +7,11 @@ import { removeMidiNoteMapping } from './actions';
 import { selectSound } from '../Sounds/actions';
 
 const propTypes = {
-  midiNote: React.PropTypes.string,
-  soundID: React.PropTypes.string,
-  sound: React.PropTypes.object,
-  selectSound: React.PropTypes.func,
-  removeMidiNoteMapping: React.PropTypes.func,
+  midiNote: PropTypes.string,
+  soundID: PropTypes.string,
+  sound: PropTypes.object,
+  selectSound: PropTypes.func,
+  removeMidiNoteMapping: PropTypes.func,
 };
 
 function MidiMapping(props) {

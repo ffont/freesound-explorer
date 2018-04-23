@@ -1,15 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import LoginButton from './LoginButton';
 import LoginModal from './LoginModal';
 import './Login.scss';
 
 const propTypes = {
-  handleFreesoundLogin: React.PropTypes.func,
-  handleFreesoundLogout: React.PropTypes.func,
-  isUserLoggedIn: React.PropTypes.bool,
-  isModalVisible: React.PropTypes.bool,
-  modalContentURL: React.PropTypes.string,
-  setLoginModalVisibility: React.PropTypes.func,
+  handleFreesoundLogin: PropTypes.func,
+  handleFreesoundLogout: PropTypes.func,
+  isUserLoggedIn: PropTypes.bool,
+  isModalVisible: PropTypes.bool,
+  modalContentURL: PropTypes.string,
+  setLoginModalVisibility: PropTypes.func,
 };
 
 const Login = (props) => (

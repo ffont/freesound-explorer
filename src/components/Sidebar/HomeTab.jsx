@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SessionManager from 'containers/SessionsHandler/SessionManager';
 import SettingsContainer from 'containers/Settings/SettingsContainer';
 import baseTab from './BaseTab';
 
 const propTypes = {
-  shouldPlayOnHover: React.PropTypes.bool,
-  togglePlayOnHover: React.PropTypes.func,
+  shouldPlayOnHover: PropTypes.bool,
+  togglePlayOnHover: PropTypes.func,
 };
 
 const HomeTab = () => (

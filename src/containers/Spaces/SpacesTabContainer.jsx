@@ -1,13 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SpaceThumbnail from 'components/Spaces/SpaceThumbnail';
 import { connect } from 'react-redux';
 import { setSpaceAsCenter, removeSpace } from './actions';
 
 const propTypes = {
-  spaces: React.PropTypes.array,
-  currentSpace: React.PropTypes.string,
-  setSpaceAsCenter: React.PropTypes.func,
-  removeSpace: React.PropTypes.func,
+  spaces: PropTypes.array,
+  currentSpace: PropTypes.string,
+  setSpaceAsCenter: PropTypes.func,
+  removeSpace: PropTypes.func,
 };
 
 const Spaces = props => (

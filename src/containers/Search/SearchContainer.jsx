@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { DEFAULT_QUERY, PERFORM_QUERY_AT_MOUNT } from 'constants';
 import InputTextButton from 'components/Input/InputTextButton';
@@ -11,19 +12,19 @@ import { getSounds } from '../Sounds/actions';
 import { setExampleQueryDone } from '../Sidebar/actions';
 
 const propTypes = {
-  maxResults: React.PropTypes.number,
-  maxDuration: React.PropTypes.number,
-  minDuration: React.PropTypes.number,
-  query: React.PropTypes.string,
-  descriptor: React.PropTypes.string,
-  getSounds: React.PropTypes.func,
-  isExampleQueryDone: React.PropTypes.bool,
-  updateDescriptor: React.PropTypes.func,
-  updateMinDuration: React.PropTypes.func,
-  updateMaxDuration: React.PropTypes.func,
-  updateMaxResults: React.PropTypes.func,
-  updateQuery: React.PropTypes.func,
-  setExampleQueryDone: React.PropTypes.func,
+  maxResults: PropTypes.number,
+  maxDuration: PropTypes.number,
+  minDuration: PropTypes.number,
+  query: PropTypes.string,
+  descriptor: PropTypes.string,
+  getSounds: PropTypes.func,
+  isExampleQueryDone: PropTypes.bool,
+  updateDescriptor: PropTypes.func,
+  updateMinDuration: PropTypes.func,
+  updateMaxDuration: PropTypes.func,
+  updateMaxResults: PropTypes.func,
+  updateQuery: PropTypes.func,
+  setExampleQueryDone: PropTypes.func,
 };
 
 class QueryBox extends React.Component {

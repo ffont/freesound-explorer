@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import LoginContainer from 'containers/Login/LoginContainer';
 import MapContainer from 'containers/Map/MapContainer';
@@ -11,7 +12,7 @@ import './App.scss';
 import '../Modal/ModalContainer.scss';
 
 const propTypes = {
-  store: React.PropTypes.object,
+  store: PropTypes.object,
 };
 
 const App = props => (

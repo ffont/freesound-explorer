@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const propTypes = {
-  isVisible: React.PropTypes.bool,
-  contentURL: React.PropTypes.string,
-  setLoginModalVisibility: React.PropTypes.func,
+  isVisible: PropTypes.bool,
+  contentURL: PropTypes.string,
+  setLoginModalVisibility: PropTypes.func,
 };
 
 function LoginModal(props) {

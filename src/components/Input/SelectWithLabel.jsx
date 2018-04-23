@@ -1,18 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './SelectWithLabel.scss';
 
 const propTypes = {
-  onChange: React.PropTypes.func,
-  label: React.PropTypes.string,
-  options: React.PropTypes.arrayOf(React.PropTypes.shape({
-    value: React.PropTypes.string,
-    name: React.PropTypes.string,
+  onChange: PropTypes.func,
+  label: PropTypes.string,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string,
+    name: PropTypes.string,
   })),
-  tabIndex: React.PropTypes.string,
-  defaultValue: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.number]),
-  id: React.PropTypes.string,
+  tabIndex: PropTypes.string,
+  defaultValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number]),
+  id: PropTypes.string,
 };
 const defaultProps = {
   onChange: () => {},

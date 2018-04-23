@@ -30,7 +30,7 @@ const SettingsContainer = props => (
     <CheckBox
       checked={!!props.shouldShowClusterTags} // !! -> casting the calue from null to false
       onChange={props.toggleClusterTags}
-      label="Show frequent tags of clusters"
+      label="Show frequent tags (or press t)"
       id="show-cluster-tags-toggle"
     />
   </div>

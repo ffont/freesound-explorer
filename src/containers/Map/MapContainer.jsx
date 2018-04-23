@@ -4,16 +4,16 @@ import { zoom } from 'd3-zoom';
 import { connect } from 'react-redux';
 import SpaceTitle from 'components/Spaces/SpaceTitle';
 import 'polyfills/requestAnimationFrame';
-import { MIN_ZOOM, MAX_ZOOM, PLAY_ON_HOVER_SHORTCUT_KEYCODE } from 'constants';
+import { MIN_ZOOM, MAX_ZOOM, PLAY_ON_HOVER_SHORTCUT_KEYCODE,
+  TOGGLE_SHOW_CLUSTER_TAGS } from 'constants';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateMapPosition } from './actions';
 import { setSoundCurrentlyLearnt } from '../Midi/actions';
 import { deselectAllSounds } from '../Sounds/actions';
 import { hideModal } from '../SoundInfo/actions';
 import Space from '../Spaces/SpaceContainer';
-import SoundInfoContainer from '../SoundInfo/SoundInfoContainer';
 import MapPath from '../Paths/MapPath';
-import { setShouldPlayOnHover } from '../Settings/actions';
+import { setShouldPlayOnHover, toggleClusterTags } from '../Settings/actions';
 
 const propTypes = {
   deselectAllSounds: React.PropTypes.func,
@@ -28,6 +28,7 @@ const propTypes = {
   updateMapPosition: React.PropTypes.func,
   hideModal: React.PropTypes.func,
   setShouldPlayOnHover: React.PropTypes.func,
+  toggleClusterTags: React.PropTypes.func,
 };
 
 class MapContainer extends React.Component {
@@ -87,6 +88,9 @@ class MapContainer extends React.Component {
       // Turn play sounds on hover on
       this.props.setShouldPlayOnHover(true);
     }
+    if (evt.keyCode === TOGGLE_SHOW_CLUSTER_TAGS) {
+      this.props.toggleClusterTags();
+    }
   }
 
   onKeyupCallback(evt) {
@@ -96,6 +100,24 @@ class MapContainer extends React.Component {
       this.props.setShouldPlayOnHover(false);
     }
   }
+  
+  
+//  TODO: enable add / remove from selection per keydown mouse modifier
+//  onKeydownCallback(evt) {
+//    if (evt.target.tagName.toUpperCase() === 'INPUT') { return; }
+//    if (evt.keyCode === TOGGLE_SELECTION_KEYCODE) {
+//      // Turn play sounds on hover on
+//      this.props.setShouldPlayOnHover(true);
+//    }
+//  }
+//
+//  onKeyupCallback(evt) {
+//    if (evt.target.tagName.toUpperCase() === 'INPUT') { return; }
+//    if (evt.keyCode === TOGGLE_SELECTION_KEYCODE) {
+//      // Turn play sounds on hover off
+//      this.props.setShouldPlayOnHover(false);
+//    }
+//  }
 
   zoomHandler() {
     const translateX = d3Event.transform.x;
@@ -147,4 +169,5 @@ export default connect(mapStateToProps, {
   setSoundCurrentlyLearnt,
   hideModal,
   setShouldPlayOnHover,
+  toggleClusterTags,
 })(MapContainer);

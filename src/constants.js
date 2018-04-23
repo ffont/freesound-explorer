@@ -7,10 +7,11 @@ export const DEFAULT_MAX_RESULTS = 60;
 export const DEFAULT_MIN_DURATION = 0;
 export const DEFAULT_MAX_DURATION = 5;
 export const DEFAULT_DESCRIPTOR = 'lowlevel.mfcc.mean';
+export const DEFAULT_SORTING = 'score';
 export const PERFORM_QUERY_AT_MOUNT = false;
 
 // backend and login urls
-const BACKEND_APPLICATION_ROOT = '/fse';  // must match with backend's application root
+const BACKEND_APPLICATION_ROOT = '/fse/backend' // -> must match with backend's application root
 export const URLS = {
   SAVE_SESSION: `${BACKEND_APPLICATION_ROOT}/save/`,
   LOAD_SESSION: `${BACKEND_APPLICATION_ROOT}/load/`,
@@ -36,6 +37,7 @@ export const MESSAGE_STATUS = {
 export const SIDEBAR_TABS = {
   SEARCH: 'search',
   SPACES: 'spaces',
+  SOUNDLIST: 'soundlist',
   PATHS: 'paths',
   MIDI: 'midi',
   HOME: 'home',
@@ -62,7 +64,11 @@ export const MIDI_MESSAGE_INDICATOR_DURATION = 1000;
 export const MIN_ZOOM = 0.05;
 export const MAX_ZOOM = 15;
 export const MAP_SCALE_FACTOR = 20;
+export const ADD_SELECTION_KEYCODE = 16; // shift key 
+export const TOGGLE_SELECTION_KEYCODE = 17; // ctrl key
 export const PLAY_ON_HOVER_SHORTCUT_KEYCODE = 18; // alt key
+export const TOGGLE_SELECTION_MAC_KEYCODE = 91 || 93; // cmd key left /right
+export const TOGGLE_SHOW_CLUSTER_TAGS = 84; // t
 
 // tsne
 export const MAX_TSNE_ITERATIONS = 150;

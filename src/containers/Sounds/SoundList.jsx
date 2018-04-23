@@ -1,10 +1,10 @@
 import React from 'react';
+import { lighten } from 'utils/colorsUtils';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
-import 'react-table/react-table.css';
-import { lighten } from 'utils/colorsUtils';
-import './SoundList.scss';
-import { selectSound, deselectSound, toggleHoveringSound } from '../../containers/Sounds/actions';
+import '../../stylesheets/react-table.css';
+import { selectSound, deselectSound, deselectAllSounds,
+   toggleHoveringSound } from '../../containers/Sounds/actions';
 import { reshapeSoundListData } from '../../containers/Sounds/utils';
 import { playAudio, stopAudio } from '../../containers/Audio/actions';
 
@@ -26,6 +26,7 @@ class SoundList extends React.Component {
     return (
       nextProps.selectedSounds !== this.props.selectedSounds
       || nextProps.space !== this.props.space
+      || nextProps.sounds !== this.props.sounds
     );
   }
 
@@ -35,27 +36,27 @@ class SoundList extends React.Component {
     const columns = [{
       Header: 'Name',
       accessor: 'name', // String-based value accessors!
-      minWidth: 225,
+      minWidth: 275,
       // style: { backgroundColor: 'white' },
     }, {
       Header: 'Duration',
       accessor: 'durationfixed',
       width: 70,
-//    style:{color:"red"}
-    }, {
-      Header: 'Username',
-      accessor: 'username',
-    },
-    {
-      Header: 'Tags',
-      accessor: 'tagsStr',
-      minWidth: 400,
-//    Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
     },
     {
       Header: 'License',
       accessor: 'shortLicense',
       minWidth: 150,
+    },
+    {
+      Header: 'Tags',
+      accessor: 'tagsStr',
+      minWidth: 400,
+      //    Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
+    },
+    {
+      Header: 'Username',
+      accessor: 'username',
     },
     ];
 
@@ -66,9 +67,9 @@ class SoundList extends React.Component {
         showPageSizeOptions={false}
         showPaginationBottom={false}
         defaultPageSize={data.length}
-        // style={{
-        //   height: '650px', // This will force the table body to overflow and scroll, since there is not enough room
-        // }}
+        style={{
+          height: '655px', // This will force the table body to overflow and scroll, since there is not enough room
+        }}
         defaultSorted={[
           {
             id: 'name',
@@ -76,7 +77,7 @@ class SoundList extends React.Component {
           },
         ]}
         columns={columns}
-        className="ReactTable -striped -highlight"
+        // className="ReactTable -striped -highlight"
         getTheadProps={() => {
           return {
             style: {
@@ -94,10 +95,11 @@ class SoundList extends React.Component {
         //   };
         // }}
 
+        // getTbodyProps={ (state, rowInfo, column, rtInstance) => { return { style: { overflowY: 'scroll' } } } }
         getTbodyProps={() => {
           return {
             style: {
-              overflowY: 'auto',
+              overflowY: 'inherit',
             },
           };
         }}
@@ -140,9 +142,8 @@ class SoundList extends React.Component {
               opacity: '0.9',
               borderRadius: '7px',
             },
-          }
-          }
-        }
+          };
+        }}
       />
     );
   }
@@ -152,7 +153,7 @@ SoundList.propTypes = propTypes;
 function mapStateToProps(_, ownProps) {
   const { space } = ownProps;
   return (state) => {
-    const { shouldPlayOnHover } = state.settings;
+    const { shouldPlayOnHover, shouldMultiSelect } = state.settings;
     const { selectedSounds } = state.sounds;
     const collectedsounds = {};
     space.sounds.forEach(soundID => collectedsounds[soundID] = state.sounds.byID[soundID]);
@@ -160,14 +161,16 @@ function mapStateToProps(_, ownProps) {
     return {
       sounds,
       shouldPlayOnHover,
+      shouldMultiSelect,
       selectedSounds,
     };
-  }
+  };
 }
 
 export default connect(mapStateToProps, {
   selectSound,
   deselectSound,
+  deselectAllSounds,
   playAudio,
   stopAudio,
   toggleHoveringSound,

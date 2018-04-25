@@ -11,8 +11,8 @@ const propTypes = {
 };
 
 const Spaces = props => (
-  <ul>{props.spaces.length > 0 ? '' : <li>Before using spaces, you should search some sounds...</li>}
-  {props.spaces.map(space => (
+  <ul>{props.spaces.length > 0 ? '' : <li className="empty-space-placeholder">Before using spaces, you should search some sounds...</li>}
+   {props.spaces.map(space => (
     <SpaceThumbnail
       key={space.queryID}
       queryID={space.queryID}

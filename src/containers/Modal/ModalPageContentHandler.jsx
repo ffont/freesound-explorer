@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { MODAL_PAGES } from 'constants';
 import SaveSessionModalContainer from './SaveSessionModalContainer';
 import NewSessionModalContainer from './NewSessionModalContainer';
 import LoadSessionModalContainer from './LoadSessionModalContainer';
 
 const propTypes = {
-  currentPage: React.PropTypes.string,
+  currentPage: PropTypes.string,
 };
 
 const ModalContentContainer = (props) => {

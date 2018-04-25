@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const propTypes = {
-  handleFreesoundLogin: React.PropTypes.func,
-  handleFreesoundLogout: React.PropTypes.func,
-  isUserLoggedIn: React.PropTypes.bool,
+  handleFreesoundLogin: PropTypes.func,
+  handleFreesoundLogout: PropTypes.func,
+  isUserLoggedIn: PropTypes.bool,
 };
 
 function LoginButton(props) {

@@ -1,16 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { lighten } from 'utils/colorsUtils';
 import { mapCircles as circleStyle } from 'stylesheets/variables.json';
 import TweenMax from 'gsap';
 import './MapCircle.scss';
 
 const propTypes = {
-  sound: React.PropTypes.object,
-  isSelected: React.PropTypes.bool,
-  isThumbnail: React.PropTypes.bool,
-  onMouseEnter: React.PropTypes.func,
-  onMouseLeave: React.PropTypes.func,
-  onClick: React.PropTypes.func,
+  sound: PropTypes.object,
+  isSelected: PropTypes.bool,
+  isThumbnail: PropTypes.bool,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  onClick: PropTypes.func,
 };
 
 const animationDuration = 0.5;

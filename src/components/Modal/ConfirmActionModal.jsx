@@ -1,13 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './ConfirmActionModal.scss';
 
 const propTypes = {
-  title: React.PropTypes.string,
-  text: React.PropTypes.string,
-  confirmAction: React.PropTypes.func,
-  cancelAction: React.PropTypes.func,
-  confirmActionTitle: React.PropTypes.string,
-  cancelActionTitle: React.PropTypes.string,
+  title: PropTypes.string,
+  text: PropTypes.string,
+  confirmAction: PropTypes.func,
+  cancelAction: PropTypes.func,
+  confirmActionTitle: PropTypes.string,
+  cancelActionTitle: PropTypes.string,
 };
 
 const defaultProps = {

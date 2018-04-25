@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SaveSessionModal from 'components/Modal/SaveSessionModal';
 import { saveSessionAs } from '../SessionsHandler/actions';
 
 const propTypes = {
-  saveSessionAs: React.PropTypes.func,
-  currentSessionName: React.PropTypes.string,
+  saveSessionAs: PropTypes.func,
+  currentSessionName: PropTypes.string,
 };
 
 const SaveSessionModalContainer = props => (

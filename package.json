@@ -66,8 +66,7 @@
     "uuid": "^3.2.1",
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.2",
-    "webpack-hot-middleware": "^2.22.1",
-    "why-did-you-update": "0.0.8"
+    "webpack-hot-middleware": "^2.22.1"
   },
   "devDependencies": {
     "babel": "^6.5.2",

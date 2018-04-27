@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SidebarContent from 'components/Sidebar/SidebarContent';
 import SidebarNavMenu from 'components/Sidebar/SidebarNavMenu';
@@ -9,13 +10,13 @@ import { MESSAGE_STATUS } from '../../constants';
 import { isGoogleChrome } from './utils';
 
 const propTypes = {
-  isVisible: React.PropTypes.bool,
-  activeTab: React.PropTypes.string,
-  bottomArrowPosition: React.PropTypes.number,
-  toggleSidebarVisibility: React.PropTypes.func,
-  setSidebarTab: React.PropTypes.func,
-  setUpMIDIDevices: React.PropTypes.func,
-  displaySystemMessage: React.PropTypes.func,
+  isVisible: PropTypes.bool,
+  activeTab: PropTypes.string,
+  bottomArrowPosition: PropTypes.number,
+  toggleSidebarVisibility: PropTypes.func,
+  setSidebarTab: PropTypes.func,
+  setUpMIDIDevices: PropTypes.func,
+  displaySystemMessage: PropTypes.func,
 };
 
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { select } from 'd3-selection';
 import { scaleLinear, scaleBand } from 'd3-scale';
 import sassVariables from 'stylesheets/variables.json';
@@ -7,7 +8,7 @@ import { arrayMean } from 'utils/arrayUtils';
 import './Waveform.scss';
 
 const propTypes = {
-  sound: React.PropTypes.object,
+  sound: PropTypes.object,
 };
 
 const downsampleSignal = (signal, numberOfPoints = 50) => {

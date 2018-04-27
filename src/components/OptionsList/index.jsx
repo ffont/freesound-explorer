@@ -1,17 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './OptionsList.scss';
 
 export const makeOption = (icon, name, action, isDisabled = false) =>
   ({ icon, name, action, isDisabled });
 
 const propTypes = {
-  options: React.PropTypes.arrayOf(React.PropTypes.shape({
-    icon: React.PropTypes.string,
-    name: React.PropTypes.string,
-    action: React.PropTypes.func,
-    isDisabled: React.PropTypes.bool,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    icon: PropTypes.string,
+    name: PropTypes.string,
+    action: PropTypes.func,
+    isDisabled: PropTypes.bool,
   })),
-  shouldCenterText: React.PropTypes.bool,
+  shouldCenterText: PropTypes.bool,
 };
 
 const OptionsList = props => (

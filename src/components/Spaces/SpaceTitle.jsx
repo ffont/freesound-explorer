@@ -1,20 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './SpaceTitle.scss';
 
 const propTypes = {
-  currentPositionInMap: React.PropTypes.shape({
-    x: React.PropTypes.number,
-    y: React.PropTypes.number,
+  currentPositionInMap: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number,
   }),
-  query: React.PropTypes.string,
-  queryParams: React.PropTypes.shape({
-    maxResults: React.PropTypes.number,
-    maxDuration: React.PropTypes.number,
-    minDuration: React.PropTypes.number,
-    descriptor: React.PropTypes.string,
+  query: PropTypes.string,
+  queryParams: PropTypes.shape({
+    maxResults: PropTypes.number,
+    maxDuration: PropTypes.number,
+    minDuration: PropTypes.number,
+    descriptor: PropTypes.string,
   }),
-  sounds: React.PropTypes.array,
-  isThumbnail: React.PropTypes.bool,
+  sounds: PropTypes.array,
+  isThumbnail: PropTypes.bool,
 };
 
 const getStyle = (props) => ({
@@ -45,8 +46,7 @@ class SpaceTitle extends React.Component {
           <li>Arranged by {
             (this.props.queryParams.descriptor) === 'lowlevel.mfcc.mean' ? 'Timbre' : 'Tonality'}
           </li>
-          <li>Duration: [{this.props.queryParams.minDuration},
-            {this.props.queryParams.maxDuration}]s</li>
+          <li>Duration: {this.props.queryParams.minDuration} to {this.props.queryParams.maxDuration} s</li>
         </ol>
       </div>);
   }

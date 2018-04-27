@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toggleModal } from './actions';
 import ModalPageContentHandler from './ModalPageContentHandler';
 
 const propTypes = {
-  toggleModal: React.PropTypes.func,
-  isVisible: React.PropTypes.bool,
-  currentPage: React.PropTypes.string,
+  toggleModal: PropTypes.func,
+  isVisible: PropTypes.bool,
+  currentPage: PropTypes.string,
 };
 
 class ModalContainer extends React.Component {

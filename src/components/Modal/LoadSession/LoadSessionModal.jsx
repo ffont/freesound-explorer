@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { robustSearch } from 'utils/arrayUtils';
 import ModalTitle from '../ModalTitle';
 import LoadSessionEntry from './LoadSessionEntry';
@@ -6,10 +7,10 @@ import './LoadSessionModal.scss';
 
 
 const propTypes = {
-  userSessions: React.PropTypes.array,
-  demoSessions: React.PropTypes.array,
-  loadSession: React.PropTypes.func,
-  removeSession: React.PropTypes.func,
+  userSessions: PropTypes.array,
+  demoSessions: PropTypes.array,
+  loadSession: PropTypes.func,
+  removeSession: PropTypes.func,
 };
 
 class LoadSessionModal extends React.Component {

@@ -1,30 +1,60 @@
 
-const nodeFpGrowth = require('node-fpgrowth');
+// https://codepen.io/ccallen001/pen/YGOzRA
+function mostFreqStr(arr) {
+  //ERROR HANDLING
+  //more than one argument passed
+  if (arguments.length > 1) {
+    return console.log("Sorry, you may only pass one array of strings to mostFreqStr.");
+  }
+  //the argument is not an array OR if it's empty
+  if (!Array.isArray(arr) || arr.length < 1) {
+    return console.log("Sorry, you may only pass an array of strings to mostFreqStr.");
+  }
+  //an element in arr is not a string
+  for (var i = 0; i < arr.length; i++) {
+    if (typeof arr[i] !== "string") {
+      return console.log(`Sorry, element at index ${i} is not a string.`);
+    }
+  }
+  
+  var obj = {}, mostFreq = 0, which = [];
 
-export const frequentPatterns = (transactions, query, support = 0.6) => {
-  const fpgrowth = new nodeFpGrowth.FPGrowth(support);
-  return fpgrowth.exec(transactions).then(
-      result => {
-        // Exclude the query string
-        const resultNoQuery = result.filter(entry => {
-          // filter out plural or singular versions of the original query
-          return (
-            !(entry.items.includes(query)
-            || entry.items.includes(query.slice(0, -1))
-            || entry.items.includes(query + 's'))
-          );
-        });
-        // sort by length of itemset
-        const frequentItemsets = _.orderBy(resultNoQuery, (i) => -i.items.length);
-        const tags = new Set();
-        // make shure no tag is in twice & a short word & max 6 tags
-        frequentItemsets.slice(0, 1)
-          .forEach(itemset => itemset.items
-            .forEach((item, idx) => {
-              if (item.length < 15 && idx < 7) tags.add(item);
-            })
-          );
-        return [...tags];
-      }
-    );
+  arr.forEach(ea => {
+    if (!obj[ea]) {
+      obj[ea] = 1;
+    } else {
+      obj[ea]++;
+    }
+
+    if (obj[ea] > mostFreq) {
+      mostFreq = obj[ea];
+      which = [ea];
+    } else if (obj[ea] === mostFreq) {
+      which.push(ea);
+    }
+  });
+  return which;
+}
+
+export const frequentPatterns = (transactions, query) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const frequent = mostFreqStr(_.flatten(transactions));
+      const resultNoQuery = frequent.filter(entry => {
+        // filter out plural or singular versions of the original query
+        return (
+          !(entry === query
+          || entry === query.slice(0, -1)
+          || entry === query + 's')
+        );
+      });
+      if (resultNoQuery.length) {
+        resolve(resultNoQuery.slice(0, 5));
+      } else resolve([]);
+    }
+    catch (e) {
+      console.log(e);
+      reject([]);
+    }
+  });
 };

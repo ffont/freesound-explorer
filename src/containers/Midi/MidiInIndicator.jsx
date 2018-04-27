@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SelectWithLabel from 'components/Input/SelectWithLabel';
 import { MIDI_MESSAGE_INDICATOR_DURATION } from 'constants';
@@ -6,14 +7,14 @@ import { midiMessageTypeLabel, midiNoteNumberToMidiNoteLabel } from './utils';
 import { setMidiInputChannel, setMidiInputDevice, setUpMIDIDevices } from './actions';
 
 const propTypes = {
-  latestReceivedMessages: React.PropTypes.array,
-  setMidiInputChannel: React.PropTypes.func,
-  setMidiInputDevice: React.PropTypes.func,
-  inputChannel: React.PropTypes.number,
-  inputDevice: React.PropTypes.string,
-  setUpMIDIDevices: React.PropTypes.func,
-  availableMIDIDevices: React.PropTypes.array,
-  isMidiSupported: React.PropTypes.bool,
+  latestReceivedMessages: PropTypes.array,
+  setMidiInputChannel: PropTypes.func,
+  setMidiInputDevice: PropTypes.func,
+  inputChannel: PropTypes.number,
+  inputDevice: PropTypes.string,
+  setUpMIDIDevices: PropTypes.func,
+  availableMIDIDevices: PropTypes.array,
+  isMidiSupported: PropTypes.bool,
 };
 
 class MidiInIndicator extends React.Component {

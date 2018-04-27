@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loadJSON } from 'utils/requests';
 import Login from 'components/Login';
@@ -36,13 +37,13 @@ const getAppToken = () => new Promise((resolve, reject) => {
 });
 
 const propTypes = {
-  isModalVisible: React.PropTypes.bool,
-  isUserLoggedIn: React.PropTypes.bool,
-  isEndUserAuthSupported: React.PropTypes.bool,
-  updateLoginModalVisibilility: React.PropTypes.func,
-  updateBackEndAuthSupport: React.PropTypes.func,
-  updateUserLoggedStatus: React.PropTypes.func,
-  displaySystemMessage: React.PropTypes.func,
+  isModalVisible: PropTypes.bool,
+  isUserLoggedIn: PropTypes.bool,
+  isEndUserAuthSupported: PropTypes.bool,
+  updateLoginModalVisibilility: PropTypes.func,
+  updateBackEndAuthSupport: PropTypes.func,
+  updateUserLoggedStatus: PropTypes.func,
+  displaySystemMessage: PropTypes.func,
 };
 
 class LoginContainer extends React.Component {

@@ -1,19 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SliderRange from '../Input/SliderRange';
 import './Metronome.scss';
 
 const propTypes = {
-  tempo: React.PropTypes.number,
-  setTempo: React.PropTypes.func,
-  shouldPlaySound: React.PropTypes.bool,
-  toggleMetronome: React.PropTypes.func,
-  isPlaying: React.PropTypes.bool,
-  bar: React.PropTypes.number,
-  beat: React.PropTypes.number,
-  tick: React.PropTypes.number,
-  bottomArrowPosition: React.PropTypes.number,
-  isRecording: React.PropTypes.bool,
-  toggleRecording: React.PropTypes.func,
+  tempo: PropTypes.number,
+  setTempo: PropTypes.func,
+  shouldPlaySound: PropTypes.bool,
+  toggleMetronome: PropTypes.func,
+  isPlaying: PropTypes.bool,
+  bar: PropTypes.number,
+  beat: PropTypes.number,
+  tick: PropTypes.number,
+  bottomArrowPosition: PropTypes.number,
+  isRecording: PropTypes.bool,
+  toggleRecording: PropTypes.func,
 };
 
 const Metronome = props => (

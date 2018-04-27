@@ -1,16 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CheckBox from 'components/Input/CheckBox';
 import { togglePlayOnHover, toggleMetronomeSound, toggleClusterTags } from './actions';
 
 const propTypes = {
-  shouldPlayOnHover: React.PropTypes.bool,
-  shouldPlayMetronomeSound: React.PropTypes.bool,
-  shouldShowClusterTags: React.PropTypes.bool,
-  togglePlayOnHover: React.PropTypes.func,
-  toggleMetronomeSound: React.PropTypes.func,
-  toggleClusterTags: React.PropTypes.func,
-
+  shouldPlayOnHover: PropTypes.bool,
+  shouldPlayMetronomeSound: PropTypes.bool,
+  shouldShowClusterTags: PropTypes.bool,
+  togglePlayOnHover: PropTypes.func,
+  toggleMetronomeSound: PropTypes.func,
+  toggleClusterTags: PropTypes.func,
 };
 
 const SettingsContainer = props => (
@@ -18,7 +18,7 @@ const SettingsContainer = props => (
     <CheckBox
       checked={props.shouldPlayOnHover}
       onChange={props.togglePlayOnHover}
-      label="Play on hover"
+      label="Play on hover (or hold alt-key)"
       id="play-on-hover-toggle"
     />
     <CheckBox

@@ -1,14 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MapCircleContainer from '../Sounds/MapCircleContainer';
 import ClusterTags from '../../components/Spaces/ClusterTags';
 
 const propTypes = {
-  sounds: React.PropTypes.array,
-  isThumbnail: React.PropTypes.bool,
-  clusters: React.PropTypes.array,
-  queryID: React.PropTypes.string,
-  shouldShowClusterTags: React.PropTypes.bool,
+  sounds: PropTypes.array,
+  isThumbnail: PropTypes.bool,
+  clusters: PropTypes.array,
+  queryID: PropTypes.string,
+  shouldShowClusterTags: PropTypes.bool,
 };
 
 const defaultProps = {

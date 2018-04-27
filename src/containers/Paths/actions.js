@@ -1,4 +1,4 @@
-import { default as UUID } from 'node-uuid';
+import { default as UUID } from 'uuid';
 import makeActionCreator from 'utils/makeActionCreator';
 import { elementWithId, getRandomElement } from 'utils/arrayUtils';
 import { audioContext, playAudio } from '../Audio/actions';

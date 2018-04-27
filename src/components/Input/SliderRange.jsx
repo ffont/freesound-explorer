@@ -1,16 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { sidebarClosedOffset } from 'stylesheets/variables.json';
 import './SliderRange.scss';
 
 const propTypes = {
-  currentValue: React.PropTypes.number,
-  minValue: React.PropTypes.string,
-  maxValue: React.PropTypes.string,
-  label: React.PropTypes.string,
-  onChange: React.PropTypes.func,
-  step: React.PropTypes.string,
-  tabIndex: React.PropTypes.string,
-  id: React.PropTypes.string,
+  currentValue: PropTypes.number,
+  minValue: PropTypes.string,
+  maxValue: PropTypes.string,
+  label: PropTypes.string,
+  onChange: PropTypes.func,
+  step: PropTypes.string,
+  tabIndex: PropTypes.string,
+  id: PropTypes.string,
 };
 
 const defaultProps = {

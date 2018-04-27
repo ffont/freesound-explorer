@@ -1,22 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { midiNoteNumberToMidiNoteLabel } from 'containers/Midi/utils';
 import './SoundInfo.scss';
 import Waveform from '../Waveform';
 
 const propTypes = {
-  isVisible: React.PropTypes.bool,
-  isMidiSupported: React.PropTypes.bool,
-  sound: React.PropTypes.object,
-  position: React.PropTypes.object,
-  direction: React.PropTypes.string,
-  isUserLoggedIn: React.PropTypes.bool,
-  setSoundCurrentlyLearnt: React.PropTypes.func,
-  soundCurrentlyLearnt: React.PropTypes.string,
-  notesMapped: React.PropTypes.object,
-  selectedPath: React.PropTypes.string,
-  addSoundToPath: React.PropTypes.func,
-  downloadSound: React.PropTypes.func,
-  bookmarkSound: React.PropTypes.func,
+  isVisible: PropTypes.bool,
+  isMidiSupported: PropTypes.bool,
+  sound: PropTypes.object,
+  position: PropTypes.object,
+  direction: PropTypes.string,
+  isUserLoggedIn: PropTypes.bool,
+  setSoundCurrentlyLearnt: PropTypes.func,
+  soundCurrentlyLearnt: PropTypes.string,
+  notesMapped: PropTypes.object,
+  selectedPath: PropTypes.string,
+  addSoundToPath: PropTypes.func,
+  downloadSound: PropTypes.func,
+  bookmarkSound: PropTypes.func,
 };
 
 const DEFAULT_CLASSNAME = 'sound-info-modal';

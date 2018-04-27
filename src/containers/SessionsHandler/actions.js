@@ -1,3 +1,4 @@
+import { default as UUID } from 'uuid';
 import makeActionCreator from 'utils/makeActionCreator';
 import { MESSAGE_STATUS, URLS } from 'constants';
 import { loadJSON, postJSON } from 'utils/requests';
@@ -8,7 +9,6 @@ import { setSessionID, updateSessionName, setAvailableUserSessions,
   setAvailableDemoSessions } from '../Session/actions';
 import { addPathEventListener, removePathEventListener } from '../Paths/actions';
 import { stopMetronome } from '../Metronome/actions';
-import { default as UUID } from 'node-uuid';
 import { setUpMIDIDevices } from '../Midi/actions';
 
 export const NEW_SESSION = 'NEW_SESSION';

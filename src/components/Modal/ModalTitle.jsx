@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './ModalTitle.scss';
 
 const propTypes = {
-  title: React.PropTypes.string,
+  title: PropTypes.string,
 };
 
 const ModalTitle = props =>

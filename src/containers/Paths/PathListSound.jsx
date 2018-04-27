@@ -1,16 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { truncateString } from 'utils/stringUtils';
 import { deleteSoundFromPath } from './actions';
 import { selectSound } from '../Sounds/actions';
 
 const propTypes = {
-  soundIdx: React.PropTypes.number,
-  soundID: React.PropTypes.string,
-  pathID: React.PropTypes.string,
-  sound: React.PropTypes.object,
-  selectSound: React.PropTypes.func,
-  deleteSoundFromPath: React.PropTypes.func,
+  soundIdx: PropTypes.number,
+  soundID: PropTypes.string,
+  pathID: PropTypes.string,
+  sound: PropTypes.object,
+  selectSound: PropTypes.func,
+  deleteSoundFromPath: PropTypes.func,
 };
 
 class PathListSound extends React.Component {

@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ModalTitle from './ModalTitle';
 import InputTextButton from '../Input/InputTextButton';
 import '././SaveSessionModal.scss';
 
 const propTypes = {
-  currentSessionName: React.PropTypes.string,
-  saveSessionAs: React.PropTypes.func,
+  currentSessionName: PropTypes.string,
+  saveSessionAs: PropTypes.func,
 };
 
 class SaveSessionModal extends React.Component {

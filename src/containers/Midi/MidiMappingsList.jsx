@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MidiMapping from './MidiMapping';
 
 const propTypes = {
-  notesMapped: React.PropTypes.object,
-  isMidiSupported: React.PropTypes.bool,
+  notesMapped: PropTypes.object,
+  isMidiSupported: PropTypes.bool,
 };
 
 class MidiMappingsList extends React.Component {

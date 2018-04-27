@@ -1,14 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import LoadSessionModal from 'components/Modal/LoadSession/LoadSessionModal';
 import { loadSession, removeSession, getAvailableSessions } from '../SessionsHandler/actions';
 
 const propTypes = {
-  loadSession: React.PropTypes.func,
-  removeSession: React.PropTypes.func,
-  getAvailableSessions: React.PropTypes.func,
-  availableUserSessions: React.PropTypes.array,
-  availableDemoSessions: React.PropTypes.array,
+  loadSession: PropTypes.func,
+  removeSession: PropTypes.func,
+  getAvailableSessions: PropTypes.func,
+  availableUserSessions: PropTypes.array,
+  availableDemoSessions: PropTypes.array,
 };
 
 class LoadSessionModalContainer extends React.Component {

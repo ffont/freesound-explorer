@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MapCircle from 'components/Sounds/MapCircle';
 import { playAudio, stopAudio } from '../Audio/actions';
@@ -9,20 +10,20 @@ import { isSoundInsideScreen } from './utils';
 import { makeIsSoundSelected } from './selectors';
 
 const propTypes = {
-  sound: React.PropTypes.object,
-  isThumbnail: React.PropTypes.bool,
-  shouldPlayOnHover: React.PropTypes.bool,
-  isSelected: React.PropTypes.bool,
-  shouldMultiSelect: React.PropTypes.bool,
-  playAudio: React.PropTypes.func,
-  stopAudio: React.PropTypes.func,
-  selectSound: React.PropTypes.func,
-  deselectSound: React.PropTypes.func,
-  deselectAllSounds: React.PropTypes.func,
-  toggleHoveringSound: React.PropTypes.func,
-  openModalForSound: React.PropTypes.func,
-  hideModal: React.PropTypes.func,
-  soundInfoModal: React.PropTypes.object,
+  sound: PropTypes.object,
+  isThumbnail: PropTypes.bool,
+  shouldPlayOnHover: PropTypes.bool,
+  isSelected: PropTypes.bool,
+  shouldMultiSelect: PropTypes.bool,
+  playAudio: PropTypes.func,
+  stopAudio: PropTypes.func,
+  selectSound: PropTypes.func,
+  deselectSound: PropTypes.func,
+  deselectAllSounds: PropTypes.func,
+  toggleHoveringSound: PropTypes.func,
+  openModalForSound: PropTypes.func,
+  hideModal: PropTypes.func,
+  soundInfoModal: PropTypes.object,
 };
 
 const isSoundVisible = (props) => {

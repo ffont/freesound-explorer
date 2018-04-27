@@ -1,13 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './InputText.scss';
 
 const propTypes = {
-  onTextChange: React.PropTypes.func,
-  onButtonClick: React.PropTypes.func,
-  tabIndex: React.PropTypes.string,
-  placeholder: React.PropTypes.string,
-  buttonIcon: React.PropTypes.string,
-  currentValue: React.PropTypes.string,
+  onTextChange: PropTypes.func,
+  onButtonClick: PropTypes.func,
+  tabIndex: PropTypes.string,
+  placeholder: PropTypes.string,
+  buttonIcon: PropTypes.string,
+  currentValue: PropTypes.string,
 };
 
 const defaultProps = {

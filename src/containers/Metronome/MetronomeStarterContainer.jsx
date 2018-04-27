@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { START_METRONOME_AT_MOUNT } from 'constants';
 import { startMetronome } from './actions';
 
 const propTypes = {
-  startMetronome: React.PropTypes.func,
+  startMetronome: PropTypes.func,
 };
 
 class MetronomeStarterContainer extends React.Component {

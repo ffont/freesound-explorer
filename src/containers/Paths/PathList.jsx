@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getRandomElement, elementWithId } from 'utils/arrayUtils';
 import { MESSAGE_STATUS } from 'constants';
@@ -7,12 +8,12 @@ import { displaySystemMessage } from '../MessagesBox/actions';
 import PathManager from './PathManager';
 
 const propTypes = {
-  paths: React.PropTypes.array,
-  selectedPath: React.PropTypes.string,
-  spaces: React.PropTypes.array,
-  currentSpace: React.PropTypes.string,
-  addPath: React.PropTypes.func,
-  displaySystemMessage: React.PropTypes.func,
+  paths: PropTypes.array,
+  selectedPath: PropTypes.string,
+  spaces: PropTypes.array,
+  currentSpace: PropTypes.string,
+  addPath: PropTypes.func,
+  displaySystemMessage: PropTypes.func,
 };
 
 class PathList extends React.Component {

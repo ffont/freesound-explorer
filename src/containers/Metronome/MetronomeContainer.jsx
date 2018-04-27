@@ -1,22 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Metronome from 'components/Metronome';
 import { setTempo, stopMetronome, startMetronome } from './actions';
 import { record } from '../Recorder/actions';
 
 const propTypes = {
-  setTempo: React.PropTypes.func,
-  tempo: React.PropTypes.number,
-  isPlaying: React.PropTypes.bool,
-  shouldPlaySound: React.PropTypes.bool,
-  stopMetronome: React.PropTypes.func,
-  startMetronome: React.PropTypes.func,
-  bar: React.PropTypes.number,
-  beat: React.PropTypes.number,
-  tick: React.PropTypes.number,
-  bottomArrowPosition: React.PropTypes.number,
-  record: React.PropTypes.func,
-  isRecording: React.PropTypes.bool,
+  setTempo: PropTypes.func,
+  tempo: PropTypes.number,
+  isPlaying: PropTypes.bool,
+  shouldPlaySound: PropTypes.bool,
+  stopMetronome: PropTypes.func,
+  startMetronome: PropTypes.func,
+  bar: PropTypes.number,
+  beat: PropTypes.number,
+  tick: PropTypes.number,
+  bottomArrowPosition: PropTypes.number,
+  record: PropTypes.func,
+  isRecording: PropTypes.bool,
 };
 
 class MetronomeContainer extends React.Component {

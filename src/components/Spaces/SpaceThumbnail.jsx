@@ -1,19 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Space from 'containers/Spaces/SpaceContainer';
 import SpaceTitle from './SpaceTitle';
 
 const propTypes = {
-  queryID: React.PropTypes.string,
-  query: React.PropTypes.string,
-  queryParams: React.PropTypes.object,
-  isSelected: React.PropTypes.bool,
-  onClick: React.PropTypes.func,
-  sounds: React.PropTypes.array,
-  currentPositionInMap: React.PropTypes.shape({
-    x: React.PropTypes.number,
-    y: React.PropTypes.number,
+  queryID: PropTypes.string,
+  query: PropTypes.string,
+  queryParams: PropTypes.object,
+  isSelected: PropTypes.bool,
+  onClick: PropTypes.func,
+  sounds: PropTypes.array,
+  currentPositionInMap: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number,
   }),
-  onRemoveClick: React.PropTypes.func,
+  onRemoveClick: PropTypes.func,
 };
 
 function SpaceThumbnail(props) {

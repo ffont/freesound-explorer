@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { select, event as d3Event } from 'd3-selection';
 import { zoom } from 'd3-zoom';
 import { connect } from 'react-redux';
@@ -17,20 +18,20 @@ import MapPath from '../Paths/MapPath';
 import { setShouldPlayOnHover, toggleMultiSelection } from '../Settings/actions';
 
 const propTypes = {
-  deselectAllSounds: React.PropTypes.func,
-  stopAllSoundsPlaying: React.PropTypes.func,
-  paths: React.PropTypes.array,
-  spaces: React.PropTypes.array,
-  map: React.PropTypes.shape({
-    translateX: React.PropTypes.number,
-    translateY: React.PropTypes.number,
-    scale: React.PropTypes.number,
+  deselectAllSounds: PropTypes.func,
+  stopAllSoundsPlaying: PropTypes.func,
+  paths: PropTypes.array,
+  spaces: PropTypes.array,
+  map: PropTypes.shape({
+    translateX: PropTypes.number,
+    translateY: PropTypes.number,
+    scale: PropTypes.number,
   }),
-  setSoundCurrentlyLearnt: React.PropTypes.func,
-  updateMapPosition: React.PropTypes.func,
-  hideModal: React.PropTypes.func,
-  setShouldPlayOnHover: React.PropTypes.func,
-  toggleMultiSelection: React.PropTypes.func,
+  setSoundCurrentlyLearnt: PropTypes.func,
+  updateMapPosition: PropTypes.func,
+  hideModal: PropTypes.func,
+  setShouldPlayOnHover: PropTypes.func,
+  toggleMultiSelection: PropTypes.func,
 };
 
 class MapContainer extends React.Component {

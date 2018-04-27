@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
 import '././LoadSessionEntry.scss';
 
 const modalEntryPropTypes = {
-  session: React.PropTypes.object,
-  loadSession: React.PropTypes.func,
-  isDemoSession: React.PropTypes.bool,
-  removeSession: React.PropTypes.func,
+  session: PropTypes.object,
+  loadSession: PropTypes.func,
+  isDemoSession: PropTypes.bool,
+  removeSession: PropTypes.func,
 };
 
 const LoadSessionEntry = props => {

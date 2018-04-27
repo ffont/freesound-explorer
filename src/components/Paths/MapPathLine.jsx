@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './MapPathLine.scss';
 
 const propTypes = {
-  x1: React.PropTypes.number,
-  y1: React.PropTypes.number,
-  x2: React.PropTypes.number,
-  y2: React.PropTypes.number,
-  isPathPlaying: React.PropTypes.bool,
+  x1: PropTypes.number,
+  y1: PropTypes.number,
+  x2: PropTypes.number,
+  y2: PropTypes.number,
+  isPathPlaying: PropTypes.bool,
 };
 
 const MapPathLine = props => (

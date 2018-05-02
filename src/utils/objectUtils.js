@@ -50,11 +50,3 @@ export const pureDeleteObjectKey = (obj, property, leaveKey = false) => {
   return Object.assign(goodObj, {
     [badKey]: pureDeleteObjectKey(obj[badKey], remainingBadKeys, leaveKey) });
 };
-
-export const getPropertyArrayOfDictionaryEntries = (dictionary, propertyName) => {
-  const valueArray = [];
-  Object.keys(dictionary).forEach(
-    key => valueArray.push(readObjectPropertyByPropertyAbsName(dictionary[key], propertyName))
-  );
-  return valueArray;
-};

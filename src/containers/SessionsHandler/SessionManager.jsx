@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import OptionsList, { makeOption } from 'components/OptionsList';
 import { MODAL_PAGES } from 'constants';
@@ -34,11 +35,11 @@ const getOptions = props => [
 ];
 
 const propTypes = {
-  newSession: React.PropTypes.func,
-  saveSession: React.PropTypes.func,
-  setModalPage: React.PropTypes.func,
-  currentSessionID: React.PropTypes.string,
-  hasUnsavedProgress: React.PropTypes.bool,
+  newSession: PropTypes.func,
+  saveSession: PropTypes.func,
+  setModalPage: PropTypes.func,
+  currentSessionID: PropTypes.string,
+  hasUnsavedProgress: PropTypes.bool,
 };
 
 const SessionManager = props => (

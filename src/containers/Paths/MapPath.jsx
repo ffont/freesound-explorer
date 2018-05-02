@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { range } from 'utils/arrayUtils';
 import MapPathLineContainer from './MapPathLineContainer';
 
 const propTypes = {
-  path: React.PropTypes.object,
+  path: PropTypes.object,
 };
 
 const MapPath = props => (

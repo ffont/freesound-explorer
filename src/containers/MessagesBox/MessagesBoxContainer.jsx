@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { messagesBoxHeight } from 'stylesheets/variables.json';
 import MessagesBox from 'components/MessagesBox';
@@ -9,10 +10,10 @@ import { moveSidebarArrow } from '../Sidebar/actions';
 const DEFAULT_CLASSNAME = 'message-box';
 
 const propTypes = {
-  message: React.PropTypes.string,
-  status: React.PropTypes.string,
-  messageCount: React.PropTypes.number,
-  moveSidebarArrow: React.PropTypes.func,
+  message: PropTypes.string,
+  status: PropTypes.string,
+  messageCount: PropTypes.number,
+  moveSidebarArrow: PropTypes.func,
 };
 
 class MessagesBoxContainer extends React.Component {

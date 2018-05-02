@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { SIDEBAR_TABS } from 'constants';
 
 const propTypes = {
-  activeTab: React.PropTypes.string,
-  setSidebarTab: React.PropTypes.func,
-  toggleSidebarVisibility: React.PropTypes.func,
-  bottomArrowPosition: React.PropTypes.number,
-  isSidebarVisible: React.PropTypes.bool,
+  activeTab: PropTypes.string,
+  setSidebarTab: PropTypes.func,
+  toggleSidebarVisibility: PropTypes.func,
+  bottomArrowPosition: PropTypes.number,
+  isSidebarVisible: PropTypes.bool,
 };
 
 const icons = {

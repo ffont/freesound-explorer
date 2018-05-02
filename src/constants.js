@@ -11,7 +11,7 @@ export const DEFAULT_SORTING = 'score';
 export const PERFORM_QUERY_AT_MOUNT = false;
 
 // backend and login urls
-const BACKEND_APPLICATION_ROOT = '/fse/backend' // -> must match with backend's application root
+const BACKEND_APPLICATION_ROOT = '/fse'; // must match with backend's application root
 export const URLS = {
   SAVE_SESSION: `${BACKEND_APPLICATION_ROOT}/save/`,
   LOAD_SESSION: `${BACKEND_APPLICATION_ROOT}/load/`,

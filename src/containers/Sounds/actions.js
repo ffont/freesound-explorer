@@ -1,4 +1,4 @@
-import { default as UUID } from 'node-uuid';
+import { default as UUID } from 'uuid';
 import makeActionCreator from 'utils/makeActionCreator';
 import { MESSAGE_STATUS, MAX_TSNE_ITERATIONS } from 'constants';
 import 'polyfills/requestAnimationFrame';

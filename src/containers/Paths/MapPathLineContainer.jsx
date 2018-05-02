@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MapPathLine from 'components/Paths/MapPathLine';
 
 const propTypes = {
-  soundFrom: React.PropTypes.object,
-  soundTo: React.PropTypes.object,
-  isPathPlaying: React.PropTypes.bool,
+  soundFrom: PropTypes.object,
+  soundTo: PropTypes.object,
+  isPathPlaying: PropTypes.bool,
 };
 
 const MapPathLineContainer = props => (

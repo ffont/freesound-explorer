@@ -5,7 +5,8 @@ import { zoom } from 'd3-zoom';
 import { connect } from 'react-redux';
 import SpaceTitle from 'components/Spaces/SpaceTitle';
 import 'polyfills/requestAnimationFrame';
-import { MIN_ZOOM, MAX_ZOOM, PLAY_ON_HOVER_SHORTCUT_KEYCODE } from 'constants';
+import { MIN_ZOOM, MAX_ZOOM, PLAY_ON_HOVER_SHORTCUT_KEYCODE,
+  TOGGLE_MULTISELECTION_KEYCODE } from 'constants';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateMapPosition } from './actions';
 import { setSoundCurrentlyLearnt } from '../Midi/actions';
@@ -14,7 +15,7 @@ import { hideModal } from '../SoundInfo/actions';
 import Space from '../Spaces/SpaceContainer';
 import SoundInfoContainer from '../SoundInfo/SoundInfoContainer';
 import MapPath from '../Paths/MapPath';
-import { setShouldPlayOnHover } from '../Settings/actions';
+import { setShouldPlayOnHover, toggleMultiSelection } from '../Settings/actions';
 
 const propTypes = {
   deselectAllSounds: PropTypes.func,
@@ -30,6 +31,7 @@ const propTypes = {
   updateMapPosition: PropTypes.func,
   hideModal: PropTypes.func,
   setShouldPlayOnHover: PropTypes.func,
+  toggleMultiSelection: PropTypes.func,
 };
 
 class MapContainer extends React.Component {
@@ -90,6 +92,9 @@ class MapContainer extends React.Component {
       // Turn play sounds on hover on
       this.props.setShouldPlayOnHover(true);
     }
+    if (evt.keyCode === TOGGLE_MULTISELECTION_KEYCODE) {
+      this.props.toggleMultiSelection(true);
+    }
   }
 
   onKeyupCallback(evt) {
@@ -98,6 +103,9 @@ class MapContainer extends React.Component {
       // Turn play sounds on hover off
       this.props.setShouldPlayOnHover(false);
     }
+      if (evt.keyCode === TOGGLE_MULTISELECTION_KEYCODE) {
+        this.props.toggleMultiSelection(false);
+      }
   }
 
   zoomHandler() {
@@ -150,4 +158,5 @@ export default connect(mapStateToProps, {
   setSoundCurrentlyLearnt,
   hideModal,
   setShouldPlayOnHover,
+  toggleMultiSelection,
 })(MapContainer);

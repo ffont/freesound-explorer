@@ -6,16 +6,15 @@ import { connect } from 'react-redux';
 import SpaceTitle from 'components/Spaces/SpaceTitle';
 import 'polyfills/requestAnimationFrame';
 import { MIN_ZOOM, MAX_ZOOM, PLAY_ON_HOVER_SHORTCUT_KEYCODE,
-  TOGGLE_MULTISELECTION_KEYCODE } from 'constants';
+  TOGGLE_SHOW_CLUSTER_TAGS, TOGGLE_MULTISELECTION_KEYCODE } from 'constants';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateMapPosition } from './actions';
 import { setSoundCurrentlyLearnt } from '../Midi/actions';
 import { deselectAllSounds, stopAllSoundsPlaying } from '../Sounds/actions';
 import { hideModal } from '../SoundInfo/actions';
 import Space from '../Spaces/SpaceContainer';
-import SoundInfoContainer from '../SoundInfo/SoundInfoContainer';
 import MapPath from '../Paths/MapPath';
-import { setShouldPlayOnHover, toggleMultiSelection } from '../Settings/actions';
+import { setShouldPlayOnHover, toggleClusterTags, toggleMultiSelection } from '../Settings/actions';
 
 const propTypes = {
   deselectAllSounds: PropTypes.func,
@@ -31,6 +30,7 @@ const propTypes = {
   updateMapPosition: PropTypes.func,
   hideModal: PropTypes.func,
   setShouldPlayOnHover: PropTypes.func,
+  toggleClusterTags: PropTypes.func,
   toggleMultiSelection: PropTypes.func,
 };
 
@@ -132,10 +132,11 @@ class MapContainer extends React.Component {
           {this.props.spaces.map(space =>
             <Space
               key={space.queryID}
+              queryID={space.queryID}
               sounds={space.sounds}
+              clusters={space.clusters}
             />)}
         </svg>
-        <SoundInfoContainer />
       </div>
     );
   }
@@ -158,5 +159,6 @@ export default connect(mapStateToProps, {
   setSoundCurrentlyLearnt,
   hideModal,
   setShouldPlayOnHover,
+  toggleClusterTags,
   toggleMultiSelection,
 })(MapContainer);

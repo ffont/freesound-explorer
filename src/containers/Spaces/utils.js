@@ -1,6 +1,8 @@
-import { range } from 'utils/arrayUtils';
+import { range, vectorMean } from 'utils/arrayUtils';
 import { computeSoundGlobalPosition } from '../Sounds/utils';
 import { getMapCenter } from '../Map/utils';
+import { computeIdxClusters, collectClusterProperties } from '../../utils/densityClustering';
+import { frequentPatterns } from '../../utils/frequentPatternMining';
 
 /**
  * This function is used to compute the position that a new space will take in the map.
@@ -72,6 +74,16 @@ export const computeSpaceIndex = (spaces) => {
   return spaceIndex;
 };
 
+export const getCurrentSpaceObj = function(spaces, queryID) {
+  let currentSpace = {};
+  for (const space of spaces) {
+    if (space.queryID === queryID) {
+      currentSpace = space;
+    }
+  }
+  return currentSpace;
+};
+
 export const getSpaceDistanceToCenter = (space, center) =>
   Math.sqrt(Math.pow((space.currentPositionInMap.x - center.x), 2) +
     Math.pow((space.currentPositionInMap.y - center.y), 2));
@@ -87,4 +99,61 @@ export const getClosestSpaceToCenter = (allSpaces) => {
     }
     return curState;
   }, undefined);
+};
+
+export const computeClustersFromTsnePos = (soundObjects, space, mapPosition) => {
+  const initialCluster = {
+    centroid: { x: 0, y: 0 },
+    clusterPosition: { cx: 0, cy: 0 },
+    freqTags: [],
+    sounds: [],
+  };
+
+  const { spaceIndex } = space;
+  const spacePosition = computeSpacePosition(spaceIndex);
+  const trainingData = Object.keys(soundObjects).map(
+    soundID => Object.values(soundObjects[soundID].tsnePosition));
+  const soundIdxClusters = computeIdxClusters(trainingData);
+  const soundIDs = Object.keys(soundObjects);
+
+  const clusterCentroid = idxCluster => {
+    const cp = vectorMean(collectClusterProperties(soundObjects, idxCluster, 'tsnePosition'));
+    return { x: cp[0], y: cp[1] };
+  };
+
+  // for filtering out unwanted tags
+  const tagFilter = (tag, _, taglist) => {
+    return (
+      !(tag.length < 3) // super short tags
+      && !/\d/.test(tag) // tags with digits
+      && !(taglist.includes(tag + 's') || taglist.includes(tag.slice(0, -1)))  // plural versions
+    );
+  };
+
+  // getFrequentTags :: ([Obj], [[Int]], Str) -> [[Str]] -> [Str]
+  const getFrequentTags = (idxCluster) => {
+    // collect all tags of a cluster excluding numbers and mine frequent items
+    return frequentPatterns(
+      collectClusterProperties(soundObjects, idxCluster, 'tags', tagFilter), space.query);
+  };
+
+  // each cluster is a Promise!
+  const makeClusterObject = idxCluster => {
+    const centroid = clusterCentroid(idxCluster);
+    const clusterPosition = computeSoundGlobalPosition(centroid, spacePosition, mapPosition);
+    const sounds = [];
+    idxCluster.forEach(idx => sounds.push(soundIDs[idx]));
+    return getFrequentTags(idxCluster)
+      .then(freqTags => Object.assign({}, initialCluster, {
+        centroid,
+        clusterPosition,
+        sounds,
+        freqTags,
+      }));
+  };
+
+  // cluster Array is a Promise Array
+  const clusterArray = [];
+  soundIdxClusters.forEach(idxCluster => clusterArray.push(makeClusterObject(idxCluster)));
+  return Promise.all(clusterArray);
 };

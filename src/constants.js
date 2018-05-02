@@ -7,6 +7,7 @@ export const DEFAULT_MAX_RESULTS = 60;
 export const DEFAULT_MIN_DURATION = 0;
 export const DEFAULT_MAX_DURATION = 5;
 export const DEFAULT_DESCRIPTOR = 'lowlevel.mfcc.mean';
+export const DEFAULT_SORTING = 'score';
 export const PERFORM_QUERY_AT_MOUNT = false;
 
 // backend and login urls
@@ -64,6 +65,8 @@ export const MAX_ZOOM = 15;
 export const MAP_SCALE_FACTOR = 20;
 export const TOGGLE_MULTISELECTION_KEYCODE = 16; // shift key
 export const PLAY_ON_HOVER_SHORTCUT_KEYCODE = 18; // alt key
+export const TOGGLE_SELECTION_MAC_KEYCODE = 91 || 93; // cmd key left /right
+export const TOGGLE_SHOW_CLUSTER_TAGS = 84; // t
 
 // tsne
 export const MAX_TSNE_ITERATIONS = 150;
@@ -82,3 +85,16 @@ export const DEFAULT_TEMPO = 120.0;
 export const LOOKAHEAD = 25; // How often we'll call the scheduler function (in milliseconds)
 export const SCHEDULEAHEADTIME = 0.2; // How far we schedule notes from lookahead call (in seconds)
 export const TICKRESOLUTION = 16; // 16 for 16th note or 32 for 32th note
+
+// clustering / rescans until constants are given
+export const MIN_ITEMS_PER_CLUSTER = 4;
+export const MIN_CLUSTERS_PER_SCAN = 3;
+export const MAX_CLUSTERS_PER_SCAN = 8;
+export const MIN_CLUSTERS_RATIO = 0.07;
+export const MAX_CLUSTERS_RATIO = 0.166; // max one cluster per 6 Sounds = 1/6
+
+
+// frequent itemset mining (in tags) / rescans until constants are given
+export const MIN_SUPPORT = 0.4;
+export const MIN_FREQTAG_LENGTH = 1;
+export const MAX_FREQTAG_LENGTH = 5;

@@ -5,7 +5,7 @@ import storable from '../SessionsHandler/storableReducer';
 export const initialState = {
   shouldPlayOnHover: false,
   shouldPlayMetronomeSound: false,
-  shouldShowClusterTags: false,
+  shouldShowClusterTags: true,
 };
 
 const settings = (state = initialState, action) => {

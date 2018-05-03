@@ -13,6 +13,7 @@ const propTypes = {
     maxDuration: PropTypes.number,
     minDuration: PropTypes.number,
     descriptor: PropTypes.string,
+    sorting: PropTypes.string,
   }),
   sounds: PropTypes.array,
   isThumbnail: PropTypes.bool,
@@ -35,6 +36,43 @@ class SpaceTitle extends React.Component {
     if (!this.props.sounds.length) {
       return null;
     }
+
+    function makeSortingLabel(sortstr) {
+      let label;
+      switch (sortstr) {
+        case 'score': {
+          label = 'Relevance';
+          break;
+        }
+        case 'rating_desc': {
+          label = 'Rating';
+          break;
+        }
+        case 'duration_desc': {
+          label = 'Duration';
+          break;
+        }
+        case 'downloads_desc': {
+          label = 'Downloads';
+          break;
+        }
+        case 'creation_desc': {
+          label = 'newest first';
+          break;
+        }
+        case 'creation_asc': {
+          label = 'oldest first';
+          break;
+        }
+        default: {
+          label = 'Releveance';
+          break;
+        }
+      }
+      return label;
+    }
+
+
     return (
       <div
         className={`SpaceTitle${this.props.isThumbnail ? ' thumbnail' : ''}`}
@@ -47,6 +85,10 @@ class SpaceTitle extends React.Component {
             (this.props.queryParams.descriptor) === 'lowlevel.mfcc.mean' ? 'Timbre' : 'Tonality'}
           </li>
           <li>Duration: {this.props.queryParams.minDuration} to {this.props.queryParams.maxDuration} s</li>
+          <li>
+            Sorted by {
+              (makeSortingLabel(this.props.queryParams.sorting))
+            }</li>
         </ol>
       </div>);
   }

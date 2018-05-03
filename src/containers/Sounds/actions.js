@@ -4,8 +4,10 @@ import { MESSAGE_STATUS, MAX_TSNE_ITERATIONS } from 'constants';
 import 'polyfills/requestAnimationFrame';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { submitQuery, reshapeReceivedSounds } from '../Search/utils';
-import { setSpaceAsCenter } from '../Spaces/actions';
+import { setSpaceAsCenter, computeSpaceClusters } from '../Spaces/actions';
 import { getTrainedTsne, computePointsPositionInSolution } from './utils';
+import { stopAudio } from '../Audio/actions';
+import { getPropertyArrayOfDictionaryEntries } from '../../utils/objectUtils';
 
 export const FETCH_SOUNDS_REQUEST = 'FETCH_SOUNDS_REQUEST';
 export const FETCH_SOUNDS_SUCCESS = 'FETCH_SOUNDS_SUCCESS';
@@ -45,6 +47,16 @@ export const deselectAllSounds = () => (dispatch, getStore) => {
 let clearTimeoutId;
 let progress = 0;
 
+// TODO: buggy -> when playing many sounds by hover, stop does not work on all sounds
+export const stopAllSoundsPlaying = () => (dispatch, getStore) => {
+  const playingSourceNodes = getStore().audio.playingSourceNodes;
+  // Object.keys(playingSourceNodes).forEach(
+  //   idx => dispatch(stopAudio(Number(idx), playingSourceNodes[idx].soundID))
+  // );
+  const playingSounds = getPropertyArrayOfDictionaryEntries(playingSourceNodes, 'soundID');
+  playingSounds.forEach(soundID => dispatch(stopAudio(soundID)));
+};
+
 const updateProgress = (sounds, stepIteration) => (dispatch) => {
   const computedProgress = (stepIteration + 1) / MAX_TSNE_ITERATIONS;
   const computedProgressPercentage = parseInt(100 * computedProgress, 10);
@@ -67,6 +79,7 @@ const handleFinalStep = queryID => (dispatch) => {
   cancelAnimationFrame(clearTimeoutId);
   dispatch(displaySystemMessage('Map computed!', MESSAGE_STATUS.SUCCESS));
   dispatch(mapComputationComplete(queryID));
+  dispatch(computeSpaceClusters(queryID)); 
 };
 
 const updateSounds = (tsne, sounds, queryID) => (dispatch, getStore) => {

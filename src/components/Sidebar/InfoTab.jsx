@@ -20,8 +20,8 @@ function InfoTab() {
       <section>
         <p className="info-paragraph">
           Freesound Explorer has been developed (so far) by Frederic Font and Giuseppe Bandiera at the
-          Music Technology Group, Universitat Pompeu Fabra. You can find the <a href="https://github.com/ffont/freesound-explorer" target="_blank">
-            source code here</a>.
+          Music Technology Group (Universitat Pompeu Fabra), and by Eric Lehmann at Film University Babelsberg KONRAD WOLF.
+          You can find the <a href="https://github.com/ffont/freesound-explorer" target="_blank"> source code here</a>.
         </p>
       </section>
     </div>

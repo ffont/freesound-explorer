@@ -20,6 +20,7 @@ def __pull():
         run("git pull")
 
 def deploy():
+	local('npm run build')  # Generate production bundle locally
 	__pull()
 	__copy_static()
     # NOTE: if needed, backend restart must be done manually

@@ -24,9 +24,9 @@ describe('settings reducer', () => {
   it('correctly sets shouldShowClusterTags setting', () => {
     const stateBefore = { shouldShowClusterTags: false };
     const stateAfter = { shouldShowClusterTags: true };
-    expect(reducer(stateBefore, toggleClusterTags(true)))
+    expect(reducer(stateBefore, toggleClusterTags()))
       .toEqual(stateAfter);
-    expect(reducer(stateAfter, toggleClusterTags(false)))
+    expect(reducer(stateAfter, toggleClusterTags()))
       .toEqual(stateBefore);
   });
 });

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import SpaceTitle from 'components/Spaces/SpaceTitle';
 import 'polyfills/requestAnimationFrame';
 import { MIN_ZOOM, MAX_ZOOM, PLAY_ON_HOVER_SHORTCUT_KEYCODE,
-  TOGGLE_SHOW_CLUSTER_TAGS, TOGGLE_MULTISELECTION_KEYCODE } from 'constants';
+  TOGGLE_SHOW_CLUSTER_TAGS_KEYCODE, TOGGLE_MULTISELECTION_KEYCODE } from 'constants';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateMapPosition } from './actions';
 import { setSoundCurrentlyLearnt } from '../Midi/actions';
@@ -103,9 +103,12 @@ class MapContainer extends React.Component {
       // Turn play sounds on hover off
       this.props.setShouldPlayOnHover(false);
     }
-      if (evt.keyCode === TOGGLE_MULTISELECTION_KEYCODE) {
-        this.props.toggleMultiSelection(false);
-      }
+    if (evt.keyCode === TOGGLE_MULTISELECTION_KEYCODE) {
+      this.props.toggleMultiSelection(false);
+    }
+    if (evt.keyCode === TOGGLE_SHOW_CLUSTER_TAGS_KEYCODE) {
+      this.props.toggleClusterTags();
+    }
   }
 
   zoomHandler() {

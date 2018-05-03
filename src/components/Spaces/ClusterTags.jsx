@@ -1,13 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './ClusterTags.scss';
 
 const propTypes = {
-  clusterPosition: React.PropTypes.shape({
-    cx: React.PropTypes.number,
-    cy: React.PropTypes.number,
+  clusterPosition: PropTypes.shape({
+    cx: PropTypes.number,
+    cy: PropTypes.number,
   }),
-  freqTags: React.PropTypes.array,
-  queryID: React.PropTypes.string,
+  freqTags: PropTypes.array,
+  queryID: PropTypes.string,
 };
 
 class ClusterTags extends React.Component {

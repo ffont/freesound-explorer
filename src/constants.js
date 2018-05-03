@@ -92,9 +92,3 @@ export const MIN_CLUSTERS_PER_SCAN = 3;
 export const MAX_CLUSTERS_PER_SCAN = 8;
 export const MIN_CLUSTERS_RATIO = 0.07;
 export const MAX_CLUSTERS_RATIO = 0.166; // max one cluster per 6 Sounds = 1/6
-
-
-// frequent itemset mining (in tags) / rescans until constants are given
-export const MIN_SUPPORT = 0.4;
-export const MIN_FREQTAG_LENGTH = 1;
-export const MAX_FREQTAG_LENGTH = 5;

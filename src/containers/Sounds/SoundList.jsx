@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { lighten } from 'utils/colorsUtils';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
@@ -9,18 +10,18 @@ import { reshapeSoundListData } from '../../containers/Sounds/utils';
 import { playAudio, stopAudio } from '../../containers/Audio/actions';
 
 const propTypes = {
-  sounds: React.PropTypes.array,
-  space: React.PropTypes.object,
-  selectedSounds: React.PropTypes.array,
-  hoveredSounds: React.PropTypes.array,
-  selectSound: React.PropTypes.func,
-  deselectSound: React.PropTypes.func,
-  deselectAllSounds: React.PropTypes.func,
-  playAudio: React.PropTypes.func,
-  stopAudio: React.PropTypes.func,
-  toggleHoveringSound: React.PropTypes.func,
-  shouldPlayOnHover: React.PropTypes.bool,
-  shouldMultiSelect: React.PropTypes.bool,
+  sounds: PropTypes.array,
+  space: PropTypes.object,
+  selectedSounds: PropTypes.array,
+  hoveredSounds: PropTypes.array,
+  selectSound: PropTypes.func,
+  deselectSound: PropTypes.func,
+  deselectAllSounds: PropTypes.func,
+  playAudio: PropTypes.func,
+  stopAudio: PropTypes.func,
+  toggleHoveringSound: PropTypes.func,
+  shouldPlayOnHover: PropTypes.bool,
+  shouldMultiSelect: PropTypes.bool,
 };
 
 class SoundList extends React.Component {

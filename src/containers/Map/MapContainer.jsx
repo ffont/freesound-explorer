@@ -5,19 +5,20 @@ import { zoom } from 'd3-zoom';
 import { connect } from 'react-redux';
 import SpaceTitle from 'components/Spaces/SpaceTitle';
 import 'polyfills/requestAnimationFrame';
-import { MIN_ZOOM, MAX_ZOOM, PLAY_ON_HOVER_SHORTCUT_KEYCODE } from 'constants';
+import { MIN_ZOOM, MAX_ZOOM, PLAY_ON_HOVER_SHORTCUT_KEYCODE,
+  TOGGLE_SHOW_CLUSTER_TAGS_KEYCODE, TOGGLE_MULTISELECTION_KEYCODE } from 'constants';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateMapPosition } from './actions';
 import { setSoundCurrentlyLearnt } from '../Midi/actions';
-import { deselectAllSounds } from '../Sounds/actions';
+import { deselectAllSounds, stopAllSoundsPlaying } from '../Sounds/actions';
 import { hideModal } from '../SoundInfo/actions';
 import Space from '../Spaces/SpaceContainer';
-import SoundInfoContainer from '../SoundInfo/SoundInfoContainer';
 import MapPath from '../Paths/MapPath';
-import { setShouldPlayOnHover } from '../Settings/actions';
+import { setShouldPlayOnHover, toggleClusterTags, toggleMultiSelection } from '../Settings/actions';
 
 const propTypes = {
   deselectAllSounds: PropTypes.func,
+  stopAllSoundsPlaying: PropTypes.func,
   paths: PropTypes.array,
   spaces: PropTypes.array,
   map: PropTypes.shape({
@@ -29,6 +30,8 @@ const propTypes = {
   updateMapPosition: PropTypes.func,
   hideModal: PropTypes.func,
   setShouldPlayOnHover: PropTypes.func,
+  toggleClusterTags: PropTypes.func,
+  toggleMultiSelection: PropTypes.func,
 };
 
 class MapContainer extends React.Component {
@@ -76,6 +79,7 @@ class MapContainer extends React.Component {
     if (evt.target.tagName !== 'circle') {
       // deselect all sounds when not clicking on a circle
       this.props.deselectAllSounds();
+      this.props.stopAllSoundsPlaying();
       // turn off current midi learn
       this.props.setSoundCurrentlyLearnt();
       this.props.hideModal();
@@ -88,6 +92,9 @@ class MapContainer extends React.Component {
       // Turn play sounds on hover on
       this.props.setShouldPlayOnHover(true);
     }
+    if (evt.keyCode === TOGGLE_MULTISELECTION_KEYCODE) {
+      this.props.toggleMultiSelection(true);
+    }
   }
 
   onKeyupCallback(evt) {
@@ -95,6 +102,12 @@ class MapContainer extends React.Component {
     if (evt.keyCode === PLAY_ON_HOVER_SHORTCUT_KEYCODE) {
       // Turn play sounds on hover off
       this.props.setShouldPlayOnHover(false);
+    }
+    if (evt.keyCode === TOGGLE_MULTISELECTION_KEYCODE) {
+      this.props.toggleMultiSelection(false);
+    }
+    if (evt.keyCode === TOGGLE_SHOW_CLUSTER_TAGS_KEYCODE) {
+      this.props.toggleClusterTags();
     }
   }
 
@@ -122,10 +135,11 @@ class MapContainer extends React.Component {
           {this.props.spaces.map(space =>
             <Space
               key={space.queryID}
+              queryID={space.queryID}
               sounds={space.sounds}
+              clusters={space.clusters}
             />)}
         </svg>
-        <SoundInfoContainer />
       </div>
     );
   }
@@ -144,7 +158,10 @@ export default connect(mapStateToProps, {
   displaySystemMessage,
   updateMapPosition,
   deselectAllSounds,
+  stopAllSoundsPlaying,
   setSoundCurrentlyLearnt,
   hideModal,
   setShouldPlayOnHover,
+  toggleClusterTags,
+  toggleMultiSelection,
 })(MapContainer);

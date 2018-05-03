@@ -1,4 +1,4 @@
-import { togglePlayOnHover, setShouldPlayOnHover } from './actions';
+import { togglePlayOnHover, setShouldPlayOnHover, toggleClusterTags } from './actions';
 import reducer, { initialState } from './reducer';
 
 describe('settings reducer', () => {
@@ -19,6 +19,14 @@ describe('settings reducer', () => {
     expect(reducer(stateBefore, setShouldPlayOnHover(true)))
       .toEqual(stateAfter);
     expect(reducer(stateAfter, setShouldPlayOnHover(false)))
+      .toEqual(stateBefore);
+  });
+  it('correctly sets shouldShowClusterTags setting', () => {
+    const stateBefore = { shouldShowClusterTags: false };
+    const stateAfter = { shouldShowClusterTags: true };
+    expect(reducer(stateBefore, toggleClusterTags()))
+      .toEqual(stateAfter);
+    expect(reducer(stateAfter, toggleClusterTags()))
       .toEqual(stateBefore);
   });
 });

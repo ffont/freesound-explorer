@@ -17,6 +17,38 @@ describe('array utils', () => {
       expect(utils.arrayMean(array2)).toEqual(Infinity);
     });
   });
+  describe('vectorSum', () => {
+    it('correctly returns the sum of two vectors', () => {
+      const vector1 = [1, 4, 11.5];
+      const vector2 = [9, -6, 9];
+      const vector3 = [1, 2, 3, 4, 5, Infinity];
+      const vector4 = [9, 8, 7, 6, 5, 4];
+      expect(utils.vectorSum(vector1, vector2)).toEqual([10, -2, 20.5]);
+      expect(utils.vectorSum(vector3, vector4)).toEqual([10, 10, 10, 10, 10, Infinity]);
+    });
+  });
+  describe('vectorDiv', () => {
+    it('correctly returns the quotient of two vectors', () => {
+      const vector1 = [18, 24, 5];
+      const vector2 = [9, -6, 9];
+      const number1 = 3;
+      const number2 = 0;
+      expect(utils.vectorDiv(vector1, vector2)).toEqual([2, -4, (5 / 9)]);
+      expect(utils.vectorDiv(vector2, number1)).toEqual([3, -2, 3]);
+      expect(utils.vectorDiv(vector2, number2)).toEqual([Infinity, -Infinity, Infinity]);
+    });
+  });
+  describe('vectorMean', () => {
+    it('correctly returns the mean of a vector of arrays', () => {
+      const vector1 = [1, 4, 11];
+      const vector2 = [9, 6, 9];
+      const vector3 = [1, 2, 3, 4, 5, 6];
+      const vector4 = [9, -2, NaN, 6, 5, Infinity];
+      expect(utils.vectorMean([vector1, vector2])).toEqual([5, 5, 10]);
+      expect(utils.vectorMean([vector3, vector4])).toEqual([5, 0, NaN, 5, 5, Infinity]);
+    });
+  });
+  
   describe('elementWithId', () => {
     it('correctly returns object in array that matches id', () => {
       const list = [{ id: 2 }, { id: 10 }, { id: 400 }];

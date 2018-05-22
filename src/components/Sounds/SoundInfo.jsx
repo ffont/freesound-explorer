@@ -124,10 +124,11 @@ class SoundInfo extends React.Component {
   }
 
   render() {
+    debugger;
     const userButtons = this.getUserButtons();
     return (
       <div className={this.getClassName()} style={this.getPosition()}>
-        <a href={this.props.sound.url} target="_blank">
+        <a href={this.props.sound.url} target="_blank" rel="noopener noreferrer">
           <div className="sound-info-modal-title">
             <div>{this.props.sound.name}</div>
             <div>by {this.props.sound.username} ({this.getLicenseLabel()})</div>

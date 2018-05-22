@@ -15,6 +15,7 @@ import { hideModal } from '../SoundInfo/actions';
 import Space from '../Spaces/SpaceContainer';
 import MapPath from '../Paths/MapPath';
 import { setShouldPlayOnHover, toggleClusterTags, toggleMultiSelection } from '../Settings/actions';
+import SoundInfoContainer from '../SoundInfo/SoundInfoContainer';
 
 const propTypes = {
   deselectAllSounds: PropTypes.func,
@@ -140,6 +141,7 @@ class MapContainer extends React.Component {
               clusters={space.clusters}
             />)}
         </svg>
+        <SoundInfoContainer />
       </div>
     );
   }

@@ -124,7 +124,6 @@ class SoundInfo extends React.Component {
   }
 
   render() {
-    debugger;
     const userButtons = this.getUserButtons();
     return (
       <div className={this.getClassName()} style={this.getPosition()}>

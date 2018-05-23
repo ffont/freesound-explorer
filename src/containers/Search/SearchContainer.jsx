@@ -10,6 +10,7 @@ import { updateDescriptor, updateMinDuration, updateMaxDuration,
   from './actions';
 import { getSounds } from '../Sounds/actions';
 import { setExampleQueryDone } from '../Sidebar/actions';
+import { randomQuery } from '../../utils/randomUtils';
 
 const propTypes = {
   maxResults: PropTypes.number,
@@ -57,7 +58,7 @@ class QueryBox extends React.Component {
     const { descriptor, maxResults, minDuration, maxDuration } = this.props;
     const queryParams = { descriptor, maxResults, minDuration, maxDuration };
     if (!query.length) {
-      query = DEFAULT_QUERY;
+      query = randomQuery();
     }
     this.props.getSounds(query, queryParams);
   }

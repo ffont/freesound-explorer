@@ -22,6 +22,10 @@
   }
 }
 
+h2 {
+  text-transform: capitalize;
+}
+
 .SidebarContent {
   width: $sidebarWidth - $sidebarClosedOffset;
   height: 100%;

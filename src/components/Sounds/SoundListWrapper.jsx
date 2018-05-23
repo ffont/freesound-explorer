@@ -19,6 +19,7 @@ const SoundListWrapper = props =>
       {typeof props.space === 'undefined' ?
         <div className="empty-soundlist">No sounds to list, please search first!</div> :
         <div className="sound-list-container">
+          <h2>{`${props.space.query}: ${props.space.sounds.length} Sounds`}</h2>
           <SoundList
             key={props.space.queryID}
             space={props.space}

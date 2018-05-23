@@ -24,6 +24,7 @@ const propTypes = {
   shouldMultiSelect: PropTypes.bool,
 };
 
+// TODO: use responsive table heigth 
 class SoundList extends React.Component {
 
   shouldComponentUpdate(nextProps) {
@@ -41,7 +42,6 @@ class SoundList extends React.Component {
       Header: 'Name',
       accessor: 'name', // String-based value accessors!
       minWidth: 275,
-      // style: { backgroundColor: 'white' },
     }, {
       Header: 'Duration',
       accessor: 'durationfixed',
@@ -71,7 +71,7 @@ class SoundList extends React.Component {
         showPaginationBottom={false}
         defaultPageSize={data.length}
         style={{
-          height: '655px', // This will force the table body to overflow and scroll, since there is not enough room
+          height: '595px', // This will force the table body to overflow and scroll, since there is not enough room
         }}
         defaultSorted={[
           {
@@ -80,12 +80,16 @@ class SoundList extends React.Component {
           },
         ]}
         columns={columns}
+
+
+        // ******* styling & behaviour ********
+
         getTheadProps={() => {
           return {
             style: {
-              background: '#373737',
-              borderRadius: '7px',
-              // textAlignment: "left",
+              height: '40px',
+              background: 'rgba(70, 70, 70, 0.4)',
+              borderRadius: '5px',
             },
           };
         }}
@@ -130,12 +134,18 @@ class SoundList extends React.Component {
               this.props.toggleHoveringSound(rowInfo.original.id);
             },
             style: {
+              height: '40px',
               background: (rowInfo.original.isHovered || rowInfo.original.isSelected) ?
-                lighten('#666666', 1.5) : rowInfo.original.color,
-              color: (rowInfo.original.isHovered || rowInfo.original.isSelected) ?
-              'black' : 'white',
-              opacity: '0.9',
-              borderRadius: '7px',
+              'rgb(179, 179, 187)' : 'rgba(70, 70, 70, 0.2)', // $sidebarIconHoverColor from stylesheets
+              borderBottom: `6px solid ${rowInfo.original.color}`,
+              borderRadius: '5px',
+            },
+          };
+        }}
+        getTdProps={() => {
+          return {
+            style: {
+              padding: '12px 10px',
             },
           };
         }}

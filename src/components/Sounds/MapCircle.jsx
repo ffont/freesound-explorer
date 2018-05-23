@@ -63,8 +63,13 @@ class MapCircle extends React.Component {
     const { isSelected } = this.props;
     const { cx, cy } = (this.props.isThumbnail) ?
       this.props.sound.thumbnailPosition : this.props.sound.position;
-    const shouldHighlight = (isHovered || isSelected || isPlaying);
-    const fillColor = shouldHighlight ? lighten(color, 1.5) : color;
+    // const shouldHighlight = (isHovered || isSelected || isPlaying);
+    let fillColor = color;
+    if (isHovered) {
+      fillColor = lighten(color, 1.8);
+    } else if (isSelected) {
+      fillColor = lighten(color, 1.25);
+    }
     const { defaultRadius, defaultStrokeWidth } = circleStyle;
     const fillWidthProportion = 2;
     const radius = parseInt(defaultRadius, 10);

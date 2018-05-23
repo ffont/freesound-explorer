@@ -22,6 +22,10 @@
   }
 }
 
+h2 {
+  text-transform: capitalize;
+}
+
 .SidebarContent {
   width: $sidebarWidth - $sidebarClosedOffset;
   height: 100%;
@@ -32,6 +36,11 @@
     display: flex;
     flex-direction: column;
   }
+}
+
+.SidebarContent header, label, span, p,
+.empty-soundlist, .midi-indicator, .empty-space-placeholder {
+  user-select: none;
 }
 
 .SidebarContent__scrollable {

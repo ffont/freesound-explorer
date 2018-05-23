@@ -68,7 +68,7 @@ class MapCircleContainer extends React.PureComponent {
     // play and stop sound
     if (this.props.sound.isPlaying) {
       this.props.stopAudio(this.props.sound);
-    } else if (!this.props.isSelected && !this.props.sound.isPlaying) {
+    } else if (!(this.props.isSelected || this.props.sound.isPlaying)) {
       this.props.playAudio(this.props.sound);
     }
     if (this.props.isSelected && !this.props.sound.isPlaying) {

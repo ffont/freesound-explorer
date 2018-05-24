@@ -1,4 +1,4 @@
-import { DEFAULT_QUERY, DEFAULT_MAX_RESULTS } from 'constants';
+import { DEFAULT_MAX_RESULTS, DEFAULT_SORTING } from 'constants';
 import freesound from 'vendors/freesound';
 import { rgbToHex } from 'utils/colorsUtils';
 import { randomQuery } from '../../utils/randomUtils';
@@ -16,7 +16,7 @@ function parseFreesoundSearchUrl(url) {
   return { query, filter };
 }
 
-function search(query = randomQuery(), filter = '', maxResults = DEFAULT_MAX_RESULTS) {
+function search(query = randomQuery(), filter = '', maxResults = DEFAULT_MAX_RESULTS, sorting = DEFAULT_SORTING) {
   // Search sounds and start loading them
   let pageCounter = 0;
   const freesoundMaxPageSize = 150;
@@ -37,15 +37,16 @@ function search(query = randomQuery(), filter = '', maxResults = DEFAULT_MAX_RES
       page_size: maxPageResults,
       group_by_pack: 0,
       filter,
-      fields: 'id,previews,name,analysis,url,username,duration,tags,license',
+      fields: 'id,previews,name,analysis,url,username,duration,tags,license,download,similar_sounds',
       descriptors: extraDescriptors.join(),
+      sort: sorting,
     }));
     pageCounter += 1;
   }
   return Promise.all(promises);
 }
 
-export function submitQuery(submittedQuery, maxResults, maxDuration) {
+export function submitQuery(submittedQuery, maxResults, maxDuration, sorting) {
   let query;
   let filter = '';
   if ((submittedQuery.startsWith('http')) && (submittedQuery.indexOf('freesound.org') !== -1)) {
@@ -59,13 +60,14 @@ export function submitQuery(submittedQuery, maxResults, maxDuration) {
     filter = `duration:[0%20TO%20${parsedMaxDuration}]`;
     query = submittedQuery;
   }
-  return search(query, filter, maxResults);
+  return search(query, filter, maxResults, sorting);
 }
 
 const reshapePageResults = (pageResults, queryID) => {
   const results = pageResults.results;
   return results.reduce((curState, curSound, curIndex) => {
-    const { analysis, url, name, username, duration, license, tags } = curSound;
+    const { analysis, url, name, username, duration, license,
+            tags, downloadURL, similar_sounds } = curSound;
     const id = `${curSound.id}-${queryID}`;
     const previewUrl = curSound.previews['preview-lq-mp3'];
     const fsObject = pageResults.getSound(curIndex);
@@ -87,6 +89,8 @@ const reshapePageResults = (pageResults, queryID) => {
           previewUrl,
           analysis,
           url,
+          downloadURL,
+          similar_sounds,
           name,
           color,
           username,

@@ -16,7 +16,7 @@ export const setSpaceAsCenter = (space) => {
 };
 
 const removeSpaceAction = makeActionCreator(REMOVE_SPACE, 'queryID');
-const clustersComputed = makeActionCreator(CLUSTERS_COMPUTED, 'clusters');
+const clustersComputed = makeActionCreator(CLUSTERS_COMPUTED, 'queryID', 'clusters');
 
 export const removeSpace = space => (dispatch) => {
   dispatch(removeSpaceAction(space.queryID));
@@ -35,6 +35,6 @@ export const computeSpaceClusters = queryID => (dispatch, getStore) => {
   const sounds = {};
   space.sounds.forEach(soundID => sounds[soundID] = allsounds[soundID]);
   computeClustersFromTsnePos(sounds, space, mapPosition)
-  .then(clusters => dispatch(clustersComputed(clusters)));
+  .then(clusters => dispatch(clustersComputed(space.queryID, clusters)));
 };
 

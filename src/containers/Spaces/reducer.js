@@ -87,8 +87,11 @@ export const singleSpace = (state = spaceInitialState, action, spaceIndex) => {
       });
     }
     case CLUSTERS_COMPUTED: {
-      const { clusters } = action;
-      return Object.assign({}, state, { clusters });
+      const { queryID, clusters } = action;
+      if (state.queryID === queryID) {
+        return Object.assign({}, state, { clusters });
+      }
+      return state;
     }
     default:
       return state;

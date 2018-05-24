@@ -2,17 +2,17 @@
 @import "../../stylesheets/mixins";
 
 .select-with-label {
-  margin: 15px 0 30px;
+  margin: 15px 0 15px;
   label, select {
     display: inline-block;
-    height: $sidebarClosedOffset;
+    height: $sidebarClosedOffset - 10px ;
     vertical-align: middle;
   }
   select {
     @include base-focus;
     background-color: white;
     color: $blackBackground;
-    width: 40%;
+    width: 60%;
     float: right;
     border-radius: $defaultBorderRadius;
     span {

@@ -89,19 +89,25 @@
   border-right: 1px solid rgba(0, 0, 0, 0.05);
   transition: box-shadow .3s cubic-bezier(.175, .885, .32, 1.275);
   box-shadow: inset 0 0 0 0 transparent;
+  border: 6px solid rgb(38, 38, 38);
+  border-radius: 5px;
 }
 
 .ReactTable .rt-thead .rt-th.-sort-asc, .ReactTable .rt-thead .rt-td.-sort-asc {
-  border-top: 7px solid rgba(153, 153, 153, 1);
+  border: 6px solid #3f677a;
+  border-bottom: 6px solid rgba(153, 153, 153, 1);
   background-color: #3F677A;
   border-radius: 5px;
 }
-
+   
 .ReactTable .rt-thead .rt-th.-sort-desc, .ReactTable .rt-thead .rt-td.-sort-desc {
-  border-bottom: 7px solid rgba(153, 153, 153, 1);
-  background-color: #3F677A;
+  border: 6px solid #3f677a;
+  border-top: 6px solid rgba(153, 153, 153, 1);
+  background-color: #3f677a;
   border-radius: 5px;
 }
+   
+  
 
 .ReactTable .rt-thead .rt-th.-cursor-pointer, .ReactTable .rt-thead .rt-td.-cursor-pointer {
   cursor: pointer

@@ -1,6 +1,7 @@
-import { DEFAULT_QUERY, DEFAULT_MAX_RESULTS, DEFAULT_SORTING } from 'constants';
+import { DEFAULT_MAX_RESULTS, DEFAULT_SORTING } from 'constants';
 import freesound from 'vendors/freesound';
 import { rgbToHex } from 'utils/colorsUtils';
+import { randomQuery } from '../../utils/randomUtils';
 
 function getRequestParameter(name, queryUrl = location.search) {
   const parsedRegex = (new RegExp(
@@ -15,7 +16,7 @@ function parseFreesoundSearchUrl(url) {
   return { query, filter };
 }
 
-function search(query = DEFAULT_QUERY, filter = '', maxResults = DEFAULT_MAX_RESULTS, sorting = DEFAULT_SORTING) {
+function search(query = randomQuery(), filter = '', maxResults = DEFAULT_MAX_RESULTS, sorting = DEFAULT_SORTING) {
   // Search sounds and start loading them
   let pageCounter = 0;
   const freesoundMaxPageSize = 150;

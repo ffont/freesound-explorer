@@ -16,7 +16,6 @@ const propTypes = {
   notesMapped: PropTypes.object,
   selectedPath: PropTypes.string,
   addSoundToPath: PropTypes.func,
-  downloadSound: PropTypes.func,
   bookmarkSound: PropTypes.func,
 };
 
@@ -65,8 +64,10 @@ class SoundInfo extends React.Component {
         </button>
       );
       downloadSoundIcon = (
-        <button onClick={() => this.props.downloadSound(this.props.sound)}>
-          <i className="fa fa-download fa-lg" aria-hidden="true" />
+        <button >
+          <a rel="noopener noreferrer" href={`${this.props.sound.url}download/`} >
+            <i className="fa fa-download fa-lg" aria-hidden="true" />
+          </a>
         </button>
       );
     }

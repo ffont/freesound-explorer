@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SIDEBAR_TABS } from 'constants';
+import { batchDownloadSelectedOriginals } from '../../containers/Sidebar/actions';
 
 const propTypes = {
   activeTab: PropTypes.string,
@@ -8,6 +9,8 @@ const propTypes = {
   toggleSidebarVisibility: PropTypes.func,
   bottomArrowPosition: PropTypes.number,
   isSidebarVisible: PropTypes.bool,
+  // selectedSounds: PropTypes.array,
+  // sounds: PropTypes.object,
 };
 
 const icons = {
@@ -38,6 +41,11 @@ const SidebarNavMenu = props => (
               </button>
             </li>
           ))}
+          <button
+            onClick={() => { batchDownloadSelectedOriginals(props.selectedSounds, props.sounds); }}
+          >
+            <i className={'fa fa-arrow-down fa-lg'} aria-hidden />
+          </button>
         </ul>
       </nav>
       <button

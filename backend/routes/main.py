@@ -284,3 +284,8 @@ def get_app_token():
     return make_response(jsonify({
         'appToken': app.config['FREESOUND_CLIENT_SECRET']
         }), 200)
+
+@app.route('/download/')
+def download():
+    return make_response(jsonify({'route_batchdownload_reached!': True }), 200)
+

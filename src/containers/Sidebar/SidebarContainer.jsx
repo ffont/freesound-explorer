@@ -17,6 +17,7 @@ const propTypes = {
   setSidebarTab: PropTypes.func,
   setUpMIDIDevices: PropTypes.func,
   displaySystemMessage: PropTypes.func,
+  sounds: PropTypes.object,
 };
 
 
@@ -40,6 +41,8 @@ class Sidebar extends React.Component {
             toggleSidebarVisibility={this.props.toggleSidebarVisibility}
             isSidebarVisible={this.props.isVisible}
             bottomArrowPosition={this.props.bottomArrowPosition}
+            // selectedSounds={this.props.sounds.selectedSounds}
+            // sounds={this.props.sounds.byID}
           />
         </div>
       </aside>
@@ -47,7 +50,10 @@ class Sidebar extends React.Component {
   }
 }
 
-const mapStateToProps = state => state.sidebar;
+const mapStateToProps = state => {
+  const { sidebar, sounds } = state;
+  return Object.assign({}, sounds, sidebar);
+};
 
 Sidebar.propTypes = propTypes;
 export default connect(mapStateToProps, {

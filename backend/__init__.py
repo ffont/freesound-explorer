@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from flask import Flask, g
 import flask_login as login
-from settings import APPLICATION_ROOT
+from .settings import APPLICATION_ROOT
 
 sys.path.append('../..')
 

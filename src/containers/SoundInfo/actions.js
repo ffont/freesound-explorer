@@ -36,8 +36,7 @@ const makeRequest = (uri, method) => {
 
 export const bookmarkSound = sound => (dispatch) => {
   freesound.setToken(sessionStorage.getItem('accessToken'), 'oauth');
-  debugger
-  sound(
+  sound.bookmark(
     sound.name,  // Use sound name
     'Freesound Explorer' // Category
   ).then(() => {
@@ -49,10 +48,10 @@ export const bookmarkSound = sound => (dispatch) => {
 export const downloadSound = (sound) => (dispatch) => {
   freesound.setToken(sessionStorage.getItem('accessToken'), 'oauth');
   debugger
+  // sound.download()
   const { downloadUrl } = sound;
   dispatch(displaySystemMessage('Downloading sound...',
   MESSAGE_STATUS.INFO));
-  // const uri = sound(sound.downloadUrl);
   makeRequest(downloadUrl, 'GET').then(audio => console.log(audio));
   dispatch(displaySystemMessage('Download completed...',
   MESSAGE_STATUS.INFO));

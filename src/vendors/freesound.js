@@ -145,7 +145,7 @@ const freesound = (function () {
 
       jsonObject.download = function (targetWindow){// can be window, new, or iframe
           checkOauth();
-          var uri = makeUri(uris.download,[jsonObject.id]);
+          var uri = makeUri(uris.download,[jsonObject.fsId]);
           targetWindow.location = uri;
       };
 

@@ -1,16 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { DEFAULT_QUERY, PERFORM_QUERY_AT_MOUNT } from 'constants';
+import { PERFORM_QUERY_AT_MOUNT, MESSAGE_STATUS } from 'constants';
 import InputTextButton from 'components/Input/InputTextButton';
 import SelectWithLabel from 'components/Input/SelectWithLabel';
 import SliderRange from 'components/Input/SliderRange';
 import { updateSorting, updateDescriptor, updateMinDuration, updateMaxDuration,
   updateMaxResults, updateQuery }
   from './actions';
-import { getSounds } from '../Sounds/actions';
+import { getSounds, getResultsCount } from '../Sounds/actions';
 import { setExampleQueryDone } from '../Sidebar/actions';
 import { randomQuery } from '../../utils/randomUtils';
+import { displaySystemMessage } from '../MessagesBox/actions';
+
 
 const propTypes = {
   maxResults: PropTypes.number,
@@ -19,7 +21,9 @@ const propTypes = {
   sorting: PropTypes.string,
   query: PropTypes.string,
   descriptor: PropTypes.string,
+  displaySystemMessage: PropTypes.func,
   getSounds: PropTypes.func,
+  getResultsCount: PropTypes.func,
   isExampleQueryDone: PropTypes.bool,
   updateSorting: PropTypes.func,
   updateDescriptor: PropTypes.func,
@@ -65,6 +69,13 @@ class QueryBox extends React.Component {
     this.props.getSounds(query, queryParams);
   }
 
+  // TODO: make request for getting number of results
+  // getNumOfResults() {
+  //   let { query } = this.props;
+  //   const page_size = 1;
+
+  // }
+
   render() {
     return (
       <form
@@ -79,6 +90,8 @@ class QueryBox extends React.Component {
           onTextChange={(evt) => {
             const query = evt.target.value;
             this.props.updateQuery(query);
+            // makes a reqest to freesound for each keystroke to get number of possible results
+            this.props.getResultsCount(query);
           }}
           currentValue={this.props.query}
           tabIndex="0"
@@ -150,7 +163,9 @@ const mapStateToProps = (state) => {
 
 QueryBox.propTypes = propTypes;
 export default connect(mapStateToProps, {
+  displaySystemMessage,
   getSounds,
+  getResultsCount,
   setExampleQueryDone,
   updateDescriptor,
   updateSorting,

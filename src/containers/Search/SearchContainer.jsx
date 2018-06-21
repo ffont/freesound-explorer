@@ -67,13 +67,6 @@ class QueryBox extends React.Component {
     this.props.getSounds(query, queryParams);
   }
 
-  // TODO: make request for getting number of results
-  // getNumOfResults() {
-  //   let { query } = this.props;
-  //   const page_size = 1;
-
-  // }
-
   render() {
     return (
       <form

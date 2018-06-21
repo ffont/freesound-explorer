@@ -114,7 +114,7 @@ const computeTsneSolution = (tsne, sounds, queryID, stepIteration = 0) => (dispa
  * @type {object} queryParams: the parameters of the query
  *       (descriptor, maxResults, maxDuration, minDuration)
  */
-export const getSounds = (query, queryParams) => (getStore, dispatch) => {
+export const getSounds = (query, queryParams) => (dispatch, getStore) => {
   dispatch(displaySystemMessage('Searching for sounds...'));
   const queryID = UUID.v4();
   dispatch(fetchRequest(queryID, query, queryParams));

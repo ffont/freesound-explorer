@@ -5,6 +5,7 @@ import { PERFORM_QUERY_AT_MOUNT } from 'constants';
 import InputTextButton from 'components/Input/InputTextButton';
 import SelectWithLabel from 'components/Input/SelectWithLabel';
 import SliderRange from 'components/Input/SliderRange';
+import { debounce } from 'lodash';
 import { updateSorting, updateDescriptor, updateMinDuration, updateMaxDuration,
   updateMaxResults, updateQuery }
   from './actions';
@@ -37,6 +38,14 @@ class QueryBox extends React.Component {
     super(props);
     this.submitQuery = this.submitQuery.bind(this);
     this.tryQueryAtMount = this.tryQueryAtMount.bind(this);
+  }
+
+  componentWillMount() {
+    // prevents too many requests to FS server
+    this._debouncedResultsCount = debounce(this.props.getResultsCount.bind(this), 400, {
+      leading: false,
+      trailing: true,
+    });
   }
 
   componentDidMount() {
@@ -82,7 +91,7 @@ class QueryBox extends React.Component {
             const query = evt.target.value;
             this.props.updateQuery(query);
             // makes a reqest to freesound for each keystroke to get number of possible results
-            this.props.getResultsCount(query);
+            this._debouncedResultsCount(query);
           }}
           currentValue={this.props.query}
           tabIndex="0"

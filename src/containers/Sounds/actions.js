@@ -146,8 +146,10 @@ export const getResultsCount = query => dispatch => {
     response => {
       dispatch(displaySystemMessage(`Possible number of results: ${response[0].count}`, MESSAGE_STATUS.INFO));
     },
-    (error) => {
-      dispatch(displaySystemMessage('No sounds available for this query.', MESSAGE_STATUS.ERROR));
+    error => {
+      if (error === 'Unknown Status Code') {
+        dispatch(displaySystemMessage('Too many requests to server, please wait a few seconds.', MESSAGE_STATUS.ERROR));
+      }
     }
 );
 };

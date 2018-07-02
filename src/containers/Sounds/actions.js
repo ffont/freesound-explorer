@@ -98,10 +98,12 @@ const computeTsneSolution = (tsne, sounds, queryID, stepIteration = 0) => (dispa
       dispatch(centerMapAtNewSpace(queryID));
     }
     dispatch(updateProgress(sounds, stepIteration));
-    dispatch(updateSounds(tsne, sounds, queryID));
+    // call this only if space hasnt been pressed
+    // dispatch(updateSounds(tsne, sounds, queryID));
     clearTimeoutId = requestAnimationFrame(() =>
       dispatch(computeTsneSolution(tsne, sounds, queryID, stepIteration + 1)));
   } else {
+    dispatch(updateSounds(tsne, sounds, queryID));
     dispatch(handleFinalStep(queryID));
   }
 };

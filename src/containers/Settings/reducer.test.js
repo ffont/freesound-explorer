@@ -1,4 +1,4 @@
-import { togglePlayOnHover, setShouldPlayOnHover, toggleClusterTags } from './actions';
+import { togglePlayOnHover, setShouldPlayOnHover, toggleClusterTags, setShortcutAnimation } from './actions';
 import reducer, { initialState } from './reducer';
 
 describe('settings reducer', () => {
@@ -27,6 +27,14 @@ describe('settings reducer', () => {
     expect(reducer(stateBefore, toggleClusterTags()))
       .toEqual(stateAfter);
     expect(reducer(stateAfter, toggleClusterTags()))
+      .toEqual(stateBefore);
+  });
+  it('correctly skips the animation of expanding circles during calculation', () => {
+    const stateBefore = { shortcutAnimation: false };
+    const stateAfter = { shortcutAnimation: true };
+    expect(reducer(stateBefore, setShortcutAnimation(true)))
+      .toEqual(stateAfter);
+    expect(reducer(stateAfter, setShortcutAnimation(false)))
       .toEqual(stateBefore);
   });
 });

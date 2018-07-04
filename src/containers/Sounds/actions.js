@@ -88,9 +88,10 @@ const updateSounds = (tsne, sounds, queryID) => (dispatch, getStore) => {
   return soundsWithUpdatedPosition;
 };
 
-const computeTsneSolution = (tsne, sounds, queryID, stepIteration = 0) => (dispatch) => {
+const computeTsneSolution = (tsne, sounds, queryID, stepIteration = 0) => (dispatch, getStore) => {
   /** we retrieve the store at each step to take into account user zooming/moving
   while map being computed */
+  const store = getStore();
   if (stepIteration <= MAX_TSNE_ITERATIONS) {
     // compute step solution
     tsne.step();
@@ -99,11 +100,15 @@ const computeTsneSolution = (tsne, sounds, queryID, stepIteration = 0) => (dispa
     }
     dispatch(updateProgress(sounds, stepIteration));
     // call this only if space hasnt been pressed
-    // dispatch(updateSounds(tsne, sounds, queryID));
+    if (!store.settings.shortcutAnimation) {
+      dispatch(updateSounds(tsne, sounds, queryID));
+    }
     clearTimeoutId = requestAnimationFrame(() =>
       dispatch(computeTsneSolution(tsne, sounds, queryID, stepIteration + 1)));
   } else {
-    dispatch(updateSounds(tsne, sounds, queryID));
+    if (store.settings.shortcutAnimation) {
+      dispatch(updateSounds(tsne, sounds, queryID));
+    }
     dispatch(handleFinalStep(queryID));
   }
 };

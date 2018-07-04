@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import SpaceTitle from 'components/Spaces/SpaceTitle';
 import 'polyfills/requestAnimationFrame';
 import { MIN_ZOOM, MAX_ZOOM, PLAY_ON_HOVER_SHORTCUT_KEYCODE,
-  TOGGLE_SHOW_CLUSTER_TAGS_KEYCODE, TOGGLE_MULTISELECTION_KEYCODE } from 'constants';
+  TOGGLE_SHOW_CLUSTER_TAGS_KEYCODE, TOGGLE_MULTISELECTION_KEYCODE,
+  SHORTCUT_ANIMATION_KEYCODE } from 'constants';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateMapPosition } from './actions';
 import { setSoundCurrentlyLearnt } from '../Midi/actions';
@@ -14,7 +15,8 @@ import { deselectAllSounds, stopAllSoundsPlaying } from '../Sounds/actions';
 import { hideModal } from '../SoundInfo/actions';
 import Space from '../Spaces/SpaceContainer';
 import MapPath from '../Paths/MapPath';
-import { setShouldPlayOnHover, toggleClusterTags, toggleMultiSelection } from '../Settings/actions';
+import { setShouldPlayOnHover, toggleClusterTags,
+  toggleMultiSelection, setShortcutAnimation } from '../Settings/actions';
 import SoundInfoContainer from '../SoundInfo/SoundInfoContainer';
 
 const propTypes = {
@@ -33,6 +35,7 @@ const propTypes = {
   setShouldPlayOnHover: PropTypes.func,
   toggleClusterTags: PropTypes.func,
   toggleMultiSelection: PropTypes.func,
+  setShortcutAnimation: PropTypes.func,
 };
 
 class MapContainer extends React.Component {
@@ -96,6 +99,9 @@ class MapContainer extends React.Component {
     if (evt.keyCode === TOGGLE_MULTISELECTION_KEYCODE) {
       this.props.toggleMultiSelection(true);
     }
+    if (evt.keyCode === SHORTCUT_ANIMATION_KEYCODE) {
+      this.props.setShortcutAnimation(true);
+    }
   }
 
   onKeyupCallback(evt) {
@@ -157,6 +163,7 @@ const mapStateToProps = (state) => {
 MapContainer.propTypes = propTypes;
 
 export default connect(mapStateToProps, {
+  setShortcutAnimation,
   displaySystemMessage,
   updateMapPosition,
   deselectAllSounds,

@@ -1,7 +1,7 @@
 import { TOGGLE_PLAY_ON_HOVER, TOGGLE_METRONOME_SOUND,
   SET_SHOULD_PLAY_ON_HOVER, TOGGLE_CLUSTER_TAGS, TOGGLE_MULTISELECTION, SET_SHORTCUT_ANIMATION } from './actions';
 import storable from '../SessionsHandler/storableReducer';
-import { FETCH_SOUNDS_REQUEST } from '../Sounds/actions';
+import { FETCH_SOUNDS_REQUEST, MAP_COMPUTATION_COMPLETE } from '../Sounds/actions';
 
 export const initialState = {
   shouldPlayOnHover: false,
@@ -45,7 +45,12 @@ const settings = (state = initialState, action) => {
     case TOGGLE_MULTISELECTION: {
       return Object.assign({}, state, {
         shouldMultiSelect: action.shouldMultiSelect,
-      })
+      });
+    }
+    case MAP_COMPUTATION_COMPLETE: {
+      return Object.assign({}, state, {
+        shortcutAnimation: false,
+      });
     }
     default:
       return state;

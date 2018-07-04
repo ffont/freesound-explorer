@@ -92,6 +92,7 @@ const computeTsneSolution = (tsne, sounds, queryID, stepIteration = 0) => (dispa
   /** we retrieve the store at each step to take into account user zooming/moving
   while map being computed */
   const store = getStore();
+  const { shortcutAnimation } = store.settings;
   if (stepIteration <= MAX_TSNE_ITERATIONS) {
     // compute step solution
     tsne.step();
@@ -100,13 +101,13 @@ const computeTsneSolution = (tsne, sounds, queryID, stepIteration = 0) => (dispa
     }
     dispatch(updateProgress(sounds, stepIteration));
     // call this only if space hasnt been pressed
-    if (!store.settings.shortcutAnimation) {
+    if (!shortcutAnimation) {
       dispatch(updateSounds(tsne, sounds, queryID));
     }
     clearTimeoutId = requestAnimationFrame(() =>
       dispatch(computeTsneSolution(tsne, sounds, queryID, stepIteration + 1)));
   } else {
-    if (store.settings.shortcutAnimation) {
+    if (shortcutAnimation) {
       dispatch(updateSounds(tsne, sounds, queryID));
     }
     dispatch(handleFinalStep(queryID));

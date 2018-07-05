@@ -2,6 +2,7 @@ import deepFreeze from 'deep-freeze';
 import { default as reducer, initialState } from './reducer';
 import { updateDescriptor, updateQuery, updateMaxDuration,
   updateMinDuration, updateMaxResults } from './actions';
+import { fetchRequest, MAP_COMPUTATION_COMPLETE, mapComputationComplete } from '../Sounds/actions';
 
 describe('search reducer', () => {
   it('should return initialState', () => {
@@ -46,6 +47,16 @@ describe('search reducer', () => {
     const stateAfter = Object.assign({}, stateBefore, { maxResults: 100 });
     it('correctly updates state', () => {
       expect(reducer(stateBefore, updateMaxResults(maxResults))).toEqual(stateAfter);
+    });
+  });
+  describe('isSearchEnabled', () => {
+    const stateBefore = initialState;
+    const stateAfter = Object.assign({}, stateBefore, { isSearchEnabled: true, activeSearches: ['123'] });
+    it('correctly updates status of enabled searches', () => {
+      expect(reducer(stateBefore, fetchRequest('123', '', ''))).toEqual(stateAfter);
+    });
+    it('correctly resets isSearchEnabled', () => {
+      expect(reducer(stateAfter, mapComputationComplete('123'))).toEqual(stateBefore);
     });
   });
 });

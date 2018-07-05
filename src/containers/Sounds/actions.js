@@ -3,7 +3,7 @@ import makeActionCreator from 'utils/makeActionCreator';
 import { MESSAGE_STATUS, MAX_TSNE_ITERATIONS } from 'constants';
 import 'polyfills/requestAnimationFrame';
 import { displaySystemMessage } from '../MessagesBox/actions';
-import { submitQuery, reshapeReceivedSounds } from '../Search/utils';
+import { submitQuery, miniSearch, reshapeReceivedSounds } from '../Search/utils';
 import { setSpaceAsCenter, computeSpaceClusters } from '../Spaces/actions';
 import { getTrainedTsne, computePointsPositionInSolution } from './utils';
 import { stopAudio } from '../Audio/actions';
@@ -139,4 +139,17 @@ export const getSounds = (query, queryParams) => (dispatch, getStore) => {
       dispatch(fetchFailure(error, queryID));
     }
   );
+};
+
+export const getResultsCount = query => dispatch => {
+  miniSearch(query).then(
+    response => {
+      dispatch(displaySystemMessage(`Possible number of results: ${response[0].count}`, MESSAGE_STATUS.INFO));
+    },
+    error => {
+      if (error === 'Unknown Status Code') {
+        dispatch(displaySystemMessage('Too many requests to server, please wait a few seconds.', MESSAGE_STATUS.ERROR));
+      }
+    }
+);
 };

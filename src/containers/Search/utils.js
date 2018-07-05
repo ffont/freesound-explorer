@@ -46,6 +46,17 @@ function search(query = randomQuery(), filter = '', maxResults = DEFAULT_MAX_RES
   return Promise.all(promises);
 }
 
+// simplified search reduced to get just the count property
+export function miniSearch(query) {
+  const pageSize = 1;
+  const promises = [];
+  freesound.setToken(sessionStorage.getItem('appToken'));
+  promises.push(freesound.textSearch(query, {
+    page_size: pageSize,
+  }));
+  return Promise.all(promises);
+}
+
 export function submitQuery(submittedQuery, maxResults, maxDuration, sorting) {
   let query;
   let filter = '';

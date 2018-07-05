@@ -72,7 +72,7 @@ class MapContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.onKeypressCallback, false);
+    document.removeEventListener('keydown', this.onKeydownCallback, false);
     document.removeEventListener('keyup', this.onKeyupCallback, false);
   }
 

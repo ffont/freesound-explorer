@@ -53,8 +53,8 @@ export const stopAllSoundsPlaying = () => (dispatch, getStore) => {
   // Object.keys(playingSourceNodes).forEach(
   //   idx => dispatch(stopAudio(Number(idx), playingSourceNodes[idx].soundID))
   // );
-  const playingSounds = getPropertyArrayOfDictionaryEntries(playingSourceNodes, 'soundID');
-  playingSounds.forEach(soundID => dispatch(stopAudio(soundID)));
+  // const playingSounds = getPropertyArrayOfDictionaryEntries(playingSourceNodes, 'soundID');
+  Object.keys(playingSourceNodes).forEach(nodekey => dispatch(stopAudio(nodekey.soundID, nodekey)));
 };
 
 const updateProgress = (sounds, stepIteration) => (dispatch) => {

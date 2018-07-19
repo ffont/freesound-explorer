@@ -90,8 +90,10 @@ class QueryBox extends React.Component {
           onTextChange={(evt) => {
             const query = evt.target.value;
             this.props.updateQuery(query);
-            // makes a reqest to freesound for each keystroke to get number of possible results
-            this._debouncedResultsCount(query);
+            // makes a request to freesound for each keystroke to get number of possible results
+            if (query != false) {
+              this._debouncedResultsCount(query);
+            }
           }}
           currentValue={this.props.query}
           tabIndex="0"

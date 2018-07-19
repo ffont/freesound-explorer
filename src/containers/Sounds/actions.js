@@ -57,14 +57,15 @@ export const stopAllSoundsPlaying = () => (dispatch, getStore) => {
   playingSounds.forEach(soundID => dispatch(stopAudio(soundID)));
 };
 
-const updateProgress = (sounds, stepIteration) => (dispatch) => {
+const updateProgress = (sounds, stepIteration, shortcutAnimation) => (dispatch) => {
   const computedProgress = (stepIteration + 1) / MAX_TSNE_ITERATIONS;
   const computedProgressPercentage = parseInt(100 * computedProgress, 10);
   if (progress !== computedProgressPercentage) {
     // update status message only with new percentage
     progress = computedProgressPercentage;
     const soundsLength = Object.keys(sounds).length;
-    const statusMessage =
+    const statusMessage = shortcutAnimation ?
+      `${soundsLength} sounds loaded, computing map (${progress}%)  ! Animation skipped ! ` :
       `${soundsLength} sounds loaded, computing map (${progress}%)`;
     dispatch(displaySystemMessage(statusMessage));
   }
@@ -99,7 +100,7 @@ const computeTsneSolution = (tsne, sounds, queryID, stepIteration = 0) => (dispa
     if (!stepIteration) {
       dispatch(centerMapAtNewSpace(queryID));
     }
-    dispatch(updateProgress(sounds, stepIteration));
+    dispatch(updateProgress(sounds, stepIteration, shortcutAnimation));
     // call this only if space hasnt been pressed
     if (!shortcutAnimation) {
       dispatch(updateSounds(tsne, sounds, queryID));

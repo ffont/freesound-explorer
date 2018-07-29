@@ -13,11 +13,11 @@ import { getSounds, getResultsCount } from '../Sounds/actions';
 import { setExampleQueryDone } from '../Sidebar/actions';
 import { randomQuery } from '../../utils/randomUtils';
 
-
 const propTypes = {
   maxResults: PropTypes.number,
   maxDuration: PropTypes.number,
   minDuration: PropTypes.number,
+  currentQuery: PropTypes.string,
   sorting: PropTypes.string,
   query: PropTypes.string,
   descriptor: PropTypes.string,
@@ -77,6 +77,7 @@ class QueryBox extends React.Component {
   }
 
   render() {
+    console.log('propsCurrentQuery:', this.props.currentQuery);
     return (
       <form
         id="query-form"
@@ -90,14 +91,14 @@ class QueryBox extends React.Component {
           onTextChange={(evt) => {
             const query = evt.target.value;
             this.props.updateQuery(query);
-            // makes a request to freesound for each keystroke to get number of possible results
+            // makes a reqest to freesound for each keystroke to get number of possible results
             if (query != false) {
               this._debouncedResultsCount(query);
             }
           }}
           currentValue={this.props.query}
           tabIndex="0"
-          placeholder="query terms, e.g.: instruments"
+          placeholder={this.props.currentQuery || 'query terms, e.g.: instruments'}
           buttonIcon="fa fa-search fa-lg"
         />
         <SelectWithLabel
@@ -159,8 +160,19 @@ class QueryBox extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  const spaceNum = state.spaces.spaces.length;
   const { isExampleQueryDone } = state.sidebar;
-  return Object.assign({}, { isExampleQueryDone }, state.search);
+  let currentQuery = '';
+  let currentSpace = {};
+  currentSpace.query = '';
+  if (spaceNum) {
+    currentSpace = state.spaces.spaces.find(space =>
+      space.queryID === state.spaces.currentSpace);
+    if (currentSpace) {
+      currentQuery = currentSpace.query;
+    }
+  }
+  return Object.assign({}, { isExampleQueryDone, currentQuery }, state.search);
 };
 
 QueryBox.propTypes = propTypes;

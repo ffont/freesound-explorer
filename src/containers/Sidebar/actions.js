@@ -1,7 +1,7 @@
 import makeActionCreator from 'utils/makeActionCreator';
 import { URLS } from '../../constants';
 import { loadJSON } from '../../utils/requests';
-import { audioLoader } from '../Audio/utils';
+// import audioLoader from '../Audio/utils';
 
 export const TOGGLE_SIDEBAR_VISIBILITY = 'TOGGLE_SIDEBAR_VISIBILITY';
 export const SET_SIDEBAR_TAB = 'SET_SIDEBAR_TAB';
@@ -17,7 +17,8 @@ export const batchDownloadSelectedOriginals = (selectedSounds, sounds) => {
   const downloadUrls = [];
   selectedSounds.forEach(soundID => downloadUrls.push(`${sounds[soundID].url}download/`));
   downloadUrls.forEach(element => {
-    audioLoader.loadFile(element).then(r => console.log(r));
+    loadJSON(`${URLS.DOWNLOAD}`).then(r => console.log(r));
+    // audioLoader.loadFile(element).then(r => console.log(r));
   });
   
 }

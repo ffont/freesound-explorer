@@ -15,7 +15,7 @@ export const moveSidebarArrow = makeActionCreator(MOVE_SIDEBAR_ARROW, 'position'
 
 export const batchDownloadSelectedOriginals = (selectedSounds, sounds) => {
   const downloadUrls = [];
-  selectedSounds.forEach(soundID => downloadUrls.push(`${sounds.byId[soundID].url}download/`));
+  selectedSounds.forEach(soundID => downloadUrls.push(`${sounds[soundID].url}download/`));
   downloadUrls.forEach(element => {
     audioLoader.loadFile(element).then(r => console.log(r));
   });

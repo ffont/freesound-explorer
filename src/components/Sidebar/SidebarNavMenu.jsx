@@ -9,8 +9,8 @@ const propTypes = {
   toggleSidebarVisibility: PropTypes.func,
   bottomArrowPosition: PropTypes.number,
   isSidebarVisible: PropTypes.bool,
-  // selectedSounds: PropTypes.array,
-  // sounds: PropTypes.object,
+  selectedSounds: PropTypes.array,
+  sounds: PropTypes.object,
 };
 
 const icons = {

@@ -18,7 +18,7 @@ export const batchDownloadSelectedOriginals = (selectedSounds, sounds) => {
   const fsIds = [];
   selectedSounds.forEach(soundID => fsIds.push(`${sounds[soundID].id.split('-')[0]}`));
   // downloadUrls.forEach(element => {
-  loadBLOB(`${URLS.DOWNLOAD}?fsids=${fsIds}`).then(file => FileSaver.saveAs(file, 'testwav.wav'));
+  loadBLOB(`${URLS.DOWNLOAD}?fsids=${fsIds}`).then(file => FileSaver.saveAs(file, 'testzip.zip'));
     // audioLoader.loadFile(element).then(r => console.log(r));
     // TODO:
     // make a list of fs ids and pass it to the backend

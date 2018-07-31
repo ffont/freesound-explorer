@@ -10,7 +10,7 @@ import datetime
 import os
 import urllib2
 import base64
-from zipfile import *
+import zipfile
 import io
 import re
 
@@ -306,16 +306,41 @@ def download():
     prefix = './backend/audio/'
     output = open(os.path.join(prefix, fn) ,'wb')
     output.write(file.read())
-    output.close()
     # # file = urllib2.urlopen(url)
-    # buffer = io.BytesIO()
-    # zipf = ZipFile(buffer, "w")
-    # zipf.write ('test.mp3')
-    # zipf.close()
+
+    default_path = os.getcwd()
+    os.chdir('./backend/audio/')
+
     filepath = os.path.join(os.getcwd() , 'backend', 'audio')
     print('filepath: ' + filepath)
-    print('!! readfile exists?: ' + str(os.path.isfile(os.path.join(filepath, fn))))
-    sendfile = open(os.path.join(filepath, fn), 'rb')
+    print('!! readfile exists?: ' + str(os.path.isfile(os.path.join(fn))))
+    sendfile = open(os.path.join(fn), 'rb')
 
-    return send_from_directory(filepath, fn, as_attachment=True) # attachment_filename=fn,
+    zipname = 'test.zip'
+    
+
+    # with zipfile.ZipFile('reportDir' + str(uuid.uuid4()) + '.zip', 'w') as myzip:
+    #     for f in lstFileNames:   
+    #         myzip.write(f)
+    zipf = zipfile.ZipFile(zipname, "a")
+    zipf.debug = 3
+    zipf.write(fn, fn)
+    print('!! ziptest: ' + str(zipf.testzip()))
+    print('!! Zipfile exists?: ' + str(os.path.isfile(os.path.join(zipname))))
+    print('!! zipinfolist: ' + str(zipf.namelist()))
+    zipf.close()
+    print('!! is zip: ' + str(zipfile.is_zipfile(os.path.join(zipname))))
+    output.close()
+    os.chdir(default_path)
+    ziprel = os.path.abspath(zipname)
+    # DEBUGGING see if we are in the correct dir
+    files = [f for f in os.listdir('.')]# if os.path.isfile(f)]
+    for f in files:
+        print '??_files: ' + f
+
+    return send_file(ziprel, as_attachment=True,  attachment_filename=zipname)
     # return make_response(jsonify({'fsids': fsids }), 200)
+
+# @app.route('/clear-tempaudio/', methods=['GET'])
+# def clear_tempaudio():
+#     return True

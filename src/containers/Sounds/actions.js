@@ -144,7 +144,7 @@ export const getSounds = (query, queryParams) => (dispatch, getStore) => {
 export const getResultsCount = query => dispatch => {
   miniSearch(query).then(
     response => {
-      dispatch(displaySystemMessage(`Possible number of results: ${response[0].count}`, MESSAGE_STATUS.INFO));
+      dispatch(displaySystemMessage(`Estimated max number of results: ${response[0].count}`, MESSAGE_STATUS.INFO));
     },
     error => {
       if (error === 'Unknown Status Code') {

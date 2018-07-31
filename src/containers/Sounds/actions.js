@@ -20,12 +20,12 @@ export const GET_SOUND_BUFFER = 'GET_SOUND_BUFFER';
 export const TOGGLE_HOVERING_SOUND = 'TOGGLE_HOVERING_SOUND';
 export const REMOVE_SOUND = 'REMOVE_SOUND';
 
-// no need to exports all these actions as they will be used internally in getSounds
-const fetchRequest = makeActionCreator(FETCH_SOUNDS_REQUEST, 'queryID', 'query', 'queryParams');
-const fetchSuccess = makeActionCreator(FETCH_SOUNDS_SUCCESS, 'sounds', 'queryID', 'mapPosition');
-const fetchFailure = makeActionCreator(FETCH_SOUNDS_FAILURE, 'error', 'queryID');
-const updateSoundsPosition = makeActionCreator(UPDATE_SOUNDS_POSITION, 'sounds', 'queryID');
-const mapComputationComplete = makeActionCreator(MAP_COMPUTATION_COMPLETE, 'queryID');
+// export needed for testing though all these actions will be only used internally in getSounds
+export const fetchRequest = makeActionCreator(FETCH_SOUNDS_REQUEST, 'queryID', 'query', 'queryParams');
+export const fetchSuccess = makeActionCreator(FETCH_SOUNDS_SUCCESS, 'sounds', 'queryID', 'mapPosition');
+export const fetchFailure = makeActionCreator(FETCH_SOUNDS_FAILURE, 'error', 'queryID');
+export const updateSoundsPosition = makeActionCreator(UPDATE_SOUNDS_POSITION, 'sounds', 'queryID');
+export const mapComputationComplete = makeActionCreator(MAP_COMPUTATION_COMPLETE, 'queryID');
 
 export const selectSound = makeActionCreator(SELECT_SOUND_BY_ID, 'soundID');
 export const deselectSound = makeActionCreator(DESELECT_SOUND_BY_ID, 'soundID');

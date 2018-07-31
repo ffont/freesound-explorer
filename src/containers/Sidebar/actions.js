@@ -1,6 +1,7 @@
 import makeActionCreator from 'utils/makeActionCreator';
+import FileSaver from 'file-saver';
 import { URLS } from '../../constants';
-import { loadJSON } from '../../utils/requests';
+import { loadJSON, loadBLOB } from '../../utils/requests';
 // import audioLoader from '../Audio/utils';
 
 export const TOGGLE_SIDEBAR_VISIBILITY = 'TOGGLE_SIDEBAR_VISIBILITY';
@@ -14,11 +15,17 @@ export const setExampleQueryDone = makeActionCreator(EXAMPLE_QUERY_DONE);
 export const moveSidebarArrow = makeActionCreator(MOVE_SIDEBAR_ARROW, 'position');
 
 export const batchDownloadSelectedOriginals = (selectedSounds, sounds) => {
-  const downloadUrls = [];
-  selectedSounds.forEach(soundID => downloadUrls.push(`${sounds[soundID].url}download/`));
-  downloadUrls.forEach(element => {
-    loadJSON(`${URLS.DOWNLOAD}`).then(r => console.log(r));
+  const fsIds = [];
+  selectedSounds.forEach(soundID => fsIds.push(`${sounds[soundID].id.split('-')[0]}`));
+  // downloadUrls.forEach(element => {
+  loadBLOB(`${URLS.DOWNLOAD}?fsids=${fsIds}`).then(file => FileSaver.saveAs(file, 'testwav.wav'));
     // audioLoader.loadFile(element).then(r => console.log(r));
-  });
+    // TODO:
+    // make a list of fs ids and pass it to the backend
+    // download and zip files
+    // include licence in filemnames and text
+    // pass it back to the frontend to download
+  // }
+// );
   
 }

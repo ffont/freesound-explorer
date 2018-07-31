@@ -90,7 +90,6 @@ class MapCircleContainer extends React.PureComponent {
       // open modal if sound is not yet selected
         this.props.openModalForSound(this.props.sound);
     }
-  console.log(this.props.selectedSounds);
   }
 
   shouldThumbnailUpdate(nextProps) {

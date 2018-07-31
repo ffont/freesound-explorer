@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, make_response, redirect, g, url_for, send_from_directory
+from flask import Flask, render_template, jsonify, request, make_response, redirect, g, url_for, send_from_directory, send_file
 from flask_login import login_required, logout_user
 from social.apps.flask_app.default.models import UserSocialAuth
 from backend import app, db_session
@@ -8,7 +8,11 @@ import json
 import uuid
 import datetime
 import os
-
+import urllib2
+import base64
+from zipfile import *
+import io
+import re
 
 def is_valid_uuid(uuid_string):
     try:
@@ -285,7 +289,33 @@ def get_app_token():
         'appToken': app.config['FREESOUND_CLIENT_SECRET']
         }), 200)
 
-@app.route('/download/')
+@app.route('/download/', methods=['GET'])
 def download():
-    return make_response(jsonify({'route_batchdownload_reached!': True }), 200)
+    fsids = request.args.get('fsids', None).split(',')
+    url = "https://freesound.org/apiv2/sounds/{}/download/".format(fsids[0])
 
+    username, access_token = get_user_data()
+    print('un: ' + username + ' ac: ' + access_token)
+    requesturl = urllib2.Request(url)
+    requesturl.add_header("Authorization", "Bearer {}".format(access_token)) #%s" % base64string)
+
+    file = urllib2.urlopen(requesturl)
+    print(file.info())
+    fn = re.search(r'".*"', file.info()['Content-Disposition']).group(0)[1:-1]
+
+    prefix = './backend/audio/'
+    output = open(os.path.join(prefix, fn) ,'wb')
+    output.write(file.read())
+    output.close()
+    # # file = urllib2.urlopen(url)
+    # buffer = io.BytesIO()
+    # zipf = ZipFile(buffer, "w")
+    # zipf.write ('test.mp3')
+    # zipf.close()
+    filepath = os.path.join(os.getcwd() , 'backend', 'audio')
+    print('filepath: ' + filepath)
+    print('!! readfile exists?: ' + str(os.path.isfile(os.path.join(filepath, fn))))
+    sendfile = open(os.path.join(filepath, fn), 'rb')
+
+    return send_from_directory(filepath, fn, as_attachment=True) # attachment_filename=fn,
+    # return make_response(jsonify({'fsids': fsids }), 200)

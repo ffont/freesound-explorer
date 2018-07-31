@@ -74,13 +74,9 @@ export const computeSpaceIndex = (spaces) => {
   return spaceIndex;
 };
 
-export const getCurrentSpaceObj = function(spaces, queryID) {
-  let currentSpace = {};
-  for (const space of spaces) {
-    if (space.queryID === queryID) {
-      currentSpace = space;
-    }
-  }
+export const getCurrentSpaceObj = (spaces, queryID) => {
+  const currentSpace = spaces.find(space =>
+    space.queryID === queryID);
   return currentSpace;
 };
 

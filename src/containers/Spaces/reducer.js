@@ -124,6 +124,9 @@ export const spacesReducer = (state = initialState.spaces, action) => {
 
 export const currentSpace = (state = initialState.currentSpace, action, allSpaces) => {
   switch (action.type) {
+    case REMOVE_SPACE: {
+      return '';
+    }
     case FETCH_SOUNDS_SUCCESS:
       return action.queryID;
     case UPDATE_MAP_POSITION: {

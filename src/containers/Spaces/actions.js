@@ -1,6 +1,7 @@
 import makeActionCreator from 'utils/makeActionCreator';
 import { removeSound } from '../Sounds/actions';
 import { computeClustersFromTsnePos } from './utils';
+import { displaySystemMessage } from '../MessagesBox/actions';
 
 export const SET_SPACE_AS_CENTER = 'SET_SPACE_AS_CENTER';
 export const REMOVE_SPACE = 'REMOVE_SPACE';
@@ -19,8 +20,10 @@ const removeSpaceAction = makeActionCreator(REMOVE_SPACE, 'queryID');
 const clustersComputed = makeActionCreator(CLUSTERS_COMPUTED, 'queryID', 'clusters');
 
 export const removeSpace = space => (dispatch) => {
-  dispatch(removeSpaceAction(space.queryID));
-  space.sounds.forEach(soundID => dispatch(removeSound(soundID)));
+  const { query, queryID, sounds } = space;
+  dispatch(removeSpaceAction(queryID));
+  sounds.forEach(soundID => dispatch(removeSound(soundID)));
+  dispatch(displaySystemMessage(`Space "${query}" has been deleted.`));
 };
 
 export const computeSpaceClusters = queryID => (dispatch, getStore) => {

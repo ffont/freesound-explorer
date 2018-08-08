@@ -17,23 +17,22 @@ export const moveSidebarArrow = makeActionCreator(MOVE_SIDEBAR_ARROW, 'position'
 export const batchDownloadSelectedOriginals = (selectedSounds, sounds) => {
   const fsIds = [];
   selectedSounds.forEach(soundID => fsIds.push(`${sounds[soundID].id.split('-')[0]}`));
-  // downloadUrls.forEach(element => {
-  loadBLOB(`${URLS.DOWNLOAD}?fsids=${fsIds}`).then(file => {
-    console.log('file: ', file);
-
-    const headers = file.headers;
-    console.log('headers: ', headers);
-    const mask = new RegExp('FreesoundExplorer.*');
-    const filename = headers.match(mask)[0];
-    FileSaver.saveAs(file.blob, filename);
-  });
-    // audioLoader.loadFile(element).then(r => console.log(r));
-    // TODO:
-    // make a list of fs ids and pass it to the backend
-    // download and zip files
-    // include licence in filemnames and text
-    // pass it back to the frontend to download
-  // }
-// );
   
-}
+  if (fsIds.length) {
+    // dispatch(displaySystemMessage(`Download of ${selectedSounds.length} Sounds started, please wait.`));
+    console.log(`Download of ${selectedSounds.length} Sounds started, please wait.`);
+    loadBLOB(`${URLS.DOWNLOAD}?fsids=${fsIds}`).then(file => {
+      const headers = file.headers;
+      const mask = new RegExp('FreesoundExplorer.*');
+      const filename = headers.match(mask)[0];
+      FileSaver.saveAs(file.blob, filename);
+      console.log('Download Finished');
+    });
+  } else {
+    return;
+  }
+  // dispatch(displaySystemMessage('Download Finished'));
+    // TODO:
+    // Debug / abort when no files are selected
+    // include licence in filemnames and text
+};

@@ -296,20 +296,24 @@ def download():
     fsids = request.args.get('fsids', None).split(',')
     download_id = str(uuid.uuid4())
     default_path = os.getcwd()
-    username, access_token = get_user_data()
+    _, access_token = get_user_data()
 
     # setup folder
     prefix = os.path.join('./backend/audio/', download_id)
     os.mkdir(prefix)
     os.chdir(prefix)
     download_path = os.getcwd()
-    print('changed path to: ' + download_path)
     
     zipname = 'FreesoundExplorer_' + download_id
     zipabs = os.path.join(download_path, zipname)
     zipf = zipfile.ZipFile(zipabs, "a")
-    print('zippath: ' + zipabs)
+    print('!!NOLENGEH?' + str(len(fsids)))
 
+    if len(fsids) == 0:
+        zipf.close()
+        os.chdir(default_path)
+        return send_file(zipabs, as_attachment=True,  attachment_filename= zipname + '.zip')
+   
    # setup zip
     # get filename and fileobj from freesound API and append to zip
     for id in fsids:
@@ -323,11 +327,11 @@ def download():
 
         # write next audiofile received
         filepath = os.path.join(os.getcwd(), fn)
-        output = open(os.path.join(download_path, fn) ,'wb')
+        output = open(filepath ,'wb')
         output.write(file.read())
         output.close()
         zipf.write(fn, fn)
-        
+
     zipf.close()
     # reset current working diretory
     os.chdir(default_path)

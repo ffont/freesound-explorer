@@ -2,6 +2,7 @@ import makeActionCreator from 'utils/makeActionCreator';
 import FileSaver from 'file-saver';
 import { URLS } from '../../constants';
 import { loadJSON, loadBLOB } from '../../utils/requests';
+import { displaySystemMessage } from '../MessagesBox/actions';
 // import audioLoader from '../Audio/utils';
 
 export const TOGGLE_SIDEBAR_VISIBILITY = 'TOGGLE_SIDEBAR_VISIBILITY';
@@ -13,6 +14,12 @@ export const toggleSidebarVisibility = makeActionCreator(TOGGLE_SIDEBAR_VISIBILI
 export const setSidebarTab = makeActionCreator(SET_SIDEBAR_TAB, 'newTab');
 export const setExampleQueryDone = makeActionCreator(EXAMPLE_QUERY_DONE);
 export const moveSidebarArrow = makeActionCreator(MOVE_SIDEBAR_ARROW, 'position');
+
+const removeDownloadTempfiles = (downloadID) => {
+  loadJSON(`${URLS.REMOVE_DOWNLOAD_TEMPFILES}?download_ID=${downloadID}`).then((res) => {
+    console.log(res.success);
+  });
+};
 
 export const batchDownloadSelectedOriginals = (selectedSounds, sounds) => {
   const fsIds = [];
@@ -35,4 +42,5 @@ export const batchDownloadSelectedOriginals = (selectedSounds, sounds) => {
     // TODO:
     // Debug / abort when no files are selected
     // include licence in filemnames and text
+    // delete tempfiles with callback!
 };

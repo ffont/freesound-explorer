@@ -289,57 +289,49 @@ def get_app_token():
         'appToken': app.config['FREESOUND_CLIENT_SECRET']
         }), 200)
 
+
 @app.route('/download/', methods=['GET'])
 def download():
-    fsids = request.args.get('fsids', None).split(',')
-    url = "https://freesound.org/apiv2/sounds/{}/download/".format(fsids[0])
-
-    username, access_token = get_user_data()
-    print('un: ' + username + ' ac: ' + access_token)
-    requesturl = urllib2.Request(url)
-    requesturl.add_header("Authorization", "Bearer {}".format(access_token)) #%s" % base64string)
-
-    file = urllib2.urlopen(requesturl)
-    print(file.info())
-    fn = re.search(r'".*"', file.info()['Content-Disposition']).group(0)[1:-1]
-
-    prefix = './backend/audio/'
-    output = open(os.path.join(prefix, fn) ,'wb')
-    output.write(file.read())
-    # # file = urllib2.urlopen(url)
-
-    default_path = os.getcwd()
-    os.chdir('./backend/audio/')
-
-    filepath = os.path.join(os.getcwd() , 'backend', 'audio')
-    print('filepath: ' + filepath)
-    print('!! readfile exists?: ' + str(os.path.isfile(os.path.join(fn))))
-    sendfile = open(os.path.join(fn), 'rb')
-
-    zipname = 'test.zip'
     
+    fsids = request.args.get('fsids', None).split(',')
+    download_id = str(uuid.uuid4())
+    default_path = os.getcwd()
+    username, access_token = get_user_data()
 
-    # with zipfile.ZipFile('reportDir' + str(uuid.uuid4()) + '.zip', 'w') as myzip:
-    #     for f in lstFileNames:   
-    #         myzip.write(f)
-    zipf = zipfile.ZipFile(zipname, "a")
-    zipf.debug = 3
-    zipf.write(fn, fn)
-    print('!! ziptest: ' + str(zipf.testzip()))
-    print('!! Zipfile exists?: ' + str(os.path.isfile(os.path.join(zipname))))
-    print('!! zipinfolist: ' + str(zipf.namelist()))
+    # setup folder
+    prefix = os.path.join('./backend/audio/', download_id)
+    os.mkdir(prefix)
+    os.chdir(prefix)
+    download_path = os.getcwd()
+    print('changed path to: ' + download_path)
+    
+    zipname = 'FreesoundExplorer_' + download_id
+    zipabs = os.path.join(download_path, zipname)
+    zipf = zipfile.ZipFile(zipabs, "a")
+    print('zippath: ' + zipabs)
+
+   # setup zip
+    # get filename and fileobj from freesound API and append to zip
+    for id in fsids:
+        url = "https://freesound.org/apiv2/sounds/{}/download/".format(id)
+        urlrequest = urllib2.Request(url)
+        urlrequest.add_header("Authorization", "Bearer {}".format(access_token))
+        file = urllib2.urlopen(urlrequest)
+
+        # get filename from request info
+        fn = re.search(r'".*"', file.info()['Content-Disposition']).group(0)[1:-1]
+
+        # write next audiofile received
+        filepath = os.path.join(os.getcwd(), fn)
+        output = open(os.path.join(download_path, fn) ,'wb')
+        output.write(file.read())
+        output.close()
+        zipf.write(fn, fn)
+        
     zipf.close()
-    print('!! is zip: ' + str(zipfile.is_zipfile(os.path.join(zipname))))
-    output.close()
+    # reset current working diretory
     os.chdir(default_path)
-    ziprel = os.path.abspath(zipname)
-    # DEBUGGING see if we are in the correct dir
-    files = [f for f in os.listdir('.')]# if os.path.isfile(f)]
-    for f in files:
-        print '??_files: ' + f
-
-    return send_file(ziprel, as_attachment=True,  attachment_filename=zipname)
-    # return make_response(jsonify({'fsids': fsids }), 200)
+    return send_file(zipabs, as_attachment=True,  attachment_filename= zipname + '.zip')
 
 # @app.route('/clear-tempaudio/', methods=['GET'])
 # def clear_tempaudio():

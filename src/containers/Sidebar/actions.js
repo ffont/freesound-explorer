@@ -18,7 +18,15 @@ export const batchDownloadSelectedOriginals = (selectedSounds, sounds) => {
   const fsIds = [];
   selectedSounds.forEach(soundID => fsIds.push(`${sounds[soundID].id.split('-')[0]}`));
   // downloadUrls.forEach(element => {
-  loadBLOB(`${URLS.DOWNLOAD}?fsids=${fsIds}`).then(file => FileSaver.saveAs(file, 'testzip.zip'));
+  loadBLOB(`${URLS.DOWNLOAD}?fsids=${fsIds}`).then(file => {
+    console.log('file: ', file);
+
+    const headers = file.headers;
+    console.log('headers: ', headers);
+    const mask = new RegExp('FreesoundExplorer.*');
+    const filename = headers.match(mask)[0];
+    FileSaver.saveAs(file.blob, filename);
+  });
     // audioLoader.loadFile(element).then(r => console.log(r));
     // TODO:
     // make a list of fs ids and pass it to the backend

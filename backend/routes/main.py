@@ -330,7 +330,6 @@ def download():
         file = urllib2.urlopen(urlrequest)
 
         # get filename from request info
-        fn = re.search(r'".*"', file.info()['Content-Disposition']).group(0)[1:-1]
 
         # get sound infos
         info_url = "https://freesound.org/apiv2/sounds/{}/?format=json".format(id)
@@ -358,6 +357,7 @@ def download():
         except: print('error appending metadata to csv.')
 
         # write next audiofile received
+        fn = info_dict['name']
         filepath = os.path.join(os.getcwd(), fn)
         cleanup_array.append(filepath)
 

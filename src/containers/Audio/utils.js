@@ -64,26 +64,6 @@ const audioLoader = audioContext => ({
       xhr.send();
     });
   },
-  loadFile(soundUrl) {
-    return new Promise((resolve, reject) => {
-      const xhr = requestPool.getAvailableRequest();
-      xhr.open('GET', soundUrl);
-      xhr.available = false;
-      xhr.onreadystatechange = () => {
-        xhr.available = true;
-        if (xhr.status >= 200 && xhr.status < 300) {
-          resolve(xhr.response);
-        } else {
-          reject('Error in the network');
-        }
-      };
-      xhr.onerror = (error) => {
-        xhr.available = true;
-        reject(error);
-      };
-      xhr.send();
-    });
-  },
 });
 
 export default audioLoader;

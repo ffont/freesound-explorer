@@ -9,9 +9,7 @@ import uuid
 import datetime
 import os
 import urllib2
-import base64
 import zipfile
-import io
 import re
 import threading
 import time
@@ -344,7 +342,7 @@ def download():
         for key in info_dict:
             columns.append(key)
         
-        # write fileinfo to csv
+        # write fileinfo to csv writing header only once
         if (id == fsids[0]):
             writer = csv.DictWriter(csvfile, fieldnames=columns)
             writer.writeheader()

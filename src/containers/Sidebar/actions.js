@@ -32,6 +32,5 @@ export const batchDownloadSelectedOriginals = (selectedSounds, sounds) => (dispa
     });
   } else {
     return;
-  }    // TODO:
-    // include licence in filemnames and text
+  }
 };

@@ -295,31 +295,25 @@ def get_app_token():
 
 @app.route('/download/', methods=['GET'])
 def download():
-    
+    # prepare arguments for download
     fsids = request.args.get('fsids', None).split(',')
     download_id = str(uuid.uuid4())
     default_path = os.getcwd()
     _, access_token = get_user_data()
     cleanup_array = []
 
-    # setup folder
+    # setup temp folder
     prefix = os.path.join('./backend/audio/', download_id)
     os.mkdir(prefix)
     os.chdir(prefix)
     download_path = os.getcwd()
     
+    # open a zipfile
     zipname = 'FreesoundExplorer_' + download_id
     zipabs = os.path.join(download_path, zipname)
     cleanup_array.append(zipabs)
-
     zipf = zipfile.ZipFile(zipabs, "a")
 
-    if len(fsids) == 0:
-        zipf.close()
-        os.chdir(default_path)
-        return send_file(zipabs, as_attachment=True,  attachment_filename= zipname + '.zip')
-   
-   # setup zip
     # get filename and fileobj from freesound API and append to zip
     for id in fsids:
         url = "https://freesound.org/apiv2/sounds/{}/download/".format(id)
@@ -334,6 +328,7 @@ def download():
         filepath = os.path.join(os.getcwd(), fn)
         cleanup_array.append(filepath)
 
+        # write file to disk and add to zip
         output = open(filepath ,'wb')
         output.write(file.read())
         output.close()
@@ -349,16 +344,20 @@ def download():
         def run(self):
             # rough estimation of download time with min 2 Mbit/sec
             waiting_time = download_size/200000
-            print('!! waiting time: ' + str(waiting_time)) 
             time.sleep(waiting_time)
+
+            # remove all files inside first
             for path in cleanup_array:
                 os.remove(path)
-            os.rmdir(os.path.dirname(cleanup_array[0]))
+            # remove the temp folder
+            try:
+                os.rmdir(os.path.dirname(cleanup_array[0]))
+            except OSError:
+                print(OSError)
             return
 
     @after_this_request
     def delayed_cleanup(res):
-        print("! afterrequest called")
         cleanup_thread = ThreadClass(group=None)
         cleanup_thread.start()
         return res

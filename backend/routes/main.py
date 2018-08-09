@@ -320,6 +320,7 @@ def download():
     csvabs = os.path.join(download_path, csvname)
     cleanup_array.append(csvabs)
     csvfile = open(csvname, 'w')
+    negative_list = ['comment', 'analysis_stats', 'images', 'num_comments', 'comments', 'previews', 'analysis_frames', 'analysis']
 
     # get filename and fileobj from freesound API and append to zip
     for id in fsids:
@@ -337,6 +338,13 @@ def download():
         urlrequest2.add_header("Authorization", "Bearer {}".format(access_token))
         resp = urllib2.urlopen(urlrequest2)
         info_dict = json.load(resp)
+
+        # delete unwanted columns
+        for key in negative_list:
+            info_dict.pop(key, None)
+        
+        # reshape tags
+        info_dict['tags'] = ','.join(info_dict['tags'])
 
         columns = []
         for key in info_dict:

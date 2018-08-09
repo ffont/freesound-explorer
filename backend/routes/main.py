@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, make_response, redirect, g, url_for, send_from_directory, send_file
+from flask import Flask, render_template, jsonify, request, make_response, redirect, g, url_for, send_from_directory, send_file, after_this_request
 from flask_login import login_required, logout_user
 from social.apps.flask_app.default.models import UserSocialAuth
 from backend import app, db_session
@@ -13,6 +13,9 @@ import base64
 import zipfile
 import io
 import re
+import threading
+import time
+import Queue # renamed to queue in python 3!
 
 def is_valid_uuid(uuid_string):
     try:
@@ -297,6 +300,7 @@ def download():
     download_id = str(uuid.uuid4())
     default_path = os.getcwd()
     _, access_token = get_user_data()
+    cleanup_array = []
 
     # setup folder
     prefix = os.path.join('./backend/audio/', download_id)
@@ -306,8 +310,9 @@ def download():
     
     zipname = 'FreesoundExplorer_' + download_id
     zipabs = os.path.join(download_path, zipname)
+    cleanup_array.append(zipabs)
+
     zipf = zipfile.ZipFile(zipabs, "a")
-    print('!!NOLENGEH?' + str(len(fsids)))
 
     if len(fsids) == 0:
         zipf.close()
@@ -327,16 +332,35 @@ def download():
 
         # write next audiofile received
         filepath = os.path.join(os.getcwd(), fn)
+        cleanup_array.append(filepath)
+
         output = open(filepath ,'wb')
         output.write(file.read())
         output.close()
         zipf.write(fn, fn)
 
     zipf.close()
+    download_size = os.path.getsize(zipabs)
     # reset current working diretory
     os.chdir(default_path)
-    return send_file(zipabs, as_attachment=True,  attachment_filename= zipname + '.zip')
 
-# @app.route('/clear-tempaudio/', methods=['GET'])
-# def clear_tempaudio():
-#     return True
+    # open a new thread that waits for the download to finish (by thumb estimation)
+    class ThreadClass(threading.Thread):
+        def run(self):
+            # rough estimation of download time with min 2 Mbit/sec
+            waiting_time = download_size/200000
+            print('!! waiting time: ' + str(waiting_time)) 
+            time.sleep(waiting_time)
+            for path in cleanup_array:
+                os.remove(path)
+            os.rmdir(os.path.dirname(cleanup_array[0]))
+            return
+
+    @after_this_request
+    def delayed_cleanup(res):
+        print("! afterrequest called")
+        cleanup_thread = ThreadClass(group=None)
+        cleanup_thread.start()
+        return res
+
+    return send_file(zipabs, as_attachment=True,  attachment_filename= zipname + '.zip')

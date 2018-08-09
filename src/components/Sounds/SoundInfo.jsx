@@ -66,10 +66,10 @@ class SoundInfo extends React.Component {
         </button>
       );
       downloadSoundIcon = (
-        <button onClick={() => this.props.downloadSound(this.props.sound)}>
-          {/* <a rel="noopener noreferrer" href={`${this.props.sound.url}download/`} > */}
+        <button>
+          <a rel="noopener noreferrer" href={`${this.props.sound.url}download/`} >
             <i className="fa fa-download fa-lg" aria-hidden="true" />
-          {/* </a> */}
+          </a>
         </button>
       );
     }

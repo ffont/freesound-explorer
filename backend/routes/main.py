@@ -15,7 +15,7 @@ import io
 import re
 import threading
 import time
-import Queue # renamed to queue in python 3!
+import csv
 
 def is_valid_uuid(uuid_string):
     try:
@@ -317,15 +317,39 @@ def download():
     cleanup_array.append(zipabs)
     zipf = zipfile.ZipFile(zipabs, "a")
 
+    # setup csv metadatafile
+    csvname = 'FreesoundMetadata_' + download_id + '.csv'
+    csvabs = os.path.join(download_path, csvname)
+    cleanup_array.append(csvabs)
+    csvfile = open(csvname, 'w')
+
     # get filename and fileobj from freesound API and append to zip
     for id in fsids:
-        url = "https://freesound.org/apiv2/sounds/{}/download/".format(id)
-        urlrequest = urllib2.Request(url)
+        dl_url = "https://freesound.org/apiv2/sounds/{}/download/".format(id)
+        urlrequest = urllib2.Request(dl_url)
         urlrequest.add_header("Authorization", "Bearer {}".format(access_token))
         file = urllib2.urlopen(urlrequest)
 
         # get filename from request info
         fn = re.search(r'".*"', file.info()['Content-Disposition']).group(0)[1:-1]
+
+        # get sound infos
+        info_url = "https://freesound.org/apiv2/sounds/{}/?format=json".format(id)
+        urlrequest2 = urllib2.Request(info_url)
+        urlrequest2.add_header("Authorization", "Bearer {}".format(access_token))
+        resp = urllib2.urlopen(urlrequest2)
+        info_dict = json.load(resp)
+
+        columns = []
+        for key in info_dict:
+            columns.append(key)
+        
+        # write fileinfo to csv
+        if (id == fsids[0]):
+            writer = csv.DictWriter(csvfile, fieldnames=columns)
+            writer.writeheader()
+        try: writer.writerow(info_dict)
+        except: print('error appending metadata to csv.')
 
         # write next audiofile received
         filepath = os.path.join(os.getcwd(), fn)
@@ -337,9 +361,11 @@ def download():
         output.close()
         zipf.write(fn, fn)
 
+    # add metadata file and reset
+    csvfile.close()
+    zipf.write(csvabs, csvname)
     zipf.close()
     download_size = os.path.getsize(zipabs)
-    # reset current working diretory
     os.chdir(default_path)
 
     # open a new thread that waits for the download to finish (by thumb estimation)

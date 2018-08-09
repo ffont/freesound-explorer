@@ -1,8 +1,10 @@
 import makeActionCreator from 'utils/makeActionCreator';
 import FileSaver from 'file-saver';
+import { MESSAGE_STATUS } from 'constants';
 import { URLS } from '../../constants';
-import { loadJSON, loadBLOB } from '../../utils/requests';
+import { loadBLOB } from '../../utils/requests';
 import { displaySystemMessage } from '../MessagesBox/actions';
+
 // import audioLoader from '../Audio/utils';
 
 export const TOGGLE_SIDEBAR_VISIBILITY = 'TOGGLE_SIDEBAR_VISIBILITY';
@@ -15,32 +17,21 @@ export const setSidebarTab = makeActionCreator(SET_SIDEBAR_TAB, 'newTab');
 export const setExampleQueryDone = makeActionCreator(EXAMPLE_QUERY_DONE);
 export const moveSidebarArrow = makeActionCreator(MOVE_SIDEBAR_ARROW, 'position');
 
-const removeDownloadTempfiles = (downloadID) => {
-  loadJSON(`${URLS.REMOVE_DOWNLOAD_TEMPFILES}?download_ID=${downloadID}`).then((res) => {
-    console.log(res.success);
-  });
-};
-
-export const batchDownloadSelectedOriginals = (selectedSounds, sounds) => {
+export const batchDownloadSelectedOriginals = (selectedSounds, sounds) => (dispatch) => {
   const fsIds = [];
   selectedSounds.forEach(soundID => fsIds.push(`${sounds[soundID].id.split('-')[0]}`));
-  
+
   if (fsIds.length) {
-    // dispatch(displaySystemMessage(`Download of ${selectedSounds.length} Sounds started, please wait.`));
-    console.log(`Download of ${selectedSounds.length} Sounds started, please wait.`);
+    dispatch(displaySystemMessage(`Prepare download of ${selectedSounds.length} Sounds, please wait...`, MESSAGE_STATUS.INFO));
     loadBLOB(`${URLS.DOWNLOAD}?fsids=${fsIds}`).then(file => {
       const headers = file.headers;
       const mask = new RegExp('FreesoundExplorer.*');
       const filename = headers.match(mask)[0];
       FileSaver.saveAs(file.blob, filename);
-      console.log('Download Finished');
+      dispatch(displaySystemMessage('Download Started!', MESSAGE_STATUS.SUCCESS));
     });
   } else {
     return;
-  }
-  // dispatch(displaySystemMessage('Download Finished'));
-    // TODO:
-    // Debug / abort when no files are selected
+  }    // TODO:
     // include licence in filemnames and text
-    // delete tempfiles with callback!
 };

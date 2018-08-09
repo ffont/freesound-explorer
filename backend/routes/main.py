@@ -303,9 +303,12 @@ def download():
     cleanup_array = []
 
     # setup temp folder
-    prefix = os.path.join('./backend/audio/', download_id)
-    os.mkdir(prefix)
-    os.chdir(prefix)
+    prefix = os.path.join(default_path, 'backend', 'audio')
+    if not (os.path.exists(prefix)):
+        os.mkdir(prefix)
+    temp_dir = os.path.join(prefix, download_id)
+    os.mkdir(temp_dir)
+    os.chdir(temp_dir)
     download_path = os.getcwd()
     
     # open a zipfile

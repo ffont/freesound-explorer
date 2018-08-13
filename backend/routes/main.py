@@ -4,16 +4,14 @@ from social.apps.flask_app.default.models import UserSocialAuth
 from backend import app, db_session
 from social.exceptions import SocialAuthBaseException
 from backend.models.session import Session
+
+from backend.fszipper import FsZipper
+from backend.settings import DOWNLOAD_TEMP
 import json
 import uuid
 import datetime
 import os
-import urllib2
-import zipfile
-import re
 import threading
-import time
-import csv
 
 def is_valid_uuid(uuid_string):
     try:
@@ -295,106 +293,43 @@ def get_app_token():
 def download():
     # prepare arguments for download
     fsids = request.args.get('fsids', None).split(',')
-    download_id = str(uuid.uuid4())
     default_path = os.getcwd()
     _, access_token = get_user_data()
-    cleanup_array = []
+    download_id = str(uuid.uuid4())
 
     # setup temp folder
-    prefix = os.path.join(default_path, 'backend', 'audio')
+    prefix = os.path.join(default_path, DOWNLOAD_TEMP)
     if not (os.path.exists(prefix)):
         os.mkdir(prefix)
     temp_dir = os.path.join(prefix, download_id)
     os.mkdir(temp_dir)
-    os.chdir(temp_dir)
-    download_path = os.getcwd()
     
-    # open a zipfile
-    zipname = 'FreesoundExplorer_' + download_id
-    zipabs = os.path.join(download_path, zipname)
-    cleanup_array.append(zipabs)
-    zipf = zipfile.ZipFile(zipabs, "a")
+    download_path = os.getcwd()
 
-    # setup csv metadatafile
+    # generate filenames
+    zipname = 'FreesoundExplorer_' + download_id + '.zip'
+    zipabs = os.path.join(download_path, zipname)
     csvname = 'FreesoundMetadata_' + download_id + '.csv'
     csvabs = os.path.join(download_path, csvname)
-    cleanup_array.append(csvabs)
-    csvfile = open(csvname, 'w')
-    negative_list = ['comment', 'analysis_stats', 'images', 'num_comments', 'comments', 'previews', 'analysis_frames', 'analysis']
+
+    negative_list = [
+        'comment', 'analysis_stats', 'images', 'num_comments',
+        'comments', 'previews', 'analysis_frames', 'analysis'
+        ]
 
     # get filename and fileobj from freesound API and append to zip
-    for id in fsids:
-        dl_url = "https://freesound.org/apiv2/sounds/{}/download/".format(id)
-        urlrequest = urllib2.Request(dl_url)
-        urlrequest.add_header("Authorization", "Bearer {}".format(access_token))
-        file = urllib2.urlopen(urlrequest)
-
-        # get filename from request info
-
-        # get sound infos
-        info_url = "https://freesound.org/apiv2/sounds/{}/?format=json".format(id)
-        urlrequest2 = urllib2.Request(info_url)
-        urlrequest2.add_header("Authorization", "Bearer {}".format(access_token))
-        resp = urllib2.urlopen(urlrequest2)
-        info_dict = json.load(resp)
-
-        # delete unwanted columns
-        for key in negative_list:
-            info_dict.pop(key, None)
-        
-        # reshape tags
-        info_dict['tags'] = ','.join(info_dict['tags'])
-
-        columns = []
-        for key in info_dict:
-            columns.append(key)
-        
-        # write fileinfo to csv writing header only once
-        if (id == fsids[0]):
-            writer = csv.DictWriter(csvfile, fieldnames=columns)
-            writer.writeheader()
-        try: writer.writerow(info_dict)
-        except: print('error appending metadata to csv.')
-
-        # write next audiofile received
-        fn = info_dict['name']
-        filepath = os.path.join(os.getcwd(), fn)
-        cleanup_array.append(filepath)
-
-        # write file to disk and add to zip
-        output = open(filepath ,'wb')
-        output.write(file.read())
-        output.close()
-        zipf.write(fn, fn)
+    zipper = FsZipper(zipabs, csvabs, access_token, download_id)
+    zipper.zip_originals(fsids, negative_list)
 
     # add metadata file and reset
-    csvfile.close()
-    zipf.write(csvabs, csvname)
-    zipf.close()
     download_size = os.path.getsize(zipabs)
-    os.chdir(default_path)
 
     # open a new thread that waits for the download to finish (by thumb estimation)
-    class ThreadClass(threading.Thread):
-        def run(self):
-            # rough estimation of download time with min 2 Mbit/sec
-            waiting_time = download_size/200000
-            time.sleep(waiting_time)
-
-            # remove all files inside first
-            for path in cleanup_array:
-                os.remove(path)
-            # remove the temp folder
-            try:
-                os.rmdir(os.path.dirname(cleanup_array[0]))
-            except OSError:
-                print(OSError)
-            return
-
     @after_this_request
     def delayed_cleanup(res):
-        cleanup_thread = ThreadClass(group=None)
+        waiting_time = download_size/50000 # estimate downloadtime for 0,5 Mbit
+        cleanup_thread = threading.Timer(waiting_time, zipper.cleanup)
         cleanup_thread.start()
         return res
 
-    return send_file(zipabs, as_attachment=True,  attachment_filename= zipname + '.zip')
+    return send_file(zipabs, as_attachment=True,  attachment_filename= zipname)

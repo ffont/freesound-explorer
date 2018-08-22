@@ -298,10 +298,9 @@ def download():
     download_id = str(uuid.uuid4())
 
     # setup temp folder
-    prefix = os.path.join(default_path, DOWNLOAD_FOLDER_PATH)
-    if not (os.path.exists(prefix)):
-        os.mkdir(prefix)
-    temp_dir = os.path.join(prefix, download_id)
+    if not (os.path.exists(DOWNLOAD_FOLDER_PATH)):
+        os.mkdir(DOWNLOAD_FOLDER_PATH)
+    temp_dir = os.path.join(DOWNLOAD_FOLDER_PATH, download_id)
     os.mkdir(temp_dir)
     
     download_path = os.getcwd()

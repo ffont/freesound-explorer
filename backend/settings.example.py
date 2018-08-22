@@ -9,7 +9,7 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:////%s/fse_db.db' % os.path.dirname(os.path.ab
 DEBUG_TB_INTERCEPT_REDIRECTS = False
 SESSION_PROTECTION = 'strong'
 CUSTOM_STATIC_FOLDER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),"..","static"))
-DOWNLOAD_FOLDER_PATH = 'backend/audio' # use with ops.path.join => requires no "/" at the beginning
+DOWNLOAD_FOLDER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "backend", "audio")) # use with ops.path.join => requires no "/" at the beginning
 
 ALLOW_UNAUTHENTICATED_USER_SAVE_LOAD = False
 ALLOW_UNAUTHENTICATED_USER_DELETE = False

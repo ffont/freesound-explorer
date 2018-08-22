@@ -1,4 +1,4 @@
-from backend.settings import DOWNLOAD_TEMP
+from backend.settings import DOWNLOAD_FOLDER_PATH
 import os
 import urllib2
 import csv
@@ -28,7 +28,7 @@ class FsZipper:
             cleanup_array:  list of all filepaths to be removed after request
         """
 
-        prefix = os.path.join(os.getcwd(), DOWNLOAD_TEMP, self.download_id)
+        prefix = os.path.join(os.getcwd(), DOWNLOAD_FOLDER_PATH, self.download_id)
         for id in fsids:
             # prepare
             dl_url = "https://freesound.org/apiv2/sounds/{}/download/".format(id)

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SIDEBAR_TABS } from 'constants';
+import './SidebarNavMenu.scss';
 
 const propTypes = {
   activeTab: PropTypes.string,
@@ -23,45 +24,56 @@ const icons = {
   [SIDEBAR_TABS.INFO]: 'fa-info',
 };
 
-const SidebarNavMenu = props => (
-  <div className="SidebarNavMenu">
-    <div className="SidebarNavMenu__scrollable">
-      <nav>
-        <ul className="SidebarNavMenu__nav-icons" role="menu">
-          {Object.keys(SIDEBAR_TABS).map(tab => (
+const SidebarNavMenu = props => {
+  const downloadButtonStyle = {
+    display: props.selectedSounds.length ? 'block' : 'None',
+    // position: 'absolute',
+  };
+  return (
+    <div className="SidebarNavMenu">
+      <div className="SidebarNavMenu__scrollable">
+        <nav>
+          <ul className="SidebarNavMenu__nav-icons" role="menu">
+            {Object.keys(SIDEBAR_TABS).map(tab => (
+              <li
+                key={tab}
+                role="menuitem"
+              >
+                <button
+                  onClick={() => props.setSidebarTab(SIDEBAR_TABS[tab])}
+                  className={(props.activeTab === SIDEBAR_TABS[tab]) ? 'active' : ''}
+                >
+                  <i className={`fa ${icons[SIDEBAR_TABS[tab]]} fa-lg`} aria-hidden />
+                </button>
+              </li>
+            ))}
             <li
-              key={tab}
-              role="menuitem"
+              style={downloadButtonStyle}
             >
               <button
-                onClick={() => props.setSidebarTab(SIDEBAR_TABS[tab])}
-                className={(props.activeTab === SIDEBAR_TABS[tab]) ? 'active' : ''}
+                onClick={() => { props.batchDownloadSelectedOriginals(props.selectedSounds, props.sounds); }}
               >
-                <i className={`fa ${icons[SIDEBAR_TABS[tab]]} fa-lg`} aria-hidden />
+                <i className="fa fa-download fa-lg" aria-hidden="true" />
+                <p id="sounds-counter">{props.selectedSounds.length}</p>
               </button>
+              
             </li>
-          ))}
-          <button
-            onClick={() => { props.batchDownloadSelectedOriginals(props.selectedSounds, props.sounds); }}
-          >
-            <i className={'fa fa-arrow-down fa-lg'} aria-hidden />
-          </button>
-        </ul>
-      </nav>
-      <button
-        className="SidebarNavMenu__toggle-button"
-        onClick={() => props.toggleSidebarVisibility()}
-        style={{ bottom: props.bottomArrowPosition }}
-        aria-label="close"
-      >
-        {(props.isSidebarVisible) ?
-          <i className="fa fa-arrow-left" aria-hidden /> :
-          <i className="fa fa-arrow-right" aria-hidden />
-        }
-      </button>
+          </ul>
+        </nav>
+        <button
+          className="SidebarNavMenu__toggle-button"
+          onClick={() => props.toggleSidebarVisibility()}
+          style={{ bottom: props.bottomArrowPosition }}
+          aria-label="close"
+        >
+          {(props.isSidebarVisible) ?
+            <i className="fa fa-arrow-left" aria-hidden /> :
+            <i className="fa fa-arrow-right" aria-hidden />
+          }
+        </button>
+      </div>
     </div>
-  </div>
-);
+)};
 
 SidebarNavMenu.propTypes = propTypes;
 export default SidebarNavMenu;

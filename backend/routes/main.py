@@ -6,7 +6,7 @@ from social.exceptions import SocialAuthBaseException
 from backend.models.session import Session
 
 from backend.fszipper import FsZipper
-from backend.settings import DOWNLOAD_TEMP
+from backend.settings import DOWNLOAD_FOLDER_PATH
 import json
 import uuid
 import datetime
@@ -298,7 +298,7 @@ def download():
     download_id = str(uuid.uuid4())
 
     # setup temp folder
-    prefix = os.path.join(default_path, DOWNLOAD_TEMP)
+    prefix = os.path.join(default_path, DOWNLOAD_FOLDER_PATH)
     if not (os.path.exists(prefix)):
         os.mkdir(prefix)
     temp_dir = os.path.join(prefix, download_id)
@@ -314,7 +314,8 @@ def download():
 
     negative_list = [
         'comment', 'analysis_stats', 'images', 'num_comments',
-        'comments', 'previews', 'analysis_frames', 'analysis'
+        'comments', 'previews', 'analysis_frames', 'analysis',
+        'download', 'rate', 'bookmark', 'geotag', 'pack', 'url'
         ]
 
     # get filename and fileobj from freesound API and append to zip

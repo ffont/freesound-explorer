@@ -22,7 +22,7 @@ export const batchDownloadSelectedOriginals = (selectedSounds, sounds) => (dispa
   selectedSounds.forEach(soundID => fsIds.push(`${sounds[soundID].id.split('-')[0]}`));
 
   if (fsIds.length) {
-    dispatch(displaySystemMessage(`Prepare download of ${selectedSounds.length} Sounds, please wait...`, MESSAGE_STATUS.INFO));
+    dispatch(displaySystemMessage(`Preparing download of ${selectedSounds.length} Sounds, please wait...`, MESSAGE_STATUS.INFO));
     loadBLOB(`${URLS.DOWNLOAD}?fsids=${fsIds}`).then(file => {
       const headers = file.headers;
       const mask = new RegExp('FreesoundExplorer.*');

@@ -294,7 +294,6 @@ def get_app_token():
 def download():
     # prepare arguments for download
     fsids = request.args.get('fsids', None).split(',')
-    default_path = os.getcwd()
     _, access_token = get_user_data()
     download_id = str(uuid.uuid4())
 
@@ -325,4 +324,4 @@ def download():
         cleanup_thread.start()
         return res
 
-    return send_file(zipabs, as_attachment=True,  attachment_filename= zipname)
+    return send_file(zipabs, as_attachment=True, attachment_filename= zipname)

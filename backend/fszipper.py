@@ -10,12 +10,15 @@ import re
 
 
 class FsZipper:
+
+
     def __init__(self, zipabs, csvabs, access_token, download_id):
         self.zipabs = zipabs
         self.csvabs = csvabs
         self.download_id = download_id
         self.access_token = access_token
         self.cleanup_array = []
+
 
     def zip_originals(self, fsids, negative_list):
         """
@@ -39,7 +42,6 @@ class FsZipper:
             except:
                 print('No internet connection?\n' + 'urlreceived: ' + dl_url)
 
-            
             # get sound infos
             info_url = "https://freesound.org/apiv2/sounds/{}/?format=json".format(id)
             urlrequest2 = (urllib2.Request(info_url))
@@ -90,6 +92,7 @@ class FsZipper:
             except BaseException as err: 
                 print('!! Error appending metadata to csv. Error Message: \n' + str(err))
             csvobj.close()
+        # end for id in fsids
 
         self.cleanup_array.append(self.csvabs)
 
@@ -99,10 +102,10 @@ class FsZipper:
                     zipobj.write(path, os.path.basename(path))
                 except:
                     print('Error adding cleanup_array paths to zip' + str(self.cleanup_array))
-        # end for id in fsids
 
         self.cleanup_array.append(self.zipabs)
         return self.cleanup_array
+
 
     def cleanup(self):
         """ 

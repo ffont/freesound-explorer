@@ -15,6 +15,7 @@ const propTypes = {
   shouldPlayOnHover: PropTypes.bool,
   isSelected: PropTypes.bool,
   shouldMultiSelect: PropTypes.bool,
+  modalDisabled: PropTypes.bool,
   playAudio: PropTypes.func,
   stopAudio: PropTypes.func,
   selectSound: PropTypes.func,
@@ -82,14 +83,14 @@ class MapCircleContainer extends React.PureComponent {
       }
     } else if (this.props.shouldMultiSelect) {
       this.props.selectSound(this.props.sound.id);
-      this.props.openModalForSound(this.props.sound);
+      this.props.openModalForSound(this.props.sound, this.props.modalDisabled);
     } else {
       // toggle selection
       this.props.deselectAllSounds();
       this.props.selectSound(this.props.sound.id);
 
       // open modal if sound is not yet selected
-      this.props.openModalForSound(this.props.sound);
+      this.props.openModalForSound(this.props.sound, this.props.modalDisabled);
     }
   }
 
@@ -126,6 +127,7 @@ const makeMapStateToProps = (_, ownProps) => {
     const soundInfoModal = state.sounds.soundInfoModal;
     const { shouldPlayOnHover, shouldMultiSelect } = state.settings;
     const isSelected = isSoundSelected(state);
+    const { modalDisabled } = state.sounds.soundInfoModal;
     return {
       sound,
       soundInfoModal,
@@ -133,6 +135,7 @@ const makeMapStateToProps = (_, ownProps) => {
       shouldPlayOnHover,
       shouldMultiSelect,
       isSelected,
+      modalDisabled,
     };
   };
 };

@@ -5,9 +5,11 @@ import { displaySystemMessage } from '../MessagesBox/actions';
 
 export const OPEN_MODAL_FOR_SOUND = 'OPEN_MODAL_FOR_SOUND';
 export const HIDE_MODAL = 'HIDE_MODAL';
+export const SUPRESS_MODAL = 'SUPPRESS_MODAL';
 
 export const hideModal = makeActionCreator(HIDE_MODAL);
-export const openModalForSound = makeActionCreator(OPEN_MODAL_FOR_SOUND, 'sound');
+export const openModalForSound = makeActionCreator(OPEN_MODAL_FOR_SOUND, 'sound', 'modalDisabled');
+export const suppressModal = makeActionCreator(SUPRESS_MODAL, 'modalDisabled');
 
 export const bookmarkSound = sound => (dispatch) => {
   freesound.setToken(sessionStorage.getItem('accessToken'), 'oauth');

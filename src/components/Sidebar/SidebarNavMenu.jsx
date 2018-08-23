@@ -47,13 +47,11 @@ const SidebarNavMenu = props => {
                 </button>
               </li>
             ))}
-            <li
-              style={downloadButtonStyle}
-            >
+            <li style={downloadButtonStyle}>
               <button
                 onClick={() => { props.batchDownloadSelectedOriginals(props.selectedSounds, props.sounds); }}
               >
-                <i className="fa fa-download fa-lg" aria-hidden="true" />
+                <i id="batch-download-icon" className="fa fa-download fa-lg" aria-hidden="true" />
                 <p id="sounds-counter">{props.selectedSounds.length}</p>
               </button>
               

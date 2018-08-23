@@ -45,12 +45,19 @@ class FsZipper:
             urlrequest2 = (urllib2.Request(info_url))
             urlrequest2.add_header("Authorization", "Bearer {}".format(self.access_token))
             metadata = urllib2.urlopen(urlrequest2)
-            info_dict = json.load(metadata)
+            info_dict = json.load(metadata, encoding='utf-8')
 
-            # get freesound filename from file response
-            try: fn = re.search(r'".*"', file.info()['Content-Disposition']).group(0)[1:-1]
-            except: fn = "unnamed_audio.raw"
-            filepath = os.path.join(prefix, fn)
+            # get freesound filename from file response and reshape it to <name><fsid>.<suffix>
+            try:
+                fn_reshaped = ''.join([
+                    info_dict['name'].split('.')[0],
+                    '__', unicode(info_dict['id']), 
+                    '.', info_dict['type']
+                    ])
+            except BaseException as be: 
+                fn_reshaped = 'unnamed_audio.' + info_dict['type']
+                print('! error in renaming the downloaded audio file: ' + str(be))
+            filepath = os.path.join(prefix, fn_reshaped)
 
             # write file to disk
             output = open(filepath ,'wb')
@@ -59,26 +66,29 @@ class FsZipper:
             output.close()
 
             ### prepare csv entries
-            info_dict['filename'] = fn
             # delete unwanted columns
             for key in negative_list:
                 info_dict.pop(key, None)
             # reshape tags
             info_dict['tags'] = ', '.join(info_dict['tags'])
-            # prepare madatory fieldnames parameter for csv.DictWriter
+            for k in info_dict:
+                info_dict[k] = unicode(info_dict[k]).encode('utf-8')
+
+            # prepare madatory fieldnames argument for csv.DictWriter
             columns = []
             for key in info_dict:
                 columns.append(key)
-            
+
             # write fileinfo to csv, writing header only once
             csvobj = open(self.csvabs, "a")
             if (id == fsids[0]):
                 writer = csv.DictWriter(csvobj, fieldnames=columns)
                 writer.writeheader()
             try: 
-                writer = csv.DictWriter(csvobj, fieldnames=columns)
+                writer = csv.DictWriter(csvobj, dialect='excel', fieldnames=columns)
                 writer.writerow(info_dict)
-            except BaseException as err: print('!! Error appending metadata to csv. Error Message: \n' + err)
+            except BaseException as err: 
+                print('!! Error appending metadata to csv. Error Message: \n' + str(err))
             csvobj.close()
 
         self.cleanup_array.append(self.csvabs)

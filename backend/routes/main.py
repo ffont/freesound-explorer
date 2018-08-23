@@ -7,6 +7,7 @@ from backend.models.session import Session
 
 from backend.fszipper import FsZipper
 from backend.settings import DOWNLOAD_FOLDER_PATH
+from backend.settings import DOWNLOAD_CSV_NEGATIVE_LIST as negative_list
 import json
 import uuid
 import datetime
@@ -298,24 +299,16 @@ def download():
     download_id = str(uuid.uuid4())
 
     # setup temp folder
-    if not (os.path.exists(DOWNLOAD_FOLDER_PATH)):
+    if not os.path.exists(DOWNLOAD_FOLDER_PATH):
         os.mkdir(DOWNLOAD_FOLDER_PATH)
     temp_dir = os.path.join(DOWNLOAD_FOLDER_PATH, download_id)
     os.mkdir(temp_dir)
-    
-    download_path = os.getcwd()
 
     # generate filenames
     zipname = 'FreesoundExplorer_' + download_id + '.zip'
-    zipabs = os.path.join(download_path, zipname)
+    zipabs = os.path.join(temp_dir, zipname)
     csvname = 'FreesoundMetadata_' + download_id + '.csv'
-    csvabs = os.path.join(download_path, csvname)
-
-    negative_list = [
-        'comment', 'analysis_stats', 'images', 'num_comments',
-        'comments', 'previews', 'analysis_frames', 'analysis',
-        'download', 'rate', 'bookmark', 'geotag', 'pack', 'url'
-        ]
+    csvabs = os.path.join(temp_dir, csvname)
 
     # get filename and fileobj from freesound API and append to zip
     zipper = FsZipper(zipabs, csvabs, access_token, download_id)

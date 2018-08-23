@@ -50,7 +50,13 @@ Freesound Explorer has been (so far) developed by Frederic Font and Giuseppe Ban
 
 ![Freesound Explorer Spaces](https://cloud.githubusercontent.com/assets/478615/24897793/897463ca-1e9a-11e7-9182-c6b4ff55ea5b.png?raw=true "Freesound Explorer Spaces")
 
-### 4) Create sound Paths
+### 4) Download multiple sounds at once
+
+After logging into freesound.org with the button in the upper right, you can download all selected soundfiles as originals directly from freesound.org.
+
+You can select more than one sound by holding shift when clicking on a circle. Doing so will make the batch download icon to appear. You then have to wait a certain amount for the backend to collect the sounds, put them in a zip archive, adds a CSV file with all relevant freesound metadata. Your browser will automatically store the archive to the download folder.
+
+### 5) Create sound paths
 
 * Once you have some sounds on the map you can create **Paths** of sounds (or *playlists*) that later you can use to play them in sync.
 
@@ -63,7 +69,7 @@ Freesound Explorer has been (so far) developed by Frederic Font and Giuseppe Ban
 ![Freesound Explorer Paths](https://cloud.githubusercontent.com/assets/478615/24897804/9122f2a8-1e9a-11e7-913a-2580acbf89be.png?raw=true "Freesound Explorer Paths Screenshot")
 
 
-### 5) Play sound Paths
+### 6) Play sound Paths
 
 * Once you have created at least one sound path you can clik its play button and the sounds will start to be played in sequence.
 
@@ -75,7 +81,7 @@ Freesound Explorer has been (so far) developed by Frederic Font and Giuseppe Ban
 
 * **TIP**: create some Paths and assign some sounds randomly. Then start the metornome and play all the paths at the same time with different sync settings. If it does not sound good enough, just add more sounds/paths ;)
 
-### 6) Use MIDI input (Chrome only)
+### 7) Use MIDI input (Chrome only)
 
 * If you have a MIDI controller or some other software generating MIDI messages, you can use it as input for the Freesound Explorer.
 
@@ -90,7 +96,7 @@ Freesound Explorer has been (so far) developed by Frederic Font and Giuseppe Ban
 <img src="https://user-images.githubusercontent.com/478615/29562416-1e5be20c-8731-11e7-9b8c-3d58826f7a4c.png?raw=true" alt="Freesound Explorer MIDI Learn" title="Freesound Explorer MIDI Learn" width=520>
 
 
-### 7) Save your session
+### 8) Save your session
 
 * Click on the "Settings" icon in the sidebar (the one with the wheel") and use the buttons there to save and load sessions.
 

@@ -13,6 +13,7 @@ import { isGoogleChrome } from './utils';
 
 const propTypes = {
   isVisible: PropTypes.bool,
+  isUserLoggedIn: PropTypes.bool,
   activeTab: PropTypes.string,
   bottomArrowPosition: PropTypes.number,
   toggleSidebarVisibility: PropTypes.func,
@@ -32,7 +33,7 @@ class Sidebar extends React.Component {
       this.props.displaySystemMessage('Freesound Explorer works better on Chrome ;)', MESSAGE_STATUS.ERROR);
     }
   }
-
+  
   render() {
     const sidebarClassName = `Sidebar${(this.props.isVisible) ? ' active' : ''}`;
     return (
@@ -44,10 +45,12 @@ class Sidebar extends React.Component {
             setSidebarTab={this.props.setSidebarTab}
             toggleSidebarVisibility={this.props.toggleSidebarVisibility}
             isSidebarVisible={this.props.isVisible}
+            isUserLoggedIn={this.props.isUserLoggedIn}
             bottomArrowPosition={this.props.bottomArrowPosition}
             selectedSounds={this.props.selectedSounds}
             sounds={this.props.sounds}
             batchDownloadSelectedOriginals={this.props.batchDownloadSelectedOriginals}
+            displaySystemMessage={this.props.displaySystemMessage}
           />
         </div>
       </aside>
@@ -57,12 +60,13 @@ class Sidebar extends React.Component {
 
 const mapStateToProps = state => {
   const { sidebar } = state;
+  const { isUserLoggedIn } = state.login;
   let selectedSounds = [];
   const sounds = state.sounds.byID;
   if (sounds) {
     selectedSounds = state.sounds.selectedSounds;
   }
-  return Object.assign({}, sidebar, { sounds, selectedSounds });
+  return Object.assign({}, sidebar, { isUserLoggedIn, sounds, selectedSounds });
 };
 
 Sidebar.propTypes = propTypes;

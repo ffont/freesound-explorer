@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SIDEBAR_TABS } from 'constants';
+import { MESSAGE_STATUS } from 'constants';
 import './SidebarNavMenu.scss';
 
 const propTypes = {
   activeTab: PropTypes.string,
   setSidebarTab: PropTypes.func,
+  displaySystemMessage: PropTypes.func,
   toggleSidebarVisibility: PropTypes.func,
   batchDownloadSelectedOriginals: PropTypes.func,
   bottomArrowPosition: PropTypes.number,
   isSidebarVisible: PropTypes.bool,
+  isUserLoggedIn: PropTypes.bool,
   selectedSounds: PropTypes.array,
   sounds: PropTypes.object,
 };
@@ -26,8 +29,12 @@ const icons = {
 
 const SidebarNavMenu = props => {
   const downloadButtonStyle = {
-    display: props.selectedSounds.length ? 'block' : 'None',
-    // position: 'absolute',
+    display: props.selectedSounds.length > 1 ? 'block' : 'None',
+  };
+  const downloadButtonSwitch = () => {
+    return  props.isUserLoggedIn ?
+      props.batchDownloadSelectedOriginals(props.selectedSounds, props.sounds) :
+      props.displaySystemMessage('This actions requires logging into freesound.org.', MESSAGE_STATUS.INFO);
   };
   return (
     <div className="SidebarNavMenu">
@@ -49,7 +56,7 @@ const SidebarNavMenu = props => {
             ))}
             <li style={downloadButtonStyle}>
               <button
-                onClick={() => { props.batchDownloadSelectedOriginals(props.selectedSounds, props.sounds); }}
+                onClick={downloadButtonSwitch}
               >
                 <i id="batch-download-icon" className="fa fa-download fa-lg" aria-hidden="true" />
                 <p id="sounds-counter">{props.selectedSounds.length}</p>

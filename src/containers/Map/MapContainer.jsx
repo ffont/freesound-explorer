@@ -12,7 +12,7 @@ import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateMapPosition } from './actions';
 import { setSoundCurrentlyLearnt } from '../Midi/actions';
 import { deselectAllSounds, stopAllSoundsPlaying } from '../Sounds/actions';
-import { hideModal } from '../SoundInfo/actions';
+import { hideModal, suppressModal } from '../SoundInfo/actions';
 import Space from '../Spaces/SpaceContainer';
 import { getCurrentSpaceObj } from '../Spaces/utils';
 import { removeSpace } from '../Spaces/actions';
@@ -37,6 +37,7 @@ const propTypes = {
   stopAllSoundsPlaying: PropTypes.func,
   setSoundCurrentlyLearnt: PropTypes.func,
   updateMapPosition: PropTypes.func,
+  suppressModal: PropTypes.func,
   hideModal: PropTypes.func,
   setShouldPlayOnHover: PropTypes.func,
   toggleClusterTags: PropTypes.func,
@@ -98,36 +99,52 @@ class MapContainer extends React.Component {
 
   onKeydownCallback(evt) {
     if (evt.target.tagName.toUpperCase() === 'INPUT') { return; }
-    if (evt.keyCode === PLAY_ON_HOVER_SHORTCUT_KEYCODE) {
-      // Turn play sounds on hover on
-      this.props.setShouldPlayOnHover(true);
-    }
-    if (evt.keyCode === TOGGLE_MULTISELECTION_KEYCODE) {
-      this.props.toggleMultiSelection(true);
-    }
-    if (evt.keyCode === SHORTCUT_ANIMATION_KEYCODE) {
-      this.props.setShortcutAnimation(true);
-    }
-    // only remove space if it is an active search
-    if (
-      evt.keyCode === CANCEL_KEYCODE && this.props.isSearchEnabled
-      && this.props.activeSearches.includes(this.props.currentSpaceObj.queryID)
-    ) {
-      this.props.removeSpace(this.props.currentSpaceObj);
+    switch (evt.keyCode) {
+      case PLAY_ON_HOVER_SHORTCUT_KEYCODE: {
+        // Turn play sounds on hover on
+        this.props.setShouldPlayOnHover(true);
+        break;
+      }
+      case TOGGLE_MULTISELECTION_KEYCODE: {
+        this.props.toggleMultiSelection(true);
+        this.props.hideModal();
+        this.props.suppressModal(true);
+        break;
+      }
+      // only remove space if it is an active search
+      case CANCEL_KEYCODE: {
+        if (this.props.isSearchEnabled && this.props.activeSearches
+              .includes(this.props.currentSpaceObj.queryID)) {
+          this.props.removeSpace(this.props.currentSpaceObj);
+        }
+        break;
+      }
+      case SHORTCUT_ANIMATION_KEYCODE: {
+        this.props.setShortcutAnimation(true);
+        break;
+      }
+      default: return;
     }
   }
 
   onKeyupCallback(evt) {
     if (evt.target.tagName.toUpperCase() === 'INPUT') { return; }
-    if (evt.keyCode === PLAY_ON_HOVER_SHORTCUT_KEYCODE) {
-      // Turn play sounds on hover off
-      this.props.setShouldPlayOnHover(false);
-    }
-    if (evt.keyCode === TOGGLE_MULTISELECTION_KEYCODE) {
-      this.props.toggleMultiSelection(false);
-    }
-    if (evt.keyCode === TOGGLE_SHOW_CLUSTER_TAGS_KEYCODE) {
-      this.props.toggleClusterTags();
+    switch (evt.keyCode) {
+      case PLAY_ON_HOVER_SHORTCUT_KEYCODE: {
+        // Turn play sounds on hover off
+        this.props.setShouldPlayOnHover(false);
+        break;
+      }
+      case TOGGLE_MULTISELECTION_KEYCODE: {
+        this.props.toggleMultiSelection(false);
+        this.props.suppressModal(false);
+        break;
+      }
+      case TOGGLE_SHOW_CLUSTER_TAGS_KEYCODE: {
+        this.props.toggleClusterTags();
+        break;
+      }
+      default: return;
     }
   }
 
@@ -169,16 +186,22 @@ class MapContainer extends React.Component {
 const mapStateToProps = (state) => {
   const { paths } = state.paths;
   const { spaces } = state.spaces;
-  const currentSpaceObj = getCurrentSpaceObj(spaces, state.spaces.currentSpace);
-  const { isSearchEnabled, activeSearches } = state.search;
   const { map } = state;
-  return { paths, spaces, map, currentSpaceObj, isSearchEnabled, activeSearches };
+  const { isSearchEnabled, activeSearches } = state.search;
+  const currentSpaceObj = getCurrentSpaceObj(spaces, state.spaces.currentSpace);
+  return {
+    paths,
+    spaces,
+    map,
+    currentSpaceObj,
+    isSearchEnabled,
+    activeSearches,
+  };
 };
 
 MapContainer.propTypes = propTypes;
 
 export default connect(mapStateToProps, {
-  setShortcutAnimation,
   removeSpace,
   displaySystemMessage,
   updateMapPosition,
@@ -189,4 +212,6 @@ export default connect(mapStateToProps, {
   setShouldPlayOnHover,
   toggleClusterTags,
   toggleMultiSelection,
+  suppressModal,
+  setShortcutAnimation,
 })(MapContainer);

@@ -7,7 +7,6 @@ import { submitQuery, miniSearch, reshapeReceivedSounds } from '../Search/utils'
 import { setSpaceAsCenter, computeSpaceClusters } from '../Spaces/actions';
 import { getTrainedTsne, computePointsPositionInSolution } from './utils';
 import { stopAudio } from '../Audio/actions';
-import { getPropertyArrayOfDictionaryEntries } from '../../utils/objectUtils';
 
 export const FETCH_SOUNDS_REQUEST = 'FETCH_SOUNDS_REQUEST';
 export const FETCH_SOUNDS_SUCCESS = 'FETCH_SOUNDS_SUCCESS';
@@ -47,20 +46,20 @@ export const deselectAllSounds = () => (dispatch, getStore) => {
 let clearTimeoutId;
 let progress = 0;
 
-// TODO: buggy -> when playing many sounds by hover, stop does not work on all sounds
 export const stopAllSoundsPlaying = () => (dispatch, getStore) => {
   const playingSourceNodes = getStore().audio.playingSourceNodes;
   Object.keys(playingSourceNodes).forEach(nodekey => dispatch(stopAudio(nodekey.soundID, nodekey)));
 };
 
-const updateProgress = (sounds, stepIteration) => (dispatch) => {
+const updateProgress = (sounds, stepIteration, shortcutAnimation) => (dispatch) => {
   const computedProgress = (stepIteration + 1) / MAX_TSNE_ITERATIONS;
   const computedProgressPercentage = parseInt(100 * computedProgress, 10);
   if (progress !== computedProgressPercentage) {
     // update status message only with new percentage
     progress = computedProgressPercentage;
     const soundsLength = Object.keys(sounds).length;
-    const statusMessage =
+    const statusMessage = shortcutAnimation ?
+      `${soundsLength} sounds loaded, computing map (${progress}%)  ! Animation skipped ! ` :
       `${soundsLength} sounds loaded, computing map (${progress}%)`;
     dispatch(displaySystemMessage(statusMessage));
   }
@@ -95,7 +94,7 @@ const computeTsneSolution = (tsne, sounds, queryID, stepIteration = 0) => (dispa
     if (!stepIteration) {
       dispatch(centerMapAtNewSpace(queryID));
     }
-    dispatch(updateProgress(sounds, stepIteration));
+    dispatch(updateProgress(sounds, stepIteration, shortcutAnimation));
     // call this only if space hasnt been pressed
     if (!shortcutAnimation) {
       dispatch(updateSounds(tsne, sounds, queryID));

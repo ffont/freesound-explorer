@@ -19,7 +19,7 @@ const settings = (state = initialState, action) => {
     }
     case SET_SHORTCUT_ANIMATION: {
       return Object.assign({}, state, {
-        shortcutAnimation: action.showAnimation,
+        shortcutAnimation: action.shortcutAnimation,
       });
     }
     case TOGGLE_PLAY_ON_HOVER: {

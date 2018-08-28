@@ -78,7 +78,8 @@ const reshapePageResults = (pageResults, queryID) => {
   const results = pageResults.results;
   return results.reduce((curState, curSound, curIndex) => {
     const { analysis, url, name, username, duration, license,
-            tags, downloadURL, similar_sounds } = curSound;
+            tags, similar_sounds } = curSound;
+    const downloadUrl = curSound.download;
     const id = `${curSound.id}-${queryID}`;
     const previewUrl = curSound.previews['preview-lq-mp3'];
     const fsObject = pageResults.getSound(curIndex);
@@ -100,7 +101,7 @@ const reshapePageResults = (pageResults, queryID) => {
           previewUrl,
           analysis,
           url,
-          downloadURL,
+          downloadUrl,
           similar_sounds,
           name,
           color,

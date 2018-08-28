@@ -9,6 +9,15 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:////%s/fse_db.db' % os.path.dirname(os.path.ab
 DEBUG_TB_INTERCEPT_REDIRECTS = False
 SESSION_PROTECTION = 'strong'
 CUSTOM_STATIC_FOLDER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),"..","static"))
+DOWNLOAD_FOLDER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "audio"))
+DOWNLOAD_CSV_NEGATIVE_LIST = [
+        'comment', 'analysis_stats', 'images', 'num_comments',
+        'comments', 'previews', 'analysis_frames', 'analysis',
+        'download', 'rate', 'bookmark', 'geotag', 'pack', 'url',
+        'similar_sounds', 'pack_name', 'avg_rating', 'num_downloads', 
+        'num_ratings', 'bitdepth', 'filesize', 'bitrate', 'samplerate', 
+        'type'
+        ]
 
 ALLOW_UNAUTHENTICATED_USER_SAVE_LOAD = False
 ALLOW_UNAUTHENTICATED_USER_DELETE = False

@@ -12,4 +12,4 @@ export const setShouldPlayOnHover = makeActionCreator(SET_SHOULD_PLAY_ON_HOVER, 
 export const toggleMetronomeSound = makeActionCreator(TOGGLE_METRONOME_SOUND);
 export const toggleClusterTags = makeActionCreator(TOGGLE_CLUSTER_TAGS);
 export const toggleMultiSelection = makeActionCreator(TOGGLE_MULTISELECTION, 'shouldMultiSelect');
-export const setShortcutAnimation = makeActionCreator(SET_SHORTCUT_ANIMATION, 'showAnimation');
+export const setShortcutAnimation = makeActionCreator(SET_SHORTCUT_ANIMATION, 'shortcutAnimation');

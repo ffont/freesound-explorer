@@ -65,7 +65,7 @@ class SpaceTitle extends React.Component {
           break;
         }
         default: {
-          label = 'Releveance';
+          label = 'Relevance';
           break;
         }
       }

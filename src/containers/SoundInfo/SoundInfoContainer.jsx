@@ -5,7 +5,7 @@ import SoundInfo from 'components/Sounds/SoundInfo';
 import { addSoundToPath } from '../Paths/actions';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { setSoundCurrentlyLearnt } from '../Midi/actions';
-import { bookmarkSound, downloadSound } from './actions';
+import { bookmarkSound } from './actions';
 
 const propTypes = {
   isVisible: PropTypes.bool,
@@ -20,7 +20,6 @@ const propTypes = {
   notesMapped: PropTypes.object,
   selectedPath: PropTypes.string,
   addSoundToPath: PropTypes.func,
-  downloadSound: PropTypes.func,
   bookmarkSound: PropTypes.func,
 };
 
@@ -43,7 +42,6 @@ const mapStateToProps = (state) => {
 SoundInfoContainer.propTypes = propTypes;
 export default connect(mapStateToProps, {
   bookmarkSound,
-  downloadSound,
   displaySystemMessage,
   addSoundToPath,
   setSoundCurrentlyLearnt,

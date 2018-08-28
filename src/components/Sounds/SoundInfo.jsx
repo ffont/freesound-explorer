@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { midiNoteNumberToMidiNoteLabel } from 'containers/Midi/utils';
 import './SoundInfo.scss';
 import Waveform from '../Waveform';
+import { downloadSound } from '../../containers/SoundInfo/actions';
 
 const propTypes = {
   isVisible: PropTypes.bool,
@@ -16,8 +17,8 @@ const propTypes = {
   notesMapped: PropTypes.object,
   selectedPath: PropTypes.string,
   addSoundToPath: PropTypes.func,
-  downloadSound: PropTypes.func,
   bookmarkSound: PropTypes.func,
+  downloadSound: PropTypes.func,
 };
 
 const DEFAULT_CLASSNAME = 'sound-info-modal';
@@ -65,8 +66,10 @@ class SoundInfo extends React.Component {
         </button>
       );
       downloadSoundIcon = (
-        <button onClick={() => this.props.downloadSound(this.props.sound)}>
-          <i className="fa fa-download fa-lg" aria-hidden="true" />
+        <button>
+          <a rel="noopener noreferrer" href={`${this.props.sound.url}download/`} >
+            <i className="fa fa-download fa-lg" aria-hidden="true" />
+          </a>
         </button>
       );
     }

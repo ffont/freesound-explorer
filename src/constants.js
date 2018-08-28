@@ -22,6 +22,7 @@ export const URLS = {
   LOGOUT: `${BACKEND_APPLICATION_ROOT}/logout/`,
   PREPARE_AUTH: `${BACKEND_APPLICATION_ROOT}/prepare_auth/`,
   GET_APP_TOKEN: `${BACKEND_APPLICATION_ROOT}/get_app_token/`,
+  DOWNLOAD: `${BACKEND_APPLICATION_ROOT}/download/`,
 };
 
 // messagesBox

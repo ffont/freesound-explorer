@@ -1,14 +1,28 @@
 import { soundInfoModalHeight } from 'stylesheets/variables.json';
-import { OPEN_MODAL_FOR_SOUND, HIDE_MODAL } from './actions';
+import { OPEN_MODAL_FOR_SOUND, HIDE_MODAL, SUPRESS_MODAL } from './actions';
 import { UPDATE_SOUNDS_POSITION } from '../Sounds/actions';
 import { UPDATE_MAP_POSITION } from '../Map/actions';
 
 export const modalHeight = parseInt(soundInfoModalHeight, 10);
 
+
+export const modalDisabledReducer = (state = false, action) => {
+  switch (action.type) {
+    case SUPRESS_MODAL: {
+      return action.modalDisabled;
+    }
+    default:
+      return state;
+  }
+};
+
 export const isVisibleReducer = (state = false, action) => {
   switch (action.type) {
     case OPEN_MODAL_FOR_SOUND:
-      return true;
+      if (!action.modalDisabled) {
+        return true;
+      }
+      return false;
     case HIDE_MODAL:
       return false;
     default:
@@ -66,10 +80,11 @@ export const soundIDReducer = (state = '', action) => {
 // Exported reducer receives `allSounds` from parent `sounds` reducer
 export default (state = {}, action, allSounds) => {
   const isVisible = isVisibleReducer(state.isVisible, action);
+  const modalDisabled = modalDisabledReducer(state.modalDisabled, action);
   const soundID = soundIDReducer(state.soundID, action);
   const { position, direction } = positionReducer({
     position: state.position,
     direction: state.direction,
   }, action, soundID, allSounds);
-  return { isVisible, soundID, position, direction };
+  return { isVisible, modalDisabled, soundID, position, direction };
 };

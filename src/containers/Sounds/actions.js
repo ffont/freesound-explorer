@@ -57,14 +57,15 @@ export const stopAllSoundsPlaying = () => (dispatch, getStore) => {
   playingSounds.forEach(soundID => dispatch(stopAudio(soundID)));
 };
 
-const updateProgress = (sounds, stepIteration) => (dispatch) => {
+const updateProgress = (sounds, stepIteration, shortcutAnimation) => (dispatch) => {
   const computedProgress = (stepIteration + 1) / MAX_TSNE_ITERATIONS;
   const computedProgressPercentage = parseInt(100 * computedProgress, 10);
   if (progress !== computedProgressPercentage) {
     // update status message only with new percentage
     progress = computedProgressPercentage;
     const soundsLength = Object.keys(sounds).length;
-    const statusMessage =
+    const statusMessage = shortcutAnimation ?
+      `${soundsLength} sounds loaded, computing map (${progress}%)  ! Animation skipped ! ` :
       `${soundsLength} sounds loaded, computing map (${progress}%)`;
     dispatch(displaySystemMessage(statusMessage));
   }
@@ -88,20 +89,28 @@ const updateSounds = (tsne, sounds, queryID) => (dispatch, getStore) => {
   return soundsWithUpdatedPosition;
 };
 
-const computeTsneSolution = (tsne, sounds, queryID, stepIteration = 0) => (dispatch) => {
+const computeTsneSolution = (tsne, sounds, queryID, stepIteration = 0) => (dispatch, getStore) => {
   /** we retrieve the store at each step to take into account user zooming/moving
   while map being computed */
+  const store = getStore();
+  const { shortcutAnimation } = store.settings;
   if (stepIteration <= MAX_TSNE_ITERATIONS) {
     // compute step solution
     tsne.step();
     if (!stepIteration) {
       dispatch(centerMapAtNewSpace(queryID));
     }
-    dispatch(updateProgress(sounds, stepIteration));
-    dispatch(updateSounds(tsne, sounds, queryID));
+    dispatch(updateProgress(sounds, stepIteration, shortcutAnimation));
+    // call this only if space hasnt been pressed
+    if (!shortcutAnimation) {
+      dispatch(updateSounds(tsne, sounds, queryID));
+    }
     clearTimeoutId = requestAnimationFrame(() =>
       dispatch(computeTsneSolution(tsne, sounds, queryID, stepIteration + 1)));
   } else {
+    if (shortcutAnimation) {
+      dispatch(updateSounds(tsne, sounds, queryID));
+    }
     dispatch(handleFinalStep(queryID));
   }
 };

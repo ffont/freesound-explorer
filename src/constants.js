@@ -68,7 +68,8 @@ export const MAP_SCALE_FACTOR = 20;
 export const TOGGLE_MULTISELECTION_KEYCODE = 16; // shift key
 export const PLAY_ON_HOVER_SHORTCUT_KEYCODE = 18; // alt key
 export const TOGGLE_SHOW_CLUSTER_TAGS_KEYCODE = 84; // t
-export const CANCEL_KEYCODE = 27; // esc
+export const SHORTCUT_ANIMATION_KEYCODE = 32; // SPACE key
+
 // tsne
 export const MAX_TSNE_ITERATIONS = 150;
 export const TSNE_CONFIG = {

@@ -5,7 +5,7 @@ import { zoom } from 'd3-zoom';
 import { connect } from 'react-redux';
 import SpaceTitle from 'components/Spaces/SpaceTitle';
 import 'polyfills/requestAnimationFrame';
-import { MIN_ZOOM, MAX_ZOOM, PLAY_ON_HOVER_SHORTCUT_KEYCODE,
+import { MIN_ZOOM, MAX_ZOOM, PLAY_ON_HOVER_SHORTCUT_KEYCODE, CANCEL_KEYCODE,
   TOGGLE_SHOW_CLUSTER_TAGS_KEYCODE, TOGGLE_MULTISELECTION_KEYCODE,
   SHORTCUT_ANIMATION_KEYCODE } from 'constants';
 import { displaySystemMessage } from '../MessagesBox/actions';
@@ -14,14 +14,17 @@ import { setSoundCurrentlyLearnt } from '../Midi/actions';
 import { deselectAllSounds, stopAllSoundsPlaying } from '../Sounds/actions';
 import { hideModal } from '../SoundInfo/actions';
 import Space from '../Spaces/SpaceContainer';
+import { getCurrentSpaceObj } from '../Spaces/utils';
+import { removeSpace } from '../Spaces/actions';
 import MapPath from '../Paths/MapPath';
 import { setShouldPlayOnHover, toggleClusterTags,
   toggleMultiSelection, setShortcutAnimation } from '../Settings/actions';
 import SoundInfoContainer from '../SoundInfo/SoundInfoContainer';
 
 const propTypes = {
-  deselectAllSounds: PropTypes.func,
-  stopAllSoundsPlaying: PropTypes.func,
+  isSearchEnabled: PropTypes.bool,
+  currentSpaceObj: PropTypes.object,
+  activeSearches: PropTypes.array,
   paths: PropTypes.array,
   spaces: PropTypes.array,
   map: PropTypes.shape({
@@ -29,6 +32,9 @@ const propTypes = {
     translateY: PropTypes.number,
     scale: PropTypes.number,
   }),
+  removeSpace: PropTypes.func,
+  deselectAllSounds: PropTypes.func,
+  stopAllSoundsPlaying: PropTypes.func,
   setSoundCurrentlyLearnt: PropTypes.func,
   updateMapPosition: PropTypes.func,
   hideModal: PropTypes.func,
@@ -75,7 +81,7 @@ class MapContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.onKeypressCallback, false);
+    document.removeEventListener('keydown', this.onKeydownCallback, false);
     document.removeEventListener('keyup', this.onKeyupCallback, false);
   }
 
@@ -101,6 +107,13 @@ class MapContainer extends React.Component {
     }
     if (evt.keyCode === SHORTCUT_ANIMATION_KEYCODE) {
       this.props.setShortcutAnimation(true);
+    }
+    // only remove space if it is an active search
+    if (
+      evt.keyCode === CANCEL_KEYCODE && this.props.isSearchEnabled
+      && this.props.activeSearches.includes(this.props.currentSpaceObj.queryID)
+    ) {
+      this.props.removeSpace(this.props.currentSpaceObj);
     }
   }
 
@@ -156,14 +169,17 @@ class MapContainer extends React.Component {
 const mapStateToProps = (state) => {
   const { paths } = state.paths;
   const { spaces } = state.spaces;
+  const currentSpaceObj = getCurrentSpaceObj(spaces, state.spaces.currentSpace);
+  const { isSearchEnabled, activeSearches } = state.search;
   const { map } = state;
-  return { paths, spaces, map };
+  return { paths, spaces, map, currentSpaceObj, isSearchEnabled, activeSearches };
 };
 
 MapContainer.propTypes = propTypes;
 
 export default connect(mapStateToProps, {
   setShortcutAnimation,
+  removeSpace,
   displaySystemMessage,
   updateMapPosition,
   deselectAllSounds,

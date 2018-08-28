@@ -1,3 +1,7 @@
+<h1 align=center>
+<img src="logo/1000px horizontal.svg" width=90%>
+</h1>
+
 # Freesound Explorer
 
 [https://labs.freesound.org/fse/](http://labs.freesound.org/fse/) (use Chrome for better experience)

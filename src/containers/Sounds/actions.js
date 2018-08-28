@@ -50,10 +50,6 @@ let progress = 0;
 // TODO: buggy -> when playing many sounds by hover, stop does not work on all sounds
 export const stopAllSoundsPlaying = () => (dispatch, getStore) => {
   const playingSourceNodes = getStore().audio.playingSourceNodes;
-  // Object.keys(playingSourceNodes).forEach(
-  //   idx => dispatch(stopAudio(Number(idx), playingSourceNodes[idx].soundID))
-  // );
-  // const playingSounds = getPropertyArrayOfDictionaryEntries(playingSourceNodes, 'soundID');
   Object.keys(playingSourceNodes).forEach(nodekey => dispatch(stopAudio(nodekey.soundID, nodekey)));
 };
 

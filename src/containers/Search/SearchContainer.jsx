@@ -77,7 +77,6 @@ class QueryBox extends React.Component {
   }
 
   render() {
-    console.log('propsCurrentQuery:', this.props.currentQuery);
     return (
       <form
         id="query-form"

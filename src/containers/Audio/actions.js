@@ -1,3 +1,4 @@
+import { default as UUID } from 'uuid';
 import makeActionCreator from 'utils/makeActionCreator';
 import 'polyfills/AudioContext';
 import { getSoundBuffer } from '../Sounds/actions';
@@ -41,19 +42,18 @@ const loadAudio = sound => new Promise((resolve, reject) => {
 export const playAudio =
   (soundRef, { playbackRate = 1, time = 0 } = {}, customSourceNodeKey, onEnded) =>
   (dispatch, getStore) => {
-    const store = getStore();
     let sound;
     if (typeof soundRef === 'object') {
       sound = soundRef; // soundRef is a sound object
     } else if (typeof soundRef === 'string') {
+      const store = getStore();
       sound = store.sounds.byID[soundRef]; // soundRef is a sound id
     }
-    const { playingSourceNodes } = store.audio;
     loadAudio(sound).then(
       (buffer) => {
         const source = audioContext.createBufferSource();
         const sourceGainNode = audioContext.createGain();
-        const sourceNodeKey = customSourceNodeKey || Object.keys(playingSourceNodes).length;
+        const sourceNodeKey = customSourceNodeKey || UUID.v4();
         dispatch(getSoundBuffer(sound.id, buffer));
         dispatch(addAudioSource(sourceNodeKey, source, sourceGainNode, sound.id));
         source.onended = () => {

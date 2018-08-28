@@ -80,7 +80,7 @@ To have some more details about the sounds of a space, you can hit the next icon
 
 ### 4) Search for more sounds
 
-* You are not limit to just a single query. If you do more queries, their results will be projected in a new **Space** in the map. A Space is simply a specific region of the map which holds to results of a specific query. Zooming out enough in the map will reveal all the Spaces arranged in a grid. It is possible to abort a search by pressing **ESC** during calculation. The corresponding space will be instatly deleted.
+* You are not limit to just a single query. If you do more queries, their results will be projected in a new **Space** in the map. A Space is simply a specific region of the map which holds to results of a specific query. Zooming out enough in the map will reveal all the Spaces arranged in a grid. It is possible to abort a search by pressing **ESC** during calculation. The corresponding space will be instatly deleted. To speed up the map calculation you can disable the animation by pressing the SPACE bar during calculation.
 
 * Click on the "Spaces" icon in the sidebar (the one with the 4 squares in a grid) to see a list of all the Spaces you have created. 
 

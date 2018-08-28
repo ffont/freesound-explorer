@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import SpaceTitle from 'components/Spaces/SpaceTitle';
 import 'polyfills/requestAnimationFrame';
 import { MIN_ZOOM, MAX_ZOOM, PLAY_ON_HOVER_SHORTCUT_KEYCODE,
-  TOGGLE_SHOW_CLUSTER_TAGS_KEYCODE, TOGGLE_MULTISELECTION_KEYCODE, CANCEL_KEYCODE } from 'constants';
+  TOGGLE_SHOW_CLUSTER_TAGS_KEYCODE, TOGGLE_MULTISELECTION_KEYCODE, CANCEL_KEYCODE, SHORTCUT_ANIMATION_KEYCODE } from 'constants';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateMapPosition } from './actions';
 import { setSoundCurrentlyLearnt } from '../Midi/actions';
@@ -16,7 +16,7 @@ import Space from '../Spaces/SpaceContainer';
 import { getCurrentSpaceObj } from '../Spaces/utils';
 import { removeSpace } from '../Spaces/actions';
 import MapPath from '../Paths/MapPath';
-import { setShouldPlayOnHover, toggleClusterTags, toggleMultiSelection } from '../Settings/actions';
+import { setShouldPlayOnHover, toggleClusterTags, toggleMultiSelection, setShortcutAnimation } from '../Settings/actions';
 import SoundInfoContainer from '../SoundInfo/SoundInfoContainer';
 
 const propTypes = {
@@ -41,6 +41,7 @@ const propTypes = {
   setShouldPlayOnHover: PropTypes.func,
   toggleClusterTags: PropTypes.func,
   toggleMultiSelection: PropTypes.func,
+  setShortcutAnimation: PropTypes.func,
 };
 
 class MapContainer extends React.Component {
@@ -115,6 +116,15 @@ class MapContainer extends React.Component {
               .includes(this.props.currentSpaceObj.queryID)) {
           this.props.removeSpace(this.props.currentSpaceObj);
         }
+        break;
+      }
+      case SHORTCUT_ANIMATION_KEYCODE: {
+        this.props.setShortcutAnimation(true);
+        break;
+      }
+      case 188: {
+        console.log('document.getElementById: ', document.getElementsByClassName('active')[1]);
+        document.getElementsByClassName('active')[1].focus();
         break;
       }
       default: return;
@@ -209,4 +219,5 @@ export default connect(mapStateToProps, {
   toggleClusterTags,
   toggleMultiSelection,
   suppressModal,
+  setShortcutAnimation,
 })(MapContainer);

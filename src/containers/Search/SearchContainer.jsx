@@ -67,6 +67,7 @@ class QueryBox extends React.Component {
   }
 
   submitQuery() {
+    document.getElementsByClassName('active')[1].focus();
     let { query } = this.props;
     const { sorting, descriptor, maxResults, minDuration, maxDuration } = this.props;
     const queryParams = { sorting, descriptor, maxResults, minDuration, maxDuration };

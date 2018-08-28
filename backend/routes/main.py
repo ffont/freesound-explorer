@@ -1,14 +1,18 @@
-from flask import Flask, render_template, jsonify, request, make_response, redirect, g, url_for, send_from_directory
+from flask import Flask, render_template, jsonify, request, make_response, redirect, g, url_for, send_from_directory, send_file, after_this_request
 from flask_login import login_required, logout_user
 from social.apps.flask_app.default.models import UserSocialAuth
 from backend import app, db_session
 from social.exceptions import SocialAuthBaseException
 from backend.models.session import Session
+
+from backend.fszipper import FsZipper
+from backend.settings import DOWNLOAD_FOLDER_PATH
+from backend.settings import DOWNLOAD_CSV_NEGATIVE_LIST as negative_list
 import json
 import uuid
 import datetime
 import os
-
+import threading
 
 def is_valid_uuid(uuid_string):
     try:
@@ -284,3 +288,40 @@ def get_app_token():
     return make_response(jsonify({
         'appToken': app.config['FREESOUND_CLIENT_SECRET']
         }), 200)
+
+
+@app.route('/download/', methods=['GET'])
+def download():
+    # prepare arguments for download
+    fsids = request.args.get('fsids', None).split(',')
+    _, access_token = get_user_data()
+    download_id = str(uuid.uuid4())
+
+    # setup temp folder
+    if not os.path.exists(DOWNLOAD_FOLDER_PATH):
+        os.mkdir(DOWNLOAD_FOLDER_PATH)
+    temp_dir = os.path.join(DOWNLOAD_FOLDER_PATH, download_id)
+    os.mkdir(temp_dir)
+
+    # generate filenames
+    zipname = 'FreesoundExplorer_' + download_id + '.zip'
+    zipabs = os.path.join(temp_dir, zipname)
+    csvname = 'FreesoundMetadata_' + download_id + '.csv'
+    csvabs = os.path.join(temp_dir, csvname)
+
+    # get filename and fileobj from freesound API and append to zip
+    zipper = FsZipper(zipabs, csvabs, access_token, download_id)
+    zipper.zip_originals(fsids, negative_list)
+
+    # add metadata file and reset
+    download_size = os.path.getsize(zipabs)
+
+    # open a new thread that waits for the download to finish (by thumb estimation)
+    @after_this_request
+    def delayed_cleanup(res):
+        waiting_time = download_size/50000 # estimate downloadtime for 0,5 Mbit
+        cleanup_thread = threading.Timer(waiting_time, zipper.cleanup)
+        cleanup_thread.start()
+        return res
+
+    return send_file(zipabs, as_attachment=True, attachment_filename= zipname)

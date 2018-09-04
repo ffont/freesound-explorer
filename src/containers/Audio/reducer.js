@@ -21,6 +21,7 @@ const sourceNodes = (state = initialState.sourceNodes, action) => {
         if (`${curSourceKey}` === `${sourceKey}`) {
           return curState;
         }
+        // overwrite stopped nodes with undefined to delete them
         return Object.assign(curState, { [curSourceKey]: state[curSourceKey] });
       }, {});
     }

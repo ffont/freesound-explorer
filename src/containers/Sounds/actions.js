@@ -7,7 +7,6 @@ import { submitQuery, miniSearch, reshapeReceivedSounds } from '../Search/utils'
 import { setSpaceAsCenter, computeSpaceClusters } from '../Spaces/actions';
 import { getTrainedTsne, computePointsPositionInSolution } from './utils';
 import { stopAudio } from '../Audio/actions';
-import { getPropertyArrayOfDictionaryEntries } from '../../utils/objectUtils';
 
 export const FETCH_SOUNDS_REQUEST = 'FETCH_SOUNDS_REQUEST';
 export const FETCH_SOUNDS_SUCCESS = 'FETCH_SOUNDS_SUCCESS';
@@ -47,14 +46,9 @@ export const deselectAllSounds = () => (dispatch, getStore) => {
 let clearTimeoutId;
 let progress = 0;
 
-// TODO: buggy -> when playing many sounds by hover, stop does not work on all sounds
 export const stopAllSoundsPlaying = () => (dispatch, getStore) => {
   const playingSourceNodes = getStore().audio.playingSourceNodes;
-  // Object.keys(playingSourceNodes).forEach(
-  //   idx => dispatch(stopAudio(Number(idx), playingSourceNodes[idx].soundID))
-  // );
-  const playingSounds = getPropertyArrayOfDictionaryEntries(playingSourceNodes, 'soundID');
-  playingSounds.forEach(soundID => dispatch(stopAudio(soundID)));
+  Object.keys(playingSourceNodes).forEach(nodekey => dispatch(stopAudio(nodekey.soundID, nodekey)));
 };
 
 const updateProgress = (sounds, stepIteration, shortcutAnimation) => (dispatch) => {

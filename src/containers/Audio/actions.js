@@ -1,3 +1,4 @@
+import { default as UUID } from 'uuid';
 import makeActionCreator from 'utils/makeActionCreator';
 import 'polyfills/AudioContext';
 import { getSoundBuffer } from '../Sounds/actions';
@@ -41,19 +42,18 @@ const loadAudio = sound => new Promise((resolve, reject) => {
 export const playAudio =
   (soundRef, { playbackRate = 1, time = 0 } = {}, customSourceNodeKey, onEnded) =>
   (dispatch, getStore) => {
-    const store = getStore();
     let sound;
     if (typeof soundRef === 'object') {
       sound = soundRef; // soundRef is a sound object
     } else if (typeof soundRef === 'string') {
+      const store = getStore();
       sound = store.sounds.byID[soundRef]; // soundRef is a sound id
     }
-    const { playingSourceNodes } = store.audio;
     loadAudio(sound).then(
       (buffer) => {
         const source = audioContext.createBufferSource();
         const sourceGainNode = audioContext.createGain();
-        const sourceNodeKey = customSourceNodeKey || Object.keys(playingSourceNodes).length;
+        const sourceNodeKey = customSourceNodeKey || UUID.v4();
         dispatch(getSoundBuffer(sound.id, buffer));
         dispatch(addAudioSource(sourceNodeKey, source, sourceGainNode, sound.id));
         source.onended = () => {
@@ -75,27 +75,25 @@ export const stopAudio =
   (soundRef, sourceNodeKey = undefined, fadeOutTime = 0.05) =>
   (dispatch, getStore) => {
     const store = getStore();
-    let sound;
+    let inputSoundID;
     if (typeof soundRef === 'object') {
-      sound = soundRef; // soundRef is a sound object
-    } else if (typeof soundRef === 'string') {
-      sound = store.sounds.byID[soundRef]; // soundRef is a sound id
+      inputSoundID = soundRef.id; // soundRef is a sound object then extract the ID
     }
     if (sourceNodeKey) {
       if (Object.keys(store.audio.playingSourceNodes).includes(sourceNodeKey)) {
         const { source, gain } = store.audio.playingSourceNodes[sourceNodeKey];
         gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + fadeOutTime);
         source.stop(audioContext.currentTime + fadeOutTime);  // this will trigger onended event
-        dispatch(stopAudioSrc(sourceNodeKey, sound.id)); // TODO: Should wait for fadeout time?
+        dispatch(stopAudioSrc(sourceNodeKey, inputSoundID)); // TODO: Should wait for fadeout time?
       }
     } else {
       // If no specific key provided, stop all source nodes for the corresponding sound
       Object.keys(store.audio.playingSourceNodes).forEach((key) => {
         const { source, gain, soundID } = store.audio.playingSourceNodes[key];
-        if (soundID === sound.id) {
+        if (soundID === inputSoundID) {
           gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + fadeOutTime);
           source.stop(audioContext.currentTime + fadeOutTime);  // this will trigger onended event
-          dispatch(stopAudioSrc(key, sound.id)); // TODO: Should wait for fadeout time?
+          dispatch(stopAudioSrc(key, inputSoundID)); // TODO: Should wait for fadeout time?
         }
       });
     }

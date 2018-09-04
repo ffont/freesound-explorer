@@ -5,18 +5,20 @@ import { zoom } from 'd3-zoom';
 import { connect } from 'react-redux';
 import SpaceTitle from 'components/Spaces/SpaceTitle';
 import 'polyfills/requestAnimationFrame';
-import { MIN_ZOOM, MAX_ZOOM, PLAY_ON_HOVER_SHORTCUT_KEYCODE,
-  TOGGLE_SHOW_CLUSTER_TAGS_KEYCODE, TOGGLE_MULTISELECTION_KEYCODE, CANCEL_KEYCODE, SHORTCUT_ANIMATION_KEYCODE } from 'constants';
+import { MIN_ZOOM, MAX_ZOOM, PLAY_ON_HOVER_SHORTCUT_KEYCODE, CANCEL_KEYCODE,
+  TOGGLE_SHOW_CLUSTER_TAGS_KEYCODE, TOGGLE_MULTISELECTION_KEYCODE,
+  SHORTCUT_ANIMATION_KEYCODE } from 'constants';
 import { displaySystemMessage } from '../MessagesBox/actions';
 import { updateMapPosition } from './actions';
 import { setSoundCurrentlyLearnt } from '../Midi/actions';
 import { deselectAllSounds, stopAllSoundsPlaying } from '../Sounds/actions';
-import { hideModal, openModalForSound, suppressModal } from '../SoundInfo/actions';
+import { hideModal, suppressModal } from '../SoundInfo/actions';
 import Space from '../Spaces/SpaceContainer';
 import { getCurrentSpaceObj } from '../Spaces/utils';
 import { removeSpace } from '../Spaces/actions';
 import MapPath from '../Paths/MapPath';
-import { setShouldPlayOnHover, toggleClusterTags, toggleMultiSelection, setShortcutAnimation } from '../Settings/actions';
+import { setShouldPlayOnHover, toggleClusterTags,
+  toggleMultiSelection, setShortcutAnimation } from '../Settings/actions';
 import SoundInfoContainer from '../SoundInfo/SoundInfoContainer';
 
 const propTypes = {
@@ -35,7 +37,6 @@ const propTypes = {
   stopAllSoundsPlaying: PropTypes.func,
   setSoundCurrentlyLearnt: PropTypes.func,
   updateMapPosition: PropTypes.func,
-  openModalForSound: PropTypes.func,
   suppressModal: PropTypes.func,
   hideModal: PropTypes.func,
   setShouldPlayOnHover: PropTypes.func,
@@ -122,11 +123,6 @@ class MapContainer extends React.Component {
         this.props.setShortcutAnimation(true);
         break;
       }
-      case 188: {
-        console.log('document.getElementById: ', document.getElementsByClassName('active')[1]);
-        document.getElementsByClassName('active')[1].focus();
-        break;
-      }
       default: return;
     }
   }
@@ -191,8 +187,8 @@ const mapStateToProps = (state) => {
   const { paths } = state.paths;
   const { spaces } = state.spaces;
   const { map } = state;
-  const currentSpaceObj = getCurrentSpaceObj(spaces, state.spaces.currentSpace);
   const { isSearchEnabled, activeSearches } = state.search;
+  const currentSpaceObj = getCurrentSpaceObj(spaces, state.spaces.currentSpace);
   return {
     paths,
     spaces,
@@ -200,7 +196,6 @@ const mapStateToProps = (state) => {
     currentSpaceObj,
     isSearchEnabled,
     activeSearches,
-    // lastSelectedSoundObj,
   };
 };
 
@@ -213,7 +208,6 @@ export default connect(mapStateToProps, {
   deselectAllSounds,
   stopAllSoundsPlaying,
   setSoundCurrentlyLearnt,
-  openModalForSound,
   hideModal,
   setShouldPlayOnHover,
   toggleClusterTags,

@@ -22,7 +22,6 @@ export const URLS = {
   LOGOUT: `${BACKEND_APPLICATION_ROOT}/logout/`,
   PREPARE_AUTH: `${BACKEND_APPLICATION_ROOT}/prepare_auth/`,
   GET_APP_TOKEN: `${BACKEND_APPLICATION_ROOT}/get_app_token/`,
-  DOWNLOAD: `${BACKEND_APPLICATION_ROOT}/download/`,
 };
 
 // messagesBox
@@ -68,7 +67,8 @@ export const MAP_SCALE_FACTOR = 20;
 export const TOGGLE_MULTISELECTION_KEYCODE = 16; // shift key
 export const PLAY_ON_HOVER_SHORTCUT_KEYCODE = 18; // alt key
 export const TOGGLE_SHOW_CLUSTER_TAGS_KEYCODE = 84; // t
-export const SHORTCUT_ANIMATION_KEYCODE = 32; // SPACE key
+export const SHORTCUT_ANIMATION_KEYCODE = 32; // space bar
+export const CANCEL_KEYCODE = 27; // esc
 
 // tsne
 export const MAX_TSNE_ITERATIONS = 150;

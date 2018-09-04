@@ -5,8 +5,6 @@ import { URLS } from '../../constants';
 import { loadBLOB } from '../../utils/requests';
 import { displaySystemMessage } from '../MessagesBox/actions';
 
-// import audioLoader from '../Audio/utils';
-
 export const TOGGLE_SIDEBAR_VISIBILITY = 'TOGGLE_SIDEBAR_VISIBILITY';
 export const SET_SIDEBAR_TAB = 'SET_SIDEBAR_TAB';
 export const EXAMPLE_QUERY_DONE = 'EXAMPLE_QUERY_DONE';

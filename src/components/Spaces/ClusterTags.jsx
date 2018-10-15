@@ -23,7 +23,7 @@ class ClusterTags extends React.Component {
     }
     return (
       <g>
-        {this.props.freqTags.map((tag, idx) => (
+        {this.props.freqTags.slice(0, 5).map((tag, idx) => (
           <text
             key={`cluster-tag-${this.props.queryID}-${idx}`}
             className="clustertag"

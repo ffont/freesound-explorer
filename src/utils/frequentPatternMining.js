@@ -35,20 +35,23 @@ function mostFreqStr(arr) {
   return Object.keys(obj).sort((a, b) => obj[b] - obj[a]);
 }
 
-export const frequentPatterns = (transactions, query) => {
+export const frequentPatterns = (transactions, rawQuery) => {
   return new Promise((resolve, reject) => {
     try {
       const frequent = mostFreqStr(_.flatten(transactions));
-      const result = frequent.filter((entry, _, arr) => {
+      const query = rawQuery.toLowerCase();
+      const result = frequent.filter((rawEntry, _, arr) => {
+        const entry = rawEntry.toLowerCase();
         // filter out plural or singular versions of the original query or any entry
         // saves the plural versions rather than singular ones, covering a few irregular
         return (
           !(entry === query
           || query.split(/\W/).includes(entry) // any terms in the query
           || query.split(/\W/).map(e => e.slice(0, -2)).includes(`${entry}`)
-          || query.split(/\W/).map(e => `${e}ing`).includes(`${entry}`)
-          || query.split(/\W/).map(e => `${e}s`).includes(`${entry}`)
-          || query.split(/\W/).map(e => `${e}ed`).includes(`${entry}`)
+          || query.split(/\W/).map(e => `${e}ing`).includes(`${entry}`) // -ing
+          || query.split(/\W/).map(e => `${e.slice(0,-1)}ing`).includes(`${entry}`) // irregular: race, racing
+          || query.split(/\W/).map(e => `${e}s`).includes(`${entry}`) // plural
+          || query.split(/\W/).map(e => `${e}ed`).includes(`${entry}`) // past
           || arr.includes(`${entry}s`) // variants of exisiting base terms
           || arr.includes(`${entry}ing`)
           || arr.includes(`${entry}oes`)
@@ -60,7 +63,7 @@ export const frequentPatterns = (transactions, query) => {
         );
       });
       if (result.length) {
-        resolve(result.slice(0, 5));
+        resolve(result);
       } else resolve([]);
     } catch (e) {
       console.log(e);

@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from flask import Flask, g
 import flask_login as login
-from .settings import APPLICATION_ROOT
+from .settings import APPLICATION_ROOT, DOWNLOAD_FOLDER_PATH
 
 sys.path.append('../..')
 
@@ -38,6 +38,18 @@ my_loader = jinja2.ChoiceLoader([
 ])
 app.jinja_loader = my_loader
 
+# cleanup download path at startup from
+# https://stackoverflow.com/questions/185936/how-to-delete-the-contents-of-a-folder-in-python#185941
+# import shutil
+# if DOWNLOAD_FOLDER_PATH:
+#     for file in os.listdir(DOWNLOAD_FOLDER_PATH):
+#         file_path = os.path.join(DOWNLOAD_FOLDER_PATH, file)
+#         try:
+#             if os.path.isfile(file_path):
+#                 os.unlink(file_path)
+#             elif os.path.isdir(file_path): shutil.rmtree(file_path)
+#         except OSError as e:
+#             print(e)
 
 # DB
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])

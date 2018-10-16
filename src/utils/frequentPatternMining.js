@@ -1,13 +1,10 @@
 
 // modified version of https://codepen.io/ccallen001/pen/YGOzRA
-function mostFreqStr(arr) {
+function mostFreqStr(arr, clusterSize) {
   // returns most frequent keys descending by values
 
   // ERROR HANDLING
   // more than one argument passed
-  if (arguments.length > 1) {
-    return console.log('Sorry, you may only pass one array of strings to mostFreqStr.');
-  }
   // the argument is not an array OR if it's empty
   if (!Array.isArray(arr) || arr.length < 1) {
     return console.log('Sorry, you may only pass an array of strings to mostFreqStr.');
@@ -31,14 +28,21 @@ function mostFreqStr(arr) {
       obj[ea] += 1;
     }
   });
-  // array descending
+
+  // remove entries with less than 3 occurencies
+  Object.entries(obj).forEach(e => {
+    if (e[1] <= Math.log(clusterSize)) {
+      delete obj[e[0]];
+    }
+  });
+  // return array descending
   return Object.keys(obj).sort((a, b) => obj[b] - obj[a]);
 }
 
 export const frequentPatterns = (transactions, rawQuery) => {
   return new Promise((resolve, reject) => {
     try {
-      const frequent = mostFreqStr(_.flatten(transactions));
+      const frequent = mostFreqStr(_.flatten(transactions), transactions.length);
       const query = rawQuery.toLowerCase();
       const result = frequent.filter((rawEntry, _, arr) => {
         const entry = rawEntry.toLowerCase();

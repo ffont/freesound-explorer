@@ -41,7 +41,7 @@ app.jinja_loader = my_loader
 # cleanup download path at startup from
 # https://stackoverflow.com/questions/185936/how-to-delete-the-contents-of-a-folder-in-python#185941
 import shutil
-if DOWNLOAD_FOLDER_PATH:
+if os.path.exists(DOWNLOAD_FOLDER_PATH):
     for file in os.listdir(DOWNLOAD_FOLDER_PATH):
         file_path = os.path.join(DOWNLOAD_FOLDER_PATH, file)
         try:

@@ -149,9 +149,7 @@ class QueryBox extends React.Component {
           onChange={(evt) => {
             const maxDuration = evt.target.value;
             this.props.updateMaxDuration(maxDuration);
-            if (this.props.query != false) {
               this._debouncedResultsCount();
-            }
           }}
           currentValue={this.props.maxDuration}
           tabIndex="0"

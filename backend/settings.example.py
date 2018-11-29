@@ -10,9 +10,10 @@ DEBUG_TB_INTERCEPT_REDIRECTS = False
 SESSION_PROTECTION = 'strong'
 CUSTOM_STATIC_FOLDER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),"..","static"))
 DOWNLOAD_FOLDER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "audio"))
+DOWNLOAD_JSON_FIELDS = ["id", "name", "license", "description", "tags", "channels", "duration", "username", "created", "type"]
 DOWNLOAD_CSV_NEGATIVE_LIST = [
         'comment', 'analysis_stats', 'images', 'num_comments',
-        'comments', 'previews', 'analysis_frames', 'analysis',
+        'comments', 'previews', 'analysis_frames', 'ac_analysis', 'analysis',
         'download', 'rate', 'bookmark', 'geotag', 'pack', 'url',
         'similar_sounds', 'pack_name', 'avg_rating', 'num_downloads', 
         'num_ratings', 'bitdepth', 'filesize', 'bitrate', 'samplerate', 

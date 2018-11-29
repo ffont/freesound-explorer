@@ -47,12 +47,13 @@ function search(query = randomQuery(), filter = '', maxResults = DEFAULT_MAX_RES
 }
 
 // simplified search reduced to get just the count property
-export function miniSearch(query) {
+export function miniSearch(query, maxDuration) {
   const pageSize = 1;
   const promises = [];
   freesound.setToken(sessionStorage.getItem('appToken'));
   promises.push(freesound.textSearch(query, {
     page_size: pageSize,
+    filter: `duration:[0%20TO%20${maxDuration}]`,
   }));
   return Promise.all(promises);
 }

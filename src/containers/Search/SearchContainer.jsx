@@ -93,7 +93,7 @@ class QueryBox extends React.Component {
             this.props.updateQuery(query);
             // makes a reqest to freesound for each keystroke to get number of possible results
             if (query != false) {
-              this._debouncedResultsCount(query);
+              this._debouncedResultsCount();
             }
           }}
           currentValue={this.props.query}
@@ -149,6 +149,7 @@ class QueryBox extends React.Component {
           onChange={(evt) => {
             const maxDuration = evt.target.value;
             this.props.updateMaxDuration(maxDuration);
+              this._debouncedResultsCount();
           }}
           currentValue={this.props.maxDuration}
           tabIndex="0"

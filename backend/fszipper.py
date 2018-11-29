@@ -1,4 +1,4 @@
-from backend.settings import DOWNLOAD_FOLDER_PATH
+from backend.settings import DOWNLOAD_FOLDER_PATH, DOWNLOAD_JSON_FIELDS
 import os
 import urllib2
 import csv
@@ -43,7 +43,8 @@ class FsZipper:
                 print('No internet connection?\n' + 'urlreceived: ' + dl_url)
 
             # get sound infos
-            info_url = "https://freesound.org/apiv2/sounds/{}/?format=json".format(id)
+            info_url = "https://freesound.org/apiv2/sounds/{}/?format=json&fields={}".format(id, ",".join(DOWNLOAD_JSON_FIELDS))
+            print(info_url)
             urlrequest2 = (urllib2.Request(info_url))
             urlrequest2.add_header("Authorization", "Bearer {}".format(self.access_token))
             metadata = urllib2.urlopen(urlrequest2)

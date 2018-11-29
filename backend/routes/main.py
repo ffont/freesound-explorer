@@ -319,7 +319,7 @@ def download():
     # open a new thread that waits for the download to finish (by thumb estimation)
     @after_this_request
     def delayed_cleanup(res):
-        waiting_time = download_size/50000 # estimate downloadtime for 0,5 Mbit
+        waiting_time = download_size/5000 # estimate downloadtime for 0,05 Mbit
         cleanup_thread = threading.Timer(waiting_time, zipper.cleanup)
         cleanup_thread.start()
         return res

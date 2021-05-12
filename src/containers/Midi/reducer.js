@@ -1,7 +1,15 @@
 import { N_MIDI_MESSAGES_TO_KEEP } from 'constants';
-import { ADD_MIDI_NOTE_MAPPING, REMOVE_MIDI_NOTE_MAPPING, SET_MIDI_LEARN_SOUND_ID,
-  SET_LATEST_RECEIVED_MIDI_MESSAGE, SET_MIDI_SUPPORTED, SET_MIDI_INPUT_CHANNEL,
-  SET_MIDI_INPUT_DEVICE, SET_MIDI_AVAILABLE_DEVICES, DISCONNECT_DEVICES }
+import {
+  ADD_MIDI_NOTE_MAPPING,
+  REMOVE_MIDI_NOTE_MAPPING,
+  SET_MIDI_LEARN_SOUND_ID,
+  SET_LATEST_RECEIVED_MIDI_MESSAGE,
+  SET_MIDI_SUPPORTED,
+  SET_MIDI_INPUT_CHANNEL,
+  SET_MIDI_INPUT_DEVICE,
+  SET_MIDI_AVAILABLE_DEVICES,
+  DISCONNECT_DEVICES,
+}
   from './actions';
 import storable from '../SessionsHandler/storableReducer';
 
@@ -29,7 +37,7 @@ export const notesMapped = (state = initialState.notesMapped, action, soundLearn
   switch (action.type) {
     case ADD_MIDI_NOTE_MAPPING: {
       const { note } = action;
-      return Object.assign({}, state, { [note]: action.soundID || soundLearnt });
+      return { ...state, [note]: action.soundID || soundLearnt };
     }
     case REMOVE_MIDI_NOTE_MAPPING: {
       return Object.keys(state).reduce((curState, curNote) => {
@@ -45,6 +53,7 @@ export const notesMapped = (state = initialState.notesMapped, action, soundLearn
   }
 };
 
+// state:: Array<MidiMessage>
 export const latestReceivedMessages = (state = initialState.latestReceivedMessages, action) => {
   switch (action.type) {
     case SET_LATEST_RECEIVED_MIDI_MESSAGE: {
@@ -87,11 +96,15 @@ export const isMidiSupported = (state = initialState.isMidiSupported, action) =>
   }
 };
 
-export const resetDevice = device => Object.assign({}, device, {
-  value: Object.assign({}, device.value, {
-    onmidimessage: undefined,
-  }),
-});
+export const resetDevice = device => (
+  {
+    ...device,
+    value: {
+      ...device.value,
+      onmidimessage: undefined,
+    },
+  }
+);
 
 export const availableMIDIDevices = (state = initialState.availableMIDIDevices, action) => {
   switch (action.type) {
@@ -105,7 +118,6 @@ export const availableMIDIDevices = (state = initialState.availableMIDIDevices, 
       return state;
   }
 };
-
 
 const midi = (state = {}, action) => ({
   soundCurrentlyLearnt: soundCurrentlyLearnt(state.soundCurrentlyLearnt, action),

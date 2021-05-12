@@ -2,10 +2,19 @@ import { N_MIDI_MESSAGES_TO_KEEP } from 'constants';
 import { range } from 'utils/arrayUtils';
 import deepFreeze from 'deep-freeze';
 import reducer, * as midi from './reducer';
-import { addMidiNoteMapping, setSoundCurrentlyLearnt, removeMidiNoteMapping,
-  setLatestReceivedMidiMessage, setMidiSupported, setMidiInputChannel,
-  setMidiInputDevice, setMidiAvailableDevices, disconnectExistingDevices }
+import {
+  addMidiNoteMapping,
+  setSoundCurrentlyLearnt,
+  removeMidiNoteMapping,
+  setLatestReceivedMidiMessage,
+  setMidiSupported,
+  setMidiInputChannel,
+  setMidiInputDevice,
+  setMidiAvailableDevices,
+  disconnectExistingDevices,
+}
   from './actions';
+import { debug } from 'console';
 
 describe('midi reducer', () => {
   it('should return initialState', () => {
@@ -15,7 +24,7 @@ describe('midi reducer', () => {
   describe('setSoundCurrentlyLearnt', () => {
     const stateBefore = midi.initialState;
     const soundID = 10;
-    const stateAfter = Object.assign({}, stateBefore, { soundCurrentlyLearnt: soundID });
+    const stateAfter = { ...stateBefore, soundCurrentlyLearnt: soundID };
     it('correctly updates state', () => {
       expect(reducer(stateBefore, setSoundCurrentlyLearnt(soundID))).toEqual(stateAfter);
     });
@@ -24,9 +33,7 @@ describe('midi reducer', () => {
     const stateBefore = midi.initialState;
     const note = 64;
     const soundID = 1234;
-    const stateAfter = Object.assign({}, stateBefore, {
-      notesMapped: { [note]: soundID },
-    });
+    const stateAfter = { ...stateBefore, notesMapped: { [note]: soundID }, };
     it('correctly adds new mapping', () => {
       expect(reducer(stateBefore, addMidiNoteMapping(note, soundID)))
         .toEqual(stateAfter);
@@ -48,19 +55,20 @@ describe('midi reducer', () => {
       expect(state2[0]).toEqual(message2);
       expect(state2[1]).toEqual(message1);
     });
-    it('stores a max amount of messages', () => {
-      const messagesToAdd = 100;
-      const stateAfter = range(messagesToAdd).reduce((curState, curMessage) =>
-        midi.latestReceivedMessages(curState, setLatestReceivedMidiMessage(`${curMessage}`))
-      );
-      expect(stateAfter.length).toEqual(N_MIDI_MESSAGES_TO_KEEP);
-      expect(stateAfter[0]).toEqual(`${messagesToAdd - 1}`);
-    });
+    it('stores a max amount of messages',
+      () => {
+        const messagesToAdd = 100;
+        console.log("many: ");
+        const stateAfter = range(messagesToAdd).reduce((curState, curMessage) =>
+          midi.latestReceivedMessages([curState], setLatestReceivedMidiMessage(`${curMessage}`)));
+          expect(stateAfter.length).toEqual(N_MIDI_MESSAGES_TO_KEEP);
+        expect(stateAfter[0]).toEqual(`${messagesToAdd - 1}`);
+      });
   });
   describe('isMidiSupported', () => {
     it('works as expected', () => {
       const isMidiSupported = true;
-      const stateAfter = Object.assign({}, midi.initialState, { isMidiSupported });
+      const stateAfter = { ...midi.initialState, isMidiSupported};
       expect(reducer(midi.initialState, setMidiSupported(isMidiSupported)))
         .toEqual(stateAfter);
     });

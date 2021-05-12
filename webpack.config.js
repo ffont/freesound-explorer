@@ -1,9 +1,7 @@
 const path = require('path');
+const sass = require('sass');
 const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
-const precss = require('precss');
 const jsonImporter = require('node-sass-json-importer');
-// const sassVars = require('@epegzz/sass-vars-loader')
 
 function getEntrySources(sources) {
   if (process.env.NODE_ENV === 'flask') {
@@ -16,20 +14,15 @@ function getEntrySources(sources) {
   return sources;
 }
 
-// function getPlugins(plugins) {
-//   if (process.env.NODE_ENV !== 'production') {
-//     plugins.push(new webpack.HotModuleReplacementPlugin());
-//   }
-//   if (process.env.NODE_ENV === 'production') {
-//     plugins.push(new webpack.optimize.UglifyJsPlugin({
-//       sourceMap: false,
-//       mangle: false,
-//     }));
-//   }
-//   return plugins;
-// }
+function getPlugins(plugins) {
+  if (process.env.NODE_ENV !== 'production') {
+    plugins.push(new webpack.HotModuleReplacementPlugin());
+  }
+  return plugins;
+}
 
 module.exports = {
+  mode: 'development',
   devtool: (process.env.NODE_ENV !== 'production') ? 'eval' : '',
   entry: getEntrySources([
     './src/index.jsx',
@@ -42,21 +35,21 @@ module.exports = {
   optimization: {
     minimize: true,
   },
-  // plugins: getPlugins([
-  //   new webpack.DefinePlugin({
-  //     'process.env': {
-  //       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-  //     },
-  //   }),
-  // ]),
+  plugins: getPlugins([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      },
+    }),
+  ]),
   module: {
     rules: [
-      // {
-      //   test: /\.js?$/,
-      //   use: ['babel-loader'],
-      //   exclude: /node_modules/,
-      //   include: path.resolve(__dirname, 'src'),
-      // },
+      {
+        test: /\.js?$/,
+        use: ['babel-loader'],
+        exclude: /node_modules/,
+        include: path.resolve(__dirname, 'src'),
+      },
       {
         test: /\.jsx?$/,
         use: ['babel-loader'],
@@ -74,10 +67,10 @@ module.exports = {
           },
           'postcss-loader',
           {
-            loader: "sass-loader",
+            loader: 'sass-loader',
             options: {
               // Prefer `dart-sass`
-              implementation: require("sass"),
+              implementation: sass,
               sassOptions: {
                 importer: jsonImporter,
               }
@@ -108,11 +101,6 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [ '.js', '.jsx', '.scss']
-  //   enforceExtension: true,
-  // },
-  // postcss() {
-  //   return [autoprefixer, precss];
+    extensions: ['.js', '.jsx', '.scss'],
   },
-}
-
+};

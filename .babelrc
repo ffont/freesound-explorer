@@ -1,8 +1,18 @@
 {
   "presets": [
-    "@babel/preset-env",
+    ["@babel/preset-env",
+      {
+        "useBuiltIns": "usage",
+        "corejs": 
+        { 
+          "version": "3.12.1", 
+          "proposals": "true"
+        }
+      }
+    ],
     "@babel/preset-react",
     ],
+  "sourceMaps" : "inline",
   "plugins": [
     "react-hot-loader/babel",
       ["module-resolver", {

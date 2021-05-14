@@ -11,11 +11,6 @@ const propTypes = {
 };
 
 class ModalContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.closeModalOnEscapeButtonPress = this.closeModalOnEscapeButtonPress.bind(this);
-  }
-
   UNSAFE_componentWillMount() {
     window.addEventListener('keydown', this.closeModalOnEscapeButtonPress);
   }
@@ -24,11 +19,11 @@ class ModalContainer extends Component {
     window.removeEventListener('keydown', this.closeModalOnEscapeButtonPress);
   }
 
-  closeModalOnEscapeButtonPress(evt) {
+  closeModalOnEscapeButtonPress = evt => {
     if (evt.keyCode === 27 && this.props.isVisible) {
       this.props.toggleModal();
     }
-  }
+  };
 
   render() {
     return (

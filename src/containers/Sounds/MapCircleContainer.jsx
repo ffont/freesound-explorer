@@ -36,13 +36,6 @@ const isSoundStayingNotVisible = (currentProps, nextProps) =>
   (!isSoundVisible(currentProps) && !isSoundVisible(nextProps));
 
 class MapCircleContainer extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.onMouseEnter = this.onMouseEnter.bind(this);
-    this.onMouseLeave = this.onMouseLeave.bind(this);
-    this.onClick = this.onClick.bind(this);
-  }
-
   shouldComponentUpdate(nextProps) {
     if (this.props.isThumbnail) {
       return this.shouldThumbnailUpdate(nextProps);
@@ -54,18 +47,18 @@ class MapCircleContainer extends PureComponent {
     );
   }
 
-  onMouseEnter() {
+  onMouseEnter = () => {
     if (this.props.shouldPlayOnHover) {
       this.props.playAudio(this.props.sound);
     }
     this.props.toggleHoveringSound(this.props.sound.id);
-  }
+  };
 
-  onMouseLeave() {
+  onMouseLeave = () => {
     this.props.toggleHoveringSound(this.props.sound.id);
-  }
+  };
 
-  onClick() {
+  onClick = () => {
     // play and stop sound
     if (this.props.sound.isPlaying) {
       this.props.stopAudio(this.props.sound);
@@ -92,7 +85,7 @@ class MapCircleContainer extends PureComponent {
       // open modal if sound is not yet selected
       this.props.openModalForSound(this.props.sound, this.props.modalDisabled);
     }
-  }
+  };
 
 
   shouldThumbnailUpdate(nextProps) {

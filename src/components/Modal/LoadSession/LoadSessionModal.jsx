@@ -23,7 +23,6 @@ class LoadSessionModal extends Component {
       userSessions: [],
       isInputFocused: false,
     };
-    this.onSearchInputChange = this.onSearchInputChange.bind(this);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -31,13 +30,13 @@ class LoadSessionModal extends Component {
     this.setState({ demoSessions, userSessions });
   }
 
-  onSearchInputChange(evt) {
+  onSearchInputChange = evt => {
     const searchInput = evt.target.value;
     // show only sessions that match search input
     const userSessions = robustSearch(searchInput, this.props.userSessions);
     const demoSessions = robustSearch(searchInput, this.props.demoSessions);
     this.setState({ userSessions, demoSessions });
-  }
+  };
 
   render() {
     const inputContainerClass = (this.state.isInputFocused) ?

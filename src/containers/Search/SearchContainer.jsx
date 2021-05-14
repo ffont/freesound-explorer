@@ -34,12 +34,6 @@ const propTypes = {
 };
 
 class QueryBox extends Component {
-  constructor(props) {
-    super(props);
-    this.submitQuery = this.submitQuery.bind(this);
-    this.tryQueryAtMount = this.tryQueryAtMount.bind(this);
-  }
-
   UNSAFE_componentWillMount() {
     // prevents too many requests to FS server
     this._debouncedResultsCount = debounce(this.props.getResultsCount.bind(this), 400, {
@@ -57,16 +51,16 @@ class QueryBox extends Component {
     }
   }
 
-  tryQueryAtMount() {
+  tryQueryAtMount = () => {
     if (sessionStorage.getItem('appToken')) {
       this.submitQuery();
       this.props.setExampleQueryDone();
     } else {
       setTimeout(this.tryQueryAtMount, 500);
     }
-  }
+  };
 
-  submitQuery() {
+  submitQuery = () => {
     document.getElementsByClassName('active')[1].focus();
     let { query } = this.props;
     const { sorting, descriptor, maxResults, minDuration, maxDuration } = this.props;
@@ -75,7 +69,7 @@ class QueryBox extends Component {
       query = randomQuery();
     }
     this.props.getSounds(query, queryParams);
-  }
+  };
 
   render() {
     return (

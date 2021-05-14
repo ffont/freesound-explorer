@@ -46,14 +46,6 @@ const propTypes = {
 };
 
 class MapContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.zoomHandler = this.zoomHandler.bind(this);
-    this.onClickCallback = this.onClickCallback.bind(this);
-    this.onKeydownCallback = this.onKeydownCallback.bind(this);
-    this.onKeyupCallback = this.onKeyupCallback.bind(this);
-  }
-
   UNSAFE_componentWillMount() {
     document.addEventListener('keydown', this.onKeydownCallback, false);
     document.addEventListener('keyup', this.onKeyupCallback, false);
@@ -86,7 +78,7 @@ class MapContainer extends Component {
     document.removeEventListener('keyup', this.onKeyupCallback, false);
   }
 
-  onClickCallback(evt) {
+  onClickCallback = evt => {
     if (evt.target.tagName !== 'circle') {
       // deselect all sounds when not clicking on a circle
       this.props.deselectAllSounds();
@@ -95,9 +87,9 @@ class MapContainer extends Component {
       this.props.setSoundCurrentlyLearnt();
       this.props.hideModal();
     }
-  }
+  };
 
-  onKeydownCallback(evt) {
+  onKeydownCallback = evt => {
     if (evt.target.tagName.toUpperCase() === 'INPUT') { return; }
     switch (evt.keyCode) {
       case PLAY_ON_HOVER_SHORTCUT_KEYCODE: {
@@ -125,9 +117,9 @@ class MapContainer extends Component {
       }
       default: return;
     }
-  }
+  };
 
-  onKeyupCallback(evt) {
+  onKeyupCallback = evt => {
     if (evt.target.tagName.toUpperCase() === 'INPUT') { return; }
     switch (evt.keyCode) {
       case PLAY_ON_HOVER_SHORTCUT_KEYCODE: {
@@ -146,14 +138,14 @@ class MapContainer extends Component {
       }
       default: return;
     }
-  }
+  };
 
-  zoomHandler() {
+  zoomHandler = () => {
     const translateX = d3Event.transform.x;
     const translateY = d3Event.transform.y;
     const scale = d3Event.transform.k;
     this.props.updateMapPosition({ translateX, translateY, scale });
-  }
+  };
 
   render() {
     return (

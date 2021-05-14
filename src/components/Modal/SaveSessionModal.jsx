@@ -13,7 +13,6 @@ class SaveSessionModal extends Component {
   constructor(props) {
     super(props);
     this.state = { currentName: props.currentSessionName };
-    this.submitSaveAs = this.submitSaveAs.bind(this);
   }
 
   updateInput(evt) {
@@ -23,10 +22,10 @@ class SaveSessionModal extends Component {
     });
   }
 
-  submitSaveAs(evt) {
+  submitSaveAs = evt => {
     evt.preventDefault();
     this.props.saveSessionAs(this.state.currentName);
-  }
+  };
 
   render() {
     return (

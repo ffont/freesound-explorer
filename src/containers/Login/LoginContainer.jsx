@@ -49,10 +49,6 @@ const propTypes = {
 class LoginContainer extends Component {
   constructor(props) {
     super(props);
-    this.handleFreesoundLogin = this.handleFreesoundLogin.bind(this);
-    this.handleFreesoundLogout = this.handleFreesoundLogout.bind(this);
-    this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
-    this.handleFailedLogin = this.handleFailedLogin.bind(this);
     window.setSessionStorage = setSessionStorage;
     window.handleSuccessfulLogin = this.handleSuccessfulLogin;
     window.handleFailedLogin = this.handleFailedLogin;
@@ -84,30 +80,30 @@ class LoginContainer extends Component {
     }
   }
 
-  handleFreesoundLogin() {
+  handleFreesoundLogin = () => {
     this.props.updateLoginModalVisibilility(true);
-  }
+  };
 
-  handleFreesoundLogout() {
+  handleFreesoundLogout = () => {
     loadJSON(URLS.LOGOUT).then(() => {
       clearSession();
       this.props.updateUserLoggedStatus(false);
       this.props.displaySystemMessage('Logged out');
     });
-  }
+  };
 
-  handleSuccessfulLogin() {
+  handleSuccessfulLogin = () => {
     this.props.updateUserLoggedStatus(true);
     this.props.updateLoginModalVisibilility(false);
     this.props.displaySystemMessage(`Logged in as ${sessionStorage.getItem('username')}`,
       MESSAGE_STATUS.SUCCESS);
-  }
+  };
 
-  handleFailedLogin() {
+  handleFailedLogin = () => {
     this.props.updateUserLoggedStatus(false);
     this.props.updateLoginModalVisibilility(false);
     this.props.displaySystemMessage('Failed to log in...', MESSAGE_STATUS.ERROR);
-  }
+  };
 
   render() {
     if (!this.props.isEndUserAuthSupported) {

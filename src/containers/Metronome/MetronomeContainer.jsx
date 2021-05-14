@@ -21,18 +21,13 @@ const propTypes = {
 };
 
 class MetronomeContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.toggleMetronome = this.toggleMetronome.bind(this);
-  }
-
-  toggleMetronome() {
+  toggleMetronome = () => {
     if (this.props.isPlaying) {
       this.props.stopMetronome();
     } else {
       this.props.startMetronome();
     }
-  }
+  };
 
   render() {
     return (

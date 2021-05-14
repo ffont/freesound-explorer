@@ -10,8 +10,11 @@
         }
       }
     ],
-    "@babel/preset-react",
-    ],
+    ["@babel/preset-react",
+      {
+      "runtime": "automatic",
+      }],
+  ],
   "sourceMaps" : "inline",
   "plugins": [
     "react-hot-loader/babel",

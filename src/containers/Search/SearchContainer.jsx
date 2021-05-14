@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { PERFORM_QUERY_AT_MOUNT } from 'constants';
@@ -33,7 +33,7 @@ const propTypes = {
   setExampleQueryDone: PropTypes.func,
 };
 
-class QueryBox extends React.Component {
+class QueryBox extends Component {
   constructor(props) {
     super(props);
     this.submitQuery = this.submitQuery.bind(this);

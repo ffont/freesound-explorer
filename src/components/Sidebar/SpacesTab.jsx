@@ -1,4 +1,3 @@
-import React from 'react';
 import SpaceTabContainer from 'containers/Spaces/SpacesTabContainer';
 import baseTab from './BaseTab';
 import './SpacesTab.scss';

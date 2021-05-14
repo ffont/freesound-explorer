@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { SIDEBAR_TABS, MESSAGE_STATUS } from 'constants';
 import './SidebarNavMenu.scss';

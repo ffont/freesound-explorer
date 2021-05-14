@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { truncateString } from 'utils/stringUtils';
@@ -14,7 +14,7 @@ const propTypes = {
   deleteSoundFromPath: PropTypes.func,
 };
 
-class PathListSound extends React.Component {
+class PathListSound extends Component {
   render() {
     return (
       <li className={(this.props.sound.isPlaying) ? 'playing' : ''}>

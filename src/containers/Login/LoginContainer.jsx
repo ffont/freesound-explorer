@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loadJSON } from 'utils/requests';
@@ -46,7 +46,7 @@ const propTypes = {
   displaySystemMessage: PropTypes.func,
 };
 
-class LoginContainer extends React.Component {
+class LoginContainer extends Component {
   constructor(props) {
     super(props);
     this.handleFreesoundLogin = this.handleFreesoundLogin.bind(this);

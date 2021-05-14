@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { select } from 'd3-selection';
 import { scaleLinear, scaleBand } from 'd3-scale';
@@ -24,7 +24,7 @@ const downsampleSignal = (signal, numberOfPoints = 50) => {
 const buildSymmetricSignal = (signal) => signal.reduce((symmetricSignal, curVal) =>
   [...symmetricSignal, curVal, -curVal], []);
 
-class Waveform extends React.Component {
+class Waveform extends Component {
   componentDidMount() {
     this.handleComponentUpdate();
   }

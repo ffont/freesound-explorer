@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import SessionManager from 'containers/SessionsHandler/SessionManager';
 import SettingsContainer from 'containers/Settings/SettingsContainer';

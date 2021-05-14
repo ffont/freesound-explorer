@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getRandomElement, elementWithId } from 'utils/arrayUtils';
@@ -16,7 +16,7 @@ const propTypes = {
   displaySystemMessage: PropTypes.func,
 };
 
-class PathList extends React.Component {
+class PathList extends Component {
 
   createNewPath() {
     if (this.props.currentSpace) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setPathSync, playPath, stopPath,
@@ -28,7 +28,7 @@ const beatButtons = [
   { name: 'bar', icon: '1' },
 ];
 
-class Path extends React.Component {
+class Path extends Component {
   onPathClick() {
     this.props.selectPath(this.props.path.id);
     if (!this.props.selected) {

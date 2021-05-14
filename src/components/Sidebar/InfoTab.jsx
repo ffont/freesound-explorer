@@ -1,4 +1,3 @@
-import React from 'react';
 import './Sidebar.scss';
 import baseTab from './BaseTab';
 

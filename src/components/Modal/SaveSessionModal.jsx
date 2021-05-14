@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import ModalTitle from './ModalTitle';
 import InputTextButton from '../Input/InputTextButton';
@@ -9,7 +9,7 @@ const propTypes = {
   saveSessionAs: PropTypes.func,
 };
 
-class SaveSessionModal extends React.Component {
+class SaveSessionModal extends Component {
   constructor(props) {
     super(props);
     this.state = { currentName: props.currentSessionName };

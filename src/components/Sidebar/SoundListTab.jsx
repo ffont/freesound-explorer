@@ -1,4 +1,3 @@
-import React from 'react';
 import './SoundListTab.scss';
 import SoundListWrapper from '../../components/Sounds/SoundListWrapper';
 import baseTab from './BaseTab';

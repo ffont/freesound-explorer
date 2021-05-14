@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { midiNoteNumberToMidiNoteLabel } from 'containers/Midi/utils';
 import './SoundInfo.scss';
@@ -23,7 +23,7 @@ const propTypes = {
 
 const DEFAULT_CLASSNAME = 'sound-info-modal';
 
-class SoundInfo extends React.Component {
+class SoundInfo extends Component {
   getClassName() {
     if (!this.props.isVisible) {
       return DEFAULT_CLASSNAME;

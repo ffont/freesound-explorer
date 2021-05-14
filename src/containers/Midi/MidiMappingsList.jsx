@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MidiMapping from './MidiMapping';
@@ -8,7 +8,7 @@ const propTypes = {
   isMidiSupported: PropTypes.bool,
 };
 
-class MidiMappingsList extends React.Component {
+class MidiMappingsList extends Component {
 
   getMappingsList() {
     return (

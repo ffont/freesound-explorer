@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { range } from 'utils/arrayUtils';
 import MapPathLineContainer from './MapPathLineContainer';

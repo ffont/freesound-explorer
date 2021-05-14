@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { messagesBoxHeight } from 'stylesheets/variables.json';
@@ -16,7 +16,7 @@ const propTypes = {
   moveSidebarArrow: PropTypes.func,
 };
 
-class MessagesBoxContainer extends React.Component {
+class MessagesBoxContainer extends Component {
   constructor(props) {
     super(props);
     this.visibilityTimeout = undefined;

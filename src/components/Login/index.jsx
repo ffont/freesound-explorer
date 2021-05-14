@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import LoginButton from './LoginButton';
 import LoginModal from './LoginModal';

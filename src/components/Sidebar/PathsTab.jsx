@@ -1,4 +1,3 @@
-import React from 'react';
 import PathList from 'containers/Paths/PathList';
 import baseTab from './BaseTab';
 import './PathsTab.scss';

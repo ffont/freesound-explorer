@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Metronome from 'components/Metronome';
@@ -20,7 +20,7 @@ const propTypes = {
   isRecording: PropTypes.bool,
 };
 
-class MetronomeContainer extends React.Component {
+class MetronomeContainer extends Component {
   constructor(props) {
     super(props);
     this.toggleMetronome = this.toggleMetronome.bind(this);

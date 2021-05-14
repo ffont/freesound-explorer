@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { lighten } from 'utils/colorsUtils';
 import { connect } from 'react-redux';
@@ -25,7 +25,7 @@ const propTypes = {
 };
 
 // TODO: use responsive table heigth 
-class SoundList extends React.Component {
+class SoundList extends Component {
 
   shouldComponentUpdate(nextProps) {
     return (

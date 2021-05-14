@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { START_METRONOME_AT_MOUNT } from 'constants';
@@ -8,7 +8,7 @@ const propTypes = {
   startMetronome: PropTypes.func,
 };
 
-class MetronomeStarterContainer extends React.Component {
+class MetronomeStarterContainer extends Component {
 
   componentDidMount() {
     if (START_METRONOME_AT_MOUNT) {

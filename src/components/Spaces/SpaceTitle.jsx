@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import './SpaceTitle.scss';
 
@@ -24,7 +24,7 @@ const getStyle = (props) => ({
   left: props.currentPositionInMap.x,
 });
 
-class SpaceTitle extends React.Component {
+class SpaceTitle extends Component {
   shouldComponentUpdate(nextProps) {
     return (
       (nextProps.currentPositionInMap !== this.props.currentPositionInMap) ||

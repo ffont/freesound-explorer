@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import LoadSessionModal from 'components/Modal/LoadSession/LoadSessionModal';
@@ -12,7 +12,7 @@ const propTypes = {
   availableDemoSessions: PropTypes.array,
 };
 
-class LoadSessionModalContainer extends React.Component {
+class LoadSessionModalContainer extends Component {
 
   UNSAFE_componentWillMount() {
     this.props.getAvailableSessions();

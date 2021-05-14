@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { robustSearch } from 'utils/arrayUtils';
 import ModalTitle from '../ModalTitle';
@@ -13,7 +13,7 @@ const propTypes = {
   removeSession: PropTypes.func,
 };
 
-class LoadSessionModal extends React.Component {
+class LoadSessionModal extends Component {
   constructor(props) {
     super(props);
     this.state = {

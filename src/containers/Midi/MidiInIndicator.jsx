@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SelectWithLabel from 'components/Input/SelectWithLabel';
@@ -17,7 +17,7 @@ const propTypes = {
   isMidiSupported: PropTypes.bool,
 };
 
-class MidiInIndicator extends React.Component {
+class MidiInIndicator extends Component {
   constructor(props) {
     super(props);
     this.visibilityTimeout = undefined;

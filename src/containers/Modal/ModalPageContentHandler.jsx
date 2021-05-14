@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { MODAL_PAGES } from 'constants';
 import SaveSessionModalContainer from './SaveSessionModalContainer';

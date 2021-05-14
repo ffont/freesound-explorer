@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import Space from 'containers/Spaces/SpaceContainer';
 import SpaceTitle from './SpaceTitle';

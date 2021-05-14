@@ -1,7 +1,6 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import 'normalize.css';
-import React from 'react';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import configureStore from './store';

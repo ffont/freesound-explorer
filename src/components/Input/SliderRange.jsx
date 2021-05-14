@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { sidebarClosedOffset } from 'stylesheets/variables.json';
 import './SliderRange.scss';
@@ -24,7 +24,7 @@ const defaultProps = {
   id: 'slider-range-input',
 };
 
-class SliderRange extends React.Component {
+class SliderRange extends Component {
   componentDidMount() {
     // hack to ensure adjustPositionWithThumbWidth gets called correctly
     this.forceUpdate();

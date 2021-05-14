@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MapCircleContainer from '../Sounds/MapCircleContainer';
@@ -16,7 +16,7 @@ const defaultProps = {
   isThumbnail: false,
 };
 
-class Space extends React.Component {
+class Space extends Component {
   shouldComponentUpdate(nextProps) {
     return (
       (nextProps.sounds !== this.props.sounds)

@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { select, event as d3Event } from 'd3-selection';
 import { zoom } from 'd3-zoom';
@@ -45,7 +45,7 @@ const propTypes = {
   setShortcutAnimation: PropTypes.func,
 };
 
-class MapContainer extends React.Component {
+class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.zoomHandler = this.zoomHandler.bind(this);

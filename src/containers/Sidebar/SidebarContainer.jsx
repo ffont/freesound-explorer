@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SidebarContent from 'components/Sidebar/SidebarContent';
@@ -26,7 +26,7 @@ const propTypes = {
 };
 
 
-class Sidebar extends React.Component {
+class Sidebar extends Component {
   componentDidMount() {
     this.props.setUpMIDIDevices(); // Prepare midi stuff
     if (!isGoogleChrome()) {

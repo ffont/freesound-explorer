@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import './ClusterTags.scss';
 
@@ -11,7 +11,7 @@ const propTypes = {
   queryID: PropTypes.string,
 };
 
-class ClusterTags extends React.Component {
+class ClusterTags extends Component {
 
   shouldComponentUpdate(nextProps) {
     return (this.props.clusterPosition !== nextProps.clusterPosition);

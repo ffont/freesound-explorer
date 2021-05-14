@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { lighten } from 'utils/colorsUtils';
 import { mapCircles as circleStyle } from 'stylesheets/variables.json';
@@ -24,7 +24,7 @@ const getCircleRadius = () => {
   return radius;
 };
 
-class MapCircle extends React.Component {
+class MapCircle extends Component {
   constructor(props) {
     super(props);
     this.tweens = { circle: undefined, filling: undefined };

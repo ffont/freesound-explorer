@@ -16,7 +16,7 @@ class ModalContainer extends React.Component {
     this.closeModalOnEscapeButtonPress = this.closeModalOnEscapeButtonPress.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     window.addEventListener('keydown', this.closeModalOnEscapeButtonPress);
   }
 

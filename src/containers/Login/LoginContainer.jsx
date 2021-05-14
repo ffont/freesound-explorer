@@ -58,7 +58,7 @@ class LoginContainer extends React.Component {
     window.handleFailedLogin = this.handleFailedLogin;
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.prepareAuth();
   }
 

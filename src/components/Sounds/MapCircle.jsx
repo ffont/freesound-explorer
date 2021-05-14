@@ -30,7 +30,7 @@ class MapCircle extends React.Component {
     this.tweens = { circle: undefined, filling: undefined };
   }
 
-  componentWillUpdate(nextProps) {
+  UNSAFE_componentWillUpdate(nextProps) {
     if (nextProps.sound.isPlaying && !this.props.sound.isPlaying) {
       this.startCircleOnPlayingAnimation();
     } else if (this.props.sound.isPlaying && !nextProps.sound.isPlaying) {

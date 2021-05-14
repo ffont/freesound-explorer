@@ -14,7 +14,7 @@ const propTypes = {
 
 class LoadSessionModalContainer extends React.Component {
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getAvailableSessions();
   }
 

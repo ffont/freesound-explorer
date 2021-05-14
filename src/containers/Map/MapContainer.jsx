@@ -54,7 +54,7 @@ class MapContainer extends React.Component {
     this.onKeyupCallback = this.onKeyupCallback.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     document.addEventListener('keydown', this.onKeydownCallback, false);
     document.addEventListener('keyup', this.onKeyupCallback, false);
   }
@@ -67,7 +67,7 @@ class MapContainer extends React.Component {
     this.container.call(this.zoomBehaviour);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { translateX, translateY, forceMapUpdate } = nextProps.map;
     if (forceMapUpdate) {
       this.container.transition().duration(500)

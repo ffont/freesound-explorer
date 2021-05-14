@@ -26,7 +26,7 @@ class LoadSessionModal extends React.Component {
     this.onSearchInputChange = this.onSearchInputChange.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { demoSessions, userSessions } = nextProps;
     this.setState({ demoSessions, userSessions });
   }

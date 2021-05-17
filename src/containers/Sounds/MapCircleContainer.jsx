@@ -1,4 +1,4 @@
-import { PureComponent } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MapCircle from 'components/Sounds/MapCircle';
@@ -35,7 +35,7 @@ const isSoundVisible = (props) => {
 const isSoundStayingNotVisible = (currentProps, nextProps) =>
   (!isSoundVisible(currentProps) && !isSoundVisible(nextProps));
 
-class MapCircleContainer extends PureComponent {
+class MapCircleContainer extends Component {
   shouldComponentUpdate(nextProps) {
     if (this.props.isThumbnail) {
       return this.shouldThumbnailUpdate(nextProps);

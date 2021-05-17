@@ -2,7 +2,6 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import 'normalize.css';
 import { render } from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
 import configureStore from './store';
 import App from './components/App';
 import { USE_LOCAL_FONTAWESOME } from './constants';
@@ -18,14 +17,12 @@ if (process.env.NODE_ENV !== 'production' && USE_LOCAL_FONTAWESOME) {
 
 const store = configureStore();
 
-render((<AppContainer><App store={store} /></AppContainer>), document.getElementById('app'));
+render((<App store={store} />), document.getElementById('app'));
 
 if (module.hot) {
   module.hot.accept('./components/App', () => {
     render(
-      <AppContainer>
-        <App store={store} />
-      </AppContainer>,
+        <App store={store} />,
       document.getElementById('app'),
     );
   });

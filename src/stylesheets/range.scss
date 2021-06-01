@@ -4,6 +4,8 @@
 // Version 1.1.1
 // MIT License
 
+@use "sass:math";
+
 @import "./variables.json";
 
 $track-color: transparentize(white, 0.8) !default;
@@ -52,7 +54,7 @@ $contrast: 5% !default;
 
 @mixin styledInputRange() {
   -webkit-appearance: none;
-  margin: $thumb-height / 2 0;
+  margin: math.div($thumb-height, 2) 0;
   width: $track-width;
 
   &:focus, &:hover {
@@ -97,7 +99,7 @@ $contrast: 5% !default;
   &::-webkit-slider-thumb {
     @include thumb();
     -webkit-appearance: none;
-    margin-top: ((-$track-border-width * 2 + $track-height) / 2) - ($thumb-height / 2);
+    margin-top: math.div(-$track-border-width * 2 + $track-height, 2) - math.div($thumb-height, 2);
   }
 
   &::-moz-range-thumb {

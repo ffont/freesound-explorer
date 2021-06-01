@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import "../../stylesheets/variables.json";
 @import "../../stylesheets/mixins";
 
@@ -12,7 +14,7 @@
 
 .OptionsList__clickable-option {
   width: 100%;
-  padding: $sidebarClosedOffset/2 $sidebarClosedOffset/4;
+  padding: math.div($sidebarClosedOffset, 2) math.div($sidebarClosedOffset, 4);
   text-transform: capitalize;
   border-radius: 0;
   position: relative;

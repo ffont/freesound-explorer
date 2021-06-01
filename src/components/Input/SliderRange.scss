@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import "./InputText.scss";
 @import "../../stylesheets/range.scss";
 
@@ -18,7 +20,7 @@
   span {
     position: absolute;
     transform: translate(-50%, -50%);
-    top: $sidebarClosedOffset / 2;
+    top: math.div($sidebarClosedOffset, 2);
     pointer-events: none;
     color: $blackBackground;
     transition: color 0.3s ease-in-out;

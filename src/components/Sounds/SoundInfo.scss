@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import "../../stylesheets/variables.json";
 $sound-info-modal-width: 400px;
 $modal-transition-duration: 0.3s;
@@ -15,7 +17,7 @@ $modal-transition-duration: 0.3s;
   }
   div {
     opacity: 0;
-    transition: opacity $modal-transition-duration/4;
+    transition: opacity math.div($modal-transition-duration, 4);
   }
   &.active, &.active-down {
     pointer-events: all;
@@ -23,7 +25,7 @@ $modal-transition-duration: 0.3s;
     div {
       opacity: 1;
       // wait for modal to be totally spread before showing its content
-      transition: opacity $modal-transition-duration/4 $modal-transition-duration;
+      transition: opacity math.div($modal-transition-duration, 4) $modal-transition-duration;
     }
   }
   &.active {

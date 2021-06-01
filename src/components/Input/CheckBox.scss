@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import "../../stylesheets/variables.json";
 
 $box-border-size: 3px;
@@ -17,7 +19,7 @@ $box-border-size: 3px;
     }
   }
   .box {
-    width: 3 / 2 * $sidebarClosedOffset;
+    width: math.div(3, 2) * $sidebarClosedOffset;
     height: $sidebarClosedOffset - 2 * $box-border-size;
     position: relative;
     margin-left: auto;

@@ -2,8 +2,8 @@ import os
 
 APPLICATION_ROOT = '/fse'
 DEBUG = False
-USE_JS_DEV_SERVER = True
-SECRET_KEY = 'secret_key'
+USE_JS_DEV_SERVER = False
+SECRET_KEY = os.environ.get('FSE_SECRET_KEY')
 SESSION_COOKIE_NAME = 'psa_session'
 SQLALCHEMY_DATABASE_URI = 'sqlite:////%s/fse_db.db' % os.path.dirname(os.path.abspath(__file__))
 DEBUG_TB_INTERCEPT_REDIRECTS = False
@@ -15,8 +15,8 @@ DOWNLOAD_CSV_NEGATIVE_LIST = [
         'comment', 'analysis_stats', 'images', 'num_comments',
         'comments', 'previews', 'analysis_frames', 'ac_analysis', 'analysis',
         'download', 'rate', 'bookmark', 'geotag', 'pack', 'url',
-        'similar_sounds', 'pack_name', 'avg_rating', 'num_downloads', 
-        'num_ratings', 'bitdepth', 'filesize', 'bitrate', 'samplerate', 
+        'similar_sounds', 'pack_name', 'avg_rating', 'num_downloads',
+        'num_ratings', 'bitdepth', 'filesize', 'bitrate', 'samplerate',
         'type'
         ]
 
@@ -31,5 +31,5 @@ SOCIAL_AUTH_LOGIN_REDIRECT_URL = APPLICATION_ROOT + '/done/'
 SOCIAL_AUTH_USER_MODEL = 'backend.models.user.User'
 SOCIAL_AUTH_AUTHENTICATION_BACKENDS = ('backend.freesound_auth.FreesoundAuth', )
 
-FREESOUND_CLIENT_ID = "YOUR_CLIENT_ID"
-FREESOUND_CLIENT_SECRET = "YOUR_CLIENT_SECRET"
+FREESOUND_CLIENT_ID = os.environ.get('FSE_FREESOUND_CLIENT_ID')
+FREESOUND_CLIENT_SECRET = os.environ.get('FSE_FREESOUND_CLIENT_SECRET')

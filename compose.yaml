@@ -1,0 +1,11 @@
+services:
+  fse:
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      - FSE_SECRET_KEY="some secret key"
+      - FSE_FREESOUND_CLIENT_ID=CnqmNd1LQy5hzHqkOtBx
+      - FSE_FREESOUND_CLIENT_SECRET=f9ws71QJQ2f07lhvVM0ovjYG4j6pisVAoXOdH0KZ
+    volumes:
+      - ./fse_db.db:/code/backend/fse_db.db

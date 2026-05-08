@@ -11,7 +11,7 @@ describe('search reducer', () => {
   deepFreeze(initialState);
   describe('updateDescriptor', () => {
     const stateBefore = initialState;
-    const descriptor = 'tonal.hpcp.mean';
+    const descriptor = 'hpcp';
     const stateAfter = Object.assign({}, stateBefore, { descriptor });
     it('correctly updates state', () => {
       expect(reducer(stateBefore, updateDescriptor(descriptor))).toEqual(stateAfter);

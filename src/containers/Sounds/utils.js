@@ -31,7 +31,7 @@ export const thumbnailSize = () => {
 export const getTrainedTsne = (sounds, queryParams) => {
   const tsne = new tsnejs.Tsne(TSNE_CONFIG);
   const descriptor = queryParams.descriptor || DEFAULT_DESCRIPTOR;
-  const descriptorKey = `analysis.${descriptor}`;
+  const descriptorKey = `${descriptor}`;
   const trainingData = Object.keys(sounds).map(
     soundID => readObjectPropertyByPropertyAbsName(sounds[soundID], descriptorKey));
   tsne.initDataRaw(trainingData);

@@ -72,7 +72,7 @@ export function submitQuery(submittedQuery, maxResults, maxDuration, sorting) {
 const reshapePageResults = (pageResults, queryID) => {
   const results = pageResults.results;
   return results.reduce((curState, curSound, curIndex) => {
-    const { tristimulus, url, name, username, duration, license,
+    const { tristimulus, hpcp, mfcc, url, name, username, duration, license,
             tags, similar_sounds } = curSound;
     const downloadUrl = curSound.download;
     const id = `${curSound.id}-${queryID}`;

@@ -147,7 +147,6 @@ export const getSounds = (query, queryParams) => (dispatch, getStore) => {
 export const getResultsCount = () => (dispatch, getStore) => {
   const store = getStore();
   const { maxDuration, query } = store.search;
-  console.log('maxDuration: ', maxDuration);
   miniSearch(query, maxDuration).then(
     response => {
       dispatch(displaySystemMessage(`Estimated max number of results: ${response[0].count}`, MESSAGE_STATUS.INFO));

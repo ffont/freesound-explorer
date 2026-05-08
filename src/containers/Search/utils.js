@@ -21,24 +21,18 @@ function search(query = randomQuery(), filter = '', maxResults = DEFAULT_MAX_RES
   let pageCounter = 0;
   const freesoundMaxPageSize = 150;
   const pagesToGet = Math.ceil(maxResults / freesoundMaxPageSize);
-  const extraDescriptors = [
-    'lowlevel.mfcc.mean',
-    'sfx.tristimulus.mean',
-    'tonal.hpcp.mean',
-  ];
   const promises = [];
   while (pageCounter < pagesToGet) {
     const maxPageResults = (pageCounter + 1 !== pagesToGet) ?
       Math.min(maxResults, freesoundMaxPageSize) :
       maxResults - (pageCounter * freesoundMaxPageSize);
     freesound.setToken(sessionStorage.getItem('appToken'));
-    promises.push(freesound.textSearch(query, {
+    promises.push(freesound.search(query, {
       page: pageCounter + 1,
       page_size: maxPageResults,
       group_by_pack: 0,
       filter,
-      fields: 'id,previews,name,analysis,url,username,duration,tags,license,download,similar_sounds',
-      descriptors: extraDescriptors.join(),
+      fields: 'id,previews,name,url,username,duration,tags,license,download,similar_sounds,tristimulus,mfcc,hpcp',
       sort: sorting,
     }));
     pageCounter += 1;
@@ -51,7 +45,7 @@ export function miniSearch(query, maxDuration) {
   const pageSize = 1;
   const promises = [];
   freesound.setToken(sessionStorage.getItem('appToken'));
-  promises.push(freesound.textSearch(query, {
+  promises.push(freesound.search(query, {
     page_size: pageSize,
     filter: `duration:[0%20TO%20${maxDuration}]`,
   }));
@@ -78,7 +72,7 @@ export function submitQuery(submittedQuery, maxResults, maxDuration, sorting) {
 const reshapePageResults = (pageResults, queryID) => {
   const results = pageResults.results;
   return results.reduce((curState, curSound, curIndex) => {
-    const { analysis, url, name, username, duration, license,
+    const { tristimulus, url, name, username, duration, license,
             tags, similar_sounds } = curSound;
     const downloadUrl = curSound.download;
     const id = `${curSound.id}-${queryID}`;
@@ -88,19 +82,21 @@ const reshapePageResults = (pageResults, queryID) => {
     // TODO: check whether the sound is actually bookmarked
     const isBookmarked = false;
     const buffer = undefined;
-    // consider only sounds with non-empty analysis
-    if (analysis) {
+    // consider only sounds with non-empty tristimulus (which means that they also have mfcc and hpcp)
+    if (tristimulus) {
       const color = rgbToHex(
-        Math.floor(255 * analysis.sfx.tristimulus.mean[0]),
-        Math.floor(255 * analysis.sfx.tristimulus.mean[1]),
-        Math.floor(255 * analysis.sfx.tristimulus.mean[2])
+        Math.floor(255 * tristimulus[0]),
+        Math.floor(255 * tristimulus[1]),
+        Math.floor(255 * tristimulus[2])
       );
       Object.assign(curState, {
         [id]: {
           id,
           queryID,
           previewUrl,
-          analysis,
+          hpcp,
+          mfcc,
+          tristimulus,
           url,
           downloadUrl,
           similar_sounds,

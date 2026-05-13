@@ -82,7 +82,7 @@ class SpaceTitle extends Component {
         <ol>
           <li>{this.props.sounds.length} sounds</li>
           <li>Arranged by {
-            (this.props.queryParams.descriptor) === 'lowlevel.mfcc.mean' ? 'Timbre' : 'Tonality'}
+            (this.props.queryParams.descriptor) === 'mfcc' ? 'Timbre' : 'Tonality'}
           </li>
           <li>Duration: {this.props.queryParams.minDuration} to {this.props.queryParams.maxDuration} s</li>
           <li>

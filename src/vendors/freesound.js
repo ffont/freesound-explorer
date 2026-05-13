@@ -6,7 +6,7 @@ const freesound = (function () {
 
   var uris = {
     base : 'https://'+host+'/apiv2',
-    textSearch : '/search/text/',
+    search : '/search/',
     contentSearch: '/search/content/',
     combinedSearch : '/sounds/search/combined/',
     sound : '/sounds/<sound_id>/',
@@ -247,10 +247,10 @@ const freesound = (function () {
               }
               makeRequest(post_url, success, error, {}, null, 'POST', data);
           },
-          textSearch: function(query, options, success, error){
+          search: function(query, options, success, error){
               options = options || {};
               options.query = query ? query : " ";
-              return search(options,uris.textSearch,success,error,SoundCollection);
+              return search(options,uris.search,success,error,SoundCollection);
           },
           contentSearch: function(options, success, error){
               if(!(options.target || options.analysis_file))

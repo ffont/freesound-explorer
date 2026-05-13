@@ -9,3 +9,5 @@ services:
       - FSE_FREESOUND_CLIENT_SECRET=f9ws71QJQ2f07lhvVM0ovjYG4j6pisVAoXOdH0KZ
     volumes:
       - ./fse_db.db:/code/backend/fse_db.db
+      # mount current directory to /code to allow hot reloading of backend code
+      #- .:/code

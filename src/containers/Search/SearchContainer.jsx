@@ -100,8 +100,8 @@ class QueryBox extends Component {
             const descriptor = evt.target.value;
             this.props.updateDescriptor(descriptor);
           }}
-          options={[{ value: 'lowlevel.mfcc.mean', name: 'Timbre' },
-            { value: 'tonal.hpcp.mean', name: 'Tonality' }]}
+          options={[{ value: 'mfcc', name: 'Timbre' },
+            { value: 'hpcp', name: 'Tonality' }]}
           label="Arrange by"
           tabIndex="0"
           defaultValue={this.props.descriptor}

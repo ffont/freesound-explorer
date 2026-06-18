@@ -74,7 +74,7 @@
     "gsap": "^3.6.1",
     "jest": "^26.6.3",
     "json-loader": "^0.5.7",
-    "loader-utils": "^2.0.0",
+    "loader-utils": "^2.0.3",
     "node-sass-json-importer": "^3.3.1",
     "postcss": "^8.2.13",
     "postcss-loader": "^4.3.0",
